@@ -11,11 +11,15 @@ An addon module for tricky store
 ## Instructions
 - Module will update taget list on every boot.
 
+
 - Action button method
+
 If action button feature is available, use action button can update tricky store target list.
 
 - Manual script method
+
 If action button feature isn't avaliable, you can run UpdateTargetList.sh under /data/adb/tricky_store/ manually.
+
 
 ## Links
 [Telegram channel](https://t.me/kowchannel)
