@@ -1,0 +1,9 @@
+# This is the list of additional apps to include in the target file
+# DO NOT remove the default app here
+# You can add your custom addition app's package name here
+# Each app package name should be on a new line 
+
+com.google.android.gms
+io.github.vvb2060.keyattestation
+io.github.vvb2060.mahoshojo
+icu.nullptr.nativetest

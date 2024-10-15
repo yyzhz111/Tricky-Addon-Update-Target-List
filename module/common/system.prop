@@ -1,0 +1,3 @@
+# To pass Minotaur native test Conventional Test (8), you can get your VerifiedBootHash from KeyAttestation app
+# Put verifiedBootHash after 'ro.boot.vbmeta.digest=' and remove the '#' infront of it.
+#ro.boot.vbmeta.digest=

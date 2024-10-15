@@ -1,0 +1,9 @@
+# This is the list of apps to exclude from the target file
+# DO NOT remove the default app here
+# You can add your custom exclusion app here
+# Each app package name should be on a new line
+
+oneplus
+coloros
+com.android.patch
+me.bmax.apatch
