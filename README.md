@@ -1,4 +1,5 @@
 # **Tricky Addon: Update Target List**
+An addon module for tricky store
 
 ## Description
 - Automated script to update tricky store target list.
