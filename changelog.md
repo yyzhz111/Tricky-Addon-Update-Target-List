@@ -5,8 +5,8 @@ Telegram channel: https://t.me/kowchannel
 
 ## Changelog
 ### v1.2
-- Automated update target list on every boot
 - Initial release
+- Automated update target list on every boot
 
 ### v1.1
 - Add exclution and addition list config, config directory: /data/adb/tricky_store/target_list_config (No release)

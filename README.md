@@ -20,4 +20,5 @@ An addon module for tricky store
 
 
 ## Links
+Download: [GitHub release](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases)
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
