@@ -3,7 +3,7 @@
 - Run with root priviledge
 
 ## Changelog
-### V1.2
+### v1.2
 - Synched some code with module script
 
 ## Download
