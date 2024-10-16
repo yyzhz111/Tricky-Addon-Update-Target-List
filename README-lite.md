@@ -8,5 +8,6 @@
 
 ## Link
 [Telegram channel](https://t.me/kowchannel)
+
 [GitHub Release](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
 
