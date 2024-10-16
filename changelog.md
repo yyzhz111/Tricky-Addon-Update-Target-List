@@ -1,6 +1,8 @@
 ### Tricky Addon: Update Target List
 Automated script to update tricky store target.txt
+
 Requirement: Tricky Store module installed
+
 Telegram channel: https://t.me/kowchannel
 
 ## Changelog
