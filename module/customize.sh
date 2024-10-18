@@ -72,8 +72,8 @@ fi
 kb="$COMPATH/.keybox"
 ui_print "*********************************************"
 ui_print "- Do you want to replace tricky store keybox?"
-ui_print "  Volume up: YES"
-ui_print "  Volume up: NO"
+ui_print "  VOL [+]: YES"
+ui_print "  VOL [-]: NO"
 ui_print "*********************************************"
 key_check
 if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
