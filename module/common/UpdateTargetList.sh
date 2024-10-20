@@ -4,8 +4,6 @@
 
 # This script will put all non-system app into /data/adb/tricky_store/target.txt
 # Using module to put normal app into system app may exclude corresponding app from this script too, please disable it if you found this script doesn't work.
-
-# Define the mod path
 MODDIR="/data/adb/tricky_store/target_list_config"
 
 # Config file check
