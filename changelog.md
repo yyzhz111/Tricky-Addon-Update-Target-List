@@ -10,6 +10,7 @@ Telegram channel: https://t.me/kowchannel
 ## Changelog
 ### v1.3
 - Minor improvement in code
+- Overwrtie protection: won't remove previous setup when updating module
 
 ### v1.2
 - Initial release
