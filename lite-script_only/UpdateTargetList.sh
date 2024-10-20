@@ -2,8 +2,8 @@
 
 # by KOW
 # Tricky Addon Lite: Update Target List Script v1.3
-# GitHub release: https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest
-# telegram channel: https://t.me/kowchannel
+# GitHub Repository: https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/master/lite-script_only/README.md
+# Telegram channel: https://t.me/kowchannel
 
 # This script will put all non-system app into /data/adb/tricky_store/target.txt
 

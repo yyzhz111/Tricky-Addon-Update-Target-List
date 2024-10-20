@@ -3,6 +3,9 @@
 - Run with root priviledge
 
 ## Changelog
+### v1.3
+- More user friendly exclude and addition list config
+
 ### v1.2
 - Synched some code with module script
 
