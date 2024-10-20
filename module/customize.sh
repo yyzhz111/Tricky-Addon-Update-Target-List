@@ -50,23 +50,28 @@ ui_print "- Installing..."
 COMPATH="$MODPATH/common"
 CONFIG_DIR="/data/adb/tricky_store/target_list_config"
 SCRIPT_DIR="/data/adb/tricky_store"
-cp "$MODPATH/module.prop" "$COMPATH/disabled"
-sed -i 's/^description=.*/description=Tricky store is disabled/' "$COMPATH/disabled"
-cp "$MODPATH/module.prop" "$COMPATH/ninstalled"
+MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}')
+for status in normal ninstalled disabled; do
+    cp "$MODPATH/module.prop" "$COMPATH/$status"
+done
 sed -i 's/^description=.*/description=Tricky store is not installed/' "$COMPATH/ninstalled"
-cp "$MODPATH/module.prop" "$COMPATH/normal"
-CONFIG_DIR="/data/adb/tricky_store/target_list_config"
-SCRIPT_DIR="/data/adb/tricky_store"
-mkdir -p "$CONFIG_DIR"
+sed -i 's/^description=.*/description=Tricky store is disabled/' "$COMPATH/disabled"
+rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
 cp "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
-mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
-mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
+if [ ! -d "$CONFIG_DIR" ]; then
+    mkdir -p "$CONFIG_DIR"
+    mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
+    mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
+else
+    rm -f "$COMPATH/EXCLUDE"
+    rm -f "$COMPATH/ADDITION"
+fi
 
-if [ ! -f "/data/adb/modules/TA_utl/system.prop" ]; then
+if [ ! -f "/data/adb/modules/$MODNAME/system.prop" ]; then
     mv "$COMPATH/system.prop" "$MODPATH/system.prop"
 else
     rm -f "$COMPATH/system.prop"
-    mv "/data/adb/modules/TA_utl/system.prop" "$MODPATH/system.prop"
+    mv "/data/adb/modules/$MODNAME/system.prop" "$MODPATH/system.prop"
 fi
 
 kb="$COMPATH/.keybox"
@@ -80,7 +85,9 @@ if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
   ui_print "*********************************************"
   ui_print "- Replacing keybox..."
   ui_print "*********************************************"
-  mv "$SCRIPT_DIR/keybox.xml" "$COMPATH/origkeybox"
+  if [ ! -f "/data/adb/modules/$MODNAME/common/origkeybox" ]; then
+    mv "$SCRIPT_DIR/keybox.xml" "$COMPATH/origkeybox"
+  fi
   mv "$kb" "$SCRIPT_DIR/keybox.xml"
 else
   rm -f "$kb"
