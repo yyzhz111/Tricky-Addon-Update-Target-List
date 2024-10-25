@@ -50,7 +50,7 @@ ui_print "- Installing..."
 COMPATH="$MODPATH/common"
 CONFIG_DIR="/data/adb/tricky_store/target_list_config"
 SCRIPT_DIR="/data/adb/tricky_store"
-MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}')
+MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}' | xargs)
 for status in normal ninstalled disabled; do
     cp "$MODPATH/module.prop" "$COMPATH/$status"
 done
