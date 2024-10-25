@@ -26,7 +26,7 @@ fi
 
 # Read exclution and addition config
 EXCLUDE=$(grep -vE '^#|^$' "$MODDIR/EXCLUDE" | tr '\n' '|' | sed 's/|$//')
-ADDITIONS=$(grep -vE '^#|^$' "$MODDIR/ADDITION")
+ADDITION=$(grep -vE '^#|^$' "$MODDIR/ADDITION")
 
 # Create or overwrite the target.txt file
 echo "- Overwritting target.txt"
@@ -42,7 +42,7 @@ sleep 1
 # Add additional apps to the target file if they are not already present
 echo "- Adding addition app... "
 echo " "
-for app in $ADDITIONS; do
+for app in $ADDITION; do
     if ! grep -qx "$app" /data/adb/tricky_store/target.txt; then
         echo "$app" >> /data/adb/tricky_store/target.txt
     fi
