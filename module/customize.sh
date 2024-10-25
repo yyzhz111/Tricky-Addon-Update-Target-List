@@ -23,7 +23,7 @@ if [ -d /data/adb/modules/tricky_store ]; then
     echo "- Tricky store module installed"
 else
     echo "! Tricky store module is not installed"
-    exit 1  
+    abort " " 
 fi
 
 key_check() {
@@ -62,9 +62,20 @@ if [ ! -d "$CONFIG_DIR" ]; then
     mkdir -p "$CONFIG_DIR"
     mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
     mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
-else
-    rm -f "$COMPATH/EXCLUDE"
-    rm -f "$COMPATH/ADDITION"
+elif [ -d "$CONFIG_DIR" ]; then
+    if [ ! -f "$CONFIG_DIR/EXCLUDE"]; then
+        mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
+        rm -f "$COMPATH/ADDITION"
+    elif [ ! -f "$CONFIG_DIR/ADDITION"]; then
+        mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
+        rm -f "$COMPATH/EXCLUDE"
+    elif [ ! -f "$CONFIG_DIR/EXCLUDE" ] && [ ! -f "$CONFIG_DIR/ADDITION" ]; then
+        mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
+        mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
+    else
+        rm -f "$COMPATH/EXCLUDE"
+        rm -f "$COMPATH/ADDITION"
+    fi
 fi
 
 if [ ! -f "/data/adb/modules/$MODNAME/system.prop" ]; then

@@ -26,7 +26,7 @@ echo " Staring script..."
 echo " "
 
 # Create or overwrite the target.txt file
-su -c > /data/adb/tricky_store/target.txt
+> /data/adb/tricky_store/target.txt
 
 echo " Adding apps to target.txt..."
 echo " "

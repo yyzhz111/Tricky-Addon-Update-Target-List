@@ -10,14 +10,14 @@ MODDIR="/data/adb/tricky_store/target_list_config"
 echo "- Checking config files..."
 echo " "
 if [ ! -f "$MODDIR/EXCLUDE" ]; then
-    echo "! Exclude list is missing!"
+    echo "! Exclude list is missing, please reinstall module"
     exit 1
 else
     echo "- Exclude config file found."
     echo " "
 fi
 if [ ! -f "$MODDIR/ADDITION" ]; then
-    echo "! Addition list is missing"
+    echo "! Addition list is missing, please reinstall module"
     exit 1
 else
     echo "- Addition config file found."
@@ -31,7 +31,7 @@ ADDITIONS=$(grep -vE '^#|^$' "$MODDIR/ADDITION")
 # Create or overwrite the target.txt file
 echo "- Overwritting target.txt"
 echo " "
-su -c > /data/adb/tricky_store/target.txt
+> /data/adb/tricky_store/target.txt
 
 # Add all non-system apps to the target file and remove exclusions
 echo "- Adding apps into /data/adb/tricky_store/target.txt"
