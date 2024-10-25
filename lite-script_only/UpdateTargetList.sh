@@ -38,7 +38,7 @@ ADDITION=$(echo "$ADDITION" | tr '\n' ' ' | sed 's/^ //;s/ $//')
 su -c pm list packages -3 </dev/null 2>&1 | cat | awk -F: '{print $2}' | grep -Ev "$EXCLUDE" > /data/adb/tricky_store/target.txt
 sleep 1
 
-# Add extra package names if any app excluded by the script (DO NOT remove default package here)
+# Add additional apps to the target file if they are not already present
 for app in $ADDITION; do
     if ! grep -qx "$app" /data/adb/tricky_store/target.txt; then
         echo "$app" >> /data/adb/tricky_store/target.txt
