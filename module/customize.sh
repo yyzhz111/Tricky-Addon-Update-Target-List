@@ -63,15 +63,15 @@ if [ ! -d "$CONFIG_DIR" ]; then
     mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
     mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
 elif [ -d "$CONFIG_DIR" ]; then
-    if [ ! -f "$CONFIG_DIR/EXCLUDE"]; then
+    if [ ! -f "$CONFIG_DIR/EXCLUDE" ] && [ ! -f "$CONFIG_DIR/ADDITION" ]; then
         mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
-        rm -f "$COMPATH/ADDITION"
+        mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
     elif [ ! -f "$CONFIG_DIR/ADDITION"]; then
         mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
         rm -f "$COMPATH/EXCLUDE"
-    elif [ ! -f "$CONFIG_DIR/EXCLUDE" ] && [ ! -f "$CONFIG_DIR/ADDITION" ]; then
+    elif [ ! -f "$CONFIG_DIR/EXCLUDE"]; then
         mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
-        mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
+        rm -f "$COMPATH/ADDITION"
     else
         rm -f "$COMPATH/EXCLUDE"
         rm -f "$COMPATH/ADDITION"
