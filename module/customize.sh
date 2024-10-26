@@ -51,6 +51,27 @@ COMPATH="$MODPATH/common"
 CONFIG_DIR="/data/adb/tricky_store/target_list_config"
 SCRIPT_DIR="/data/adb/tricky_store"
 MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}' | xargs)
+EXCLUDE=$(grep -vE '^#|^$' "$CONFIG_DIR/EXLUDE")
+ADDITION=$(grep -vE '^#|^$' "$CONFIG_DIR/ADDITION")
+
+add_exclude() {
+  for app in $EXCLUDE; do
+      if ! grep -qx "$app" $COMPATH/EXCLUDE; then
+          echo "$app" >> $COMPATH/EXCLUDE
+      fi
+  done
+  mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
+}
+
+add_addition() {
+  for app in $ADDITION; do
+      if ! grep -qx "$app" $COMPATH/ADDITION; then
+          echo "$app" >> $COMPATH/ADDITION
+      fi
+  done
+  mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
+}
+
 for status in normal ninstalled disabled; do
     cp "$MODPATH/module.prop" "$COMPATH/$status"
 done
@@ -58,6 +79,7 @@ sed -i 's/^description=.*/description=Tricky store is not installed/' "$COMPATH/
 sed -i 's/^description=.*/description=Tricky store is disabled/' "$COMPATH/disabled"
 rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
 cp "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
+
 if [ ! -d "$CONFIG_DIR" ]; then
     mkdir -p "$CONFIG_DIR"
     mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
@@ -68,13 +90,13 @@ elif [ -d "$CONFIG_DIR" ]; then
         mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
     elif [ ! -f "$CONFIG_DIR/ADDITION" ]; then
         mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
-        rm -f "$COMPATH/EXCLUDE"
+        add_exclude
     elif [ ! -f "$CONFIG_DIR/EXCLUDE" ]; then
         mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
-        rm -f "$COMPATH/ADDITION"
+        add_addition
     else
-        rm -f "$COMPATH/EXCLUDE"
-        rm -f "$COMPATH/ADDITION"
+        add_exclude
+        add_addition
     fi
 fi
 

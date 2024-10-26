@@ -4,7 +4,7 @@ TS="/data/adb/modules/tricky_store"
 
 if [ ! -f "$COMPATH/ninstalled" ] || [ ! -f "$COMPATH/disabled" ] || [ ! -f "$COMPATH/normal" ]; then
     sed -i 's/^description=.*/description=Module is corrupted, please reinstall module./' "$MODDIR/module.prop"
-    abort
+    exit 1
 fi
 
 if [ ! -d "$TS" ]; then
@@ -16,5 +16,5 @@ else
     until [ "$(getprop sys.boot_completed)" = "1" ]; do
         sleep 1
     done
-    . "$COMPATH/common/UpdateTargetList.sh"
+    . "$COMPATH/UpdateTargetList.sh"
 fi

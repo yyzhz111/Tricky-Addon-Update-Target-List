@@ -3,6 +3,9 @@
 - Run with root priviledge
 
 ## Changelog
+### v1.3.1
+- Added Apatch Next package name to exclude list
+
 ### v1.3
 - More user friendly exclude and addition list config
 

@@ -8,6 +8,10 @@ GitHub release: https://github.com/KOWX712/Tricky-Addon-Update-Target-List/relea
 Telegram channel: https://t.me/kowchannel
 
 ## Changelog
+### v1.3.1
+- Added Apatch Next package name to exclude list
+- Fix automatic update target script not working issue
+
 ### v1.3
 - Minor improvement in code
 - Overwrtie protection: won't remove previous setup when updating module

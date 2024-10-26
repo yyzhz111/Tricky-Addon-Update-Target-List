@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # by KOW
-# Tricky Addon Lite: Update Target List Script v1.3
+# Tricky Addon Lite: Update Target List Script v1.3.1
 # GitHub Repository: https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/master/lite-script_only/README.md
 # Telegram channel: https://t.me/kowchannel
 
@@ -13,7 +13,8 @@ EXCLUDE="
 oneplus
 coloros
 com.android.patch
-me.bmax.apatch"
+me.bmax.apatch
+me.garfieldhan.apatch.next"
 
 ADDITION="
 com.google.android.gms
