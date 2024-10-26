@@ -3,9 +3,9 @@ Automated script to update tricky store target.txt
 
 Requirement: Tricky Store module installed
 
-GitHub release: https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest
+GitHub release: [https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
 
-Telegram channel: https://t.me/kowchannel
+Telegram channel: [https://t.me/kowchannel](https://t.me/kowchannel)
 
 ## Changelog
 ### v1.3.1
