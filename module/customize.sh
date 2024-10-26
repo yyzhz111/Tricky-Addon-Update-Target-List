@@ -51,10 +51,9 @@ COMPATH="$MODPATH/common"
 CONFIG_DIR="/data/adb/tricky_store/target_list_config"
 SCRIPT_DIR="/data/adb/tricky_store"
 MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}' | xargs)
-EXCLUDE=$(grep -vE '^#|^$' "$CONFIG_DIR/EXLUDE")
-ADDITION=$(grep -vE '^#|^$' "$CONFIG_DIR/ADDITION")
 
 add_exclude() {
+  EXCLUDE=$(grep -vE '^#|^$' "$CONFIG_DIR/EXCLUDE")
   for app in $EXCLUDE; do
       if ! grep -qx "$app" $COMPATH/EXCLUDE; then
           echo "$app" >> $COMPATH/EXCLUDE
@@ -64,6 +63,7 @@ add_exclude() {
 }
 
 add_addition() {
+  ADDITION=$(grep -vE '^#|^$' "$CONFIG_DIR/ADDITION")
   for app in $ADDITION; do
       if ! grep -qx "$app" $COMPATH/ADDITION; then
           echo "$app" >> $COMPATH/ADDITION
