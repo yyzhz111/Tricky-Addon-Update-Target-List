@@ -1,6 +1,6 @@
 SKIPUNZIP=0
 DEBUG=false
-if [ "$(which magisk)" ]; then
+if [ "$MAGISK_VER_CODE" ]; then
     BM="Magisk:$MAGISK_VER│$MAGISK_VER_CODE"
 elif [ "$KSU" ]; then
     BM="KSU:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
