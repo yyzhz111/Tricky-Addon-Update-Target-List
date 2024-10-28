@@ -12,6 +12,7 @@ Telegram channel: [https://t.me/kowchannel](https://t.me/kowchannel)
 ## Changelog
 ### v1.4
 - Migrate ro.boot.vbmeta.digest from system.prop to resetprop
+- Fix config list recognize error on some device
 - Refactor code
 
 ### v1.3.1
