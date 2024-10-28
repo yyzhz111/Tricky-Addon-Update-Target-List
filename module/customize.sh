@@ -100,11 +100,20 @@ elif [ -d "$CONFIG_DIR" ]; then
     fi
 fi
 
-if [ ! -f "/data/adb/modules/$MODNAME/system.prop" ]; then
-    mv "$COMPATH/system.prop" "$MODPATH/system.prop"
+ORG_DIR="/data/adb/modules/$MODNAME"
+if [ ! -f "$ORG_DIR/boot_hash" ]; then
+    mv "$COMPATH/boot_hash" "$MODPATH/boot_hash"
 else
-    rm -f "$COMPATH/system.prop"
-    mv "/data/adb/modules/$MODNAME/system.prop" "$MODPATH/system.prop"
+    rm -f "$COMPATH/boot_hash"
+    mv "$ORG_DIR/boot_hash" "$MODPATH/boot_hash"
+fi
+
+# Migrate from old version setup
+if [ -f "$ORG_DIR/system.prop" ]; then
+    hash_value=$(sed -n 's/^ro.boot.vbmeta.digest=//p' "$ORG_DIR/system.prop")
+    if [ -n "$hash_value" ]; then
+        echo -e "\n$hash_value" >> "$MODPATH/boot_hash"
+    fi
 fi
 
 kb="$COMPATH/.keybox"

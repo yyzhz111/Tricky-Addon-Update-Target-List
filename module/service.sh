@@ -2,6 +2,11 @@ MODDIR=${0%/*}
 COMPATH="$MODDIR/common"
 TS="/data/adb/modules/tricky_store"
 
+hash_value=$(grep -v '^#' "$MODDIR/boot_hash" | tr -d '[:space:]')
+if [ -n "$hash_value" ]; then
+    resetprop -n ro.boot.vbmeta.digest "$hash_value"
+fi
+
 if [ ! -f "$COMPATH/ninstalled" ] || [ ! -f "$COMPATH/disabled" ] || [ ! -f "$COMPATH/normal" ]; then
     sed -i 's/^description=.*/description=Module is corrupted, please reinstall module./' "$MODDIR/module.prop"
     exit 1

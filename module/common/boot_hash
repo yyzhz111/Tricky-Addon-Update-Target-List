@@ -1,0 +1,6 @@
+# This file is to pass Minotaur native test 'Partition Check Fail'
+# Download Key Attestation (chiteroman fork recommended)
+# Link: https://github.com/chiteroman/KeyAttestation/releases
+# Get your VerifiedBootHash value from Key Attestation app
+# Ask here if you don't know how to do: https://t.me/kowchannelchat
+# Paste verifiedBootHash value on next line and save
