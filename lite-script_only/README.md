@@ -1,6 +1,7 @@
 ## Tricky Addon Lite: Update Target List Script
 - Script only, **NOT Module**
 - Run with root priviledge
+- Recommend to run with MT manager
 
 ## Changelog
 ### v1.4
