@@ -5,9 +5,9 @@ Requirement: Tricky Store module installed
 
 Manually add VerifiedBootHash to /data/adb/modules/TA_utl/boot_hash (optional)
 
-GitHub release: [https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
+GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
 
-Telegram channel: [https://t.me/kowchannel](https://t.me/kowchannel)
+Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
 ### v1.4

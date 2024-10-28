@@ -5,19 +5,28 @@ An addon module for tricky store
 ## Description
 - Automated script to update tricky store target list.
 - Custom config: ADDITION and EXCLUDE in `/data/adb/tricky_store/target_list_config`
+- System app excluded by default
+- This is **not** a necessary module for root hide but for those who lazy to do it manually
 
 ## Requirements
 - Tricky store module installed
 
 ## Instructions
-**Module will update taget list on every boot.**
+### Automatic update
+- On boot
 
+### Manually update
 **Action button method**
-- If action button feature is available, use action button can update tricky store target list.
+- Use action button to update tricky store target list.
+- Available for Magisk 27008+, KernelSU 11981+, Apatch 10927+
 
 **Manual script method**
-- If action button feature isn't avaliable, you can run `UpdateTargetList.sh` under `/data/adb/tricky_store` manually.
+- Run `UpdateTargetList.sh` under `/data/adb/tricky_store` manually.
+- MT manager is recommened for this method
 
+## More
+- Support to pass Patition Check Fail in Minotaur test
+- Put Verfied Boot Hash to `boot_hash` in `/data/adb/modules/TA_utl`, reboot.
 
 ## Links
 Download: [GitHub release](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases)
