@@ -10,14 +10,14 @@ MODDIR="/data/adb/tricky_store/target_list_config"
 echo "- Checking config files..."
 echo " "
 if [ ! -f "$MODDIR/EXCLUDE" ]; then
-    echo "! Exclude list is missing, please reinstall module"
+    echo "! Exclude list is missing!"
     exit 1
 else
     echo "- Exclude config file found."
     echo " "
 fi
 if [ ! -f "$MODDIR/ADDITION" ]; then
-    echo "! Addition list is missing, please reinstall module"
+    echo "! Addition list is missing"
     exit 1
 else
     echo "- Addition config file found."
@@ -43,7 +43,8 @@ sleep 1
 echo "- Adding addition app... "
 echo " "
 for app in $ADDITION; do
-    if ! grep -qx "$app" /data/adb/tricky_store/target.txt; then
+    app=$(echo "$app" | tr -d '[:space:]')  # Trim any whitespace
+    if ! grep -Fxq "$app" /data/adb/tricky_store/target.txt; then
         echo "$app" >> /data/adb/tricky_store/target.txt
     fi
 done

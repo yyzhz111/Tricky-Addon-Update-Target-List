@@ -3,9 +3,9 @@ echo "**********************************************"
 echo "- Staring script..."
 echo " "
 
-sh "$MODDIR"/common/UpdateTargetList.sh
+sh "$MODDIR"/UpdateTargetList.sh
 
 echo "**********************************************"
 echo "\(__All set!__)/"
-echo "Exiting in 3 seconds..."
-sleep 3
+echo "Exiting in 2 seconds..."
+sleep 2

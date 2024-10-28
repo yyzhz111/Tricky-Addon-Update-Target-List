@@ -19,7 +19,15 @@ print_modname() {
   ui_print "*******************************************************"
 }
 
-if [ -d /data/adb/modules/tricky_store ]; then
+COMPATH="$MODPATH/common"
+TS="/data/adb/tricky_store"
+CONFIG_DIR="$TS/target_list_config"
+MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}' | xargs)
+ORG_DIR="/data/adb/modules/$MODNAME"
+EXCLUDE=$(grep -vE '^#|^$' "$CONFIG_DIR/EXCLUDE")
+ADDITION=$(grep -vE '^#|^$' "$CONFIG_DIR/ADDITION")
+
+if [ -d "$TS" ]; then
     echo "- Tricky store module installed"
 else
     echo "! Tricky store module is not installed"
@@ -46,14 +54,7 @@ key_check() {
   done
 }
 
-ui_print "- Installing..."
-COMPATH="$MODPATH/common"
-CONFIG_DIR="/data/adb/tricky_store/target_list_config"
-SCRIPT_DIR="/data/adb/tricky_store"
-MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}' | xargs)
-
 add_exclude() {
-  EXCLUDE=$(grep -vE '^#|^$' "$CONFIG_DIR/EXCLUDE")
   for app in $EXCLUDE; do
       if ! grep -qx "$app" $COMPATH/EXCLUDE; then
           echo "$app" >> $COMPATH/EXCLUDE
@@ -63,7 +64,6 @@ add_exclude() {
 }
 
 add_addition() {
-  ADDITION=$(grep -vE '^#|^$' "$CONFIG_DIR/ADDITION")
   for app in $ADDITION; do
       if ! grep -qx "$app" $COMPATH/ADDITION; then
           echo "$app" >> $COMPATH/ADDITION
@@ -72,19 +72,12 @@ add_addition() {
   mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
 }
 
-for status in normal ninstalled disabled; do
-    cp "$MODPATH/module.prop" "$COMPATH/$status"
-done
-sed -i 's/^description=.*/description=Tricky store is not installed/' "$COMPATH/ninstalled"
-sed -i 's/^description=.*/description=Tricky store is disabled/' "$COMPATH/disabled"
-rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
-cp "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
+ui_print "- Installing..."
 
-if [ ! -d "$CONFIG_DIR" ]; then
-    mkdir -p "$CONFIG_DIR"
-    mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
-    mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
-elif [ -d "$CONFIG_DIR" ]; then
+cp "$MODPATH/UpdateTargetList.sh" "$TS/UpdateTargetList.sh"
+cp "$MODPATH/module.prop" "$COMPATH/module.prop.orig"
+
+if [ -d "$CONFIG_DIR" ]; then
     if [ ! -f "$CONFIG_DIR/EXCLUDE" ] && [ ! -f "$CONFIG_DIR/ADDITION" ]; then
         mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
         mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
@@ -98,9 +91,12 @@ elif [ -d "$CONFIG_DIR" ]; then
         add_exclude
         add_addition
     fi
+else
+    mkdir -p "$CONFIG_DIR"
+    mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
+    mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
 fi
 
-ORG_DIR="/data/adb/modules/$MODNAME"
 if [ ! -f "$ORG_DIR/boot_hash" ]; then
     mv "$COMPATH/boot_hash" "$MODPATH/boot_hash"
 else
@@ -124,15 +120,23 @@ ui_print "  VOL [-]: NO"
 ui_print "*********************************************"
 key_check
 if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
-  ui_print "*********************************************"
-  ui_print "- Replacing keybox..."
-  ui_print "*********************************************"
-  if [ ! -f "/data/adb/modules/$MODNAME/common/origkeybox" ]; then
-    mv "$SCRIPT_DIR/keybox.xml" "$COMPATH/origkeybox"
-  fi
-  mv "$kb" "$SCRIPT_DIR/keybox.xml"
+    ui_print "*********************************************"
+    ui_print "- Replacing keybox..."
+    ui_print "*********************************************"
+    
+    if [ -f "$ORG_DIR/common/origkeybox" ]; then
+        mv "$ORG_DIR/common/origkeybox" "$COMPATH/origkeybox"
+    else
+        mv "$TS/keybox.xml" "$COMPATH/origkeybox"
+    fi
+    
+    mv "$kb" "$TS/keybox.xml"
 else
-  rm -f "$kb"
+    if [ -f "$ORG_DIR/common/origkeybox" ]; then
+        mv "$ORG_DIR/common/origkeybox" "$COMPATH/origkeybox"
+    else
+        rm -f "$kb"
+    fi
 fi
 
 ui_print " "
