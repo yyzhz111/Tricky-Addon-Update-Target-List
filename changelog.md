@@ -11,8 +11,8 @@ Telegram channel: [https://t.me/kowchannel](https://t.me/kowchannel)
 
 ## Changelog
 ### v1.4
-- migrate ro.boot.vbmeta.digest from system.prop to resetprop
-- refactor code
+- Migrate ro.boot.vbmeta.digest from system.prop to resetprop
+- Refactor code
 
 ### v1.3.1
 - Added Apatch Next package name to exclude list
