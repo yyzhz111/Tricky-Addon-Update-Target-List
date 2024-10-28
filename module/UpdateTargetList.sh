@@ -25,7 +25,7 @@ else
 fi
 
 # Read exclution and addition config
-EXCLUDE=$(grep -vE '^#|^$' "$MODDIR/EXCLUDE" | tr '\n' '|' | sed 's/|$//')
+EXCLUDE=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$MODDIR/EXCLUDE" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '\n' '|' | sed 's/|$//')
 ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$MODDIR/ADDITION")
 
 # Create or overwrite the target.txt file

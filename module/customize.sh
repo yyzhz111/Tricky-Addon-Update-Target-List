@@ -24,8 +24,8 @@ TS="/data/adb/tricky_store"
 CONFIG_DIR="$TS/target_list_config"
 MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}' | xargs)
 ORG_DIR="/data/adb/modules/$MODNAME"
-EXCLUDE=$(grep -vE '^#|^$' "$CONFIG_DIR/EXCLUDE")
-ADDITION=$(grep -vE '^#|^$' "$CONFIG_DIR/ADDITION")
+EXCLUDE=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/EXCLUDE")
+ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/ADDITION")
 
 if [ -d "$TS" ]; then
     echo "- Tricky store module installed"
