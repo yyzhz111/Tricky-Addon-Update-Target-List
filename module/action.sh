@@ -1,4 +1,4 @@
-TS="/data/adb/modules/tricky_store"
+TS="/data/adb/tricky_store"
 echo "**********************************************"
 echo "- Staring script..."
 echo " "

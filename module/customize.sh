@@ -74,7 +74,7 @@ add_addition() {
 
 ui_print "- Installing..."
 
-mv "$MODPATH/UpdateTargetList.sh" "$TS/UpdateTargetList.sh"
+mv "$COMPATH/UpdateTargetList.sh" "$TS/UpdateTargetList.sh"
 cp "$MODPATH/module.prop" "$COMPATH/module.prop.orig"
 
 if [ -d "$CONFIG_DIR" ]; then
