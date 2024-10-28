@@ -4,4 +4,4 @@ version=v1.4
 versionCode=140
 author=KOWX712
 description=Update tricky store target list with action button. Custom config: ADDITION and EXCLUDE in /data/adb/tricky_store/target_list_config
-updateJson=https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/refs/heads/master/update.json
+updateJson=https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/update.json
