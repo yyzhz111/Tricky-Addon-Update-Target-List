@@ -3,11 +3,17 @@ Automated script to update tricky store target.txt
 
 Requirement: Tricky Store module installed
 
+Manually add VerifiedBootHash to /data/adb/modules/TA_utl/boot_hash (optional)
+
 GitHub release: [https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
 
 Telegram channel: [https://t.me/kowchannel](https://t.me/kowchannel)
 
 ## Changelog
+### v1.4
+- migrate ro.boot.vbmeta.digest from system.prop to resetprop
+- refactor code
+
 ### v1.3.1
 - Added Apatch Next package name to exclude list
 - Fix automatic update target script not working issue

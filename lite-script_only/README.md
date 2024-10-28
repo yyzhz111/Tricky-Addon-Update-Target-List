@@ -3,6 +3,9 @@
 - Run with root priviledge
 
 ## Changelog
+### v1.4
+- Remain same with v1.3.1
+
 ### v1.3.1
 - Added Apatch Next package name to exclude list
 
