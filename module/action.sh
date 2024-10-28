@@ -1,9 +1,9 @@
-MODDIR=${0%/*}
+TS="/data/adb/modules/tricky_store"
 echo "**********************************************"
 echo "- Staring script..."
 echo " "
 
-sh "$MODDIR"/UpdateTargetList.sh
+sh "$TS"/UpdateTargetList.sh
 
 echo "**********************************************"
 echo "\(__All set!__)/"
