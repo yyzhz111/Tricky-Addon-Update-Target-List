@@ -114,7 +114,7 @@ if [ -f "$ORG_DIR/system.prop" ]; then
     fi
 fi
 
-kb="$COMPATH/.keybox"
+kb="$COMPATH/.default"
 ui_print "*********************************************"
 ui_print "- Do you want to replace tricky store keybox?"
 ui_print "  VOL [+]: YES"

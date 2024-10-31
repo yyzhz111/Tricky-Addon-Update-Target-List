@@ -44,9 +44,5 @@ for app in $ADDITION; do
     fi
 done
 
-# Force stop gms. Not necessary, you can add it if you want
-#su -c killall com.google.android.gms
-#su -c killall com.google.android.gms.unstable
-
 echo "- target.txt updated successfully"
 echo " "
