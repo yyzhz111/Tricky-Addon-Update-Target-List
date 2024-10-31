@@ -25,7 +25,7 @@ An addon module for tricky store
 - MT manager is recommened for this method
 
 ## More
-- Support to pass Patition Check Fail in Minotaur test
+**Support to pass Patition Check Fail in Minotaur test**
 - Put Verfied Boot Hash to `boot_hash` in `/data/adb/modules/TA_utl`, reboot.
 
 ## Links
