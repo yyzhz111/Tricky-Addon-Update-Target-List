@@ -74,7 +74,7 @@ add_addition() {
 
 ui_print "- Installing..."
 
-if [ -f "$TS/UpdateTargetList.sh" ]
+if [ -f "$TS/UpdateTargetList.sh" ]; then
     rm -f "$TS/UpdateTargetList.sh"
 fi
 mv "$COMPATH/UpdateTargetList.sh" "$TS/UpdateTargetList.sh"
