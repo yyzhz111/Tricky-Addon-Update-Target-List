@@ -10,6 +10,9 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v1.4.1
+- Fixed Magisk installation issue
+
 ### v1.4
 - Migrate ro.boot.vbmeta.digest from system.prop to resetprop
 - Fix config list recognize error on some device
