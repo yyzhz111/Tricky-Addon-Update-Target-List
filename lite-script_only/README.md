@@ -4,7 +4,7 @@
 - Recommend to run with MT manager
 
 ## Changelog
-### v1.\4.1
+### v1.4.1
 - Remain same with v1.3.1
 
 ### v1.4
