@@ -1,11 +1,11 @@
 SKIPUNZIP=0
 DEBUG=false
-if [ "$MAGISK_VER_CODE" ]; then
-    BM="Magisk:$MAGISK_VER│$MAGISK_VER_CODE"
+if [ "$APATCH" ]; then
+    echo "APatch:$APATCH_VER│$APATCH_VER_CODE"
 elif [ "$KSU" ]; then
-    BM="KSU:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
-elif [ "$APATCH" ]; then
-    BM="APatch:$APATCH_VER│$APATCH_VER_CODE"
+    echo "KSU:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
+elif [ "$MAGISK_VER_CODE" ]; then
+    echo "Magisk:$MAGISK_VER│$MAGISK_VER_CODE"
 else
     ui_print " "; 
     ui_print "! recovery is not supported"; 
@@ -55,20 +55,22 @@ key_check() {
 }
 
 add_exclude() {
-  for app in $EXCLUDE; do
-      if ! grep -qx "$app" $COMPATH/EXCLUDE; then
-          echo "$app" >> $COMPATH/EXCLUDE
-      fi
-  done
-  mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
+    for app in $EXCLUDE; do
+        app=$(echo "$app" | tr -d '[:space:]')
+        if ! grep -Fqx "$app" $COMPATH/EXCLUDE; then
+            echo "$app" >> $COMPATH/EXCLUDE
+        fi
+    done
+    mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
 }
 
 add_addition() {
-  for app in $ADDITION; do
-      if ! grep -qx "$app" $COMPATH/ADDITION; then
-          echo "$app" >> $COMPATH/ADDITION
-      fi
-  done
+    for app in $ADDITION; do
+        app=$(echo "$app" | tr -d '[:space:]')
+        if ! grep -Fqx "$app" $COMPATH/ADDITION; then
+            echo "$app" >> $COMPATH/ADDITION
+        fi
+    done
   mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
 }
 
