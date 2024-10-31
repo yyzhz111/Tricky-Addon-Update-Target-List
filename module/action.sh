@@ -3,7 +3,13 @@ echo "**********************************************"
 echo "- Staring script..."
 echo " "
 
-sh "$TS"/UpdateTargetList.sh
+if [ ! -f "$TS/UpdateTargetList.sh" ]; then
+    echo "! Script missing, please install module again"
+    echo "**********************************************"
+    exit 1
+else
+    . "$TS/UpdateTargetList.sh"
+fi
 
 echo "**********************************************"
 echo "\(__All set!__)/"

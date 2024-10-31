@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # by KOW
-# Tricky Addon Lite: Update Target List Script v1.4.1 (v1.3.1)
+# Tricky Addon Lite: Update Target List Script v1.5
 # GitHub Repository: https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/master/lite-script_only/README.md
 # Telegram channel: https://t.me/kowchannel
 
@@ -26,7 +26,6 @@ echo " "
 echo " Staring script..."
 echo " "
 
-# Create or overwrite the target.txt file
 > /data/adb/tricky_store/target.txt
 
 echo " Adding apps to target.txt..."
