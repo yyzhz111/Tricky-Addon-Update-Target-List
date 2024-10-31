@@ -1,23 +1,17 @@
 SKIPUNZIP=0
 DEBUG=false
+ui_print " ";
 if [ "$APATCH" ]; then
-    echo "APatch:$APATCH_VER│$APATCH_VER_CODE"
+    ui_print "- APatch:$APATCH_VER│$APATCH_VER_CODE"
 elif [ "$KSU" ]; then
-    echo "KSU:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
+    ui_print "- KSU:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
 elif [ "$MAGISK_VER_CODE" ]; then
-    echo "Magisk:$MAGISK_VER│$MAGISK_VER_CODE"
+    ui_print "- Magisk:$MAGISK_VER│$MAGISK_VER_CODE"
 else
     ui_print " "; 
     ui_print "! recovery is not supported"; 
     abort " "; 
 fi
-
-print_modname() {
-  ui_print "*******************************************************"
-  ui_print "Installing Tricky Addon: Update Target List"
-  ui_print "Author: KOWX712"
-  ui_print "*******************************************************"
-}
 
 COMPATH="$MODPATH/common"
 TS="/data/adb/tricky_store"
@@ -28,9 +22,10 @@ EXCLUDE=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/EXCLUDE")
 ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/ADDITION")
 
 if [ -d "$TS" ]; then
-    echo "- Tricky store module installed"
+    ui_print "- Tricky store module installed"
+    ui_print " "
 else
-    echo "! Tricky store module is not installed"
+    ui_print "! Tricky store module is not installed"
     abort " " 
 fi
 
@@ -96,7 +91,9 @@ if [ -d "$CONFIG_DIR" ]; then
         add_exclude
         add_addition
     fi
+    ui_print "- Migrating old config data"
 else
+    ui_print "- Creating config folder $CONFIG_DIR"
     mkdir -p "$CONFIG_DIR"
     mv "$COMPATH/EXCLUDE" "$CONFIG_DIR/EXCLUDE"
     mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
@@ -126,6 +123,7 @@ ui_print "*********************************************"
 key_check
 if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
     ui_print "*********************************************"
+    ui_print "- Backing up original keybox..."
     ui_print "- Replacing keybox..."
     ui_print "*********************************************"
     
