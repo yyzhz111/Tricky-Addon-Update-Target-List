@@ -30,29 +30,29 @@ else
 fi
 
 key_check() {
-  while true; do
-    key_check=$(/system/bin/getevent -qlc 1)
-    key_event=$(echo "$key_check" | awk '{ print $3 }' | grep 'KEY_')
-    key_status=$(echo "$key_check" | awk '{ print $4 }')
-    if [[ "$key_event" == *"KEY_"* && "$key_status" == "DOWN" ]]; then
-      keycheck="$key_event"
-      break
-    fi
-  done
-  while true; do
-    key_check=$(/system/bin/getevent -qlc 1)
-    key_event=$(echo "$key_check" | awk '{ print $3 }' | grep 'KEY_')
-    key_status=$(echo "$key_check" | awk '{ print $4 }')
-    if [[ "$key_event" == *"KEY_"* && "$key_status" == "UP" ]]; then
-      break
-    fi
-  done
+    while true; do
+        key_check=$(/system/bin/getevent -qlc 1)
+        key_event=$(echo "$key_check" | awk '{ print $3 }' | grep 'KEY_')
+        key_status=$(echo "$key_check" | awk '{ print $4 }')
+        if [[ "$key_event" == *"KEY_"* && "$key_status" == "DOWN" ]]; then
+            keycheck="$key_event"
+            break
+        fi
+    done
+    while true; do
+        key_check=$(/system/bin/getevent -qlc 1)
+        key_event=$(echo "$key_check" | awk '{ print $3 }' | grep 'KEY_')
+        key_status=$(echo "$key_check" | awk '{ print $4 }')
+        if [[ "$key_event" == *"KEY_"* && "$key_status" == "UP" ]]; then
+            break
+        fi
+    done
 }
 
 add_exclude() {
     for app in $EXCLUDE; do
         app=$(echo "$app" | tr -d '[:space:]')
-        if ! grep -Fqx "$app" $COMPATH/EXCLUDE; then
+        if ! grep -Fq "$app" $COMPATH/EXCLUDE; then
             echo "$app" >> $COMPATH/EXCLUDE
         fi
     done
@@ -62,11 +62,11 @@ add_exclude() {
 add_addition() {
     for app in $ADDITION; do
         app=$(echo "$app" | tr -d '[:space:]')
-        if ! grep -Fqx "$app" $COMPATH/ADDITION; then
+        if ! grep -Fq "$app" $COMPATH/ADDITION; then
             echo "$app" >> $COMPATH/ADDITION
         fi
     done
-  mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
+    mv "$COMPATH/ADDITION" "$CONFIG_DIR/ADDITION"
 }
 
 ui_print "- Installing..."
