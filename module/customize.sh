@@ -74,6 +74,9 @@ add_addition() {
 
 ui_print "- Installing..."
 
+if [ -f "$TS/UpdateTargetList.sh" ]
+    rm -f "$TS/UpdateTargetList.sh"
+fi
 mv "$COMPATH/UpdateTargetList.sh" "$TS/UpdateTargetList.sh"
 cp "$MODPATH/module.prop" "$COMPATH/module.prop.orig"
 
