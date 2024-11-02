@@ -4,6 +4,9 @@
 - Recommend to run with MT manager
 
 ## Changelog
+### v1.6
+- Remain same with v1.5
+
 ### v1.5
 - Reduced size
 - Removed useless code

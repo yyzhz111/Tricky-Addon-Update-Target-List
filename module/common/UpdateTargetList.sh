@@ -1,9 +1,6 @@
 #!/bin/sh
 
-# by KOW, telegram channel: https://t.me/kowchannel
-
 # This script will put all non-system app into /data/adb/tricky_store/target.txt
-# Using module to put normal app into system app may exclude corresponding app from this script too, please disable it if you found this script doesn't work.
 MODDIR="/data/adb/tricky_store/target_list_config"
 
 echo "- Checking config files..."
@@ -39,7 +36,7 @@ echo "- Adding addition app... "
 echo " "
 for app in $ADDITION; do
     app=$(echo "$app" | tr -d '[:space:]')
-    if ! grep -Fxq "$app" /data/adb/tricky_store/target.txt; then
+    if ! grep -Fq "$app" /data/adb/tricky_store/target.txt; then
         echo "$app" >> /data/adb/tricky_store/target.txt
     fi
 done

@@ -10,6 +10,9 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v1.6
+- Updated something
+
 ### v1.5
 - Fixed some known issue
 - Updated something

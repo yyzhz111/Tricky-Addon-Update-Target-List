@@ -18,8 +18,7 @@ TS="/data/adb/tricky_store"
 CONFIG_DIR="$TS/target_list_config"
 MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}' | xargs)
 ORG_DIR="/data/adb/modules/$MODNAME"
-EXCLUDE=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/EXCLUDE")
-ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/ADDITION")
+kb="$COMPATH/.default"
 
 if [ -d "$TS" ]; then
     ui_print "- Tricky store module installed"
@@ -50,6 +49,7 @@ key_check() {
 }
 
 add_exclude() {
+    EXCLUDE=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/EXCLUDE")
     for app in $EXCLUDE; do
         app=$(echo "$app" | tr -d '[:space:]')
         if ! grep -Fq "$app" $COMPATH/EXCLUDE; then
@@ -60,6 +60,7 @@ add_exclude() {
 }
 
 add_addition() {
+    ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/ADDITION")
     for app in $ADDITION; do
         app=$(echo "$app" | tr -d '[:space:]')
         if ! grep -Fq "$app" $COMPATH/ADDITION; then
@@ -114,7 +115,6 @@ if [ -f "$ORG_DIR/system.prop" ]; then
     fi
 fi
 
-kb="$COMPATH/.default"
 ui_print "*********************************************"
 ui_print "- Do you want to replace tricky store keybox?"
 ui_print "  VOL [+]: YES"
@@ -126,13 +126,11 @@ if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
     ui_print "- Backing up original keybox..."
     ui_print "- Replacing keybox..."
     ui_print "*********************************************"
-    
     if [ -f "$ORG_DIR/common/origkeybox" ]; then
         mv "$ORG_DIR/common/origkeybox" "$COMPATH/origkeybox"
     else
         mv "$TS/keybox.xml" "$COMPATH/origkeybox"
     fi
-    
     mv "$kb" "$TS/keybox.xml"
 else
     if [ -f "$ORG_DIR/common/origkeybox" ]; then
