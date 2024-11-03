@@ -1,33 +1,29 @@
 #!/bin/sh
 
 # This script will put all non-system app into /data/adb/tricky_store/target.txt
-MODDIR="/data/adb/tricky_store/target_list_config"
+CONFIG_DIR="/data/adb/tricky_store/target_list_config"
 
 echo "- Checking config files..."
 echo " "
-if [ ! -f "$MODDIR/EXCLUDE" ]; then
-    echo "! Exclude list is missing!"
+if [ ! -f "$CONFIG_DIR/EXCLUDE" ]; then
+    echo "! Exclude list is missing, please install module again"
     exit 1
 else
-    echo "- Exclude config file found."
+    echo "- Exclude config file found"
     echo " "
 fi
-if [ ! -f "$MODDIR/ADDITION" ]; then
-    echo "! Addition list is missing"
+if [ ! -f "$CONFIG_DIR/ADDITION" ]; then
+    echo "! Addition list is missing, please install module again"
     exit 1
 else
-    echo "- Addition config file found."
+    echo "- Addition config file found"
     echo " "
 fi
 
-EXCLUDE=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$MODDIR/EXCLUDE" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '\n' '|' | sed 's/|$//')
-ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$MODDIR/ADDITION")
+EXCLUDE=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/EXCLUDE" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '\n' '|' | sed 's/|$//')
+ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/ADDITION")
 
-echo "- Overwritting target.txt"
-echo " "
-> /data/adb/tricky_store/target.txt
-
-echo "- Adding apps into /data/adb/tricky_store/target.txt"
+echo "- Adding apps into /data/adb/tricky_store/target.txt..."
 echo " "
 su -c pm list packages -3 </dev/null 2>&1 | cat | awk -F: '{print $2}' | grep -Ev "$EXCLUDE" > /data/adb/tricky_store/target.txt
 sleep 1

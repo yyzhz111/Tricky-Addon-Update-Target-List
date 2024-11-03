@@ -4,6 +4,10 @@
 - Recommend to run with MT manager
 
 ## Changelog
+### v1.8
+- More clarify remark in code
+- Remove useless code
+
 ### v1.6, v1.7
 - Remain same with v1.5
 

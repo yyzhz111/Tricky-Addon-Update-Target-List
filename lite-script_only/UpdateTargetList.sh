@@ -1,14 +1,16 @@
 #!/bin/sh
 
-# by KOW
-# Tricky Addon Lite: Update Target List Script v1.7 (v1.5)
+# Tricky Addon Lite: Update Target List Script v1.8
 # GitHub Repository: https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/master/lite-script_only/README.md
 # Telegram channel: https://t.me/kowchannel
 
 # This script will put all non-system app into /data/adb/tricky_store/target.txt
 
+###################################################
 # Configurable exclude and addition list
 # DO NOT remove default package names here
+###################################################
+
 EXCLUDE="
 oneplus
 coloros
@@ -22,14 +24,14 @@ io.github.vvb2060.keyattestation
 io.github.vvb2060.mahoshojo
 icu.nullptr.nativetest"
 
-echo " "
-echo " Staring script..."
-echo " "
+###################################################
+# Script
+###################################################
 
-> /data/adb/tricky_store/target.txt
-
-echo " Adding apps to target.txt..."
 echo " "
+echo "- Staring script..."
+echo " "
+echo "- Adding apps to target.txt..."
 
 EXCLUDE=$(echo "$EXCLUDE" | tr '\n' '|' | sed 's/^|//;s/|$//')
 ADDITION=$(echo "$ADDITION" | tr '\n' ' ' | sed 's/^ //;s/ $//')
@@ -45,4 +47,5 @@ for app in $ADDITION; do
     fi
 done
 
-echo " All done!"
+echo " "
+echo "- All done!"
