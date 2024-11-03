@@ -1,5 +1,6 @@
 SKIPUNZIP=0
 DEBUG=false
+
 ui_print " ";
 if [ "$APATCH" ]; then
     ui_print "- APatch:$APATCH_VER│$APATCH_VER_CODE"
@@ -14,8 +15,9 @@ else
 fi
 
 COMPATH="$MODPATH/common"
-TS="/data/adb/tricky_store"
-CONFIG_DIR="$TS/target_list_config"
+TS="/data/adb/modules/tricky_store"
+SCRIPT_DIR="/data/adb/tricky_store"
+CONFIG_DIR="$SCRIPT_DIR/target_list_config"
 MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}' | xargs)
 ORG_DIR="/data/adb/modules/$MODNAME"
 kb="$COMPATH/.default"
@@ -72,10 +74,10 @@ add_addition() {
 
 ui_print "- Installing..."
 
-if [ -f "$TS/UpdateTargetList.sh" ]; then
-    rm -f "$TS/UpdateTargetList.sh"
+if [ -f "$SCRIPT_DIR/UpdateTargetList.sh" ]; then
+    rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
 fi
-mv "$COMPATH/UpdateTargetList.sh" "$TS/UpdateTargetList.sh"
+mv "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
 cp "$MODPATH/module.prop" "$COMPATH/module.prop.orig"
 
 if [ -d "$CONFIG_DIR" ]; then
@@ -129,9 +131,9 @@ if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
     if [ -f "$ORG_DIR/common/origkeybox" ]; then
         mv "$ORG_DIR/common/origkeybox" "$COMPATH/origkeybox"
     else
-        mv "$TS/keybox.xml" "$COMPATH/origkeybox"
+        mv "$SCRIPT_DIR/keybox.xml" "$COMPATH/origkeybox"
     fi
-    mv "$kb" "$TS/keybox.xml"
+    mv "$kb" "$SCRIPT_DIR/keybox.xml"
 else
     if [ -f "$ORG_DIR/common/origkeybox" ]; then
         mv "$ORG_DIR/common/origkeybox" "$COMPATH/origkeybox"

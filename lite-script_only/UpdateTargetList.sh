@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # by KOW
-# Tricky Addon Lite: Update Target List Script v1.6 (v1.5)
+# Tricky Addon Lite: Update Target List Script v1.7 (v1.5)
 # GitHub Repository: https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/master/lite-script_only/README.md
 # Telegram channel: https://t.me/kowchannel
 

@@ -4,17 +4,14 @@
 - Recommend to run with MT manager
 
 ## Changelog
-### v1.6
+### v1.6, v1.7
 - Remain same with v1.5
 
 ### v1.5
 - Reduced size
 - Removed useless code
 
-### v1.4.1
-- Remain same with v1.3.1
-
-### v1.4
+### v1.4, v1.4.1
 - Remain same with v1.3.1
 
 ### v1.3.1

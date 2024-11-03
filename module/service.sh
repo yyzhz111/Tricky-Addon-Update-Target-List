@@ -1,5 +1,6 @@
 MODPATH=${0%/*}
 TS="/data/adb/modules/tricky_store"
+SCRIPT_DIR="/data/adb/tricky_store"
 
 hash_value=$(grep -v '^#' "$MODPATH/boot_hash" | tr -d '[:space:]')
 if [ -n "$hash_value" ]; then
@@ -18,10 +19,13 @@ if [ ! -d "$TS" ]; then
 elif  [ -f "$TS/disable" ]; then
     sed -i 's/^description=.*/description=Tricky store is disabled/' "$MODPATH/module.prop"
     touch "$MODPATH/disable"
+elif  [ ! -f "$SCRIPT_DIR/UpdateTargetList.sh" ]; then
+    sed -i 's/^description=.*/description=Script missing, please install module again/' "$MODPATH/module.prop"
+    touch "$MODPATH/disable"
 else
     cat "$MODPATH/common/module.prop.orig" > "$MODPATH/module.prop"
     until [ "$(getprop sys.boot_completed)" = "1" ]; do
         sleep 1
     done
-    . "$TS/UpdateTargetList.sh"
+    . "$SCRIPT_DIR/UpdateTargetList.sh"
 fi

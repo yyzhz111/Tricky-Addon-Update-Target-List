@@ -1,4 +1,4 @@
-# **Tricky Addon: Update Target List**
+# **Tricky Addon - Update Target List**
 An addon module for tricky store
 
 ---

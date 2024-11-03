@@ -1,14 +1,15 @@
-TS="/data/adb/tricky_store"
+SCRIPT_DIR="/data/adb/tricky_store"
+
 echo "**********************************************"
 echo "- Staring script..."
 echo " "
 
-if [ ! -f "$TS/UpdateTargetList.sh" ]; then
+if [ ! -f "$SCRIPT_DIR/UpdateTargetList.sh" ]; then
     echo "! Script missing, please install module again"
     echo "**********************************************"
     exit 1
 else
-    . "$TS/UpdateTargetList.sh"
+    . "$SCRIPT_DIR/UpdateTargetList.sh"
 fi
 
 echo "**********************************************"

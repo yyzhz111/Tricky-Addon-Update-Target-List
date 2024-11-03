@@ -1,9 +1,10 @@
 MODPATH=${0%/*}
-TS="/data/adb/tricky_store"
+SCRIPT_DIR="/data/adb/tricky_store"
+
 # Remove residue and restore original keybox.
-rm -rf "$TS/target_list_config"
-rm -f "$TS/UpdateTargetList.sh"
+rm -rf "$SCRIPT_DIR/target_list_config"
+rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
 if [ -f "$MODPATH/common/origkeybox" ]; then
-    rm -f "$TS/keybox.xml"
-    mv "$MODPATH/common/origkeybox" "$TS/keybox.xml"
+    rm -f "$SCRIPT_DIR/keybox.xml"
+    mv "$MODPATH/common/origkeybox" "$SCRIPT_DIR/keybox.xml"
 fi
