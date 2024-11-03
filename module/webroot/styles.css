@@ -1,0 +1,107 @@
+body {
+    background-color: #F5F5F5;
+}
+#apps-list {
+    margin-top: 70px;
+}
+.card {
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+}
+.content {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+.name {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: calc(100% - 30px);
+    margin: 0;
+    display: inline-block;
+}
+.checkbox {
+    margin-left: auto;
+}
+.floating-card {
+    display: flex;
+    justify-content: center;
+    z-index: 3;
+    position: fixed;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%); 
+}
+.floating-btn {
+    color: #fff;
+    cursor: pointer;
+    background-color: #007bff;
+    border: none;
+    border-radius: 24px;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: transform .3s ease-in-out;
+    display: flex;
+    box-shadow: 0 4px 8px #0003;
+}
+.search-card {
+    position: fixed;
+    top: 10px;
+    width: calc(100% - 35px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+.search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 5px;
+    font-size: 14px;
+    background-color: #fff;
+    box-sizing: border-box;
+    text-align: left;
+}
+.acknowledgment {
+    width: auto;
+    background-color: #F5F5F5;
+    color: #6E6E6E;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #eee;
+        background-color: #121212;
+    }
+    .card {
+        background-color: #343434;
+    }
+    .search-card {
+        border: 1px solid #6E6E6E;
+        background-color: #343434;
+    }
+    .search-input {
+        color: #eee;
+        background-color: #343434;
+    }
+    .acknowledgment {
+        background-color: #121212;
+    }
+}
