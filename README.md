@@ -28,6 +28,9 @@ An addon module for tricky store
 **Support to pass Patition Check Fail in Minotaur test**
 - Put Verfied Boot Hash to `boot_hash` in `/data/adb/modules/TA_utl`, reboot.
 
+## Acknowledgement
+- [j-hc/zygisk-detach](https://github.com/j-hc/zygisk-detach) - KSU WebUI template
+
 ## Links
 Download: [GitHub release](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases)
 
