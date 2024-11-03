@@ -14,7 +14,7 @@ An addon module for tricky store
 - ADDITION and EXCLUDE in `/data/adb/tricky_store/target_list_config`
 - EXCLUDE for removing unnecessary apps
 - ADDITION for adding back system app excluded by default
-- Configuration list with **KSU WebUI** (For KernelSU and Apatch users)
+- *Coming soon: Configuration list with **KSU WebUI** (For KernelSU and Apatch users only)*
 
 ## Instructions
 ### Automatic update
