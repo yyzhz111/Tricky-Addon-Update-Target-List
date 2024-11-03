@@ -4,12 +4,17 @@ An addon module for tricky store
 ---
 ## Description
 - Automated script to update tricky store target list.
-- Custom config: ADDITION and EXCLUDE in `/data/adb/tricky_store/target_list_config`
 - System app excluded by default
 - This is **not** a necessary module for root hide but for those who lazy to do it manually
 
 ## Requirements
 - Tricky store module installed
+
+## Custom Configuration
+- ADDITION and EXCLUDE in `/data/adb/tricky_store/target_list_config`
+- EXCLUDE for removing unnecessary apps
+- ADDITION for adding back system app excluded by default
+- Configuration list with **KSU WebUI** (For KernelSU and Apatch users)
 
 ## Instructions
 ### Automatic update

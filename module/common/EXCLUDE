@@ -2,7 +2,6 @@
 # DO NOT remove the default app here
 # You can add your custom exclusion app here
 # Each app package name should be on a new line
-
 oneplus
 coloros
 com.android.patch
