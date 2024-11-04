@@ -8,7 +8,7 @@ body {
     font-size: 18px;
     font-weight: bold;
     left: 0;
-    padding: 7px 25px;
+    padding: 10px 25px;
     position: fixed;
     text-align: left;
     top: 0;
@@ -213,7 +213,7 @@ body {
     .search-input {
         color: white;
     }
-    
+
     .menu-options,
     #menu-button {
         background-color: #343434;

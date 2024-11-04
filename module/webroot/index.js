@@ -231,8 +231,8 @@ const menu = document.querySelector('.menu');
 window.addEventListener('scroll', () => {
     if (window.scrollY > lastScrollY) {
         title.style.transform = 'translateY(-100%)';
-        searchCard.style.transform = 'translateY(-40px)';
-        menu.style.transform = 'translateY(-40px)';
+        searchCard.style.transform = 'translateY(-35px)';
+        menu.style.transform = 'translateY(-35px)';
     } else {
         title.style.transform = 'translateY(0)';
         searchCard.style.transform = 'translateY(0)';
