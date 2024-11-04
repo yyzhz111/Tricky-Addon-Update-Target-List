@@ -24,7 +24,6 @@ kb="$COMPATH/.default"
 
 if [ -d "$TS" ]; then
     ui_print "- Tricky store module installed"
-    ui_print " "
 else
     ui_print "! Tricky store module is not installed"
     abort " " 
@@ -77,8 +76,10 @@ ui_print "- Installing..."
 if [ -f "$SCRIPT_DIR/UpdateTargetList.sh" ]; then
     rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
 fi
-mv "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
 cp "$MODPATH/module.prop" "$COMPATH/module.prop.orig"
+mv "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
+
+set_perm $SCRIPT_DIR/UpdateTargetList.sh 0 2000 0755
 
 if [ -d "$CONFIG_DIR" ]; then
     if [ ! -f "$CONFIG_DIR/EXCLUDE" ] && [ ! -f "$CONFIG_DIR/ADDITION" ]; then
@@ -142,6 +143,5 @@ else
     fi
 fi
 
-ui_print " "
 ui_print "- Installation completed successfully! "
 ui_print " "

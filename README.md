@@ -8,13 +8,13 @@ An addon module for tricky store
 - This is **not** a necessary module for root hide but for those who lazy to do it manually
 
 ## Requirements
-- Tricky store module installed
+- [Tricky store](https://github.com/5ec1cff/TrickyStore) module installed
 
 ## Custom Configuration
 - ADDITION and EXCLUDE in `/data/adb/tricky_store/target_list_config`
 - EXCLUDE for removing unnecessary apps
 - ADDITION for adding back system app excluded by default
-- *Coming soon: Configuration list with **KSU WebUI** (For KernelSU and Apatch users only)*
+- Configuration list with **KSU WebUI** (For KernelSU and Apatch, )
 
 ## Instructions
 ### Automatic update
@@ -30,7 +30,7 @@ An addon module for tricky store
 - MT manager is recommened for this method
 
 ## More
-**Support to pass Patition Check Fail in Minotaur test**
+**Support to pass abnormal boot state**
 - Put Verfied Boot Hash to `boot_hash` in `/data/adb/modules/TA_utl`, reboot.
 
 ## Acknowledgement

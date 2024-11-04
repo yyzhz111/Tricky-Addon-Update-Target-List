@@ -26,7 +26,6 @@ ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/ADDITION")
 echo "- Adding apps into /data/adb/tricky_store/target.txt..."
 echo " "
 su -c pm list packages -3 </dev/null 2>&1 | cat | awk -F: '{print $2}' | grep -Ev "$EXCLUDE" > /data/adb/tricky_store/target.txt
-sleep 1
 
 echo "- Adding addition app... "
 echo " "

@@ -8,15 +8,28 @@
     <script type="module" crossorigin src="/index.js"></script>
 </head>
 <body>
+    <div id="title">Tricky Addon - Update Target List</div>
     <div class="search-card">
         <input type="text" class="search-input" id="search" placeholder="Search">
     </div>
+    <div class="menu">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle" style="display: none;">
+        <label for="menu-toggle" id="menu-button">☰</label>
+        <div id="menu-options" class="menu-options">
+            <ul>
+                <li id="refresh">Refresh</li>
+                <li id="select-all">Select All</li>
+                <li id="deselect-all">Deselect All</li>
+                <li id="update">Update Target List</li>
+            </ul>
+        </div>
+    </div>
     <div id="apps-list"></div>
     <div class="floating-card">
-        <button class="floating-btn" id="add">Update Config</button>
-    </div>
+        <button class="floating-btn" id="save">Save Config</button>
+    </div> 
     <template id="app-template">
-        <div class="card">
+        <div class="card" onclick="toggleCheckbox(event)">
             <div class="content">
                 <p class="name"></p>
                 <input type="checkbox" class="checkbox" checked>
@@ -24,7 +37,8 @@
         </div>
     </template>
     <div class="acknowledgment">
-        Acknowledgment to j-hc/zygisk-detach WebUI
+        Credit to j-hc/zygisk-detach WebUI
     </div>
+    <div id="prompt" class="prompt"></div>
 </body>
 </html>

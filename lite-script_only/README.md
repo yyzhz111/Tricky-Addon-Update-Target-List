@@ -4,7 +4,7 @@
 - Recommend to run with MT manager
 
 ## Changelog
-### v1.8
+### v2.0
 - More clarify remark in code
 - Remove useless code
 
