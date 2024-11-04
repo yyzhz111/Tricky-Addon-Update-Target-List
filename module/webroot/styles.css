@@ -210,6 +210,10 @@ body {
         border: 1px solid #6E6E6E;
     }
     
+    .search-input {
+        color: white;
+    }
+    
     .menu-options,
     #menu-button {
         background-color: #343434;
