@@ -11,22 +11,25 @@
     <div id="title">Tricky Addon - Update Target List</div>
     <div class="search-card">
         <input type="text" class="search-input" id="search" placeholder="Search">
+        <button class="clear-btn" id="clear-btn">&#x2715;</button>
     </div>
     <div class="menu">
         <input type="checkbox" id="menu-toggle" class="menu-toggle" style="display: none;">
-        <label for="menu-toggle" id="menu-button">☰</label>
+        <label for="menu-toggle" id="menu-button">
+            <span class="menu-icon">&#9776;</span>
+        </label>
         <div id="menu-options" class="menu-options">
             <ul>
                 <li id="refresh">Refresh</li>
                 <li id="select-all">Select All</li>
                 <li id="deselect-all">Deselect All</li>
-                <li id="update">Update Target List</li>
+                <li id="deselect-xposed">Deselect Xposed</li>
             </ul>
         </div>
     </div>
     <div id="apps-list"></div>
     <div class="floating-card">
-        <button class="floating-btn" id="save">Save Config</button>
+        <button class="floating-btn" id="save">Save and Update</button>
     </div> 
     <template id="app-template">
         <div class="card" onclick="toggleCheckbox(event)">
@@ -36,9 +39,8 @@
             </div>
         </div>
     </template>
-    <div class="acknowledgment">
-        Credit to j-hc/zygisk-detach WebUI
-    </div>
+    <div class="loading">Loading...</div>
+    <div class="acknowledgment">Credit to j-hc/zygisk-detach WebUI</div>
     <div id="prompt" class="prompt"></div>
 </body>
 </html>

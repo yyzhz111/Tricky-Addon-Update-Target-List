@@ -79,7 +79,18 @@ fi
 cp "$MODPATH/module.prop" "$COMPATH/module.prop.orig"
 mv "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
 
+sed -i "s|\"set-path\"|\"/data/adb/modules/$MODNAME/common/\"|" "$MODPATH/webroot/index.js" || ui_print "! fail to replace path"
+
+# Curl binary is used to fetch xposed module package name list from https://modules.lsposed.org/modules.json
+if [ ! -f "/system/bin/curl" ]; then
+    mkdir -p "$MODPATH/system/bin"
+    mv "$MODPATH/bin/$(getprop ro.product.cpu.abi)/curl" "$MODPATH/system/bin/curl"
+    set_perm "$MODPATH/system/bin/curl" 0 2000 0777
+fi
+rm -rf "$MODPATH/bin"
+
 set_perm $SCRIPT_DIR/UpdateTargetList.sh 0 2000 0755
+set_perm $COMPATH/get_xposed.sh 0 2000 0755
 
 if [ -d "$CONFIG_DIR" ]; then
     if [ ! -f "$CONFIG_DIR/EXCLUDE" ] && [ ! -f "$CONFIG_DIR/ADDITION" ]; then

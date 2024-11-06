@@ -10,6 +10,15 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.1
+- Added curl binary to fetch Xposed module package name from LSPosed webside
+
+**KSU WebUI**
+- Added feature to exclude Xposed module package name
+- Fixed abnormal color in dark mode
+- Combined save config and update target.txt button
+- Fixed some more known bugs
+
 ### v2.0
 - Added WebUI for configuration
 
