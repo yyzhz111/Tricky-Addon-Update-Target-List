@@ -239,7 +239,6 @@ searchInput.addEventListener("input", (e) => {
 clearBtn.addEventListener("click", () => {
     searchInput.value = "";
     clearBtn.style.display = "none";
-    searchInput.focus();
     const apps = appListContainer.querySelectorAll(".card");
     apps.forEach(app => {
         app.style.display = "block";
