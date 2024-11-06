@@ -84,9 +84,9 @@ async function refreshAppList() {
     appListContainer.innerHTML = '';
     loadingIndicator.style.display = 'flex';
     await new Promise(resolve => setTimeout(resolve, 500));
-    loadingIndicator.style.display = 'none';
     window.scrollTo(0, 0);
     await fetchAppList();
+    loadingIndicator.style.display = 'none';
     isRefreshing = false;
 }
 
