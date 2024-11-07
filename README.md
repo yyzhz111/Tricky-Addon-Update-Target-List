@@ -1,5 +1,5 @@
 # **Tricky Addon - Update Target List**
-An addon module for tricky store
+A **KSU WebUI**** to configure tricky store target.txt
 
 ---
 ## Description
