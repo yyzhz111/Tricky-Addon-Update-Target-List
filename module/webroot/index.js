@@ -156,14 +156,15 @@ function showPrompt(message, isSuccess = true) {
     }, 500);
 }
 
-// Menu toggle functionality
 function setupMenuToggle() {
     const menuButton = document.getElementById('menu-button');
     const menuIcon = menuButton.querySelector('.menu-icon');
     const menuOptions = document.getElementById('menu-options');
     let menuOpen = false;
+    let menuAnimating = false;
 
     menuButton.addEventListener('click', (event) => {
+        if (menuAnimating) return;
         event.stopPropagation();
         if (menuOptions.classList.contains('visible')) {
             closeMenu();
@@ -196,6 +197,7 @@ function setupMenuToggle() {
     });
 
     function openMenu() {
+        menuAnimating = true;
         menuOptions.style.display = 'block';
         setTimeout(() => {
             menuOptions.classList.remove('hidden');
@@ -203,19 +205,22 @@ function setupMenuToggle() {
             menuIcon.classList.add('menu-open');
             menuIcon.classList.remove('menu-closed');
             menuOpen = true;
+            menuAnimating = false;
         }, 10);
     }
 
     function closeMenu() {
         if (menuOptions.classList.contains('visible')) {
+            menuAnimating = true;
             menuOptions.classList.remove('visible');
             menuOptions.classList.add('hidden');
             menuIcon.classList.remove('menu-open');
             menuIcon.classList.add('menu-closed');
             setTimeout(() => {
                 menuOptions.style.display = 'none';
-            }, 400);
-            menuOpen = false;
+                menuOpen = false;
+                menuAnimating = false;
+            }, 200);
         }
     }
 }
@@ -227,6 +232,7 @@ searchInput.addEventListener("input", (e) => {
     apps.forEach(app => {
         const name = app.querySelector(".name").textContent.toLowerCase();
         app.style.display = name.includes(searchQuery) ? "block" : "none";
+        window.scrollTo(0, 0);
     });
     if (searchQuery !== "") {
         clearBtn.style.display = "block";
@@ -239,6 +245,7 @@ searchInput.addEventListener("input", (e) => {
 clearBtn.addEventListener("click", () => {
     searchInput.value = "";
     clearBtn.style.display = "none";
+    window.scrollTo(0, 0);
     const apps = appListContainer.querySelectorAll(".card");
     apps.forEach(app => {
         app.style.display = "block";
@@ -305,17 +312,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Scroll event
 let lastScrollY = window.scrollY;
+const searchMenuContainer = document.querySelector('.search-menu-container');
 window.addEventListener('scroll', () => {
     if (isRefreshing) return;
     if (window.scrollY > lastScrollY) {
         title.style.transform = 'translateY(-100%)';
-        searchCard.style.transform = 'translateY(-35px)';
-        menu.style.transform = 'translateY(-35px)';
+        searchMenuContainer.style.transform = 'translateY(-35px)';
         floatingBtn.style.transform = 'translateY(0)';
     } else {
         title.style.transform = 'translateY(0)';
-        searchCard.style.transform = 'translateY(0)';
-        menu.style.transform = 'translateY(0)';
+        searchMenuContainer.style.transform = 'translateY(0)';
         floatingBtn.style.transform = 'translateY(-100px)';
     }
     lastScrollY = window.scrollY;

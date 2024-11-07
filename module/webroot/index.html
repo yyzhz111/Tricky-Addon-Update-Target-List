@@ -4,33 +4,37 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/styles.css" type="text/css">
     <script type="module" crossorigin src="/index.js"></script>
 </head>
 <body>
     <div id="title">Tricky Addon - Update Target List</div>
-    <div class="search-card">
-        <input type="text" class="search-input" id="search" placeholder="Search">
-        <button class="clear-btn" id="clear-btn">&#x2715;</button>
-    </div>
-    <div class="menu">
-        <input type="checkbox" id="menu-toggle" class="menu-toggle" style="display: none;">
-        <label for="menu-toggle" id="menu-button">
-            <span class="menu-icon">&#9776;</span>
-        </label>
-        <div id="menu-options" class="menu-options">
-            <ul>
-                <li id="refresh">Refresh</li>
-                <li id="select-all">Select All</li>
-                <li id="deselect-all">Deselect All</li>
-                <li id="deselect-xposed">Deselect Xposed</li>
-            </ul>
+    <div class="search-menu-container">
+        <div class="search-card">
+            <span class="search-icon"><i class="fa fa-search"></i></span>
+            <input type="text" class="search-input" id="search" placeholder="Search">
+            <button class="clear-btn" id="clear-btn"><i class="fa fa-close"></i></button>
+        </div>
+        <div class="menu">
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" id="menu-button">
+                <span class="menu-icon"><i class="fa fa-bars"></i></span>
+            </label>
+            <div id="menu-options" class="menu-options">
+                <ul>
+                    <li id="refresh">Refresh</li>
+                    <li id="select-all">Select All</li>
+                    <li id="deselect-all">Deselect All</li>
+                    <li id="deselect-xposed">Deselect Xposed</li>
+                </ul>
+            </div>
         </div>
     </div>
     <div id="apps-list"></div>
     <div class="floating-card">
         <button class="floating-btn" id="save">Save and Update</button>
-    </div> 
+    </div>
     <template id="app-template">
         <div class="card" onclick="toggleCheckbox(event)">
             <div class="content">
@@ -38,7 +42,7 @@
                 <input type="checkbox" class="checkbox" checked>
             </div>
         </div>
-    </template>
+    </template>    
     <div class="loading">Loading...</div>
     <div class="acknowledgment">Credit to j-hc/zygisk-detach WebUI</div>
     <div id="prompt" class="prompt"></div>
