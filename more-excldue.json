@@ -1,0 +1,52 @@
+// This is excldue list for tricky store target.txt
+// All the apps here are apps that will not detect bootloader
+[
+    {
+        "name": "Magisk",
+        "package-name": "com.topjohnwu.magisk"
+    },
+    {
+        "name": "Magisk Alpha",
+        "package-name": "io.github.vvb2060.magisk"
+    },
+    {
+        "name": "Kitsune Mask",
+        "package-name": "io.github.huskydg.magisk"
+    },
+    {
+        "name": "KernelSU",
+        "package-name": "me.weishu.kernelsu"
+    },
+    {
+        "name": "Apatch",
+        "package-name": "me.bmax.apatch"
+    },
+    {
+        "name": "Apatch Next",
+        "package-name": "me.garfieldhan.apatch.next"
+    },
+    {
+        "name": "LSPosed Manager",
+        "package-name": "org.lsposed.manager"
+    },
+    {
+        "name": "Termux",
+        "package-name": "com.termux"
+    },
+    {
+        "name": "MT Manager",
+        "package-name": "bin.mt.plus"
+    },
+    {
+        "name": "MT Manager clone",
+        "package-name": "bin.mt.plus.canary"
+    },
+    {
+        "name": "KonaBess",
+        "package-name": "xzr.konabess"
+    },
+    {
+        "name": "Scene",
+        "package-name": "com.omarea.vtools"
+    }
+]
