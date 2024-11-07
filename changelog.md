@@ -13,7 +13,7 @@ Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 ### v2.1
 - Added curl binary to fetch Xposed module package name from LSPosed webside
 
-**KSU WebUI**
+- **KSU WebUI:**
 - Added feature to exclude Xposed module package name
 - Fixed abnormal color in dark mode
 - Combined save config and update target.txt button
