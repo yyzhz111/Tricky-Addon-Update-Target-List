@@ -92,25 +92,25 @@ async function refreshAppList() {
 // Function to run the Xposed script
 async function runXposedScript() {
     try {
-        const scriptPath = `${basePath}get_xposed.sh`;
+        const scriptPath = `${basePath}get_exclude-list.sh`;
         await execCommand(scriptPath);
-        console.log("Xposed script executed successfully.");
+        console.log("Exclude script executed successfully.");
     } catch (error) {
-        console.error("Failed to execute Xposed script:", error);
+        console.error("Failed to execute exclude script:", error);
     }
 }
 
-// Function to read the xposed list and uncheck corresponding apps
+// Function to read the more exclude list and uncheck corresponding apps
 async function deselectXposedApps() {
     try {
-        const result = await execCommand(`cat ${basePath}xposed-list`);
+        const result = await execCommand(`cat ${basePath}exclude-list`);
         const xposedApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
         apps.forEach(app => {
             const appName = app.querySelector(".name").textContent.trim();
             const checkbox = app.querySelector(".checkbox");
             if (xposedApps.includes(appName)) {
-                checkbox.checked = false; // Uncheck if found in xposed-list
+                checkbox.checked = false; // Uncheck if found in exclude-list
             }
         });
         console.log("Xposed apps deselected successfully.");

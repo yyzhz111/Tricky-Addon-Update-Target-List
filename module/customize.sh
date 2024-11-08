@@ -90,7 +90,7 @@ fi
 rm -rf "$MODPATH/bin"
 
 set_perm $SCRIPT_DIR/UpdateTargetList.sh 0 2000 0755
-set_perm $COMPATH/get_xposed.sh 0 2000 0755
+set_perm $COMPATH/get_exclude-list.sh 0 2000 0755
 
 if [ -d "$CONFIG_DIR" ]; then
     if [ ! -f "$CONFIG_DIR/EXCLUDE" ] && [ ! -f "$CONFIG_DIR/ADDITION" ]; then
