@@ -2,7 +2,7 @@
     "description": "Extra exclude option for root related apps",
     "data": [
         {
-            "info": "Root Manager",
+            "info": "Root manager",
             "apps": [
                 {
                     "name": "Magisk",
@@ -31,7 +31,7 @@
             ]
         },
         {
-            "info": "Miscellaneous Root Related App",
+            "info": "Root related app that won't detect bootloader",
             "apps": [
                 {
                     "name": "LSPosed Manager",
@@ -56,6 +56,15 @@
                 {
                     "name": "Scene",
                     "package-name": "com.omarea.vtools"
+                }
+            ]
+        },
+        {
+            "info": "General app that won't detect bootloader",
+            "apps": [
+                {
+                    "name": "",
+                    "package-name": ""
                 }
             ]
         }

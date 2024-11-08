@@ -44,29 +44,38 @@ async function readExcludeFile() {
     }
 }
 
+// Function to check if an app name should be excluded
+function isExcluded(appName) {
+    return excludeList.some(excludeItem => appName.includes(excludeItem));
+}
+
 // Function to fetch, sort, and render the app list
 async function fetchAppList() {
     try {
         await readExcludeFile();
         const result = await execCommand("pm list packages -3 </dev/null 2>&1 | cat");
         const packageList = result.split("\n").map(line => line.replace("package:", "").trim()).filter(Boolean);
+
         const sortedApps = packageList.sort((a, b) => {
-            const aInExclude = excludeList.includes(a);
-            const bInExclude = excludeList.includes(b);
+            const aInExclude = isExcluded(a);
+            const bInExclude = isExcluded(b);
             return aInExclude === bInExclude ? a.localeCompare(b) : aInExclude ? 1 : -1;
         });
+
         appListContainer.innerHTML = "";
         sortedApps.forEach(appName => {
             const appElement = document.importNode(appTemplate, true);
             appElement.querySelector(".name").textContent = appName;
             const checkbox = appElement.querySelector(".checkbox");
-            checkbox.checked = !excludeList.includes(appName);
+            checkbox.checked = !isExcluded(appName);
             appListContainer.appendChild(appElement);
         });
+
         console.log("App list fetched, sorted, and rendered successfully.");
     } catch (error) {
         console.error("Failed to fetch or render app list:", error);
     }
+
     floatingBtn.style.transform = 'translateY(-100px)';
 }
 
