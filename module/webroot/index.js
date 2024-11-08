@@ -75,8 +75,7 @@ let isRefreshing = false;
 async function refreshAppList() {
     isRefreshing = true;
     title.style.transform = 'translateY(0)';
-    searchCard.style.transform = 'translateY(0)';
-    menu.style.transform = 'translateY(0)';
+    searchMenuContainer.style.transform = 'translateY(0)';
     floatingBtn.style.transform = 'translateY(0)';
     const searchInput = document.getElementById("search");
     searchInput.value = '';
@@ -224,6 +223,11 @@ function setupMenuToggle() {
         }
     }
 }
+
+// Focus on search input when search card is clicked
+searchCard.addEventListener("click", () => {
+    searchInput.focus();
+});
 
 // Search functionality
 searchInput.addEventListener("input", (e) => {

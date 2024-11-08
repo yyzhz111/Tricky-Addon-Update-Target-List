@@ -25,7 +25,8 @@ body {
     display: flex;
     position: fixed;
     top: 40px;
-    width: calc(100% - 15px);
+    height: 50px;
+    width: calc(100% - 17px);
     z-index: 1000;
     transition: transform 0.3s ease;
 }
@@ -36,26 +37,29 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
-    padding: 10px;
     border-radius: 50px;
     left: 0;
-    width: calc(100% - 80px);
+    height: calc(100% - 2px);
+    width: calc(100% - 60px);
     position: absolute;
 }
 
 .search-icon {
     position: absolute;
     left: 18px;
+    font-size: 15px;
+    z-index: 1000;
 }
 
 
 .search-input {
-    background-color: #fff;
+    position: absolute;
     border: none;
-    font-size: 14px;
+    font-size: 17px;
     outline: none;
-    padding: 5px 30px;
-    width: 100%;
+    left: 10px;
+    padding: 0 30px;
+    width: calc(100% - 10);
 }
 
 .clear-btn {
@@ -73,6 +77,7 @@ body {
     display: flex;
     right: 0;
     position: absolute;
+    height: 100%;
 }
 
 .menu-toggle {
@@ -84,8 +89,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    width: 50px;
-    height: 50px;
+    width: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
