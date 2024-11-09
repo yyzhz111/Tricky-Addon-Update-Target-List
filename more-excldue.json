@@ -1,5 +1,5 @@
 {
-    "description": "Extra exclude option for root related apps",
+    "description": "Unnecessary app list",
     "data": [
         {
             "info": "Root manager",
@@ -52,10 +52,6 @@
                 {
                     "name": "KonaBess",
                     "package-name": "xzr.konabess"
-                },
-                {
-                    "name": "Scene",
-                    "package-name": "com.omarea.vtools"
                 }
             ]
         },
@@ -63,8 +59,12 @@
             "info": "General app that won't detect bootloader",
             "apps": [
                 {
-                    "name": "",
-                    "package-name": ""
+                    "name": "Scene",
+                    "package-name": "com.omarea.vtools"
+                },
+                {
+                    "name": "Swift Backup",
+                    "package-name": "org.swiftapps.swiftbackup"
                 }
             ]
         }
