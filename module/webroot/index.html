@@ -9,12 +9,52 @@
     <script type="module" crossorigin src="/index.js"></script>
 </head>
 <body>
-    <div id="title">Tricky Addon - Update Target List</div>
+    <div class="title-container">
+        <div id="title">Tricky Addon - Update Target List</div>
+        <button id="help-button" class="help-button"><i class="fa fa-question-circle"></i></button>
+    </div>
+    <div id="help-overlay" class="help-overlay">
+        <div class="help-menu">
+            <button id="close-help" class="close-help">&#x2715;</button>
+            <div class="help-content">
+                <p>Instructions</p>
+                <ul>
+                    <li>Save and Update
+                        <ul>
+                            <li>Save the current configuration and update target.txt immediately.</li>
+                            <li><br></li>
+                        </ul>
+                    </li>
+                    <li>Refresh
+                        <ul>
+                            <li>Refresh app list and exclude list.</li>
+                            <li><br></li>
+                        </ul>
+                    </li>
+                    <li>Select All & Deselect All
+                        <ul>
+                            <li>Select or deselect all apps in the current interface.</li>
+                            <li><br></li>
+                        </ul>
+                    </li>
+                    <li>Deselect Unnecessary
+                        <ul>
+                            <li>Unnecessary category: Xposed module, root manager, root-related apps, and general apps that never check bootloader status.</li>
+                            <ul>
+                                <li>Contribute to <a href="https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/more-excldue.json" target="_blank">unnecessary app list</a>? Create an <a href="https://github.com/KOWX712/Tricky-Addon-Update-Target-List/issues" target="_blank">issue</a> or <a href="https://github.com/KOWX712/Tricky-Addon-Update-Target-List/pulls" target="_blank">pull request</a>.</li>
+                            </ul>
+                            <li><br></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="search-menu-container">
         <div class="search-card">
             <span class="search-icon"><i class="fa fa-search"></i></span>
             <input type="text" class="search-input" id="search" placeholder="Search">
-            <button class="clear-btn" id="clear-btn"><i class="fa fa-close"></i></button>
+            <button class="clear-btn" id="clear-btn">&#x2715;</button>
         </div>
         <div class="menu">
             <input type="checkbox" id="menu-toggle" class="menu-toggle">
@@ -26,7 +66,7 @@
                     <li id="refresh">Refresh</li>
                     <li id="select-all">Select All</li>
                     <li id="deselect-all">Deselect All</li>
-                    <li id="deselect-xposed">Deselect Root Related</li>
+                    <li id="deselect-xposed">Deselect Unnecessary</li>
                 </ul>
             </div>
         </div>
@@ -42,7 +82,7 @@
                 <input type="checkbox" class="checkbox" checked>
             </div>
         </div>
-    </template>    
+    </template>
     <div class="loading">Loading...</div>
     <div class="acknowledgment">Credit to j-hc/zygisk-detach WebUI</div>
     <div id="prompt" class="prompt"></div>

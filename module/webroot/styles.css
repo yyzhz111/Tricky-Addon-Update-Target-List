@@ -2,19 +2,106 @@ body {
     background-color: #F5F5F5;
 }
 
-#title {
+.no-scroll {
+    overflow: hidden;
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    height: 40px;
+    width: calc(100% - 17px);
     background-color: #F5F5F5;
-    border: none;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+#title {
     font-size: 18px;
     font-weight: bold;
-    left: 0;
-    padding: 10px 25px;
+    padding-left: 10px;
+}
+
+.help-button {
+    margin-right: auto;
+    padding: 0 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    align-items: center;
+    justify-content: center;
+}
+
+.help-overlay {
+    display: none;
     position: fixed;
-    text-align: left;
     top: 0;
-    transition: transform 0.3s ease;
-    width: 100%;
-    z-index: 1000;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.help-menu {
+    position: relative;
+    width: 75vw;
+    max-width: 600px;
+    background-color: white;
+    padding: 0 10px;
+    border-radius: 15px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.close-help {
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #ccc;
+}
+
+.help-content {
+    max-height: 85vh;
+    padding: 0 20px;
+    overflow-y: auto;
+}
+
+.help-content p {
+    font-size: 26px;
+}
+
+.help-content ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.help-content ul li {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.help-content ul ul li {
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.help-content ul ul ul li {
+    color: #777777;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.help-content ul ul ul li a {
+    color: inherit;
 }
 
 #apps-list {
@@ -64,6 +151,7 @@ body {
 
 .clear-btn {
     position: absolute;
+    color: #ccc;
     right: 10px;
     border: none;
     background: none;
@@ -139,7 +227,7 @@ body {
 }
 
 .menu-options li {
-    cursor: pointer;
+    cursor: default;
     padding: 15px 18px;
     text-align: left;
 }
@@ -271,11 +359,16 @@ body {
         background-color: #121212;
         color: #eee;
     }
-
-    #title {
+    
+    .title-container {
         background-color: #121212;
     }
-
+    
+    .help-button {
+        color: #fff;
+    }
+    
+    .help-menu,
     .card,
     .search-input,
     .search-card {
@@ -286,7 +379,6 @@ body {
         border: 1px solid #6E6E6E;
     }
 
-    .clear-btn,
     .search-input{
         color: white;
     }

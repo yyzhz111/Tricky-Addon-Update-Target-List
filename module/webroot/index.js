@@ -2,9 +2,13 @@ let e = 0;
 const appTemplate = document.getElementById("app-template").content;
 const appListContainer = document.getElementById("apps-list");
 const loadingIndicator = document.querySelector(".loading");
+const searchMenuContainer = document.querySelector('.search-menu-container');
 const searchInput = document.getElementById("search");
 const clearBtn = document.getElementById("clear-btn");
-const title = document.getElementById('title');
+const title = document.querySelector('.title-container');
+const helpButton = document.getElementById("help-button");
+const helpOverlay = document.getElementById("help-overlay");
+const closeHelp = document.getElementById("close-help");
 const searchCard = document.querySelector('.search-card');
 const menu = document.querySelector('.menu');
 const floatingBtn = document.querySelector('.floating-btn');
@@ -44,38 +48,29 @@ async function readExcludeFile() {
     }
 }
 
-// Function to check if an app name should be excluded
-function isExcluded(appName) {
-    return excludeList.some(excludeItem => appName.includes(excludeItem));
-}
-
 // Function to fetch, sort, and render the app list
 async function fetchAppList() {
     try {
         await readExcludeFile();
         const result = await execCommand("pm list packages -3 </dev/null 2>&1 | cat");
         const packageList = result.split("\n").map(line => line.replace("package:", "").trim()).filter(Boolean);
-
         const sortedApps = packageList.sort((a, b) => {
-            const aInExclude = isExcluded(a);
-            const bInExclude = isExcluded(b);
+            const aInExclude = excludeList.includes(a);
+            const bInExclude = excludeList.includes(b);
             return aInExclude === bInExclude ? a.localeCompare(b) : aInExclude ? 1 : -1;
         });
-
         appListContainer.innerHTML = "";
         sortedApps.forEach(appName => {
             const appElement = document.importNode(appTemplate, true);
             appElement.querySelector(".name").textContent = appName;
             const checkbox = appElement.querySelector(".checkbox");
-            checkbox.checked = !isExcluded(appName);
+            checkbox.checked = !excludeList.includes(appName);
             appListContainer.appendChild(appElement);
         });
-
         console.log("App list fetched, sorted, and rendered successfully.");
     } catch (error) {
         console.error("Failed to fetch or render app list:", error);
     }
-
     floatingBtn.style.transform = 'translateY(-100px)';
 }
 
@@ -325,17 +320,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Scroll event
 let lastScrollY = window.scrollY;
-const searchMenuContainer = document.querySelector('.search-menu-container');
+const scrollThreshold = 35;
 window.addEventListener('scroll', () => {
     if (isRefreshing) return;
-    if (window.scrollY > lastScrollY) {
+    if (window.scrollY > lastScrollY && window.scrollY > scrollThreshold) {
         title.style.transform = 'translateY(-100%)';
         searchMenuContainer.style.transform = 'translateY(-35px)';
         floatingBtn.style.transform = 'translateY(0)';
-    } else {
+    } else if (window.scrollY < lastScrollY) {
         title.style.transform = 'translateY(0)';
         searchMenuContainer.style.transform = 'translateY(0)';
         floatingBtn.style.transform = 'translateY(-100px)';
     }
     lastScrollY = window.scrollY;
+});
+
+// Show help overlay and disable scrolling
+helpButton.addEventListener("click", () => {
+    helpOverlay.style.display = "flex";
+    document.body.classList.add("no-scroll");
+});
+
+// Hide the help overlay and re-enable scrolling, Close button and blank
+const hideHelpOverlay = () => {
+    helpOverlay.style.display = "none";
+    document.body.classList.remove("no-scroll");
+};
+closeHelp.addEventListener("click", hideHelpOverlay);
+helpOverlay.addEventListener("click", (event) => {
+    if (event.target === helpOverlay) {
+        hideHelpOverlay();
+    }
 });
