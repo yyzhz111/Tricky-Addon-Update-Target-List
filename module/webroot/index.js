@@ -296,11 +296,11 @@ document.getElementById("save").addEventListener("click", async () => {
             showPrompt("Config and target.txt updated");
         } catch (error) {
             console.error("Failed to update target list:", error);
-            showPrompt("Config saved, but failed to update target list", false);
+            showPrompt("File not found, please reinstall module!", false);
         }
     } catch (error) {
         console.error("Failed to update EXCLUDE file:", error);
-        showPrompt("Failed to save config", false);
+        showPrompt("File not found, please reinstall module!", false);
     }
     await readExcludeFile();
     await refreshAppList();
