@@ -312,9 +312,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.getElementById("select-all").addEventListener("click", selectAllApps);
     document.getElementById("deselect-all").addEventListener("click", deselectAllApps);
-    document.getElementById("deselect-xposed").addEventListener("click", deselectXposedApps);   
+    document.getElementById("deselect-xposed").addEventListener("click", deselectXposedApps);
     await runXposedScript();
-    await fetchAppList();    
+    await fetchAppList();
     loadingIndicator.style.display = "none";
 });
 

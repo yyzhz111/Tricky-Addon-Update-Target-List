@@ -291,9 +291,11 @@ body {
     0% {
         transform: translateY(100%);
     }
+
     50% {
         transform: translateY(-80%);
     }
+
     100% {
         transform: translateY(-60%);
     }
@@ -303,9 +305,11 @@ body {
     0% {
         transform: translateY(-60%);
     }
+
     50% {
         transform: translateY(-80%);
     }
+
     100% {
         transform: translateY(100%);
     }
@@ -359,15 +363,15 @@ body {
         background-color: #121212;
         color: #eee;
     }
-    
+
     .title-container {
         background-color: #121212;
     }
-    
+
     .help-button {
         color: #fff;
     }
-    
+
     .help-menu,
     .card,
     .search-input,
@@ -379,10 +383,10 @@ body {
         border: 1px solid #6E6E6E;
     }
 
-    .search-input{
+    .search-input {
         color: white;
     }
-    
+
     .menu-options,
     #menu-button {
         background-color: #343434;
