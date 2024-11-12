@@ -4,7 +4,10 @@
 - Recommend to run with MT manager
 
 ## Changelog
-### v2.0, v2.1
+### v2.1, v2.2
+- Remain same with v2.0
+
+### v2.0
 - More clarify remark in code
 - Remove useless code
 

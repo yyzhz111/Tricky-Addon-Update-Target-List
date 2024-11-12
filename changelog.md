@@ -10,6 +10,12 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.2
+**KSU WebUI**
+- Added help menu
+- Added extra [unnecessary app](https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/more-excldue.json) exclude option
+- Added no Internet connection prompt
+
 ### v2.1
 - Added curl binary to fetch Xposed module package name from LSPosed webside
 
