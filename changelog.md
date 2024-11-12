@@ -11,7 +11,7 @@ Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
 ### v2.2
-**KSU WebUI**
+**KSU WebUI:**
 - Added help menu
 - Added extra [unnecessary app](https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/more-excldue.json) exclude option
 - Added no Internet connection prompt
