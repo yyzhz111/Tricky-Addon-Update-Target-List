@@ -3,6 +3,10 @@
 MODPATH=${0%/*}
 OUTPUT="$MODPATH/exclude-list"
 
+if ! curl -s "https://modules.lsposed.org/modules.json" > /dev/null; then
+    exit 1
+fi
+
 # Fetch Xposed module package names
 curl -s "https://modules.lsposed.org/modules.json" | \
 grep -o '"name":"[^"]*","description":' | \

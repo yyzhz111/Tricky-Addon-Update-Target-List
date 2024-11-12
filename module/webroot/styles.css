@@ -25,6 +25,19 @@ body {
     padding-left: 10px;
 }
 
+.no-connection {
+    display: none;
+    align-items: center;
+    color: #7E7E7E;
+}
+
+.no-connection .wifi-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    filter: invert(0.6) sepia(0) saturate(0) hue-rotate(180deg) brightness(0.8) contrast(1);
+}
+
 .help-button {
     margin-right: auto;
     padding: 0 10px;
@@ -46,6 +59,17 @@ body {
     z-index: 2000;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.help-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+.help-overlay.hide {
+    opacity: 0;
 }
 
 .help-menu {
@@ -203,6 +227,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     display: none;
     position: absolute;
+    padding: 5px;
     top: 110%;
     right: 0;
     transform: translateX(120%);
@@ -228,7 +253,7 @@ body {
 
 .menu-options li {
     cursor: default;
-    padding: 15px 18px;
+    padding: 15px 12px;
     text-align: left;
 }
 

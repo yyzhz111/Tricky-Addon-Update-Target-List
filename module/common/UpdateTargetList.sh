@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# This script will put all non-system app into /data/adb/tricky_store/target.txt
+# This script will put non-system app into /data/adb/tricky_store/target.txt
 CONFIG_DIR="/data/adb/tricky_store/target_list_config"
 
 echo "- Checking config files..."

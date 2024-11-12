@@ -6,6 +6,7 @@ const searchMenuContainer = document.querySelector('.search-menu-container');
 const searchInput = document.getElementById("search");
 const clearBtn = document.getElementById("clear-btn");
 const title = document.querySelector('.title-container');
+const noConnection = document.querySelector(".no-connection");
 const helpButton = document.getElementById("help-button");
 const helpOverlay = document.getElementById("help-overlay");
 const closeHelp = document.getElementById("close-help");
@@ -14,6 +15,7 @@ const menu = document.querySelector('.menu');
 const floatingBtn = document.querySelector('.floating-btn');
 const basePath = "set-path";
 let excludeList = [];
+let isRefreshing = false;
 
 // Function to execute shell commands
 async function execCommand(command) {
@@ -75,20 +77,21 @@ async function fetchAppList() {
 }
 
 // Function to refresh app list
-let isRefreshing = false;
 async function refreshAppList() {
     isRefreshing = true;
     title.style.transform = 'translateY(0)';
     searchMenuContainer.style.transform = 'translateY(0)';
     floatingBtn.style.transform = 'translateY(0)';
-    const searchInput = document.getElementById("search");
     searchInput.value = '';
     clearBtn.style.display = "none";
     appListContainer.innerHTML = '';
     loadingIndicator.style.display = 'flex';
     await new Promise(resolve => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
-    await fetchAppList();
+    if (noConnection.style.display === "flex") {
+        await runXposedScript();
+    }
+    await fetchAppList();[]
     loadingIndicator.style.display = 'none';
     isRefreshing = false;
 }
@@ -98,13 +101,16 @@ async function runXposedScript() {
     try {
         const scriptPath = `${basePath}get_exclude-list.sh`;
         await execCommand(scriptPath);
-        console.log("Exclude script executed successfully.");
+        console.log("Xposed script executed successfully.");
+        noConnection.style.display = "none";
     } catch (error) {
-        console.error("Failed to execute exclude script:", error);
+        console.error("Failed to execute Xposed script:", error);
+        showPrompt("Please check your Internet connection", false); 
+        noConnection.style.display = "flex";
     }
 }
 
-// Function to read the more exclude list and uncheck corresponding apps
+// Function to read the xposed list and uncheck corresponding apps
 async function deselectXposedApps() {
     try {
         const result = await execCommand(`cat ${basePath}exclude-list`);
@@ -159,6 +165,7 @@ function showPrompt(message, isSuccess = true) {
     }, 500);
 }
 
+// Function to toggle menu option
 function setupMenuToggle() {
     const menuButton = document.getElementById('menu-button');
     const menuIcon = menuButton.querySelector('.menu-icon');
@@ -296,11 +303,11 @@ document.getElementById("save").addEventListener("click", async () => {
             showPrompt("Config and target.txt updated");
         } catch (error) {
             console.error("Failed to update target list:", error);
-            showPrompt("File not found, please reinstall module!", false);
+            showPrompt("Config saved, but failed to update target list", false);
         }
     } catch (error) {
         console.error("Failed to update EXCLUDE file:", error);
-        showPrompt("File not found, please reinstall module!", false);
+        showPrompt("Failed to save config", false);
     }
     await readExcludeFile();
     await refreshAppList();
@@ -312,9 +319,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.getElementById("select-all").addEventListener("click", selectAllApps);
     document.getElementById("deselect-all").addEventListener("click", deselectAllApps);
-    document.getElementById("deselect-xposed").addEventListener("click", deselectXposedApps);
-    await runXposedScript();
+    document.getElementById("deselect-xposed").addEventListener("click", deselectXposedApps);   
     await fetchAppList();
+    runXposedScript();
     loadingIndicator.style.display = "none";
 });
 
@@ -335,17 +342,27 @@ window.addEventListener('scroll', () => {
     lastScrollY = window.scrollY;
 });
 
-// Show help overlay and disable scrolling
+// Show help overlay
 helpButton.addEventListener("click", () => {
+    helpOverlay.classList.remove("hide");
     helpOverlay.style.display = "flex";
+    requestAnimationFrame(() => {
+        helpOverlay.classList.add("show");
+    });
     document.body.classList.add("no-scroll");
 });
 
-// Hide the help overlay and re-enable scrolling, Close button and blank
+// Hide help overlay
 const hideHelpOverlay = () => {
-    helpOverlay.style.display = "none";
+    helpOverlay.classList.remove("show");
+    helpOverlay.classList.add("hide");
     document.body.classList.remove("no-scroll");
+    setTimeout(() => {
+        helpOverlay.style.display = "none";
+    }, 200);
 };
+
+// Hide when clicking on close button or outside of the overlay content
 closeHelp.addEventListener("click", hideHelpOverlay);
 helpOverlay.addEventListener("click", (event) => {
     if (event.target === helpOverlay) {
