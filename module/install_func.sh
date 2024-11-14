@@ -5,18 +5,10 @@ initialize() {
     cp "$MODPATH/module.prop" "$COMPATH/module.prop.orig"
     mv "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
 
-    sed -i "s|\"set-path\"|\"/data/adb/modules/$MODNAME/common/\"|" "$MODPATH/webroot/index.js" || {
+    sed -i "s|\"set-path\"|\"/data/adb/modules/$MODID/common/\"|" "$MODPATH/webroot/index.js" || {
         ui_print "! Failed to replace path"
         abort
     }
-
-    # handle missing binary
-    if [ ! -f "/system/bin/curl" ]; then
-        mkdir -p "$MODPATH/system/bin"
-        mv "$MODPATH/bin/$(getprop ro.product.cpu.abi)/curl" "$MODPATH/system/bin/curl"
-        set_perm "$MODPATH/system/bin/curl" 0 2000 0777
-    fi
-    rm -rf "$MODPATH/bin"
 
     set_perm $SCRIPT_DIR/UpdateTargetList.sh 0 2000 0755
     set_perm $COMPATH/get_exclude-list.sh 0 2000 0755

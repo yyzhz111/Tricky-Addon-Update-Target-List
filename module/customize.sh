@@ -18,8 +18,8 @@ COMPATH="$MODPATH/common"
 TS="/data/adb/modules/tricky_store"
 SCRIPT_DIR="/data/adb/tricky_store"
 CONFIG_DIR="$SCRIPT_DIR/target_list_config"
-MODNAME=$(grep '^id=' "$MODPATH/module.prop" | awk -F= '{print $2}' | xargs)
-ORG_DIR="/data/adb/modules/$MODNAME"
+MODID=`grep_prop id $TMPDIR/module.prop`
+ORG_DIR="/data/adb/modules/$MODID"
 kb="$COMPATH/.default"
 
 if [ ! -d "$TS" ]; then
