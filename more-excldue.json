@@ -54,6 +54,10 @@
                 {
                     "name": "KonaBess",
                     "package-name": "xzr.konabess"
+                },
+                {
+                    "name": "KsuWebUI",
+                    "package-name": "io.github.a13e300.ksuwebui"
                 }
             ]
         },
@@ -67,6 +71,34 @@
                 {
                     "name": "Swift Backup",
                     "package-name": "org.swiftapps.swiftbackup"
+                },
+                {
+                    "name": "Google Docs",
+                    "package-name": "com.google.android.apps.docs.editors.docs"
+                },
+                {
+                    "name": "Google Sheets",
+                    "package-name": "com.google.android.apps.docs.editors.sheets"
+                },
+                {
+                    "name": "Google Slides",
+                    "package-name": "com.google.android.apps.docs.editors.slides"
+                },
+                {
+                    "name": "Google Maps",
+                    "package-name": "com.google.android.apps.maps"
+                },
+                {
+                    "name": "Google Earth",
+                    "package-name": "com.google.earth"
+                },
+                {
+                    "name": "Google Translate",
+                    "package-name": "com.google.android.apps.translate"
+                },
+                {
+                    "name": "Chrome",
+                    "package-name": "com.android.chrome"
                 }
             ]
         }
