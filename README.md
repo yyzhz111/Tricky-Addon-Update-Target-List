@@ -11,19 +11,18 @@ A **KSU WebUI** to configure tricky store target.txt
 - [Tricky store](https://github.com/5ec1cff/TrickyStore) module installed
 
 ## Custom Configuration
-- ADDITION and EXCLUDE in `/data/adb/tricky_store/target_list_config`
-- EXCLUDE for removing unnecessary apps
-- ADDITION for adding back system app excluded by default
-- Configuration list with **KSU WebUI** (KernelSU & Apatch, For Magisk users: [KSU WebUI standalone](https://github.com/5ec1cff/KsuWebUIStandalone))
+- Configuration target list with **KSU WebUI**
+- For Magisk users, first attempt perform action button can install KSU WebUI (optional).
+- Advance configure: ADDITION and EXCLUDE in `/data/adb/tricky_store/target_list_config`
 
 ## Instructions
 ### Automatic update
 - On boot
 
 ### Manually update
-**Action button method**
-- Use action button to update tricky store target list.
-- Available for Magisk 27008+, KernelSU 11981+, Apatch 10927+
+**KSU WebUI**
+- Configure target list
+- Save and Update
 
 **Manual script method**
 - Run `UpdateTargetList.sh` under `/data/adb/tricky_store` manually.
@@ -31,7 +30,7 @@ A **KSU WebUI** to configure tricky store target.txt
 
 ## More
 **Support to pass abnormal boot state**
-- Put Verfied Boot Hash to `boot_hash` in `/data/adb/modules/TA_utl`, reboot.
+- Paste Verfied Boot Hash to `boot_hash` in `/data/adb/`, reboot.
 
 ## Acknowledgement
 - [j-hc/zygisk-detach](https://github.com/j-hc/zygisk-detach) - KSU WebUI template
