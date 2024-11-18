@@ -58,6 +58,10 @@
                 {
                     "name": "KsuWebUI",
                     "package-name": "io.github.a13e300.ksuwebui"
+                },
+                {
+                    "name": "ShortX",
+                    "package-name": "tornaco.apps.shortx"
                 }
             ]
         },
