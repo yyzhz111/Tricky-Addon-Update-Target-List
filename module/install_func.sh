@@ -6,12 +6,22 @@ initialize() {
     mv "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
 
     sed -i "s|\"set-path\"|\"/data/adb/modules/$MODID/common/\"|" "$MODPATH/webroot/index.js" || {
-        ui_print "! Failed to replace path"
+        ui_print "! Failed to set path"
+        abort
+    }
+    sed -i "s|\"set-id\"|\"$MODID\"|" "$COMPATH/util_func.sh" || {
+        ui_print "! Failed to set id"
         abort
     }
 
     set_perm $SCRIPT_DIR/UpdateTargetList.sh 0 2000 0755
     set_perm $COMPATH/get_exclude-list.sh 0 2000 0755
+    set_perm $COMPATH/get_WebUI.sh 0 2000 0755
+    
+    if [ "$ACTION" = "false" ]; then
+        rm -f "$MODPATH/action.sh"
+        rm -f "$COMPATH/get_WebUI.sh"
+    fi
 }
 
 add_exclude() {
@@ -111,8 +121,8 @@ kb_operation() {
     else
         if [ -f "$ORG_DIR/common/origkeybox" ]; then
             mv "$ORG_DIR/common/origkeybox" "$COMPATH/origkeybox"
-        else
-            rm -f "$kb"
         fi
+        
+        rm -f "$kb"
     fi
 }

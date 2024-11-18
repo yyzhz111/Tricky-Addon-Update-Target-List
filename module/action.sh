@@ -1,18 +1,30 @@
+MODPATH="${0%/*}"
+COMPATH="$MODPATH/common"
 SCRIPT_DIR="/data/adb/tricky_store"
 
-echo "**********************************************"
-echo "- Staring script..."
-echo " "
+. "$COMPATH/util_func.sh"
 
-if [ ! -f "$SCRIPT_DIR/UpdateTargetList.sh" ]; then
-    echo "! Script missing, please install module again"
-    echo "**********************************************"
-    exit 1
+if pm list packages | grep -q "$PACKAGE_NAME"; then
+    echo "- Launching KSU WebUI..."
+    am start -n "${PACKAGE_NAME}/.WebUIActivity" -e id "$MODID"
 else
-    . "$SCRIPT_DIR/UpdateTargetList.sh"
-fi
+    SKIP_FILE="$SCRIPT_DIR/target_list_config/skipwebui"
+    if [ ! -f "$SKIP_FILE" ]; then
+        echo "- Do you want to install KSU WebUI standalone?"
+        echo "  VOL [+]: YES"
+        echo "  VOL [-]: NO"
 
-echo "**********************************************"
-echo "\(__All set!__)/"
-echo "Exiting in 2 seconds..."
-sleep 2
+        key_check
+        if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
+            echo "- Installing KSU WebUI..."
+            . "$COMPATH/get_WebUI.sh"
+        else
+            echo "- Skipping WebUI installation..."
+            touch "$SKIP_FILE"
+            echo "- Skip WebUI check until next installation."
+            update_script
+        fi
+    else
+        update_script
+    fi
+fi

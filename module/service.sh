@@ -21,7 +21,6 @@ if [ ! -f "$MODPATH/common/module.prop.orig" ]; then
     exit 1
 fi
 
-# Check availability of Tricky Store module
 if [ ! -d "$TS" ]; then
     sed -i 's/^description=.*/description=Tricky store is not installed/' "$MODPATH/module.prop"
     touch "$MODPATH/disable"

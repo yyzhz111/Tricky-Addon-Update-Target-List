@@ -1,19 +1,5 @@
 SKIPUNZIP=0
 DEBUG=false
-
-ui_print " ";
-if [ "$APATCH" ]; then
-    ui_print "- APatch:$APATCH_VER│$APATCH_VER_CODE"
-elif [ "$KSU" ]; then
-    ui_print "- KSU:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
-elif [ "$MAGISK_VER_CODE" ]; then
-    ui_print "- Magisk:$MAGISK_VER│$MAGISK_VER_CODE"
-else
-    ui_print " "; 
-    ui_print "! recovery is not supported"; 
-    abort " "; 
-fi
-
 COMPATH="$MODPATH/common"
 TS="/data/adb/modules/tricky_store"
 SCRIPT_DIR="/data/adb/tricky_store"
@@ -21,6 +7,21 @@ CONFIG_DIR="$SCRIPT_DIR/target_list_config"
 MODID=`grep_prop id $TMPDIR/module.prop`
 ORG_DIR="/data/adb/modules/$MODID"
 kb="$COMPATH/.default"
+
+ui_print " ";
+if [ "$APATCH" ]; then
+    ui_print "- APatch:$APATCH_VER│$APATCH_VER_CODE"
+    ACTION=false
+elif [ "$KSU" ]; then
+    ui_print "- KSU:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
+    ACTION=false
+elif [ "$MAGISK_VER_CODE" ]; then
+    ui_print "- Magisk:$MAGISK_VER│$MAGISK_VER_CODE"
+else
+    ui_print " "; 
+    ui_print "! recovery is not supported"; 
+    abort " "; 
+fi
 
 if [ ! -d "$TS" ]; then
     ui_print "! Tricky store module is not installed"

@@ -2,30 +2,11 @@
 
 MODPATH=${0%/*}
 OUTPUT="$MODPATH/exclude-list"
-BBPATH="/data/adb/modules/busybox-ndk/system/*/busybox \
-        /data/adb/magisk/busybox \
-        /data/adb/ksu/bin/busybox \
-        /data/adb/ap/bin/busybox"
-            
-find_busybox() {    
-    for path in $BBPATH; do
-        if [ -f "$path" ]; then
-            BUSYBOX="$path"
-            return 0
-        fi
-    done
-    return 1
-}
 
-# Check for wget binary
-if ! command -v wget >/dev/null || grep -q "wget-curl" "$(command -v wget)"; then
-    if find_busybox; then
-        wget() { "$BUSYBOX" wget "$@"; }
-    else
-        echo "Error: busybox not found in specified paths." > "$OUTPUT"
-        exit 1
-    fi
-fi
+. $MODPATH/util_func.sh
+
+find_busybox
+check_wget
 
 # Fetch Xposed module package names
 wget --no-check-certificate -q -O - "https://modules.lsposed.org/modules.json" 2>/dev/null | \
