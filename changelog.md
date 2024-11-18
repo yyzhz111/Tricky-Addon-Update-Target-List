@@ -1,9 +1,9 @@
 ### Tricky Addon: Update Target List
-Automated script to update tricky store target.txt
+A **KSU WebUI** to configure tricky store target.txt
 
 Requirement: Tricky Store module installed
 
-Manually add VerifiedBootHash to /data/adb/modules/TA_utl/boot_hash (optional)
+Manually add VerifiedBootHash to /data/adb/boot_hash (optional)
 
 GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
 
