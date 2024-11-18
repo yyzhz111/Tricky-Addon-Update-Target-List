@@ -3,7 +3,7 @@ TS="/data/adb/modules/tricky_store"
 SCRIPT_DIR="/data/adb/tricky_store"
 TSPA="/data/adb/modules/tsupport-advance"
 
-hash_value=$(grep -v '^#' "$MODPATH/boot_hash" | tr -d '[:space:]')
+hash_value=$(grep -v '^#' "/data/adb/boot_hash" | tr -d '[:space:]')
 if [ -n "$hash_value" ]; then
     resetprop -n ro.boot.vbmeta.digest "$hash_value"
 fi
