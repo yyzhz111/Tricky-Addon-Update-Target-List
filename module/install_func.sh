@@ -69,18 +69,20 @@ find_config() {
 }
 
 migrate_old_boot_hash() {
-    if [ ! -f "$ORG_DIR/boot_hash" ]; then
-        mv "$COMPATH/boot_hash" "$MODPATH/boot_hash"
+    if [ ! -f "/data/adb/boot_hash" ]; then
+        if [ -f "$ORG_DIR/boot_hash" ]; then
+            mv "$ORG_DIR/boot_hash" "/data/adb/boot_hash"
+        fi
+            mv "$COMPATH/boot_hash" "/data/adb/boot_hash"
     else
         rm -f "$COMPATH/boot_hash"
-        mv "$ORG_DIR/boot_hash" "$MODPATH/boot_hash"
     fi
 
     # Migrate from old version setup
     if [ -f "$ORG_DIR/system.prop" ]; then
         hash_value=$(sed -n 's/^ro.boot.vbmeta.digest=//p' "$ORG_DIR/system.prop")
         if [ -n "$hash_value" ]; then
-            echo -e "\n$hash_value" >> "$MODPATH/boot_hash"
+            echo -e "\n$hash_value" >> "/data/adb/boot_hash"
         fi
     fi
 }
