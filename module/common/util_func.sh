@@ -80,4 +80,5 @@ update_script() {
     echo ""
     echo "\(__All set!__)/"
     echo "Exiting in 2 seconds..."
+    sleep 2
 }

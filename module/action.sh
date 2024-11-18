@@ -10,9 +10,11 @@ if pm list packages | grep -q "$PACKAGE_NAME"; then
 else
     SKIP_FILE="$SCRIPT_DIR/target_list_config/skipwebui"
     if [ ! -f "$SKIP_FILE" ]; then
+        echo "**********************************************"
         echo "- Do you want to install KSU WebUI standalone?"
         echo "  VOL [+]: YES"
         echo "  VOL [-]: NO"
+        echo "**********************************************"
 
         key_check
         if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
@@ -22,6 +24,7 @@ else
             echo "- Skipping WebUI installation..."
             touch "$SKIP_FILE"
             echo "- Skip WebUI check until next installation."
+            echo ""
             update_script
         fi
     else
