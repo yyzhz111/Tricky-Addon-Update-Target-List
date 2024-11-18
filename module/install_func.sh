@@ -15,6 +15,7 @@ initialize() {
     }
 
     set_perm $SCRIPT_DIR/UpdateTargetList.sh 0 2000 0755
+    set_perm $COMPATH/get_denylist.sh 0 2000 0755
     set_perm $COMPATH/get_exclude-list.sh 0 2000 0755
     set_perm $COMPATH/get_WebUI.sh 0 2000 0755
     

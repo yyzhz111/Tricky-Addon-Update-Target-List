@@ -12,6 +12,7 @@ const helpOverlay = document.getElementById("help-overlay");
 const closeHelp = document.getElementById("close-help");
 const searchCard = document.querySelector('.search-card');
 const menu = document.querySelector('.menu');
+const selectDenylistElement = document.getElementById("select-denylist");
 const floatingBtn = document.querySelector('.floating-btn');
 const basePath = "set-path";
 let excludeList = [];
@@ -50,6 +51,11 @@ async function readExcludeFile() {
     }
 }
 
+// Helper function to check if an app name should be excluded
+function isExcluded(appName) {
+    return excludeList.some(excludeItem => appName.includes(excludeItem));
+}
+
 // Function to fetch, sort, and render the app list
 async function fetchAppList() {
     try {
@@ -57,8 +63,8 @@ async function fetchAppList() {
         const result = await execCommand("pm list packages -3 </dev/null 2>&1 | cat");
         const packageList = result.split("\n").map(line => line.replace("package:", "").trim()).filter(Boolean);
         const sortedApps = packageList.sort((a, b) => {
-            const aInExclude = excludeList.includes(a);
-            const bInExclude = excludeList.includes(b);
+            const aInExclude = isExcluded(a);
+            const bInExclude = isExcluded(b);
             return aInExclude === bInExclude ? a.localeCompare(b) : aInExclude ? 1 : -1;
         });
         appListContainer.innerHTML = "";
@@ -66,7 +72,7 @@ async function fetchAppList() {
             const appElement = document.importNode(appTemplate, true);
             appElement.querySelector(".name").textContent = appName;
             const checkbox = appElement.querySelector(".checkbox");
-            checkbox.checked = !excludeList.includes(appName);
+            checkbox.checked = !isExcluded(appName);
             appListContainer.appendChild(appElement);
         });
         console.log("App list fetched, sorted, and rendered successfully.");
@@ -75,6 +81,7 @@ async function fetchAppList() {
     }
     floatingBtn.style.transform = 'translateY(-100px)';
 }
+
 
 // Function to refresh app list
 async function refreshAppList() {
@@ -105,7 +112,7 @@ async function runXposedScript() {
         noConnection.style.display = "none";
     } catch (error) {
         console.error("Failed to execute Xposed script:", error);
-        showPrompt("Please check your Internet connection", false); 
+        showPrompt("Please check your Internet connection", false);
         noConnection.style.display = "flex";
     }
 }
@@ -128,6 +135,40 @@ async function deselectXposedApps() {
         console.error("Failed to deselect Xposed apps:", error);
     }
 }
+
+// Function to run the Denylist script
+async function runDenylistScript() {
+    try {
+        const denylistScriptPath = `${basePath}get_denylist.sh`;
+        await execCommand(denylistScriptPath);
+        console.log('Denylist element displayed successfully.');
+        selectDenylistElement.style.display = "flex";
+    } catch (error) {
+        console.error("Failed to execute Denylist script:", error);
+    }
+}
+
+// Function to read the denylist and check corresponding apps
+async function selectDenylistApps() {
+    try {
+        const result = await execCommand(`cat ${basePath}denylist`);
+        const denylistApps = result.split("\n")
+            .map(app => app.trim())
+            .filter(Boolean);
+        const apps = document.querySelectorAll(".card");
+        apps.forEach(app => {
+            const appName = app.querySelector(".name").textContent.trim();
+            const checkbox = app.querySelector(".checkbox");
+            if (denylistApps.includes(appName)) {
+                checkbox.checked = true; // Select the app if found in denylist
+            }
+        });
+        console.log("Denylist apps selected successfully.");
+    } catch (error) {
+        console.error("Failed to select Denylist apps:", error);
+    }
+}
+
 
 // Function to select all visible apps
 function selectAllApps() {
@@ -195,7 +236,7 @@ function setupMenuToggle() {
         }
     });
 
-    const closeMenuItems = ['refresh', 'select-all', 'deselect-all', 'deselect-xposed'];
+    const closeMenuItems = ['refresh', 'select-all', 'deselect-all', 'select-denylist', 'deselect-xposed'];
     closeMenuItems.forEach(id => {
         const item = document.getElementById(id);
         if (item) {
@@ -319,8 +360,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.getElementById("select-all").addEventListener("click", selectAllApps);
     document.getElementById("deselect-all").addEventListener("click", deselectAllApps);
-    document.getElementById("deselect-xposed").addEventListener("click", deselectXposedApps);   
+    document.getElementById("select-denylist").addEventListener("click", selectDenylistApps);
+    document.getElementById("deselect-xposed").addEventListener("click", deselectXposedApps);
     await fetchAppList();
+    runDenylistScript();
     runXposedScript();
     loadingIndicator.style.display = "none";
 });

@@ -236,6 +236,10 @@ body {
     white-space: nowrap;
 }
 
+#select-denylist {
+    display: none;
+}
+
 .menu-options.visible {
     display: block;
     transform: translateX(0);
