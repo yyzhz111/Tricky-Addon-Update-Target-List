@@ -18,7 +18,6 @@ wget --no-check-certificate -q -O - "https://raw.githubusercontent.com/KOWX712/T
 grep -o '"package-name": *"[^"]*"' | \
 awk -F'"' '{print $4}' >> "$OUTPUT"
 
-# Check if the output directory is empty
 if [ ! -s "$OUTPUT" ]; then
     echo "Error: Failed to fetch data." > "$OUTPUT"
     exit 1

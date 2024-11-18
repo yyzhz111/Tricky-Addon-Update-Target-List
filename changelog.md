@@ -10,6 +10,16 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.3
+- Removed curl binary
+- Moved boot_hash to /data/adb to prevent overwrite
+- Stop TSP-A auto target to prevent overwrite
+- Abandoned action button in KernelSU and Apatch
+- Magisk action button: open WebUI, automatic download if not installed (optional)
+
+**KSU WebUI**
+- Option to select app from DenyList (Magisk)
+
 ### v2.2
 **KSU WebUI:**
 - Added help menu

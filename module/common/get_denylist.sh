@@ -13,7 +13,6 @@ awk -F'|' '{print $1}' | \
 grep -v "isolated" | \
 sort | uniq > "$OUTPUT"
 
-# Check if the output file is successfully created
 if [ ! -s "$OUTPUT" ]; then
     echo "Failed to retrieve Magisk denylist or no packages found." > "$OUTPUT"
     exit 1
