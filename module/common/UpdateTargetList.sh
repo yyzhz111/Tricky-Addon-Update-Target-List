@@ -20,14 +20,23 @@ else
     echo " "
 fi
 
+EXCLUDE=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/EXCLUDE" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/ADDITION" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
+for app in $ADDITION; do
+    app=$(echo "$app" | tr -d '[:space:]')
+    if grep -Fq "$app" "$CONFIG_DIR/EXCLUDE"; then
+        sed -i "\|^$app$|d" "$CONFIG_DIR/EXCLUDE"
+    fi
+done
+
 EXCLUDE=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/EXCLUDE" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '\n' '|' | sed 's/|$//')
-ADDITION=$(grep -vE '^[[:space:]]*#|^[[:space:]]*$' "$CONFIG_DIR/ADDITION")
 
 echo "- Adding apps into /data/adb/tricky_store/target.txt..."
 echo " "
-su -c pm list packages -3 </dev/null 2>&1 | cat | awk -F: '{print $2}' | grep -Ev "$EXCLUDE" > /data/adb/tricky_store/target.txt
+pm list packages -3 </dev/null 2>&1 | awk -F: '{print $2}' | grep -Ev "$EXCLUDE" > /data/adb/tricky_store/target.txt
 
-echo "- Adding addition app... "
+echo "- Adding addition app..."
 echo " "
 for app in $ADDITION; do
     app=$(echo "$app" | tr -d '[:space:]')
