@@ -13,9 +13,13 @@ initialize() {
         ui_print "! Failed to set id"
         abort
     }
-
+    
+    mkdir -p "$MODPATH/system/bin"
+    mv "$MODPATH/bin/$(getprop ro.product.cpu.abi)/aapt" "$COMPATH/aapt"
+    rm -rf "$MODPATH/bin"
+    
+    set_perm $COMPATH/aapt 0 2000 0755
     set_perm $SCRIPT_DIR/UpdateTargetList.sh 0 2000 0755
-    set_perm $COMPATH/get_denylist.sh 0 2000 0755
     set_perm $COMPATH/get_exclude-list.sh 0 2000 0755
     set_perm $COMPATH/get_WebUI.sh 0 2000 0755
     
