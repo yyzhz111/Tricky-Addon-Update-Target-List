@@ -56,32 +56,48 @@ function isExcluded(appName) {
     return excludeList.some(excludeItem => appName.includes(excludeItem));
 }
 
-// Function to fetch, sort, and render the app list
+// Function to fetch, sort, and render the app list with app names
 async function fetchAppList() {
     try {
         await readExcludeFile();
-        const result = await execCommand("pm list packages -3 </dev/null 2>&1 | cat");
-        const packageList = result.split("\n").map(line => line.replace("package:", "").trim()).filter(Boolean);
-        const sortedApps = packageList.sort((a, b) => {
-            const aInExclude = isExcluded(a);
-            const bInExclude = isExcluded(b);
-            return aInExclude === bInExclude ? a.localeCompare(b) : aInExclude ? 1 : -1;
+        const result = await execCommand(`
+            pm list packages -3 | while read -r line; do
+                PACKAGE=$(echo "$line" | awk -F: '{print $2}')
+                APK_PATH=$(pm path "$PACKAGE" | grep "base.apk" | awk -F: '{print $2}' | tr -d '\\r')
+                if [ -n "$APK_PATH" ]; then
+                    APP_NAME=$( ${basePath}aapt dump badging "$APK_PATH" 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g" )
+                    echo "$APP_NAME|$PACKAGE"
+                else
+                    echo "Unknown App|$PACKAGE"
+                fi
+            done
+        `);
+        const appEntries = result.split("\n").map(line => {
+            const [appName, packageName] = line.split("|").map(item => item.trim());
+            return { appName, packageName };
+        }).filter(entry => entry.packageName); // Remove invalid entries
+        const sortedApps = appEntries.sort((a, b) => {
+            const aInExclude = isExcluded(a.packageName);
+            const bInExclude = isExcluded(b.packageName);
+            return aInExclude === bInExclude ? a.appName.localeCompare(b.appName) : aInExclude ? 1 : -1;
         });
-        appListContainer.innerHTML = "";
-        sortedApps.forEach(appName => {
+        appListContainer.innerHTML = ""; // Clear the container before rendering
+        sortedApps.forEach(({ appName, packageName }) => {
             const appElement = document.importNode(appTemplate, true);
-            appElement.querySelector(".name").textContent = appName;
+            const contentElement = appElement.querySelector(".content");
+            contentElement.setAttribute("data-package", packageName);
+            const nameElement = appElement.querySelector(".name");
+            nameElement.innerHTML = `<strong>${appName || "Unknown App"}</strong><br>${packageName}`;
             const checkbox = appElement.querySelector(".checkbox");
-            checkbox.checked = !isExcluded(appName);
+            checkbox.checked = !isExcluded(packageName);
             appListContainer.appendChild(appElement);
         });
-        console.log("App list fetched, sorted, and rendered successfully.");
+        console.log("App list with names and packages rendered successfully.");
     } catch (error) {
-        console.error("Failed to fetch or render app list:", error);
+        console.error("Failed to fetch or render app list with names:", error);
     }
-    floatingBtn.style.transform = 'translateY(-100px)';
+    floatingBtn.style.transform = "translateY(-100px)";
 }
-
 
 // Function to refresh app list
 async function refreshAppList() {
@@ -117,17 +133,18 @@ async function runXposedScript() {
     }
 }
 
-// Function to read the xposed list and uncheck corresponding apps
+// Function to read the Xposed list and uncheck corresponding apps
 async function deselectXposedApps() {
     try {
         const result = await execCommand(`cat ${basePath}exclude-list`);
         const xposedApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
         apps.forEach(app => {
-            const appName = app.querySelector(".name").textContent.trim();
+            const contentElement = app.querySelector(".content");
+            const packageName = contentElement.getAttribute("data-package");
             const checkbox = app.querySelector(".checkbox");
-            if (xposedApps.includes(appName)) {
-                checkbox.checked = false; // Uncheck if found in exclude-list
+            if (xposedApps.includes(packageName)) {
+                checkbox.checked = false; // Uncheck if found in Xposed list
             }
         });
         console.log("Xposed apps deselected successfully.");
@@ -136,30 +153,43 @@ async function deselectXposedApps() {
     }
 }
 
-// Function to run the Denylist script
-async function runDenylistScript() {
+// Function to check if Magisk
+async function checkMagisk() {
     try {
-        const denylistScriptPath = `${basePath}get_denylist.sh`;
-        await execCommand(denylistScriptPath);
-        console.log('Denylist element displayed successfully.');
-        selectDenylistElement.style.display = "flex";
+        const hasDenylistCondition = await execCommand(`
+            if [ ! -f "/data/adb/apd" ] && [ ! -f "/data/adb/ksud" ]; then
+                echo "OK"
+            else
+                echo ""
+            fi
+        `);
+        if (hasDenylistCondition.trim() === "OK") {
+            console.log("Denylist conditions met, displaying element.");
+            selectDenylistElement.style.display = "flex";
+        } else {
+            console.log("ksud or apd detected, leaving denylist element hidden.");
+        }
     } catch (error) {
-        console.error("Failed to execute Denylist script:", error);
+        console.error("Error while checking denylist conditions:", error);
     }
 }
 
 // Function to read the denylist and check corresponding apps
 async function selectDenylistApps() {
     try {
-        const result = await execCommand(`cat ${basePath}denylist`);
-        const denylistApps = result.split("\n")
-            .map(app => app.trim())
-            .filter(Boolean);
+        const result = await execCommand(`
+            magisk --denylist ls 2>/dev/null | \
+            awk -F'|' '{print $1}' | \
+            grep -v "isolated" | \
+            sort | uniq
+        `);
+        const denylistApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
         apps.forEach(app => {
-            const appName = app.querySelector(".name").textContent.trim();
+            const contentElement = app.querySelector(".content");
+            const packageName = contentElement.getAttribute("data-package");
             const checkbox = app.querySelector(".checkbox");
-            if (denylistApps.includes(appName)) {
+            if (denylistApps.includes(packageName)) {
                 checkbox.checked = true; // Select the app if found in denylist
             }
         });
@@ -168,7 +198,6 @@ async function selectDenylistApps() {
         console.error("Failed to select Denylist apps:", error);
     }
 }
-
 
 // Function to select all visible apps
 function selectAllApps() {
@@ -312,26 +341,25 @@ clearBtn.addEventListener("click", () => {
 document.getElementById("save").addEventListener("click", async () => {
     await readExcludeFile();
     const deselectedApps = Array.from(appListContainer.querySelectorAll(".checkbox:not(:checked)"))
-        .map(checkbox => checkbox.closest(".card").querySelector(".name").textContent);
+        .map(checkbox => checkbox.closest(".card").querySelector(".content").getAttribute("data-package"));
     const selectedApps = Array.from(appListContainer.querySelectorAll(".checkbox:checked"))
-        .map(checkbox => checkbox.closest(".card").querySelector(".name").textContent);
-
-    for (const app of deselectedApps) {
-        if (!excludeList.includes(app)) {
-            excludeList.push(app);
-            console.log("Added to EXCLUDE list:", app);
+        .map(checkbox => checkbox.closest(".card").querySelector(".content").getAttribute("data-package"));
+    // Add deselected apps to EXCLUDE list
+    for (const packageName of deselectedApps) {
+        if (!excludeList.includes(packageName)) {
+            excludeList.push(packageName);
+            console.log("Added to EXCLUDE list:", packageName);
         } else {
-            console.log("App already in EXCLUDE file, skipping:", app);
+            console.log("Package already in EXCLUDE file, skipping:", packageName);
         }
     }
-
+    // Remove selected apps from EXCLUDE list
     if (selectedApps.length > 0) {
-        selectedApps.forEach(app => {
-            excludeList = excludeList.filter(excludedApp => excludedApp !== app);
-            console.log("Removed from EXCLUDE list:", app);
+        selectedApps.forEach(packageName => {
+            excludeList = excludeList.filter(excludedPackage => excludedPackage !== packageName);
+            console.log("Removed from EXCLUDE list:", packageName);
         });
     }
-
     try {
         // Save the EXCLUDE file
         const updatedExcludeContent = excludeList.join("\n");
@@ -363,7 +391,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("select-denylist").addEventListener("click", selectDenylistApps);
     document.getElementById("deselect-xposed").addEventListener("click", deselectXposedApps);
     await fetchAppList();
-    runDenylistScript();
+    checkMagisk();
     runXposedScript();
     loadingIndicator.style.display = "none";
 });
