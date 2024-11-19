@@ -10,6 +10,12 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.4
+- Added aapt binary for app name display
+
+**KSU WebUI**
+- Added app name display
+
 ### v2.3
 - Removed curl binary
 - Moved boot_hash to /data/adb to prevent overwrite
