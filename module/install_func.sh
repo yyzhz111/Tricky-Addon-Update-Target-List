@@ -20,7 +20,7 @@ initialize() {
     
     set_perm $COMPATH/aapt 0 2000 0755
     set_perm $SCRIPT_DIR/UpdateTargetList.sh 0 2000 0755
-    set_perm $COMPATH/get_exclude-list.sh 0 2000 0755
+    set_perm $COMPATH/get_extra.sh 0 2000 0755
     set_perm $COMPATH/get_WebUI.sh 0 2000 0755
     
     if [ "$ACTION" = "false" ]; then
@@ -89,47 +89,5 @@ migrate_old_boot_hash() {
         if [ -n "$hash_value" ]; then
             echo -e "\n$hash_value" >> "/data/adb/boot_hash"
         fi
-    fi
-}
-
-key_check() {
-    while true; do
-        key_check=$(/system/bin/getevent -qlc 1)
-        key_event=$(echo "$key_check" | awk '{ print $3 }' | grep 'KEY_')
-        key_status=$(echo "$key_check" | awk '{ print $4 }')
-        if [[ "$key_event" == *"KEY_"* && "$key_status" == "DOWN" ]]; then
-            keycheck="$key_event"
-            break
-        fi
-    done
-    while true; do
-        key_check=$(/system/bin/getevent -qlc 1)
-        key_event=$(echo "$key_check" | awk '{ print $3 }' | grep 'KEY_')
-        key_status=$(echo "$key_check" | awk '{ print $4 }')
-        if [[ "$key_event" == *"KEY_"* && "$key_status" == "UP" ]]; then
-            break
-        fi
-    done
-}
-
-kb_operation() {
-    if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
-        ui_print "- Backing up original keybox..."
-        ui_print "- Replacing keybox..."
-        ui_print "*********************************************"
-
-        if [ -f "$ORG_DIR/common/origkeybox" ]; then
-            mv "$ORG_DIR/common/origkeybox" "$COMPATH/origkeybox"
-        else
-            mv "$SCRIPT_DIR/keybox.xml" "$COMPATH/origkeybox"
-        fi
-
-        mv "$kb" "$SCRIPT_DIR/keybox.xml"
-    else
-        if [ -f "$ORG_DIR/common/origkeybox" ]; then
-            mv "$ORG_DIR/common/origkeybox" "$COMPATH/origkeybox"
-        fi
-        
-        rm -f "$kb"
     fi
 }

@@ -1,9 +1,9 @@
 PACKAGE_NAME="io.github.a13e300.ksuwebui"
 MODID="set-id"
 BBPATH="/data/adb/modules/busybox-ndk/system/*/busybox \
-        /data/adb/magisk/busybox \
-        /data/adb/ksu/bin/busybox \
-        /data/adb/ap/bin/busybox"
+/data/adb/magisk/busybox \
+/data/adb/ksu/bin/busybox \
+/data/adb/ap/bin/busybox"
             
 find_busybox() {    
     for path in $BBPATH; do

@@ -37,14 +37,6 @@ ui_print "- Creating config directory..."
 find_config
 migrate_old_boot_hash
 
-ui_print "*********************************************"
-ui_print "- Do you want to replace tricky store keybox? (AOSP, no strong)"
-ui_print "  VOL [+]: YES"
-ui_print "  VOL [-]: NO"
-ui_print "*********************************************"
-key_check
-kb_operation
-
 rm -f "$MODPATH/install_func.sh"
 
 ui_print "- Installation completed successfully! "

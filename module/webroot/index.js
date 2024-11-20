@@ -96,6 +96,7 @@ async function fetchAppList() {
     } catch (error) {
         console.error("Failed to fetch or render app list with names:", error);
     }
+
     floatingBtn.style.transform = "translateY(-100px)";
 }
 
@@ -112,44 +113,62 @@ async function refreshAppList() {
     await new Promise(resolve => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
     if (noConnection.style.display === "flex") {
-        await runXposedScript();
+        await runExtraScript();
     }
     await fetchAppList();[]
     loadingIndicator.style.display = 'none';
     isRefreshing = false;
 }
 
-// Function to run the Xposed script
-async function runXposedScript() {
+// Function to select all visible apps
+function selectAllApps() {
+    document.querySelectorAll(".card").forEach(card => {
+        if (card.style.display !== "none") {
+            card.querySelector(".checkbox").checked = true;
+        }
+    });
+}
+
+// Function to deselect all visible apps
+function deselectAllApps() {
+    document.querySelectorAll(".card").forEach(card => {
+        if (card.style.display !== "none") {
+            card.querySelector(".checkbox").checked = false;
+        }
+    });
+}
+
+// Function to run the extra script
+async function runExtraScript() {
     try {
-        const scriptPath = `${basePath}get_exclude-list.sh`;
+        const scriptPath = `${basePath}get_extra.sh`;
         await execCommand(scriptPath);
-        console.log("Xposed script executed successfully.");
+        console.log("Extra script executed successfully.");
         noConnection.style.display = "none";
     } catch (error) {
-        console.error("Failed to execute Xposed script:", error);
+        console.error("Failed to execute Extra script:", error);
         showPrompt("Please check your Internet connection", false);
         noConnection.style.display = "flex";
     }
 }
 
-// Function to read the Xposed list and uncheck corresponding apps
-async function deselectXposedApps() {
+// Function to read the exclude list and uncheck corresponding apps
+async function deselectUnnecessaryApps() {
     try {
         const result = await execCommand(`cat ${basePath}exclude-list`);
-        const xposedApps = result.split("\n").map(app => app.trim()).filter(Boolean);
+        const UnnecessaryApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
         apps.forEach(app => {
             const contentElement = app.querySelector(".content");
             const packageName = contentElement.getAttribute("data-package");
             const checkbox = app.querySelector(".checkbox");
-            if (xposedApps.includes(packageName)) {
-                checkbox.checked = false; // Uncheck if found in Xposed list
+            if (UnnecessaryApps.includes(packageName)) {
+                checkbox.checked = false; // Uncheck if found in more-exclude list
             }
         });
-        console.log("Xposed apps deselected successfully.");
+        console.log("unnecessary apps deselected successfully.");
     } catch (error) {
-        console.error("Failed to deselect Xposed apps:", error);
+        console.error("Failed to deselect unnecessary apps:", error);
     }
 }
 
@@ -185,6 +204,7 @@ async function selectDenylistApps() {
         `);
         const denylistApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
+        await deselectAllApps();
         apps.forEach(app => {
             const contentElement = app.querySelector(".content");
             const packageName = contentElement.getAttribute("data-package");
@@ -199,22 +219,37 @@ async function selectDenylistApps() {
     }
 }
 
-// Function to select all visible apps
-function selectAllApps() {
-    document.querySelectorAll(".card").forEach(card => {
-        if (card.style.display !== "none") {
-            card.querySelector(".checkbox").checked = true;
-        }
-    });
+// Function to replace aosp kb
+async function aospkb() {
+    try {
+        const sourcePath = `${basePath}.default`;
+        const destinationPath = "/data/adb/tricky_store/keybox.xml";
+        await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
+        console.log("AOSP keybox copied successfully.");
+        showPrompt("keybox.xml successfully updated with AOSP keybox.");
+    } catch (error) {
+        console.error("Failed to copy AOSP keybox:", error);
+        showPrompt("Failed to update keybox.", false);
+    }
 }
 
-// Function to deselect all visible apps
-function deselectAllApps() {
-    document.querySelectorAll(".card").forEach(card => {
-        if (card.style.display !== "none") {
-            card.querySelector(".checkbox").checked = false;
+// Function to replace valid kb
+async function extrakb() {
+    const sourcePath = `${basePath}.extra`;
+    const destinationPath = "/data/adb/tricky_store/keybox.xml";
+    try {
+        const fileExists = await execCommand(`[ -f ${sourcePath} ] && echo "exists"`);
+        if (fileExists.trim() !== "exists") {
+            throw new Error(".extra file not found");
         }
-    });
+        await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
+        console.log("Valid keybox copied successfully.");
+        showPrompt("Successfully updated with valid keybox.");
+    } catch (error) {
+        console.error("Failed to copy valid keybox:", error);
+        await aospkb();
+        showPrompt("No valid keybox found, replaced with AOSP keybox.", false);
+    }
 }
 
 // Function to show the prompt with a success or error message
@@ -265,7 +300,7 @@ function setupMenuToggle() {
         }
     });
 
-    const closeMenuItems = ['refresh', 'select-all', 'deselect-all', 'select-denylist', 'deselect-xposed'];
+    const closeMenuItems = ['refresh', 'select-all', 'deselect-all', 'select-denylist', 'deselect-unnecessary', 'aospkb', 'extrakb'];
     closeMenuItems.forEach(id => {
         const item = document.getElementById(id);
         if (item) {
@@ -389,10 +424,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("select-all").addEventListener("click", selectAllApps);
     document.getElementById("deselect-all").addEventListener("click", deselectAllApps);
     document.getElementById("select-denylist").addEventListener("click", selectDenylistApps);
-    document.getElementById("deselect-xposed").addEventListener("click", deselectXposedApps);
+    document.getElementById("deselect-unnecessary").addEventListener("click", deselectUnnecessaryApps);
+    document.getElementById("aospkb").addEventListener("click", aospkb);
+    document.getElementById("extrakb").addEventListener("click", extrakb);
     await fetchAppList();
     checkMagisk();
-    runXposedScript();
+    runExtraScript();
     loadingIndicator.style.display = "none";
 });
 
