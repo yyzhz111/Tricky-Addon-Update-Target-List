@@ -226,7 +226,7 @@ async function aospkb() {
         const destinationPath = "/data/adb/tricky_store/keybox.xml";
         await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("AOSP keybox copied successfully.");
-        showPrompt("keybox.xml successfully updated with AOSP keybox.");
+        showPrompt("AOSP keybox set successfully.");
     } catch (error) {
         console.error("Failed to copy AOSP keybox:", error);
         showPrompt("Failed to update keybox.", false);
@@ -244,7 +244,7 @@ async function extrakb() {
         }
         await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("Valid keybox copied successfully.");
-        showPrompt("Successfully updated with valid keybox.");
+        showPrompt("Valid keybox set successfully.");
     } catch (error) {
         console.error("Failed to copy valid keybox:", error);
         await aospkb();
