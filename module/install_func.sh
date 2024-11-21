@@ -2,6 +2,9 @@ initialize() {
     if [ -f "$SCRIPT_DIR/UpdateTargetList.sh" ]; then
         rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
     fi
+    if [ -f "$CONFIG_DIR/skipwebui" ]; then
+        rm -f "$CONFIG_DIR/skipwebui"
+    fi
     cp "$MODPATH/module.prop" "$COMPATH/module.prop.orig"
     mv "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
 
