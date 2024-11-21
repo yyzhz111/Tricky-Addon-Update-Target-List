@@ -9,7 +9,13 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
+Starting from v2.4, WebUI will take longer time to load due to reading app name from every base.apk. The more apps installed, the longer time it takes to load the WebUI.
+
 ## Changelog
+### v2.5
+- Remove kb prompt on installation, moved into WebUI
+- Restore to AOSP keybox during uninstallation
+
 ### v2.4
 - Added aapt binary for app name display
 
