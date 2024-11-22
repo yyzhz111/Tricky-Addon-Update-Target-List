@@ -17,7 +17,6 @@ initialize() {
         abort
     }
     
-    mkdir -p "$MODPATH/system/bin"
     mv "$MODPATH/bin/$(getprop ro.product.cpu.abi)/aapt" "$COMPATH/aapt"
     rm -rf "$MODPATH/bin"
     

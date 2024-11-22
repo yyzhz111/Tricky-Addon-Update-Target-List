@@ -26,6 +26,8 @@ check_wget() {
     fi
 }
 
+aapt() { "$MODPATH/aapt" "$@"; }
+
 download_webui() {
     wget --no-check-certificate -P "$APK_DIR" "$URL"
     if [ $? -ne 0 ]; then

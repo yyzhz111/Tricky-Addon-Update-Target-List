@@ -9,24 +9,30 @@ KBOUTPUT="$MODPATH/.extra"
 find_busybox
 check_wget
 
-# Fetch Xposed module package names
-wget --no-check-certificate -q -O - "https://modules.lsposed.org/modules.json" 2>/dev/null | \
-grep -o '"name":"[^"]*","description":' | \
-awk -F'"' '{print $4}' > "$OUTPUT"
-
 # Fetch additional package names
 wget --no-check-certificate -q -O - "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/more-excldue.json" 2>/dev/null | \
 grep -o '"package-name": *"[^"]*"' | \
-awk -F'"' '{print $4}' >> "$OUTPUT"
+awk -F'"' '{print $4}' > "$OUTPUT"
 
 if [ ! -s "$OUTPUT" ]; then
-    echo "Error: Failed to fetch data." > "$OUTPUT"
     rm -f "$KBOUTPUT"
-    exit 1
+    skipkb=true
 fi
 
-wget --no-check-certificate -qO "$KBOUTPUT" "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/.extra"
+# Find xposed package name
+pm list packages -3 | awk -F: '{print $2}' | while read -r PACKAGE; do
+    pm path "$PACKAGE" | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r' | \
+    while read -r APK_PATH; do
+        aapt dump xmltree "$APK_PATH" AndroidManifest.xml 2>/dev/null | grep -qE "xposed.category|xposeddescription" && echo "$PACKAGE" >> "$OUTPUT"
+    done
+done
 
-if [ ! -s "$KBOUTPUT" ]; then
-    rm -f "$KBOUTPUT"
+if [ "$skipkb" != "true" ]; then
+    wget --no-check-certificate -qO "$KBOUTPUT" "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/.extra"
+
+    if [ ! -s "$KBOUTPUT" ]; then
+        rm -f "$KBOUTPUT"
+    fi
+else
+    exit 1
 fi
