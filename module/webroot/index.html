@@ -73,6 +73,13 @@
                             <li><br></li>
                         </ul>
                     </li>
+                    <li>Set Verified Boot Hash
+                        <ul>
+                            <li>Get it from KeyAttesation Demo. Fix abnormal boot state by reset ro.boot.vbmeta.digest.
+                            </li>
+                            <li><br></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -97,6 +104,7 @@
                     <li id="deselect-unnecessary">Deselect Unnecessary</li>
                     <li id="aospkb">Set AOSP Keybox</li>
                     <li id="extrakb">Set Valid Keybox</li>
+                    <li id="boot-hash">Set Verified Boot Hash</li>
                 </ul>
             </div>
         </div>
@@ -113,6 +121,13 @@
             </div>
         </div>
     </template>
+    <div id="overlay" class="overlay"></div>
+    <div id="boot-hash-card" class="boot-hash-card">
+        <textarea id="boot-hash-input" class="input-box" placeholder="Paste your verified Boot Hash here"></textarea>
+        <div class="button-container">
+            <button id="save-button" class="button save-button">Save</button>
+        </div>
+    </div>
     <div class="loading">Loading...</div>
     <div class="acknowledgment">Credit to j-hc/zygisk-detach WebUI</div>
     <div id="prompt" class="prompt"></div>

@@ -60,28 +60,54 @@ function isExcluded(appName) {
 async function fetchAppList() {
     try {
         await readExcludeFile();
-        const result = await execCommand(`
-            pm list packages -3 | while read -r line; do
-                PACKAGE=$(echo "$line" | awk -F: '{print $2}')
-                APK_PATH=$(pm path "$PACKAGE" | grep "base.apk" | awk -F: '{print $2}' | tr -d '\\r')
-                if [ -n "$APK_PATH" ]; then
-                    APP_NAME=$( ${basePath}aapt dump badging "$APK_PATH" 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g" )
-                    echo "$APP_NAME|$PACKAGE"
-                else
-                    echo "Unknown App|$PACKAGE"
-                fi
-            done
-        `);
-        const appEntries = result.split("\n").map(line => {
-            const [appName, packageName] = line.split("|").map(item => item.trim());
-            return { appName, packageName };
-        }).filter(entry => entry.packageName); // Remove invalid entries
+        let applistMap = {};
+        try {
+            const applistResult = await execCommand(`cat ${basePath}applist`);
+            applistMap = applistResult
+                .split("\n")
+                .reduce((map, line) => {
+                    const match = line.match(/app-name:\s*(.+),\s*package-name:\s*(.+)/);
+                    if (match) {
+                        const appName = match[1].trim();
+                        const packageName = match[2].trim();
+                        map[packageName] = appName;
+                    }
+                    return map;
+                }, {});
+            console.log("Applist loaded successfully.");
+        } catch (error) {
+            console.warn("Applist file not found or could not be loaded. Skipping applist lookup.");
+        }
+        const result = await execCommand("pm list packages -3");
+        const appEntries = result
+            .split("\n")
+            .map(line => {
+                const packageName = line.replace("package:", "").trim();
+                const appName = applistMap[packageName] || null;
+                return { appName, packageName };
+            })
+            .filter(entry => entry.packageName);
+        for (const entry of appEntries) {
+            if (!entry.appName) {
+                try {
+                    const apkPath = await execCommand(`pm path ${entry.packageName} | grep "base.apk" | awk -F: '{print $2}' | tr -d '\\r'`);
+                    if (apkPath) {
+                        const appName = await execCommand(`${basePath}aapt dump badging ${apkPath.trim()} 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g"`);
+                        entry.appName = appName.trim() || "Unknown App";
+                    } else {
+                        entry.appName = "Unknown App";
+                    }
+                } catch (error) {
+                    entry.appName = "Unknown App";
+                }
+            }
+        }
         const sortedApps = appEntries.sort((a, b) => {
             const aInExclude = isExcluded(a.packageName);
             const bInExclude = isExcluded(b.packageName);
             return aInExclude === bInExclude ? a.appName.localeCompare(b.appName) : aInExclude ? 1 : -1;
         });
-        appListContainer.innerHTML = ""; // Clear the container before rendering
+        appListContainer.innerHTML = "";
         sortedApps.forEach(({ appName, packageName }) => {
             const appElement = document.importNode(appTemplate, true);
             const contentElement = appElement.querySelector(".content");
@@ -96,7 +122,6 @@ async function fetchAppList() {
     } catch (error) {
         console.error("Failed to fetch or render app list with names:", error);
     }
-
     floatingBtn.style.transform = "translateY(-100px)";
 }
 
@@ -252,6 +277,59 @@ async function extrakb() {
     }
 }
 
+// Function to handle Verified Boot Hash
+async function setBootHash() {
+    const overlay = document.getElementById("overlay");
+    const card = document.getElementById("boot-hash-card");
+    const inputBox = document.getElementById("boot-hash-input");
+    const saveButton = document.getElementById("save-button");
+    const showCard = () => {
+        overlay.style.display = "flex";
+        card.style.display = "flex";
+        requestAnimationFrame(() => {
+            overlay.classList.add("show");
+            card.classList.add("show");
+        });
+        document.body.style.overflow = "hidden";
+    };
+    const closeCard = () => {
+        overlay.classList.remove("show");
+        card.classList.remove("show");
+        setTimeout(() => {
+            overlay.style.display = "none";
+            card.style.display = "none";
+            document.body.style.overflow = "auto";
+        }, 200);
+    };
+    showCard();
+    try {
+        const bootHashContent = await execCommand("cat /data/adb/boot_hash");
+        const validHash = bootHashContent
+            .split("\n")
+            .filter(line => !line.startsWith("#") && line.trim())[0];
+        inputBox.value = validHash || "";
+    } catch (error) {
+        console.warn("Failed to read boot_hash file. Defaulting to empty input.");
+        inputBox.value = "";
+    }
+    // Save button click handler
+    saveButton.addEventListener("click", async () => {
+        const inputValue = inputBox.value.trim();
+        try {
+            await execCommand(`echo "${inputValue}" > /data/adb/boot_hash`);
+            await execCommand(`su -c resetprop -n ro.boot.vbmeta.digest ${inputValue}`);
+            showPrompt("Verified Boot Hash saved successfully.");
+            closeCard();
+        } catch (error) {
+            console.error("Failed to update boot_hash:", error);
+            showPrompt("Failed to update Verified Boot Hash.", false);
+        }
+    });
+    overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) closeCard();
+    });
+}
+
 // Function to show the prompt with a success or error message
 function showPrompt(message, isSuccess = true) {
     const prompt = document.getElementById('prompt');
@@ -300,7 +378,7 @@ function setupMenuToggle() {
         }
     });
 
-    const closeMenuItems = ['refresh', 'select-all', 'deselect-all', 'select-denylist', 'deselect-unnecessary', 'aospkb', 'extrakb'];
+    const closeMenuItems = ['refresh', 'select-all', 'deselect-all', 'select-denylist', 'deselect-unnecessary', 'aospkb', 'extrakb', 'boot-hash'];
     closeMenuItems.forEach(id => {
         const item = document.getElementById(id);
         if (item) {
@@ -427,6 +505,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("deselect-unnecessary").addEventListener("click", deselectUnnecessaryApps);
     document.getElementById("aospkb").addEventListener("click", aospkb);
     document.getElementById("extrakb").addEventListener("click", extrakb);
+    document.getElementById("boot-hash").addEventListener("click", setBootHash);
     await fetchAppList();
     checkMagisk();
     runExtraScript();
