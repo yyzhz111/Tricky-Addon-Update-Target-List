@@ -28,9 +28,8 @@ A **KSU WebUI** to configure tricky store target.txt
 - Run `UpdateTargetList.sh` under `/data/adb/tricky_store` manually.
 - MT manager is recommened for this method
 
-## More
-**Support to pass abnormal boot state**
-- Paste Verfied Boot Hash to `boot_hash` in `/data/adb/`, reboot.
+## Translation
+- Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/tree/master/module/webroot/locales/A-translate.md)
 
 ## Acknowledgement
 - [j-hc/zygisk-detach](https://github.com/j-hc/zygisk-detach) - KSU WebUI template
