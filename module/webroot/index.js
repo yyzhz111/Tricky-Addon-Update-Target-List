@@ -232,7 +232,7 @@ async function fetchAppList() {
     } catch (error) {
         console.error("Failed to fetch or render app list with names:", error);
     }
-    floatingBtn.style.transform = "translateY(-100px)";
+    floatingBtn.style.transform = "translateY(-120px)";
 }
 
 // Function to refresh app list
@@ -685,7 +685,7 @@ window.addEventListener('scroll', () => {
     } else if (window.scrollY < lastScrollY) {
         title.style.transform = 'translateY(0)';
         searchMenuContainer.style.transform = 'translateY(0)';
-        floatingBtn.style.transform = 'translateY(-100px)';
+        floatingBtn.style.transform = 'translateY(-120px)';
     }
     if (languageMenu.classList.contains("show")) {
         languageMenu.classList.remove("show");
