@@ -9,7 +9,7 @@ Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
 ### v2.6-beta.1
-- Check in (release notes)[https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/tag/v2.6-beta.1].
+- Check in [release notes](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/tag/v2.6-beta.1).
 
 ### v2.5
 - Remove kb prompt on installation, moved into WebUI
