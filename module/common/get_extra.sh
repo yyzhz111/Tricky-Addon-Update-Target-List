@@ -1,6 +1,7 @@
 #!/system/bin/sh
 
 MODPATH=${0%/*}
+SKIPLIST="$MODPATH/skiplist"
 OUTPUT="$MODPATH/exclude-list"
 KBOUTPUT="$MODPATH/.extra"
 
@@ -21,10 +22,11 @@ fi
 
 # Find xposed package name
 pm list packages -3 | awk -F: '{print $2}' | while read -r PACKAGE; do
-    pm path "$PACKAGE" | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r' | \
-    while read -r APK_PATH; do
-        aapt dump xmltree "$APK_PATH" AndroidManifest.xml 2>/dev/null | grep -qE "xposed.category|xposeddescription" && echo "$PACKAGE" >> "$OUTPUT"
-    done
+    if ! grep -Fq "$PACKAGE" "$SKIPLIST"; then
+        pm path "$PACKAGE" | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r' | while read -r APK_PATH; do
+            aapt dump xmltree "$APK_PATH" AndroidManifest.xml 2>/dev/null | grep -qE "xposed.category|xposeddescription" && echo "$PACKAGE" >> "$OUTPUT"
+        done
+    fi
 done
 
 if [ "$skipkb" != "true" ]; then

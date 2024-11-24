@@ -1,5 +1,6 @@
 MODPATH=${0%/*}
-OUTPUT="$MODPATH/common/applist"
+OUTPUT_APP="$MODPATH/common/applist"
+OUTPUT_SKIP="$MODPATH/common/skiplist"
 TS="/data/adb/modules/tricky_store"
 SCRIPT_DIR="/data/adb/tricky_store"
 TSPA="/data/adb/modules/tsupport-advance"
@@ -38,14 +39,18 @@ else
     until [ "$(getprop sys.boot_completed)" = "1" ]; do
         sleep 1
     done
-    > "$OUTPUT"
+    echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_APP"
+    echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_SKIP"
     pm list packages -3 | awk -F: '{print $2}' | while read -r PACKAGE; do
-    APK_PATH=$(pm path "$PACKAGE" | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r')
+        APK_PATH=$(pm path "$PACKAGE" | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r')
         if [ -n "$APK_PATH" ]; then
             APP_NAME=$(aapt dump badging "$APK_PATH" 2>/dev/null | grep "application-label:" | sed "s/application-label://g; s/'//g")
-            echo "app-name: $APP_NAME, package-name: $PACKAGE" >> "$OUTPUT"
+            echo "app-name: $APP_NAME, package-name: $PACKAGE" >> "$OUTPUT_APP"
         else
-            echo "app-name: Unknown App package-name: $PACKAGE" >> "$OUTPUT"
+            echo "app-name: Unknown App package-name: $PACKAGE" >> "$OUTPUT_APP"
+        fi
+        if ! aapt dump xmltree "$APK_PATH" AndroidManifest.xml 2>/dev/null | grep -qE "xposed.category|xposeddescription"; then
+            echo "$PACKAGE" >> "$OUTPUT_SKIP"
         fi
     done
     . "$SCRIPT_DIR/UpdateTargetList.sh"
