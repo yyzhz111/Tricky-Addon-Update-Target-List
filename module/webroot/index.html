@@ -1,93 +1,51 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title data-i18n="title">Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/styles.css" type="text/css">
     <script type="module" crossorigin src="/index.js"></script>
 </head>
-
 <body>
-    <div class="title-container">
-        <div id="title">Tricky Addon - Update Target List</div>
+    <!-- Header -->
+    <div class="header">
+        <div id="title" data-i18n="title">Tricky Addon - Update Target List</div>
         <button id="help-button" class="help-button"><i class="fa fa-question-circle"></i></button>
         <div class="no-connection">
             <img src="wifi-slash.svg" alt="No Connection Icon" class="wifi-icon">
         </div>
-    </div>
-    <div id="help-overlay" class="help-overlay">
-        <div class="help-menu">
-            <button id="close-help" class="close-help">&#x2715;</button>
-            <div class="help-content">
-                <p>Instructions</p>
-                <ul>
-                    <li>Save and Update
-                        <ul>
-                            <li>Save the current configuration and update target.txt immediately.</li>
-                            <li><br></li>
-                        </ul>
-                    </li>
-                    <li>Refresh
-                        <ul>
-                            <li>Refresh app list and exclude list.</li>
-                            <li><br></li>
-                        </ul>
-                    </li>
-                    <li>Select All & Deselect All
-                        <ul>
-                            <li>Select or deselect all apps in the current interface.</li>
-                            <li><br></li>
-                        </ul>
-                    </li>
-                    <li>Select From DenyList
-                        <ul>
-                            <li>Available in Magisk only, select apps that in the DenyList. Recommended.</li>
-                            <li><br></li>
-                        </ul>
-                    </li>
-                    <li>Deselect Unnecessary
-                        <ul>
-                            <li>Unnecessary category: Xposed module, root manager, root-related apps, and general apps
-                                that never check bootloader status. This option requrie Internet connection.</li>
-                            <ul>
-                                <li>Contribute to <a
-                                        href="https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/more-excldue.json"
-                                        target="_blank">unnecessary app list</a>? Create an <a
-                                        href="https://github.com/KOWX712/Tricky-Addon-Update-Target-List/issues"
-                                        target="_blank">issue</a> or <a
-                                        href="https://github.com/KOWX712/Tricky-Addon-Update-Target-List/pulls"
-                                        target="_blank">pull request</a>.</li>
-                            </ul>
-                            <li><br></li>
-                        </ul>
-                    </li>
-                    <li>Set AOSP & Valid Keybox
-                        <ul>
-                            <li>Replace tricky store keybox.xml<br><strong>AOSP keybox:</strong> Device
-                                Integrity.<br><strong>Valid keybox:</strong> Strong Integrity, fallback to Basic
-                                Integrity if revoked.<br>AOSP keybox will be replaced if there's no more valid keybox.
-                                Valid keybox option require Internet connection.</li>
-                            <li><br></li>
-                        </ul>
-                    </li>
-                    <li>Set Verified Boot Hash
-                        <ul>
-                            <li>Get it from KeyAttesation Demo. Fix abnormal boot state by reset ro.boot.vbmeta.digest.
-                            </li>
-                            <li><br></li>
-                        </ul>
-                    </li>
-                </ul>
+        <div class="language-dropdown">
+            <button class="language-button">
+                <i class="fa fa-compass"></i>
+            </button>
+            <div class="language-menu">
+                <button class="language-option" data-lang="en-US" data-i18n="language_english_us">English</button>
+                <button class="language-option" data-lang="ru-RU" data-i18n="language_russian">Русский</button>
+                <button class="language-option" data-lang="tl-PH" data-i18n="language_tagalog">Tagalog</button>
+                <button class="language-option" data-lang="zh-CN"data-i18n="language_chinese_simplified">中文（简体）</button>
+                <button class="language-option" data-lang="zh-TW"data-i18n="language_chinese_traditional">中文（繁体）</button>
             </div>
         </div>
     </div>
+
+    <!-- Loading Element -->
+    <div class="loading" data-i18n="loading"></div>
+
+    <!-- Prompt Element -->
+    <div id="prompt" class="prompt"></div>
+
+    <!-- Floating Button Element -->
+    <div class="floating-card">
+        <button class="floating-btn" id="save" data-i18n="save_and_update_button"></button>
+    </div>
+
+    <!-- Menu Options -->
     <div class="search-menu-container">
         <div class="search-card">
             <span class="search-icon"><i class="fa fa-search"></i></span>
-            <input type="text" class="search-input" id="search" placeholder="Search">
+            <input type="text" class="search-input" id="search" placeholder="Search" data-i18n="search_placeholder">
             <button class="clear-btn" id="clear-btn">&#x2715;</button>
         </div>
         <div class="menu">
@@ -97,22 +55,22 @@
             </label>
             <div id="menu-options" class="menu-options">
                 <ul>
-                    <li id="refresh">Refresh</li>
-                    <li id="select-all">Select All</li>
-                    <li id="deselect-all">Deselect All</li>
-                    <li id="select-denylist">Select From DenyList</li>
-                    <li id="deselect-unnecessary">Deselect Unnecessary</li>
-                    <li id="aospkb">Set AOSP Keybox</li>
-                    <li id="extrakb">Set Valid Keybox</li>
-                    <li id="boot-hash">Set Verified Boot Hash</li>
+                    <li id="refresh" data-i18n="refresh"></li>
+                    <li id="select-all" data-i18n="select_all"></li>
+                    <li id="deselect-all" data-i18n="deselect_all"></li>
+                    <li id="select-denylist" data-i18n="select_denylist"></li>
+                    <li id="deselect-unnecessary" data-i18n="deselect_unnecessary"></li>
+                    <li id="aospkb" data-i18n="set_aosp_keybox"></li>
+                    <li id="extrakb" data-i18n="set_valid_keybox"></li>
+                    <li id="boot-hash" data-i18n="set_verified_boot_hash"></li>
+                    <li id="about" data-i18n="about"></li>
                 </ul>
             </div>
         </div>
     </div>
+
+    <!-- Applist Display -->
     <div id="apps-list"></div>
-    <div class="floating-card">
-        <button class="floating-btn" id="save">Save and Update</button>
-    </div>
     <template id="app-template">
         <div class="card" onclick="toggleCheckbox(event)">
             <div class="content" data-package="">
@@ -121,16 +79,53 @@
             </div>
         </div>
     </template>
-    <div id="overlay" class="overlay"></div>
-    <div id="boot-hash-card" class="boot-hash-card">
-        <textarea id="boot-hash-input" class="input-box" placeholder="Paste your verified Boot Hash here"></textarea>
-        <div class="button-container">
-            <button id="save-button" class="button save-button">Save</button>
+
+    <!-- Help Overlay -->
+    <div id="help-overlay" class="help-overlay">
+        <div class="help-menu">
+            <button id="close-help" class="close-help">&#x2715;</button>
+            <div class="help-content">
+                <p data-i18n="help_instructions"></p>
+                <ul id="help-list"></ul>
+            </div>
         </div>
     </div>
-    <div class="loading">Loading...</div>
-    <div class="acknowledgment">Credit to j-hc/zygisk-detach WebUI</div>
-    <div id="prompt" class="prompt"></div>
-</body>
 
+    <!-- BootHash Input Overlay -->
+    <div id="boot-hash-overlay" class="boot-hash-overlay"></div>
+    <div id="boot-hash-card" class="boot-hash-card">
+        <textarea id="boot-hash-input" class="input-box" placeholder="Paste your verified Boot Hash here"
+            data-i18n="boot_hash_input_placeholder"></textarea>
+        <div class="button-container">
+            <button id="boot-hash-save-button" class="boot-hash-save-button" data-i18n="boot_hash_save_button"></button>
+        </div>
+    </div>
+
+    <!-- About Overlay -->
+    <div id="about-overlay" class="about-overlay">
+        <div id="about-menu" class="about-menu">
+            <button id="close-about" class="close-about">&#x2715;</button>
+            <div class="about-content">
+                <p data-i18n="module_name_line1">Module Name Line 1</p>
+                <p data-i18n="module_name_line2">Module Name Line 2</p>
+                <p><span data-i18n="by">by </span>KOWX712</p>
+                <br>
+                <p>
+                    <span data-i18n="telegram_channel"></span>:
+                    <span>t.me/kowchannel</span>
+                </p>
+                <p>
+                    <span data-i18n="github">GitHub</span>:
+                    <span>github.com/KOWX712/Tricky-Addon-Update-Target-List</span>
+                </p>
+                <br>
+                <p data-i18n="acknowledgment">Acknowledgment</p>
+                <p>j-hc/zygisk-detach: WebUI template</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer"></div>
+</body>
 </html>

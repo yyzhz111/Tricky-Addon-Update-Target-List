@@ -1,22 +1,132 @@
-let e = 0;
-const appTemplate = document.getElementById("app-template").content;
-const appListContainer = document.getElementById("apps-list");
-const loadingIndicator = document.querySelector(".loading");
+// Header Elements
+const title = document.querySelector('.header');
+const helpButton = document.getElementById('help-button');
+const noConnection = document.querySelector('.no-connection');
+const languageButton = document.querySelector('.language-button');
+const languageMenu = document.querySelector('.language-menu');
+const languageOptions = document.querySelectorAll('.language-option');
+
+// Loading and Prompt Elements
+const loadingIndicator = document.querySelector('.loading');
+const prompt = document.getElementById('prompt');
+
+// Floating Button
+const floatingBtn = document.querySelector('.floating-btn');
+
+// Search and Menu Elements
+const searchInput = document.getElementById('search');
+const clearBtn = document.getElementById('clear-btn');
 const searchMenuContainer = document.querySelector('.search-menu-container');
-const searchInput = document.getElementById("search");
-const clearBtn = document.getElementById("clear-btn");
-const title = document.querySelector('.title-container');
-const noConnection = document.querySelector(".no-connection");
-const helpButton = document.getElementById("help-button");
-const helpOverlay = document.getElementById("help-overlay");
-const closeHelp = document.getElementById("close-help");
 const searchCard = document.querySelector('.search-card');
 const menu = document.querySelector('.menu');
-const selectDenylistElement = document.getElementById("select-denylist");
-const floatingBtn = document.querySelector('.floating-btn');
+const menuButton = document.getElementById('menu-button');
+const menuOptions = document.getElementById('menu-options');
+const selectDenylistElement = document.getElementById('select-denylist');
+
+// Applist Elements
+const appTemplate = document.getElementById('app-template').content;
+const appListContainer = document.getElementById('apps-list');
+
+// Help Overlay Elements
+const helpOverlay = document.getElementById('help-overlay');
+const closeHelp = document.getElementById('close-help');
+const helpList = document.getElementById('help-list');
+
+// BootHash Overlay Elements
+const bootHashOverlay = document.getElementById('boot-hash-overlay');
+const card = document.getElementById('boot-hash-card');
+const inputBox = document.getElementById('boot-hash-input');
+const saveButton = document.getElementById('boot-hash-save-button');
+
 const basePath = "set-path";
+
+// Variables
+let e = 0;
 let excludeList = [];
 let isRefreshing = false;
+let translations = {};
+let currentLang = 'en-US';
+
+// Function to detect user's default language
+function detectUserLanguage() {
+    const userLang = navigator.language || navigator.userLanguage;
+    const langCode = userLang.split('-')[0];
+    const availableLanguages = ['en-US', 'ru-RU', 'tl-PH', 'zh-CN', 'zh-TW'];
+    if (availableLanguages.includes(userLang)) {
+        return userLang;
+    }
+    else if (availableLanguages.includes(langCode)) {
+        return langCode;
+    }
+    else {
+        return 'en-US';
+    }
+}
+
+// Load translations dynamically based on the selected language
+async function loadTranslations(lang) {
+    try {
+        const response = await fetch(`/locales/${lang}.json`);
+        translations = await response.json();
+        applyTranslations();
+    } catch (error) {
+        console.error(`Error loading translations for ${lang}:`, error);
+        if (lang !== 'en-US') {
+            console.log("Falling back to English.");
+            loadTranslations('en-US');
+        }
+    }
+}
+
+// Function to apply translations to all elements with data-i18n attributes
+function applyTranslations() {
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[key]) {
+            if (el.hasAttribute("placeholder")) {
+                el.setAttribute("placeholder", translations[key]);
+            } else {
+                el.textContent = translations[key];
+            }
+        }
+    });
+    updateHelpMenu();
+}
+
+// Language selection event listener
+document.querySelectorAll(".language-option").forEach((button) => {
+    button.addEventListener("click", (e) => {
+        const lang = e.target.getAttribute("data-lang");
+        loadTranslations(lang);
+    });
+});
+
+// Function to dynamically update the help menu
+function updateHelpMenu() {
+    helpList.innerHTML = "";
+    const helpSections = [
+        { title: "save_and_update_button", description: "save_and_update_description" },
+        { title: "refresh", description: "refresh_description" },
+        { title: "select_deselect", description: "select_description" },
+        { title: "select_denylist", description: "select_denylist_description" },
+        { title: "deselect_unnecessary", description: "deselect_unnecessary_description" },
+        { title: "set_keybox", description: "set_aosp_keybox_description" },
+        { title: "set_verified_boot_hash", description: "set_verified_boot_hash_description" }
+    ];
+    helpSections.forEach((section) => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<strong data-i18n="${section.title}">${translations[section.title]}</strong>`;
+        const description = document.createElement("ul");
+        const descriptionItem = document.createElement("li");
+        descriptionItem.textContent = translations[section.description] || `[Missing: ${section.description}]`;
+        description.appendChild(descriptionItem);
+        listItem.appendChild(description);
+        helpList.appendChild(listItem);
+        const emptyLine = document.createElement("li");
+        emptyLine.innerHTML = "<br>";
+        helpList.appendChild(emptyLine);
+    });
+}
 
 // Function to execute shell commands
 async function execCommand(command) {
@@ -172,7 +282,7 @@ async function runExtraScript() {
         noConnection.style.display = "none";
     } catch (error) {
         console.error("Failed to execute Extra script:", error);
-        showPrompt("Please check your Internet connection", false);
+        showPrompt("no_internet", false);
         noConnection.style.display = "flex";
     }
 }
@@ -251,10 +361,10 @@ async function aospkb() {
         const destinationPath = "/data/adb/tricky_store/keybox.xml";
         await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("AOSP keybox copied successfully.");
-        showPrompt("AOSP keybox set successfully.");
+        showPrompt("aosp_key_set");
     } catch (error) {
         console.error("Failed to copy AOSP keybox:", error);
-        showPrompt("Failed to update keybox.", false);
+        showPrompt("key_set_error", false);
     }
 }
 
@@ -269,34 +379,30 @@ async function extrakb() {
         }
         await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("Valid keybox copied successfully.");
-        showPrompt("Valid keybox set successfully.");
+        showPrompt("valid_key_set");
     } catch (error) {
         console.error("Failed to copy valid keybox:", error);
         await aospkb();
-        showPrompt("No valid keybox found, replaced with AOSP keybox.", false);
+        showPrompt("no_valid_fallback", false);
     }
 }
 
 // Function to handle Verified Boot Hash
 async function setBootHash() {
-    const overlay = document.getElementById("overlay");
-    const card = document.getElementById("boot-hash-card");
-    const inputBox = document.getElementById("boot-hash-input");
-    const saveButton = document.getElementById("save-button");
     const showCard = () => {
-        overlay.style.display = "flex";
+        bootHashOverlay.style.display = "flex";
         card.style.display = "flex";
         requestAnimationFrame(() => {
-            overlay.classList.add("show");
+            bootHashOverlay.classList.add("show");
             card.classList.add("show");
         });
         document.body.style.overflow = "hidden";
     };
     const closeCard = () => {
-        overlay.classList.remove("show");
+        bootHashOverlay.classList.remove("show");
         card.classList.remove("show");
         setTimeout(() => {
-            overlay.style.display = "none";
+            bootHashOverlay.style.display = "none";
             card.style.display = "none";
             document.body.style.overflow = "auto";
         }, 200);
@@ -312,27 +418,60 @@ async function setBootHash() {
         console.warn("Failed to read boot_hash file. Defaulting to empty input.");
         inputBox.value = "";
     }
-    // Save button click handler
     saveButton.addEventListener("click", async () => {
         const inputValue = inputBox.value.trim();
         try {
             await execCommand(`echo "${inputValue}" > /data/adb/boot_hash`);
             await execCommand(`su -c resetprop -n ro.boot.vbmeta.digest ${inputValue}`);
-            showPrompt("Verified Boot Hash saved successfully.");
+            showPrompt("boot_hash_set");
             closeCard();
         } catch (error) {
             console.error("Failed to update boot_hash:", error);
-            showPrompt("Failed to update Verified Boot Hash.", false);
+            showPrompt("boot_hash_set_error", false);
         }
     });
-    overlay.addEventListener("click", (event) => {
-        if (event.target === overlay) closeCard();
+    bootHashOverlay.addEventListener("click", (event) => {
+        if (event.target === bootHashOverlay) closeCard();
     });
 }
 
+// Function to show about overlay
+function aboutMenu() {
+    const aboutOverlay = document.getElementById('about-overlay');
+    const menu = document.getElementById('about-menu');
+    const closeAbout = document.getElementById('close-about');
+    const showMenu = () => {
+        aboutOverlay.style.display = 'flex';
+        setTimeout(() => {
+            aboutOverlay.style.opacity = '1';
+            menu.style.opacity = '1';
+        }, 10);
+        document.body.style.overflow = 'hidden';
+    };
+    const hideMenu = () => {
+        aboutOverlay.style.opacity = '0';
+        menu.style.opacity = '0';
+        setTimeout(() => {
+            aboutOverlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }, 200);
+    };
+    showMenu();
+    closeAbout.addEventListener('click', (event) => {
+        event.stopPropagation();
+        hideMenu();
+    });
+    aboutOverlay.addEventListener('click', (event) => {
+        if (!menu.contains(event.target)) {
+            hideMenu();
+        }
+    });
+    menu.addEventListener('click', (event) => event.stopPropagation());
+}
+
 // Function to show the prompt with a success or error message
-function showPrompt(message, isSuccess = true) {
-    const prompt = document.getElementById('prompt');
+function showPrompt(key, isSuccess = true) {
+    const message = translations[key] || key;
     prompt.textContent = message;
     prompt.classList.toggle('error', !isSuccess);
     if (window.promptTimeout) {
@@ -350,9 +489,7 @@ function showPrompt(message, isSuccess = true) {
 
 // Function to toggle menu option
 function setupMenuToggle() {
-    const menuButton = document.getElementById('menu-button');
     const menuIcon = menuButton.querySelector('.menu-icon');
-    const menuOptions = document.getElementById('menu-options');
     let menuOpen = false;
     let menuAnimating = false;
 
@@ -378,7 +515,7 @@ function setupMenuToggle() {
         }
     });
 
-    const closeMenuItems = ['refresh', 'select-all', 'deselect-all', 'select-denylist', 'deselect-unnecessary', 'aospkb', 'extrakb', 'boot-hash'];
+    const closeMenuItems = ['refresh', 'select-all', 'deselect-all', 'select-denylist', 'deselect-unnecessary', 'aospkb', 'extrakb', 'boot-hash', 'about'];
     closeMenuItems.forEach(id => {
         const item = document.getElementById(id);
         if (item) {
@@ -482,14 +619,14 @@ document.getElementById("save").addEventListener("click", async () => {
         // Execute UpdateTargetList.sh
         try {
             await execCommand("/data/adb/tricky_store/UpdateTargetList.sh");
-            showPrompt("Config and target.txt updated");
+            showPrompt("saved_and_updated");
         } catch (error) {
             console.error("Failed to update target list:", error);
-            showPrompt("Config saved, but failed to update target list", false);
+            showPrompt("saved_not_updated", false);
         }
     } catch (error) {
         console.error("Failed to update EXCLUDE file:", error);
-        showPrompt("Failed to save config", false);
+        showPrompt("save_error", false);
     }
     await readExcludeFile();
     await refreshAppList();
@@ -497,6 +634,8 @@ document.getElementById("save").addEventListener("click", async () => {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
+    const userLang = detectUserLanguage();
+    await loadTranslations(userLang);
     setupMenuToggle();
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.getElementById("select-all").addEventListener("click", selectAllApps);
@@ -506,10 +645,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("aospkb").addEventListener("click", aospkb);
     document.getElementById("extrakb").addEventListener("click", extrakb);
     document.getElementById("boot-hash").addEventListener("click", setBootHash);
+    document.getElementById("about").addEventListener("click", aboutMenu);
     await fetchAppList();
     checkMagisk();
-    runExtraScript();
     loadingIndicator.style.display = "none";
+    runExtraScript();
+});
+
+// Toggle the visibility of the language menu when clicking the button
+languageButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const isVisible = languageMenu.classList.contains("show");
+    if (isVisible) {
+        languageMenu.classList.remove("show");
+    } else {
+        languageMenu.classList.add("show");
+    }
+});
+document.addEventListener("click", (event) => {
+    if (!languageButton.contains(event.target) && !languageMenu.contains(event.target)) {
+        languageMenu.classList.remove("show");
+    }
+});
+languageOptions.forEach(option => {
+    option.addEventListener("click", () => {
+        languageMenu.classList.remove("show");
+    });
 });
 
 // Scroll event
@@ -525,6 +686,9 @@ window.addEventListener('scroll', () => {
         title.style.transform = 'translateY(0)';
         searchMenuContainer.style.transform = 'translateY(0)';
         floatingBtn.style.transform = 'translateY(-100px)';
+    }
+    if (languageMenu.classList.contains("show")) {
+        languageMenu.classList.remove("show");
     }
     lastScrollY = window.scrollY;
 });
