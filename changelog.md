@@ -3,15 +3,14 @@ A **KSU WebUI** to configure tricky store target.txt
 
 Requirement: Tricky Store module installed
 
-Manually add VerifiedBootHash to /data/adb/boot_hash (optional)
-
 GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
 
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
-Starting from v2.4, WebUI will take longer time to load due to reading app name from every base.apk. The more apps installed, the longer time it takes to load the WebUI.
-
 ## Changelog
+### v2.6-beta.1
+- Check in (release notes)[https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/tag/v2.6-beta.1].
+
 ### v2.5
 - Remove kb prompt on installation, moved into WebUI
 - Restore to AOSP keybox during uninstallation

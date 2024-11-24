@@ -56,22 +56,14 @@
                     "package-name": "xzr.konabess"
                 },
                 {
-                    "name": "KsuWebUI",
+                    "name": "KSUWebUI",
                     "package-name": "io.github.a13e300.ksuwebui"
-                },
-                {
-                    "name": "ShortX",
-                    "package-name": "tornaco.apps.shortx"
                 }
             ]
         },
         {
             "info": "General app that won't detect bootloader",
             "apps": [
-                {
-                    "name": "Scene",
-                    "package-name": "com.omarea.vtools"
-                },
                 {
                     "name": "Swift Backup",
                     "package-name": "org.swiftapps.swiftbackup"
@@ -89,6 +81,10 @@
                     "package-name": "com.google.android.apps.docs.editors.slides"
                 },
                 {
+                    "name": "Keep Notes",
+                    "package-name": "com.google.android.keep"
+                },
+                {
                     "name": "Google Maps",
                     "package-name": "com.google.android.apps.maps"
                 },
@@ -103,6 +99,18 @@
                 {
                     "name": "Chrome",
                     "package-name": "com.android.chrome"
+                },
+                {
+                    "name": "YouTube",
+                    "package-name": "com.google.android.youtube"
+                },
+                {
+                    "name": "YouTube Music",
+                    "package-name": "com.google.android.apps.youtube.music"
+                },
+                {
+                    "name": "Speedtest",
+                    "package-name": "org.zwanoo.android.speedtest"
                 }
             ]
         }
