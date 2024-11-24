@@ -21,7 +21,7 @@ if [ ! -s "$OUTPUT" ]; then
 fi
 
 # Find xposed package name
-pm list packages -3 | awk -F: '{print $2}' | while read -r PACKAGE; do
+pm list packages -3  </dev/null 2>&1 | cat | awk -F: '{print $2}' | while read -r PACKAGE; do
     if ! grep -Fq "$PACKAGE" "$SKIPLIST"; then
         pm path "$PACKAGE" | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r' | while read -r APK_PATH; do
             aapt dump xmltree "$APK_PATH" AndroidManifest.xml 2>/dev/null | grep -qE "xposed.category|xposeddescription" && echo "$PACKAGE" >> "$OUTPUT"

@@ -1,8 +1,9 @@
 # Translation Guide
 ## Fix Translation Error
-- Fork this repository.
-- Edit the string value with translated incorrectly.
-- Create a Pull Request.
+1. Fork this repository.
+2. Find your language string file in `/module/webroot/locales/`.
+3. Edit the string value with translated incorrectly.
+4. Create a Pull Request.
 
 ---
 ## Create a New Language
@@ -30,3 +31,4 @@ function detectUserLanguage() {
     const availableLanguages = ['en-US', 'ru-RU', 'tl-PH', 'zh-CN', 'zh-TW'];
 }
 ```
+6. Create a Pull Request
