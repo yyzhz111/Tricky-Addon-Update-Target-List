@@ -1,6 +1,5 @@
 MODPATH=${0%/*}
-OUTPUT_APP="$MODPATH/common/applist"
-OUTPUT_SKIP="$MODPATH/common/skiplist"
+HIDE_DIR="/data/adb/modules/.TA_utl"
 TS="/data/adb/modules/tricky_store"
 SCRIPT_DIR="/data/adb/tricky_store"
 TSPA="/data/adb/modules/tsupport-advance"
@@ -19,23 +18,32 @@ elif [ ! -d "$TSPA" ] && [ -f "/storage/emulated/0/stop-tspa-auto-target" ]; the
     rm -f "/storage/emulated/0/stop-tspa-auto-target"
 fi
 
-if [ ! -f "$MODPATH/common/module.prop.orig" ]; then
-    sed -i 's/^description=.*/description=Module is corrupted, please reinstall module./' "$MODPATH/module.prop"
-    touch "$MODPATH/disable"
-    exit 1
+rm -f "$MODPATH/module.prop"
+if [ ! -d "$HIDE_DIR" ]; then
+    mv "$MODPATH" "$HIDE_DIR"
 fi
+MODPATH="$HIDE_DIR"
+OUTPUT_APP="$MODPATH/common/applist"
+OUTPUT_SKIP="$MODPATH/common/skiplist"
 
 if [ ! -d "$TS" ]; then
-    sed -i 's/^description=.*/description=Tricky store is not installed/' "$MODPATH/module.prop"
-    touch "$MODPATH/disable"
+    cp -rf "$MODPATH/common/temp/" "/data/adb/modules/TA_utl/"
+    rm -rf "$MODPATH"
+    exit 1
 elif  [ -f "$TS/disable" ]; then
-    sed -i 's/^description=.*/description=Tricky store is disabled/' "$MODPATH/module.prop"
-    touch "$MODPATH/disable"
-elif  [ ! -f "$SCRIPT_DIR/UpdateTargetList.sh" ]; then
-    sed -i 's/^description=.*/description=Script missing, please install module again/' "$MODPATH/module.prop"
-    touch "$MODPATH/disable"
+    exit 1
 else
-    cat "$MODPATH/common/module.prop.orig" > "$MODPATH/module.prop"
+    if [ -f "$MODPATH/action.sh" ]; then
+        if [ -f "$TS/action.sh" ]; then
+            rm -f "$TS/action.sh"
+        fi
+        ln -s "$MODPATH/action.sh" "$TS/action.sh"
+    else
+        if [ ! -d "$TS/webroot" ]; then
+            rm -rf "$TS/webroot"
+        fi
+        ln -s "$MODPATH/webroot" "$TS/webroot"
+    fi
     until [ "$(getprop sys.boot_completed)" = "1" ]; do
         sleep 1
     done

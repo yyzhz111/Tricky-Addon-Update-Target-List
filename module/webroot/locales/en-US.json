@@ -5,6 +5,7 @@
     "boot_hash_save_button": "Save",
     "loading": "Loading...",
     "boot_hash_input_placeholder": "Paste your verified Boot Hash here",
+    "uninstall_webui": "Uninstall WebUI",
     
     "refresh": "Refresh",
     "select_all": "Select All",
@@ -32,6 +33,7 @@
     "by": "by ",
     "telegram_channel": "Telegram Channel",
     "github": "GitHub",
+    "disclaimer": "This WebUI is not a part of Tricky Store, DO NOT report to Tricky Store author if you encounter any issue.",
     "acknowledgment": "Acknowledgment",
 
     "no_internet": "Please check your Internet connection",
@@ -43,5 +45,6 @@
     "boot_hash_set_error": "Failed to update Verified Boot Hash",
     "saved_and_updated": "Config and target.txt updated",
     "saved_not_updated": "Config saved, but failed to update target list",
-    "save_error": "Failed to save config"
+    "uninstall_prompt": "WebUI will be removed after reboot",
+    "uninstall_failed": "Failed to uninstall WebUI"
 }

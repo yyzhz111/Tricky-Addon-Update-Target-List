@@ -245,13 +245,15 @@ async function refreshAppList() {
     clearBtn.style.display = "none";
     appListContainer.innerHTML = '';
     loadingIndicator.style.display = 'flex';
+    document.querySelector('.uninstall-container').classList.add('hidden');
     await new Promise(resolve => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
     if (noConnection.style.display === "flex") {
         await runExtraScript();
     }
-    await fetchAppList();[]
+    await fetchAppList();
     loadingIndicator.style.display = 'none';
+    document.querySelector('.uninstall-container').classList.remove('hidden');
     isRefreshing = false;
 }
 
@@ -649,6 +651,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await fetchAppList();
     checkMagisk();
     loadingIndicator.style.display = "none";
+    document.querySelector('.uninstall-container').classList.remove('hidden');
     runExtraScript();
 });
 
@@ -675,12 +678,12 @@ languageOptions.forEach(option => {
 
 // Scroll event
 let lastScrollY = window.scrollY;
-const scrollThreshold = 35;
+const scrollThreshold = 40;
 window.addEventListener('scroll', () => {
     if (isRefreshing) return;
     if (window.scrollY > lastScrollY && window.scrollY > scrollThreshold) {
         title.style.transform = 'translateY(-100%)';
-        searchMenuContainer.style.transform = 'translateY(-35px)';
+        searchMenuContainer.style.transform = 'translateY(-40px)';
         floatingBtn.style.transform = 'translateY(0)';
     } else if (window.scrollY < lastScrollY) {
         title.style.transform = 'translateY(0)';
@@ -718,5 +721,16 @@ closeHelp.addEventListener("click", hideHelpOverlay);
 helpOverlay.addEventListener("click", (event) => {
     if (event.target === helpOverlay) {
         hideHelpOverlay();
+    }
+});
+
+// Uninstall WebUI button
+document.querySelector(".uninstall-container").addEventListener("click", async () => {
+    try {
+        await execCommand('cp -rf "/data/adb/modules/.TA_utl/common/temp/" "/data/adb/modules/TA_utl/"');
+        showPrompt("uninstall_prompt");
+    } catch (error) {
+        console.error("Failed to execute uninstall command:", error);
+        showPrompt("uninstall_failed", false);
     }
 });

@@ -5,6 +5,7 @@ A **KSU WebUI** to configure tricky store target.txt
 ## Description
 - Automated script to update tricky store target list.
 - System app excluded by default
+- This module is **not** a part of Tricky Store module, DO NOT report to Tricky Store if you encounter any issue.
 - This is **not** a necessary module for root hide but for those who lazy to do it manually
 
 ## Requirements

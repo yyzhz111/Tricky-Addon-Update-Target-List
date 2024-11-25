@@ -5,6 +5,7 @@
     "boot_hash_save_button": "Сохранить",
     "loading": "Загрузка...",
     "boot_hash_input_placeholder": "Вставьте свой проверенный Boot Hash сюда",
+    "uninstall_webui": "Удалить WebUI",
     
     "refresh": "Обновить",
     "select_all": "Выбрать все",
@@ -32,6 +33,7 @@
     "by": "от ",
     "telegram_channel": "Канал в Telegram",
     "github": "GitHub",
+    "disclaimer": "Этот WebUI не является частью Tricky Store, НЕ сообщайте автору Tricky Store о любых возникающих проблемах.",
     "acknowledgment": "Благодарности",
     
     "no_internet": "Пожалуйста, проверьте ваше подключение к интернету",
@@ -43,5 +45,7 @@
     "boot_hash_set_error": "Не удалось обновить Verified Boot Hash",
     "saved_and_updated": "Конфигурация и target.txt обновлены",
     "saved_not_updated": "Конфигурация сохранена, но не удалось обновить список целей",
-    "save_error": "Не удалось сохранить конфигурацию"
+    "save_error": "Не удалось сохранить конфигурацию",
+    "uninstall_prompt": "WebUI будет удален после перезагрузки",
+    "uninstall_failed": "Не удалось удалить WebUI"
 }

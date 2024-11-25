@@ -5,14 +5,18 @@ initialize() {
     if [ -f "$CONFIG_DIR/skipwebui" ]; then
         rm -f "$CONFIG_DIR/skipwebui"
     fi
-    cp "$MODPATH/module.prop" "$COMPATH/module.prop.orig"
+    if [ -d "/data/adb/modules/$NEW_MODID" ]; then
+        rm -rf "/data/adb/modules/$NEW_MODID"
+    fi
+    cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
+    cp "$COMPATH/.default" "$COMPATH/temp/.default"
     mv "$COMPATH/UpdateTargetList.sh" "$SCRIPT_DIR/UpdateTargetList.sh"
 
-    sed -i "s|\"set-path\"|\"/data/adb/modules/$MODID/common/\"|" "$MODPATH/webroot/index.js" || {
+    sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/common/\"|" "$MODPATH/webroot/index.js" || {
         ui_print "! Failed to set path"
         abort
     }
-    sed -i "s|\"set-id\"|\"$MODID\"|" "$COMPATH/util_func.sh" || {
+    sed -i "s|\"set-id\"|\"$NEW_MODID\"|" "$COMPATH/util_func.sh" || {
         ui_print "! Failed to set id"
         abort
     }
@@ -77,19 +81,8 @@ find_config() {
 
 migrate_old_boot_hash() {
     if [ ! -f "/data/adb/boot_hash" ]; then
-        if [ -f "$ORG_DIR/boot_hash" ]; then
-            mv "$ORG_DIR/boot_hash" "/data/adb/boot_hash"
-        fi
-            mv "$COMPATH/boot_hash" "/data/adb/boot_hash"
+        mv "$COMPATH/boot_hash" "/data/adb/boot_hash"
     else
         rm -f "$COMPATH/boot_hash"
-    fi
-
-    # Migrate from old version setup
-    if [ -f "$ORG_DIR/system.prop" ]; then
-        hash_value=$(sed -n 's/^ro.boot.vbmeta.digest=//p' "$ORG_DIR/system.prop")
-        if [ -n "$hash_value" ]; then
-            echo -e "\n$hash_value" >> "/data/adb/boot_hash"
-        fi
     fi
 }

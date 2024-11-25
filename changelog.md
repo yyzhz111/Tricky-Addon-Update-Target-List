@@ -3,11 +3,19 @@ A **KSU WebUI** to configure tricky store target.txt
 
 Requirement: Tricky Store module installed
 
+This module is not a part of Tricky Store, DO NOT report to Tricky Store if you encounter any issue.
+
 GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
 
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.6-beta.2
+- Due to extensive code refactoring, you might encounter unexpected bugs in this version, feedback in [Telegram](https://t.me/kowchannel) or [create issue](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/issues) if you found any issue.
+- This module now invisible, use shortcut on Tricky Store module. To uninstall module, scroll down to the botttom of WebUI and press Uninstall WebUI.
+- Compatiple with Tricky Store 1.2.0. Tested on Magisk Alpha 28001, Apatch Next 11010, KernelSU 11895.
+- Fixed some UI bug.
+
 ### v2.6-beta.1
 - Check in [release notes](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/tag/v2.6-beta.1).
 

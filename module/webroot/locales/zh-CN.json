@@ -5,7 +5,8 @@
     "boot_hash_save_button": "保存",
     "loading": "加载中...",
     "boot_hash_input_placeholder": "在此粘贴您的哈希值",
-    
+    "uninstall_webui": "卸载 WebUI",
+   
     "refresh": "刷新",
     "select_all": "全选",
     "deselect_all": "取消全选",
@@ -32,6 +33,7 @@
     "by": "作者：",
     "telegram_channel": "TG频道",
     "github": "GitHub",
+    "disclaimer": "此 WebUI 不是 Tricky Store 的一部分，遇到任何问题请勿向 Tricky Store 作者反馈。",
     "acknowledgment": "特别鸣谢",
 
     "no_internet": "请检查您的网络连接",
@@ -43,5 +45,7 @@
     "boot_hash_set_error": "哈希值重置失败",
     "saved_and_updated": "成功保存配置和更新目标列表",
     "saved_not_updated": "配置已保存，但更新目标列表失败",
-    "save_error": "保存配置失败"
+    "save_error": "保存配置失败",
+    "uninstall_prompt": "WebUI 将在重启后被移除",
+    "uninstall_failed": "卸载 WebUI 失败"
 }

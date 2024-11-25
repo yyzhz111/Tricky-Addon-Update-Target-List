@@ -1,6 +1,6 @@
 id=TA_utl
 name=Tricky Addon - Update Target List
-version=v2.6-beta.1
+version=v2.6-beta.2
 versionCode=250
 author=KOWX712
 description=A WebUI to conifgure tricky store target.txt

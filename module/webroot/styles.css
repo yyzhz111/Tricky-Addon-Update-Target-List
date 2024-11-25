@@ -20,20 +20,21 @@ body {
 }
 
 #title {
-    font-size: 18px;
+    font-size: 16.5px;
     font-weight: bold;
 }
 
 .no-connection {
+    padding-bottom: 2px;
     display: none;
-    align-items: center;
+    position: relative;
+    margin-right: 0px;
     color: #7E7E7E;
 }
 
 .no-connection .wifi-icon {
-    width: 18px;
-    height: 18px;
-    margin-right: 0;
+    width: 22px;
+    height: 22px;
     filter: invert(0.6) sepia(0) saturate(0) hue-rotate(180deg) brightness(0.8) contrast(1);
 }
 
@@ -45,9 +46,9 @@ body {
 .language-button {
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 23px;
     color: #333;
-    margin-left: 10px;
+    margin-right: -3px;
 }
 
 .language-menu {
@@ -57,7 +58,6 @@ body {
     position: absolute;
     right: 0;
     background-color: #fff;
-    min-width: 120px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 2000;
     border: 1px solid #ccc;
@@ -89,10 +89,9 @@ body {
 
 .help-button {
     margin-right: auto;
-    padding: 0 7px;
     background: none;
     border: none;
-    font-size: 23px;
+    font-size: 22px;
     align-items: center;
     justify-content: center;
 }
@@ -270,7 +269,6 @@ body {
     background: #fff;
     border-radius: 8px;
     padding: 25px 30px;
-    padding-right: 50px;
     z-index: 1200;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     opacity: 0;
@@ -306,6 +304,14 @@ body {
 
 .about-content p span[data-i18n="by"] {
     font-size: 14px;
+}
+
+.about-content p span[data-i18n="telegram_channel"] {
+    font-weight: bold;
+}
+
+.about-content p span[data-i18n="github"] {
+    font-weight: bold;
 }
 
 .about-content p[data-i18n="acknowledgment"] {
@@ -544,6 +550,7 @@ body {
 }
 
 .floating-btn {
+    flex-shrink: 0;
     background-color: #007bff;
     border: none;
     box-shadow: 0 4px 8px #0003;
@@ -576,6 +583,35 @@ body {
 
 .footer {
     padding: 25px;
+    position: relative;
+}
+
+.uninstall-container {
+    padding: 10px 10px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background-color: #B10000
+}
+
+.uninstall-container i {
+    margin-right: 5px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.uninstall-container span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.hidden {
+    display: none;
 }
 
 @media (prefers-color-scheme: dark) {

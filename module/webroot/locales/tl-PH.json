@@ -5,6 +5,7 @@
     "boot_hash_save_button": "I-save",
     "loading": "Naglo-load...",
     "boot_hash_input_placeholder": "I-paste ang iyong verified Boot Hash dito",
+    "uninstall_webui": "I-uninstall ang WebUI",
     
     "refresh": "I-refresh",
     "select_all": "Piliin Lahat",
@@ -32,6 +33,7 @@
     "by": "ni ",
     "telegram_channel": "Telegram Channel",
     "github": "GitHub",
+    "disclaimer": "Ang WebUI na ito ay hindi bahagi ng Tricky Store, HUWAG i-report sa may-akda ng Tricky Store kung makaranas ka ng anumang isyu.",
     "acknowledgment": "Pagkilala",
     
     "no_internet": "Pakitingnan ang iyong koneksyon sa Internet",
@@ -43,5 +45,7 @@
     "boot_hash_set_error": "Nabigong i-update ang Verified Boot Hash",
     "saved_and_updated": "Na-save ang config at na-update ang target.txt",
     "saved_not_updated": "Na-save ang config, ngunit nabigong i-update ang target list",
-    "save_error": "Nabigong i-save ang config"
+    "save_error": "Nabigong i-save ang config",
+    "uninstall_prompt": "Mawawala ang WebUI pagkatapos ng reboot",
+    "uninstall_failed": "Nabigong i-uninstall ang WebUI"
 }
