@@ -39,7 +39,7 @@ else
         fi
         ln -s "$MODPATH/action.sh" "$TS/action.sh"
     else
-        if [ ! -d "$TS/webroot" ]; then
+        if [ -d "$TS/webroot" ]; then
             rm -rf "$TS/webroot"
         fi
         ln -s "$MODPATH/webroot" "$TS/webroot"
