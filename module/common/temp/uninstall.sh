@@ -13,7 +13,7 @@ rm -rf "$SCRIPT_DIR/target_list_config"
 rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
 rm -f "/data/adb/boot_hash"
 if [ -d "$TS" ]; then
-    if [ -f "$MODPATH/action.sh" ]; then
+    if [ -f "$TS/action.sh" ]; then
         rm -f "$TS/action.sh"
     else
         rm -rf "$TS/webroot"
