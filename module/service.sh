@@ -18,7 +18,9 @@ elif [ ! -d "$TSPA" ] && [ -f "/storage/emulated/0/stop-tspa-auto-target" ]; the
     rm -f "/storage/emulated/0/stop-tspa-auto-target"
 fi
 
-rm -f "$MODPATH/module.prop"
+if [ "$KSU" ] || [ "$APATCH" ]; then
+    rm -f "$MODPATH/module.prop"
+fi
 if [ ! -d "$HIDE_DIR" ]; then
     mv "$MODPATH" "$HIDE_DIR"
 fi
