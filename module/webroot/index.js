@@ -245,7 +245,7 @@ async function refreshAppList() {
     clearBtn.style.display = "none";
     appListContainer.innerHTML = '';
     loadingIndicator.style.display = 'flex';
-    document.querySelector('.uninstall-container').classList.add('hidden');
+    document.querySelector('.uninstall-container').classList.add('hidden-uninstall');
     await new Promise(resolve => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
     if (noConnection.style.display === "flex") {
@@ -253,7 +253,7 @@ async function refreshAppList() {
     }
     await fetchAppList();
     loadingIndicator.style.display = 'none';
-    document.querySelector('.uninstall-container').classList.remove('hidden');
+    document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
     isRefreshing = false;
 }
 
@@ -651,7 +651,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await fetchAppList();
     checkMagisk();
     loadingIndicator.style.display = "none";
-    document.querySelector('.uninstall-container').classList.remove('hidden');
+    document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
     runExtraScript();
 });
 
@@ -724,10 +724,13 @@ helpOverlay.addEventListener("click", (event) => {
     }
 });
 
-// Uninstall WebUI button
+// Uninstall WebUI
 document.querySelector(".uninstall-container").addEventListener("click", async () => {
     try {
-        await execCommand('cp -rf "/data/adb/modules/.TA_utl/common/temp/" "/data/adb/modules/TA_utl/"');
+        await execCommand(`
+            su -c "mkdir -p '/data/adb/modules/TA_utl' &&
+            cp -rf '${basePath}temp/'* '/data/adb/modules/TA_utl/'"
+        `);
         showPrompt("uninstall_prompt");
     } catch (error) {
         console.error("Failed to execute uninstall command:", error);

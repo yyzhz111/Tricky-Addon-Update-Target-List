@@ -595,7 +595,7 @@ body {
     display: flex;
     align-items: center;
     border-radius: 8px;
-    background-color: #B10000
+    background-color: #B10000;
 }
 
 .uninstall-container i {
@@ -610,7 +610,7 @@ body {
     color: #fff;
 }
 
-.hidden {
+.uninstall-container.hidden-uninstall {
     display: none;
 }
 
