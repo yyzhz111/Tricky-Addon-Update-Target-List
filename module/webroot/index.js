@@ -277,16 +277,26 @@ function deselectAllApps() {
 
 // Function to run the extra script
 async function runExtraScript() {
-    try {
-        const scriptPath = `${basePath}get_extra.sh`;
-        await execCommand(scriptPath);
-        console.log("Extra script executed successfully.");
-        noConnection.style.display = "none";
-    } catch (error) {
-        console.error("Failed to execute Extra script:", error);
-        showPrompt("no_internet", false);
-        noConnection.style.display = "flex";
+  try {
+    const scriptPath = `${basePath}get_extra.sh`;
+    const output = await execCommand(scriptPath);
+    console.log("Extra script executed successfully.");
+    noConnection.style.display = "none";
+    if (output.includes("update")) {
+      console.log("Update detected from extra script.");
+      showPrompt("new_update");
+      await execCommand(`
+        su -c "mkdir -p '/data/adb/modules/TA_utl' &&
+        cp -rf '${basePath}temp/'* '/data/adb/modules/TA_utl/'"
+      `);
+    } else {
+      console.log("No update detected from extra script.");
     }
+  } catch (error) {
+    console.error("Failed to execute Extra script:", error);
+    showPrompt("no_internet", false);
+    noConnection.style.display = "flex";
+  }
 }
 
 // Function to read the exclude list and uncheck corresponding apps
@@ -728,12 +738,20 @@ helpOverlay.addEventListener("click", (event) => {
 document.querySelector(".uninstall-container").addEventListener("click", async () => {
     try {
         await execCommand(`
-            su -c "mkdir -p '/data/adb/modules/TA_utl' &&
-            cp -rf '${basePath}temp/'* '/data/adb/modules/TA_utl/'"
+            su -c "
+                if [ -d '${basePath}temp/' ]; then
+                    mkdir -p '/data/adb/modules/TA_utl' &&
+                    cp -rf '${basePath}temp/'* '/data/adb/modules/TA_utl/' &&
+                    touch '/data/adb/modules/TA_utl/remove'
+                else
+                    touch '/data/adb/modules/TA_utl/remove'
+                fi
+            "
         `);
         showPrompt("uninstall_prompt");
     } catch (error) {
         console.error("Failed to execute uninstall command:", error);
+        console.log("Error message:", error.message);
         showPrompt("uninstall_failed", false);
     }
 });
