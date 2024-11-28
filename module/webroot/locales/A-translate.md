@@ -12,7 +12,7 @@
 
 ### Advanced
 1. Fork this repository.
-2. Rename `/module/webroot/locales/A-translate.json` to `language_code-COUNTRY_CODE.json`, e.g., `en-US.json`.
+2. Rename `/module/webroot/locales/A-template.json` to `language_code-COUNTRY_CODE.json`, e.g., `en-US.json`.
 3. Translate the string value inside.
 4. Add `langauge-option` into `/module/webroot/index.html`.
 Format:
