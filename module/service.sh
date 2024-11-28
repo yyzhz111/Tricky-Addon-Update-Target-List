@@ -18,20 +18,32 @@ elif [ ! -d "$TSPA" ] && [ -f "/storage/emulated/0/stop-tspa-auto-target" ]; the
     rm -f "/storage/emulated/0/stop-tspa-auto-target"
 fi
 
-if [ "$KSU" ] || [ "$APATCH" ]; then
-    rm -f "$MODPATH/module.prop"
+if [ -d "$MODPATH/common/temp" ]; then
+    if [ "$KSU" ] || [ "$APATCH" ]; then
+        rm -f "$MODPATH/module.prop"
+    fi
+    if [ ! -d "$HIDE_DIR" ]; then
+        mv "$MODPATH" "$HIDE_DIR"
+    elif [[ "$MODPATH" != "$HIDE_DIR" ]]; then
+        rm -rf "$MODPATH"
+        exit 0
+    fi
+    MODPATH="$HIDE_DIR"
 fi
-if [ ! -d "$HIDE_DIR" ]; then
-    mv "$MODPATH" "$HIDE_DIR"
-fi
-MODPATH="$HIDE_DIR"
+
 OUTPUT_APP="$MODPATH/common/applist"
 OUTPUT_SKIP="$MODPATH/common/skiplist"
 
 if [ ! -d "$TS" ]; then
-    cp -rf "$MODPATH/common/temp/" "/data/adb/modules/TA_utl/"
-    rm -rf "$MODPATH"
-    exit 1
+    if [ -d "$MODPATH/common/temp" ]; then
+        mkdir -p "/data/adb/modules/TA_utl"
+        cp -rf "$MODPATH/common/temp/*" "/data/adb/modules/TA_utl/"
+        touch "/data/adb/modules/TA_utl/remove"
+        exit 1
+    else
+        touch "$MODPATH/remove"
+        exit 1
+    fi
 elif  [ -f "$TS/disable" ]; then
     exit 1
 else
@@ -44,7 +56,9 @@ else
         if [ -d "$TS/webroot" ]; then
             rm -rf "$TS/webroot"
         fi
-        ln -s "$MODPATH/webroot" "$TS/webroot"
+        if [ -d "$MODPATH/common/temp" ]; then
+            ln -s "$MODPATH/webroot" "$TS/webroot"
+        fi
     fi
     until [ "$(getprop sys.boot_completed)" = "1" ]; do
         sleep 1

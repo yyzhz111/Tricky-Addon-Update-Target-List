@@ -4,6 +4,7 @@ COMPATH="$MODPATH/common"
 TS="/data/adb/modules/tricky_store"
 SCRIPT_DIR="/data/adb/tricky_store"
 CONFIG_DIR="$SCRIPT_DIR/target_list_config"
+MODID=`grep_prop id $TMPDIR/module.prop`
 NEW_MODID=.TA_utl
 kb="$COMPATH/.default"
 
