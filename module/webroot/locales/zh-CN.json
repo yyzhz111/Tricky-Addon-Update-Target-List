@@ -47,5 +47,6 @@
     "saved_not_updated": "配置已保存，但更新目标列表失败",
     "save_error": "保存配置失败",
     "uninstall_prompt": "WebUI 将在重启后被移除",
-    "uninstall_failed": "卸载 WebUI 失败"
+    "uninstall_failed": "卸载 WebUI 失败",
+    "new_update": "发现新的版本！"
 }
