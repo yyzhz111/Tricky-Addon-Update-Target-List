@@ -1,8 +1,6 @@
 ### Tricky Addon: Update Target List
 A **KSU WebUI** to configure tricky store target.txt
 
-Requirement: Tricky Store module installed
-
 This module is not a part of Tricky Store, DO NOT report to Tricky Store if you encounter any issue.
 
 GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
@@ -10,6 +8,9 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.6-beta.3
+- Check in [release notes](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/tag/v2.6-beta.3).
+
 ### v2.6-beta.2
 - Check in [release notes](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/tag/v2.6-beta.2).
 
