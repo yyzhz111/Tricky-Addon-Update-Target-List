@@ -45,6 +45,7 @@
     "boot_hash_set_error": "Failed to update Verified Boot Hash",
     "saved_and_updated": "Config and target.txt updated",
     "saved_not_updated": "Config saved, but failed to update target list",
+    "save_error": "Failed to save config",
     "uninstall_prompt": "WebUI will be removed after reboot",
     "uninstall_failed": "Failed to uninstall WebUI",
     "new_update": "A new update is available!"
