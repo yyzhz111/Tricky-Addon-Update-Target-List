@@ -38,6 +38,6 @@ A **KSU WebUI** to configure tricky store target.txt
 ## Links
 Download: [GitHub release](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases)
 
-Update Changelog: [changelog.md](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/master/changelog.md)
+Update log: Read [ChangeLog](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/master/changelog.md)
 
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
