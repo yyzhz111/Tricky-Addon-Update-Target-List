@@ -11,7 +11,7 @@ find_busybox
 check_wget
 
 # Fetch additional package names
-wget --no-check-certificate -q -O - "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/more-excldue.json" 2>/dev/null | \
+wget --no-check-certificate -q -O - "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-excldue.json" 2>/dev/null | \
 grep -o '"package-name": *"[^"]*"' | \
 awk -F'"' '{print $4}' > "$OUTPUT"
 
@@ -30,14 +30,14 @@ pm list packages -3  </dev/null 2>&1 | cat | awk -F: '{print $2}' | while read -
 done
 
 if [ "$skipfetch" != "true" ]; then
-    wget --no-check-certificate -qO "$KBOUTPUT" "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/.extra"
+    wget --no-check-certificate -qO "$KBOUTPUT" "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra"
 
     if [ ! -s "$KBOUTPUT" ]; then
         rm -f "$KBOUTPUT"
     fi
 
     if [ -d "$MODPATH/temp" ]; then
-        JSON=$(wget --no-check-certificate -q -O - "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/update.json")
+        JSON=$(wget --no-check-certificate -q -O - "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json")
         REMOTE_VERSION=$(echo "$JSON" | grep -o '"versionCode": *[0-9]*' | awk -F: '{print $2}' | tr -d ' ')
         LOCAL_VERSION=$(grep -o 'versionCode=[0-9]*' "$MODPATH/temp/module.prop" | awk -F= '{print $2}')
         if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ]; then

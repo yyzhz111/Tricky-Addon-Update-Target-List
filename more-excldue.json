@@ -1,7 +1,7 @@
 {
     "description": "Unnecessary app list",
     "repo-link": "https://github.com/KOWX712/Tricky-Addon-Update-Target-List",
-    "json-link": "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/more-excldue.json",
+    "json-link": "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-excldue.json",
     "data": [
         {
             "info": "Root manager",

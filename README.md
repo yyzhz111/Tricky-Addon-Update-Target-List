@@ -30,7 +30,7 @@ A **KSU WebUI** to configure tricky store target.txt
 - MT manager is recommened for this method
 
 ## Translation
-- Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/tree/master/module/webroot/locales/A-translate.md)
+- Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/module/webroot/locales/A-translate.md)
 
 ## Acknowledgement
 - [j-hc/zygisk-detach](https://github.com/j-hc/zygisk-detach) - KSU WebUI template
@@ -38,6 +38,6 @@ A **KSU WebUI** to configure tricky store target.txt
 ## Links
 Download: [GitHub release](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases)
 
-Update log: Read [ChangeLog](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/master/changelog.md)
+Update log: Read [ChangeLog](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/changelog.md)
 
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)

@@ -4,4 +4,4 @@ version=v2.6-beta.3
 versionCode=250
 author=KOWX712
 description=A WebUI to conifgure tricky store target.txt
-updateJson=https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/master/update.json
+updateJson=https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json
