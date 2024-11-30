@@ -1,0 +1,42 @@
+name: canary
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Extract Module Info
+        id: extract_info
+        run: |
+          # Extract module name and version
+          MODULE_NAME=$(grep -oP '^name=\K.*' module/module.prop | tr ' ' '_')
+          MODULE_VERSION=$(grep -oP '^version=\K.*' module/module.prop)
+
+          # Generate build count based on GitHub Actions run number
+          BUILD_COUNT=$((1000 + ${{ github.run_number }}))
+          
+          # Combine for artifact name
+          ARTIFACT_NAME="${MODULE_NAME}-${MODULE_VERSION}-${BUILD_COUNT}"
+
+          echo "MODULE_NAME=${MODULE_NAME}" >> $GITHUB_ENV
+          echo "MODULE_VERSION=${MODULE_VERSION}" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >> $GITHUB_ENV
+
+      - name: Create ZIP Archive
+        run: |
+          zip -r "${ARTIFACT_NAME}.zip" module
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_NAME }}.zip
