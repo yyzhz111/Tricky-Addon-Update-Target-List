@@ -72,13 +72,13 @@ jobs:
     - name: Compress the module folder
       if: env.skip == 'false'
       run: |
-        zip -rj "${{ env.ZIP_NAME }}" "${{ env.ZIP_PATH }}"
+        cd "${{ env.ZIP_PATH }}" && zip -r "../${{ env.ZIP_NAME }}" ./*
         echo "Created zip file: ${{ env.ZIP_NAME }}"
 
     - name: Compress the lite-script_only folder
       if: env.skip == 'false'
       run: |
-        zip -rj "${{ env.LITE_SCRIPT_ONLY_ZIP_NAME }}" "${{ env.LITE_SCRIPT_ONLY_PATH }}"
+        cd "${{ env.LITE_SCRIPT_ONLY_PATH }}" && zip -r "../${{ env.LITE_SCRIPT_ONLY_ZIP_NAME }}" ./*
         echo "Created zip file: ${{ env.LITE_SCRIPT_ONLY_ZIP_NAME }}"
 
     - name: Create release
