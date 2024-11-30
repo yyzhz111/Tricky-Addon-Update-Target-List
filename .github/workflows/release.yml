@@ -72,8 +72,7 @@ jobs:
     - name: Compress the module folder
       if: env.skip == 'false'
       run: |
-        echo "Compressing module folder..."
-        zip -r "${{ env.ZIP_NAME }}" "${{ env.ZIP_PATH }}"
+        zip -r "${{ env.ZIP_NAME }}" "${{ env.ZIP_PATH }}/"*
         echo "Created zip file: ${{ env.ZIP_NAME }}"
 
     - name: Compress the lite-script_only folder
