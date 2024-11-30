@@ -35,10 +35,10 @@ jobs:
 
       - name: Create ZIP Archive
         run: |
-          zip -r "${ARTIFACT_NAME}" module/*
+          cd module && zip -r "../${ARTIFACT_NAME}.zip" ./*
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT_NAME }}
-          path: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.ARTIFACT_NAME }}.zip
