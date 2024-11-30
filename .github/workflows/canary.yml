@@ -33,12 +33,8 @@ jobs:
           echo "MODULE_VERSION=${MODULE_VERSION}" >> $GITHUB_ENV
           echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >> $GITHUB_ENV
 
-      - name: Create ZIP Archive
-        run: |
-          cd module && zip -r "../${ARTIFACT_NAME}.zip" ./*
-
-      - name: Upload Artifact
+      - name: Upload Artifact (without zipping)
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT_NAME }}
-          path: ${{ env.ARTIFACT_NAME }}.zip
+          path: module/
