@@ -8,6 +8,17 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.6
+- Invisible module, intergrate action button & webui on tricky store card. You can stil use visible option if you found any issue with invisble module. Thanks for idea from @backslashxx.
+- To uninstall invisble module, scroll down to the bottom of WebUI and press Uninstall WebUI.
+- Add update prompt if found new version in webui, and show module if found an update. (invisible)
+- Reduced WebUI loading time
+- Added feature to save verifiedBootHash
+- New way to detect Xposed module, now can catch all Xposed module apk package name in Deselect Unnecessary option, feedback in [Telegram](https://t.me/kowchannel) or [create issue](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/issues) if missed any.
+- Initial support for multiple languages
+- Language available: **en-US**, **ru-RU**, **tl-PH**, **zh-CN**, **zh-TW**
+- Add language or fix translation error? [Read here](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/tree/master/module/webroot/locales/A-translate.md).
+
 ### v2.6-beta.3
 - Check in [release notes](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/tag/v2.6-beta.3).
 
