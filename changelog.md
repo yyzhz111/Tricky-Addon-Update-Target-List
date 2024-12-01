@@ -35,7 +35,7 @@ Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 ### v2.4
 - Added aapt binary for app name display
 
-**KSU WebUI**
+- **KSU WebUI**
 - Added app name display
 
 ### v2.3
@@ -45,11 +45,11 @@ Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 - Abandoned action button in KernelSU and Apatch
 - Magisk action button: open WebUI, automatic download if not installed (optional)
 
-**KSU WebUI**
+- **KSU WebUI**
 - Option to select app from DenyList (Magisk)
 
 ### v2.2
-**KSU WebUI:**
+- **KSU WebUI:**
 - Added help menu
 - Added extra [unnecessary app](https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-excldue.json) exclude option
 - Added no Internet connection prompt
