@@ -16,4 +16,4 @@ if [ -d "$TS" ]; then
         rm -rf "$TS/webroot"
     fi
 fi
-xxd -r -p "$MODPATH/common/.default" | base64 -d > "$SCRIPT_DIR/keybox.xml"
+xxd -r -p "$MODPATH/common/default" | base64 -d > "$SCRIPT_DIR/keybox.xml"
