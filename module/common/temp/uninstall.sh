@@ -9,8 +9,6 @@ fi
 
 # Remove residue and restore aosp keybox.
 rm -rf "/data/adb/modules/.TA_utl"
-rm -rf "$SCRIPT_DIR/target_list_config"
-rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
 rm -f "/data/adb/boot_hash"
 if [ -d "$TS" ]; then
     if [ -f "$TS/action.sh" ]; then
