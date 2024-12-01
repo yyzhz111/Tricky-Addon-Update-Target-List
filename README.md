@@ -1,6 +1,7 @@
 # Tricky Addon - Update Target List
-- Configure Tricky Store target.txt with KSU WebUI.
-- This module is **not** a part of Tricky Store module, DO NOT report to Tricky Store if you encounter any issue.
+Configure Tricky Store target.txt with KSU WebUI.
+
+*This module is **not** a part of Tricky Store module, DO NOT report to Tricky Store if you encounter any issue.*
 
 ## Requirements
 - [Tricky store](https://github.com/5ec1cff/TrickyStore) module installed
