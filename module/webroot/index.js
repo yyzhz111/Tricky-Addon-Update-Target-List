@@ -39,6 +39,12 @@ const inputBox = document.getElementById('boot-hash-input');
 const saveButton = document.getElementById('boot-hash-save-button');
 
 const basePath = "set-path";
+const ADDITIONAL_APPS = [
+    "com.google.android.gms",
+    "io.github.vvb2060.keyattestation",
+    "io.github.vvb2060.mahoshojo",
+    "icu.nullptr.nativetest"
+];
 
 // Variables
 let e = 0;
@@ -150,26 +156,18 @@ async function execCommand(command) {
     });
 }
 
-// Function to read the EXCLUDE file and return its contents as an array
-async function readExcludeFile() {
-    try {
-        const result = await execCommand('cat /data/adb/tricky_store/target_list_config/EXCLUDE');
-        excludeList = result.split("\n").filter(app => app.trim() !== ''); // Filter out empty lines
-        console.log("Current EXCLUDE list:", excludeList);
-    } catch (error) {
-        console.error("Failed to read EXCLUDE file:", error);
-    }
-}
-
-// Helper function to check if an app name should be excluded
-function isExcluded(appName) {
-    return excludeList.some(excludeItem => appName.includes(excludeItem));
-}
-
-// Function to fetch, sort, and render the app list with app names
+// Fetch and render applist
 async function fetchAppList() {
     try {
-        await readExcludeFile();
+        let targetList = [];
+        try {
+            const targetFileContent = await execCommand('cat /data/adb/tricky_store/target.txt');
+            targetList = targetFileContent.split("\n").filter(app => app.trim() !== ''); // Filter out empty lines
+            console.log("Current target list:", targetList);
+        } catch (error) {
+            console.error("Failed to read target.txt file:", error);
+        }
+        
         let applistMap = {};
         try {
             const applistResult = await execCommand(`cat ${basePath}applist`);
@@ -188,6 +186,7 @@ async function fetchAppList() {
         } catch (error) {
             console.warn("Applist file not found or could not be loaded. Skipping applist lookup.");
         }
+
         const result = await execCommand("pm list packages -3");
         const appEntries = result
             .split("\n")
@@ -212,11 +211,18 @@ async function fetchAppList() {
                 }
             }
         }
+
+        // Sort
         const sortedApps = appEntries.sort((a, b) => {
-            const aInExclude = isExcluded(a.packageName);
-            const bInExclude = isExcluded(b.packageName);
-            return aInExclude === bInExclude ? a.appName.localeCompare(b.appName) : aInExclude ? 1 : -1;
+            const aChecked = targetList.includes(a.packageName);
+            const bChecked = targetList.includes(b.packageName);
+            if (aChecked !== bChecked) {
+                return aChecked ? -1 : 1;
+            }
+            return (a.appName || "").localeCompare(b.appName || "");
         });
+
+        // Render
         appListContainer.innerHTML = "";
         sortedApps.forEach(({ appName, packageName }) => {
             const appElement = document.importNode(appTemplate, true);
@@ -225,7 +231,7 @@ async function fetchAppList() {
             const nameElement = appElement.querySelector(".name");
             nameElement.innerHTML = `<strong>${appName || "Unknown App"}</strong><br>${packageName}`;
             const checkbox = appElement.querySelector(".checkbox");
-            checkbox.checked = !isExcluded(packageName);
+            checkbox.checked = targetList.includes(packageName);
             appListContainer.appendChild(appElement);
         });
         console.log("App list with names and packages rendered successfully.");
@@ -233,6 +239,21 @@ async function fetchAppList() {
         console.error("Failed to fetch or render app list with names:", error);
     }
     floatingBtn.style.transform = "translateY(-120px)";
+    toggleableCheckbox();
+}
+
+// Make checkboxes toggleable
+function toggleableCheckbox() {
+    const appElements = appListContainer.querySelectorAll(".card");
+    appElements.forEach(card => {
+        const content = card.querySelector(".content");
+        const checkbox = content.querySelector(".checkbox");
+        content.addEventListener("click", (event) => {
+            if (event.target !== checkbox) {
+                checkbox.checked = !checkbox.checked;
+            }
+        });
+    });
 }
 
 // Function to refresh app list
@@ -502,6 +523,7 @@ function showPrompt(key, isSuccess = true) {
 // Function to toggle menu option
 function setupMenuToggle() {
     const menuIcon = menuButton.querySelector('.menu-icon');
+    const menuOptions = document.getElementById('menu-options');
     let menuOpen = false;
     let menuAnimating = false;
 
@@ -599,48 +621,24 @@ clearBtn.addEventListener("click", () => {
     });
 });
 
-// Add button click event to update EXCLUDE file and run UpdateTargetList.sh
+// Save configure
 document.getElementById("save").addEventListener("click", async () => {
-    await readExcludeFile();
-    const deselectedApps = Array.from(appListContainer.querySelectorAll(".checkbox:not(:checked)"))
-        .map(checkbox => checkbox.closest(".card").querySelector(".content").getAttribute("data-package"));
     const selectedApps = Array.from(appListContainer.querySelectorAll(".checkbox:checked"))
         .map(checkbox => checkbox.closest(".card").querySelector(".content").getAttribute("data-package"));
-    // Add deselected apps to EXCLUDE list
-    for (const packageName of deselectedApps) {
-        if (!excludeList.includes(packageName)) {
-            excludeList.push(packageName);
-            console.log("Added to EXCLUDE list:", packageName);
-        } else {
-            console.log("Package already in EXCLUDE file, skipping:", packageName);
-        }
-    }
-    // Remove selected apps from EXCLUDE list
-    if (selectedApps.length > 0) {
-        selectedApps.forEach(packageName => {
-            excludeList = excludeList.filter(excludedPackage => excludedPackage !== packageName);
-            console.log("Removed from EXCLUDE list:", packageName);
-        });
-    }
+    let finalAppsList = new Set(selectedApps);
+    ADDITIONAL_APPS.forEach(app => {
+        finalAppsList.add(app);
+    });
+    finalAppsList = Array.from(finalAppsList);
     try {
-        // Save the EXCLUDE file
-        const updatedExcludeContent = excludeList.join("\n");
-        await execCommand(`echo "${updatedExcludeContent}" > /data/adb/tricky_store/target_list_config/EXCLUDE`);
-        console.log("EXCLUDE file updated successfully.");
-
-        // Execute UpdateTargetList.sh
-        try {
-            await execCommand("/data/adb/tricky_store/UpdateTargetList.sh");
-            showPrompt("saved_and_updated");
-        } catch (error) {
-            console.error("Failed to update target list:", error);
-            showPrompt("saved_not_updated", false);
-        }
+        const updatedTargetContent = finalAppsList.join("\n");
+        await execCommand(`echo "${updatedTargetContent}" > /data/adb/tricky_store/target.txt`);
+        console.log("target.txt updated successfully.");
+        showPrompt("saved_target");
     } catch (error) {
-        console.error("Failed to update EXCLUDE file:", error);
+        console.error("Failed to update target.txt:", error);
         showPrompt("save_error", false);
     }
-    await readExcludeFile();
     await refreshAppList();
 });
 
