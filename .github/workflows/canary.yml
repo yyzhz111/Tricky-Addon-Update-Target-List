@@ -19,21 +19,15 @@ jobs:
       - name: Extract Module Info
         id: extract_info
         run: |
-          # Extract module name and version
-          MODULE_NAME=$(grep -oP '^name=\K.*' module/module.prop | tr ' ' '_')
           MODULE_VERSION=$(grep -oP '^version=\K.*' module/module.prop)
-
-          # Generate build count based on GitHub Actions run number
+          COMMIT_ID=$(git rev-parse --short HEAD)
           BUILD_COUNT=$((1000 + ${{ github.run_number }}))
-          
-          # Combine for artifact name
-          ARTIFACT_NAME="${MODULE_NAME}-${MODULE_VERSION}-${BUILD_COUNT}"
-
-          echo "MODULE_NAME=${MODULE_NAME}" >> $GITHUB_ENV
+          ARTIFACT_NAME="TrickyAddonModule-${MODULE_VERSION}-${COMMIT_ID}-canary-${BUILD_COUNT}"
           echo "MODULE_VERSION=${MODULE_VERSION}" >> $GITHUB_ENV
+          echo "COMMIT_ID=${COMMIT_ID}" >> $GITHUB_ENV
           echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >> $GITHUB_ENV
 
-      - name: Upload Artifact (without zipping)
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT_NAME }}
