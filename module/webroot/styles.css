@@ -53,13 +53,13 @@ body {
 
 .language-menu {
     display: flex;
-    padding: 5px;
+    padding: 3px 10px;
     flex-direction: column;
     position: absolute;
     right: 0;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 2000;
+    z-index: 1800;
     border: 1px solid #ccc;
     border-radius: 8px;
     opacity: 0;
@@ -76,15 +76,19 @@ body {
 }
 
 .language-option {
-    padding: 10px;
+    padding: 8px 5px;
     text-align: left;
     background: none;
     border: none;
-    width: 100%;
     font-size: 16px;
     color: #333;
-    width: auto;
+    width: 100%;
     white-space: nowrap;
+    border-bottom: 1px solid #ccc;    
+}
+
+.language-option:last-child {
+    border-bottom: none;
 }
 
 .help-button {
@@ -314,6 +318,10 @@ body {
     font-weight: bold;
 }
 
+.about-content p[data-i18n="disclaimer"] {
+    font-style: italic;
+}
+
 .about-content p[data-i18n="acknowledgment"] {
     font-size: 18px;
     text-align: left;
@@ -422,7 +430,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     display: none;
     position: absolute;
-    padding: 5px;
+    padding: 5px 12px;
     top: 110%;
     right: 0;
     transform: translateX(120%);
@@ -452,17 +460,22 @@ body {
 
 .menu-options li {
     cursor: default;
-    padding: 13px 12px;
+    padding: 12px 4px;
     text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.menu-options li:last-child {
+    border-bottom: none;
 }
 
 .card {
     background-color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     margin-bottom: 10px;
     outline: none;
-    padding: 15px;
+    padding: 13px;
 }
 
 .content {
@@ -558,13 +571,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12px 17px;
-    font-size: 17px;
-    transition: transform 0.3s ease-in-out;
+    padding: 10px 22px;
+    font-size: 19px;
+    transition: transform 0.3s ease-in-out, background-color 0.2s ease;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
+}
+
+.floating-btn:active {
+    background-color: #003d80;
 }
 
 .loading {
@@ -595,7 +612,12 @@ body {
     display: flex;
     align-items: center;
     border-radius: 8px;
-    background-color: #B10000;
+    background-color: #CE0000;
+    transition: background-color 0.2s ease;
+}
+
+.uninstall-container:active {
+    background-color: #830000;
 }
 
 .uninstall-container i {
@@ -654,5 +676,10 @@ body {
     #menu-button {
         background-color: #343434;
         border: 1px solid #6E6E6E;
+    }
+    
+    .language-option,
+    .menu-options li {
+        border-bottom: 1px solid #6E6E6E;
     }
 }
