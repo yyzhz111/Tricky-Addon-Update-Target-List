@@ -77,5 +77,4 @@ else
             echo "$PACKAGE" >> "$OUTPUT_SKIP"
         fi
     done
-    . "$SCRIPT_DIR/UpdateTargetList.sh"
 fi
