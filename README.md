@@ -1,7 +1,7 @@
 # Tricky Addon - Update Target List
 Configure Tricky Store target.txt with KSU WebUI.
 
-*This module is **not** a part of Tricky Store module, DO NOT report to Tricky Store if you encounter any issue.*
+*This module is **not** a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered.*
 
 ## Requirements
 - [Tricky store](https://github.com/5ec1cff/TrickyStore) module installed
@@ -14,19 +14,20 @@ Configure Tricky Store target.txt with KSU WebUI.
 - action.sh will open WebUI, automatic install [KSUWebUIStandalone](https://github.com/5ec1cff/KsuWebUIStandalone) if not installed.
 
 ### Module Visibility
-- Invisible, action/WebUI on Tricky Store module card, uninstall by pressing uninstall button at the bottom part of WebUI.
-- Visible, for people have trouble with KSUWebUIStandalone, like using old version Magisk which has no action button, KSU built-in WebUI crash etc.
+**Invisible:** Action/WebUI on the Tricky Store module card. Uninstall by pressing the uninstall button at the bottom part of WebUI.
+
+**Visible:** For people having trouble with KSUWebUIStandalone, such as using an old version of Magisk that lacks the action button, KSU built-in WebUI crashes, etc.
 
 ### What This Module Do
-- Configure target.txt with app name display ✅
-- Option to select from Magisk DenyList ✅
-- Set verifiedBootHash (optional) ✅
+- Configure `target.txt` with the app name for display ✅
+- Select apps from Magisk DenyList (optional) ✅
+- Set `verifiedBootHash` (optional) ✅
 - Provide AOSP Keybox (optional) ✅
-- Strong integrity (I never promise it) ❌
-- Shamiko Whitelist switch (BIG NO) ❌
-- Add '!' or '?' to target ([Not needed](https://github.com/5ec1cff/TrickyStore/releases/tag/1.1.0)) ❌
-- Periodicly update target and add new app ❌
-- Add system app ❌ (but GMS added by default)
+- Strong integrity (not guaranteed) ❌
+- Shamiko Whitelist switch (BIG NO) ❌  
+- Add '!' or '?' to the target ([Not needed](https://github.com/5ec1cff/TrickyStore/releases/tag/1.1.0)) ❌
+- Periodically update the target and add new apps ❌
+- Add system apps ❌ (except GMS, added by default)
 
 ## Translation
 - Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/module/webroot/locales/A-translate.md)
