@@ -1,7 +1,7 @@
 {
     "title": "TS插件 - 更新目標列表",
     "search_placeholder": "搜尋",
-    "save_and_update_button": "保存並更新",
+    "save_and_update_button": "保存",
     "boot_hash_save_button": "保存",
     "loading": "加載中...",
     "boot_hash_input_placeholder": "在此粘貼您的哈希值",
@@ -18,7 +18,7 @@
     "about": "關於",
     
     "help_instructions": "使用指南",
-    "save_and_update_description": "保存當前配置並立即更新目標列表（target.txt）。",
+    "save_and_update_description": "保存當前配置到目標列表（target.txt）。",
     "refresh_description": "刷新應用列表和排除列表。",
     "select_deselect": "全選 & 取消全選",
     "select_description": "選擇或取消選擇當前界面中的所有應用。",

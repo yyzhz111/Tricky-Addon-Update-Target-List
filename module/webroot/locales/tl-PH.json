@@ -1,7 +1,7 @@
 {
     "title": "Tricky Addon - I-update ang Target List",
     "search_placeholder": "Maghanap",
-    "save_and_update_button": "I-save at I-update",
+    "save_and_update_button": "I-save",
     "boot_hash_save_button": "I-save",
     "loading": "Naglo-load...",
     "boot_hash_input_placeholder": "I-paste ang iyong verified Boot Hash dito",
@@ -18,7 +18,7 @@
     "about": "Tungkol",
     
     "help_instructions": "Mga Tagubilin",
-    "save_and_update_description": "I-save ang kasalukuyang configuration at i-update ang target.txt agad.",
+    "save_and_update_description": "I-save ang kasalukuyang configuration sa target.txt.",
     "refresh_description": "I-refresh ang listahan ng apps at exclude list.",
     "select_deselect": "Piliin & Huwag Pumili ng Lahat",
     "select_description": "Piliin o huwag piliin ang lahat ng apps sa kasalukuyang interface.",

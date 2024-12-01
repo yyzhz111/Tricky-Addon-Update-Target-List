@@ -1,7 +1,7 @@
 {
     "title": "Tricky Addon - Обновить список целей",
     "search_placeholder": "Поиск",
-    "save_and_update_button": "Сохранить и обновить",
+    "save_and_update_button": "Сохранить",
     "boot_hash_save_button": "Сохранить",
     "loading": "Загрузка...",
     "boot_hash_input_placeholder": "Вставьте свой проверенный Boot Hash сюда",
@@ -18,7 +18,7 @@
     "about": "О программе",
     
     "help_instructions": "Инструкции",
-    "save_and_update_description": "Сохраните текущую конфигурацию и немедленно обновите target.txt.",
+    "save_and_update_description": "Сохранить текущую конфигурацию в target.txt.",
     "refresh_description": "Обновить список приложений и список исключений.",
     "select_deselect": "Выбрать и отменить выбор всех",
     "select_description": "Выбрать или отменить выбор всех приложений в текущем интерфейсе.",

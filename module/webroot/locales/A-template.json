@@ -1,7 +1,7 @@
 {
     "title": "Tricky Addon - Update Target List",
     "search_placeholder": "Search",
-    "save_and_update_button": "Save and Update",
+    "save_and_update_button": "Save",
     "boot_hash_save_button": "Save",
     "loading": "Loading...",
     "boot_hash_input_placeholder": "Paste your verified Boot Hash here",
@@ -18,7 +18,7 @@
     "about": "About",
     
     "help_instructions": "Instructions",
-    "save_and_update_description": "Save the current configuration and update target.txt immediately.",
+    "save_and_update_description": "Save current configure to target.txt.",
     "refresh_description": "Refresh app list and exclude list.",
     "select_deselect": "Select & Deselect All",
     "select_description": "Select or deselect all apps in the current interface.",
