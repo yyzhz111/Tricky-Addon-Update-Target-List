@@ -15,22 +15,23 @@ Configure Tricky Store target.txt with KSU WebUI.
 - action.sh will open WebUI, automatic install [KSUWebUIStandalone](https://github.com/5ec1cff/KsuWebUIStandalone) if not installed.
 
 ### Module Visibility
-**Invisible:** Action/WebUI on the Tricky Store module card. Uninstall by pressing the uninstall button at the bottom part of WebUI.
-
-**Visible:** For people having trouble with KSUWebUIStandalone, such as using an old version of Magisk that lacks the action button, KSU built-in WebUI crashes, etc.
+| Visibility | Behavior|
+| :--- | :--- |
+| Invisible | <li>Action/WebUI on the Tricky Store module card.</li><li>Uninstall by pressing the uninstall button at the bottom part of WebUI.</li> |
+| Visible | <li>For people having trouble with KSUWebUIStandalone, such as</li><ul><li>using an old version of Magisk that lacks the action button</li><li>KSU built-in WebUI crashes</li></ul> |
 
 ### What This Module Do
 | Feature | Status |
 |:---|:---:|
-| Configure target.txt with the app name for display | ✅ |
+| Configure target.txt with app name display | ✅ |
 | Select apps from Magisk DenyList (optional) | ✅ |
 | Set verifiedBootHash (optional) | ✅ |
 | Provide AOSP Keybox (optional) | ✅ |
-| Strong integrity (not guaranteed) | ❌ |
-| Shamiko Whitelist switch (BIG NO) | ❌ |
-| Add '!' or '?' to the target (Not needed) | ❌ |
-| Periodically update the target and add new apps | ❌ |
-| Add system apps (except GMS, added by default) | ❌ |
+| Valid Keybox (not guaranteed) | ❌ |
+| Shamiko Whitelist switch | ❌ |
+| Add `!` or `?` to the target ([Not needed](https://github.com/5ec1cff/TrickyStore/releases/tag/1.1.0)) | ❌ |
+| Periodically update target and add new apps | ❌ |
+| Add system apps (GMS added by default) | ❌ |
 
 ## Translation
 - Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/module/webroot/locales/A-translate.md)
