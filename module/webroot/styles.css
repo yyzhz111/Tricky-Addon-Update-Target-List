@@ -571,8 +571,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 22px;
-    font-size: 19px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
     transition: transform 0.3s ease-in-out, background-color 0.2s ease;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
