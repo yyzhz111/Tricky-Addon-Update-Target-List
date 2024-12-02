@@ -390,7 +390,7 @@ async function selectDenylistApps() {
 // Function to replace aosp kb
 async function aospkb() {
     try {
-        const sourcePath = `${basePath}default`;
+        const sourcePath = `${basePath}.default`;
         const destinationPath = "/data/adb/tricky_store/keybox.xml";
         await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("AOSP keybox copied successfully.");
