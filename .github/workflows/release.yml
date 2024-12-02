@@ -57,7 +57,7 @@ jobs:
           flag {print}
         ' changelog.md)
 
-        FORMATTED_RELEASE_NOTES=$(printf "### Tricky Addon module\n%s\n---\n### Tricky Addon Lite - script only\n- Check on [changelog](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/tree/main/lite-script_only#tricky-addon-lite-update-target-list-script)" "$RELEASE_NOTES")
+        FORMATTED_RELEASE_NOTES=$(echo -e "### Tricky Addon module\n$RELEASE_NOTES\n---\n### Tricky Addon Lite - script only\n- Check on [changelog](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/tree/main/lite-script_only#tricky-addon-lite-update-target-list-script)")
 
         echo "$FORMATTED_RELEASE_NOTES" > release_notes.txt
         echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
@@ -68,6 +68,12 @@ jobs:
         echo "ZIP_PATH=module" >> $GITHUB_ENV
         echo "LITE_SCRIPT_ONLY_ZIP_NAME=TrickyAddonLite_ScriptOnly_Extract-${VERSION}.zip" >> $GITHUB_ENV
         echo "LITE_SCRIPT_ONLY_PATH=lite-script_only" >> $GITHUB_ENV
+
+        if [[ "$VERSION" == *"beta"* ]]; then
+          echo "PRERELEASE=true" >> $GITHUB_ENV
+        else
+          echo "PRERELEASE=false" >> $GITHUB_ENV
+        fi
 
     - name: Compress the module folder
       if: env.skip == 'false'
@@ -92,4 +98,4 @@ jobs:
         name: ${{ env.CURRENT_TAG }}
         body: ${{ env.RELEASE_NOTES }}
         draft: false
-        prerelease: false
+        prerelease: ${{ env.PRERELEASE }}
