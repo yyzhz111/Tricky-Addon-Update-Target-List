@@ -2,7 +2,7 @@
 Configure Tricky Store target.txt with KSU WebUI.
 
 > [!NOTE]
-> *This module is **not** a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered.*
+> _This module is **not** a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered._
 
 ## Requirements
 - [Tricky store](https://github.com/5ec1cff/TrickyStore) module installed
@@ -20,7 +20,7 @@ Configure Tricky Store target.txt with KSU WebUI.
 | Invisible | <li>Action/WebUI on the Tricky Store module card.</li><li>Uninstall by pressing the uninstall button at the bottom part of WebUI.</li> |
 | Visible | <li>For people having trouble with KSUWebUIStandalone, such as</li><ul><li>using an old version of Magisk that lacks the action button</li><li>KSU built-in WebUI crashes</li></ul> |
 
-### What This Module Do
+### What Can This Module Do
 | Feature | Status |
 |:---|:---:|
 | Configure target.txt with app name display | ✅ |
