@@ -7,7 +7,8 @@ initialize() {
     fi
     
     cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
-    cp "$COMPATH/.default" "$COMPATH/temp/.default"
+    cp "$COMPATH/.default" "$COMPATH/temp/common/.default"
+    cp "$MODPATH/uninstall.sh" "$COMPATH/temp/uninstall.sh"
     set_perm $COMPATH/get_extra.sh 0 2000 0755
     set_perm $COMPATH/get_WebUI.sh 0 2000 0755
     

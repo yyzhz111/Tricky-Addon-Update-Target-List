@@ -34,47 +34,35 @@ fi
 OUTPUT_APP="$MODPATH/common/applist"
 OUTPUT_SKIP="$MODPATH/common/skiplist"
 
-if [ ! -d "$TS" ]; then
-    if [ -d "$MODPATH/common/temp" ]; then
-        mkdir -p "/data/adb/modules/TA_utl"
-        cp -rf "$MODPATH/common/temp/*" "/data/adb/modules/TA_utl/"
-        touch "/data/adb/modules/TA_utl/remove"
-        exit 1
-    else
-        touch "$MODPATH/remove"
-        exit 1
+if [ -f "$MODPATH/action.sh" ]; then
+    if [ -f "$TS/action.sh" ]; then
+        rm -f "$TS/action.sh"
     fi
-elif  [ -f "$TS/disable" ]; then
-    exit 1
+    ln -s "$MODPATH/action.sh" "$TS/action.sh"
 else
-    if [ -f "$MODPATH/action.sh" ]; then
-        if [ -f "$TS/action.sh" ]; then
-            rm -f "$TS/action.sh"
-        fi
-        ln -s "$MODPATH/action.sh" "$TS/action.sh"
-    else
-        if [ -d "$TS/webroot" ]; then
-            rm -rf "$TS/webroot"
-        fi
-        if [ -d "$MODPATH/common/temp" ]; then
-            ln -s "$MODPATH/webroot" "$TS/webroot"
-        fi
+    if [ -d "$TS/webroot" ]; then
+        rm -rf "$TS/webroot"
     fi
-    until [ "$(getprop sys.boot_completed)" = "1" ]; do
-        sleep 1
-    done
-    echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_APP"
-    echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_SKIP"
-    pm list packages -3 </dev/null 2>&1 | cat | awk -F: '{print $2}' | while read -r PACKAGE; do
-        APK_PATH=$(pm path "$PACKAGE" </dev/null 2>&1 | cat | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r')
-        if [ -n "$APK_PATH" ]; then
-            APP_NAME=$(aapt dump badging "$APK_PATH" </dev/null 2>&1 | cat | grep "application-label:" | sed "s/application-label://g; s/'//g")
-            echo "app-name: $APP_NAME, package-name: $PACKAGE" >> "$OUTPUT_APP"
-        else
-            echo "app-name: Unknown App package-name: $PACKAGE" >> "$OUTPUT_APP"
-        fi
-        if ! aapt dump xmltree "$APK_PATH" AndroidManifest.xml </dev/null 2>&1 | cat | grep -qE "xposed.category|xposeddescription"; then
-            echo "$PACKAGE" >> "$OUTPUT_SKIP"
-        fi
-    done
+    if [ -d "$MODPATH/common/temp" ]; then
+        ln -s "$MODPATH/webroot" "$TS/webroot"
+    fi
 fi
+
+until [ "$(getprop sys.boot_completed)" = "1" ]; do
+    sleep 1
+done
+
+echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_APP"
+echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_SKIP"
+pm list packages -3 </dev/null 2>&1 | cat | awk -F: '{print $2}' | while read -r PACKAGE; do
+    APK_PATH=$(pm path "$PACKAGE" </dev/null 2>&1 | cat | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r')
+    if [ -n "$APK_PATH" ]; then
+        APP_NAME=$(aapt dump badging "$APK_PATH" </dev/null 2>&1 | cat | grep "application-label:" | sed "s/application-label://g; s/'//g")
+        echo "app-name: $APP_NAME, package-name: $PACKAGE" >> "$OUTPUT_APP"
+    else
+        echo "app-name: Unknown App package-name: $PACKAGE" >> "$OUTPUT_APP"
+    fi
+    if ! aapt dump xmltree "$APK_PATH" AndroidManifest.xml </dev/null 2>&1 | cat | grep -qE "xposed.category|xposeddescription"; then
+        echo "$PACKAGE" >> "$OUTPUT_SKIP"
+    fi
+done
