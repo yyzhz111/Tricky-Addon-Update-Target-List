@@ -6,6 +6,7 @@ initialize() {
         rm -rf "/data/adb/modules/$NEW_MODID"
     fi
     
+    mkdir -p "$COMPATH/temp/common"
     cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
     cp "$COMPATH/.default" "$COMPATH/temp/common/.default"
     cp "$MODPATH/uninstall.sh" "$COMPATH/temp/uninstall.sh"
