@@ -28,7 +28,7 @@ Configure Tricky Store target.txt with KSU WebUI.
 | Set verifiedBootHash (optional) | ✅ |
 | Provide AOSP Keybox (optional) | ✅ |
 | Valid Keybox (not guaranteed) | ❌ |
-| Shamiko Whitelist switch | ❌ |
+| Shamiko Whitelist switch ([Why?](https://github.com/rushizgithub/shamiko?tab=readme-ov-file#whitelist)) | ❌ |
 | Add `!` or `?` to the target ([Not needed](https://github.com/5ec1cff/TrickyStore/releases/tag/1.1.0)) | ❌ |
 | Periodically update target and add new apps | ❌ |
 | Add system apps (GMS added by default) | ❌ |
