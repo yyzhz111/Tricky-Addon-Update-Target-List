@@ -13,13 +13,19 @@ body {
     position: fixed;
     top: 0;
     height: 40px;
-    width: 100%;
+    width: calc(100% - 10px);
+    max-width: 1100px;
     background-color: #F5F5F5;
     transition: transform 0.3s ease;
     z-index: 1100;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
 }
 
 #title {
+    padding-left: 5px;
     font-size: 16.5px;
     font-weight: bold;
 }
@@ -41,7 +47,6 @@ body {
 .language-dropdown {
     position: relative;
     display: inline-block;
-    margin-right: 15px;
 }
 
 .language-button {
@@ -84,7 +89,7 @@ body {
     color: #333;
     width: 100%;
     white-space: nowrap;
-    border-bottom: 1px solid #ccc;    
+    border-bottom: 1px solid #ccc;
 }
 
 .language-option:last-child {
@@ -340,9 +345,14 @@ body {
     position: fixed;
     top: 40px;
     height: 50px;
-    width: calc(100% - 17px);
+    width: calc(100% - 20px);
+    max-width: 1100px;
     z-index: 1000;
     transition: transform 0.3s ease;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
 }
 
 .search-card {
@@ -379,6 +389,7 @@ body {
 .clear-btn {
     position: absolute;
     color: #ccc;
+    padding-bottom: 3px;
     right: 10px;
     border: none;
     background: none;
@@ -469,13 +480,22 @@ body {
     border-bottom: none;
 }
 
+.card-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: cacl(100% - 30px);
+}
+
 .card {
     background-color: white;
     border: none;
     border-radius: 10px;
     margin-bottom: 10px;
     outline: none;
-    padding: 13px;
+    padding: 12px;
+    width: calc(100% - 30px);
+    max-width: 900px;
 }
 
 .content {
@@ -487,6 +507,7 @@ body {
 .name {
     display: inline-block;
     margin: 0;
+    font-size: 15.5px;
     max-width: calc(100% - 30px);
     overflow-wrap: break-word;
     word-break: break-word;
@@ -494,6 +515,7 @@ body {
 
 .checkbox {
     margin-left: auto;
+    transform: scale(1.15);
 }
 
 .prompt {
@@ -600,20 +622,28 @@ body {
 }
 
 .footer {
-    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% - 10px);
+    max-width: 1100px;
+    padding: 25px 0;
     position: relative;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .uninstall-container {
     padding: 10px 10px;
     position: absolute;
-    right: 15px;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
     border-radius: 8px;
     background-color: #CE0000;
+    white-space: nowrap;
     transition: background-color 0.2s ease;
 }
 
@@ -678,7 +708,7 @@ body {
         background-color: #343434;
         border: 1px solid #6E6E6E;
     }
-    
+
     .language-option,
     .menu-options li {
         border-bottom: 1px solid #6E6E6E;
