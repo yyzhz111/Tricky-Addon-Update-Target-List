@@ -18,7 +18,7 @@ Configure Tricky Store target.txt with KSU WebUI.
 | Visibility | Behavior|
 | :--- | :--- |
 | Invisible | <li>Action/WebUI on the Tricky Store module card.</li><li>Uninstall by pressing the uninstall button at the bottom part of WebUI.</li> |
-| Visible | <li>For people having trouble with KSUWebUIStandalone, such as</li><ul><li>using an old version of Magisk that lacks the action button</li><li>KSU built-in WebUI crashes</li></ul> |
+| Visible | <li>For those who having trouble with KSUWebUIStandalone, such as</li><ul><li>using an old version of Magisk that lacks the action button</li><li>KSU built-in WebUI crashes</li></ul> |
 
 ### What Can This Module Do
 | Feature | Status |
