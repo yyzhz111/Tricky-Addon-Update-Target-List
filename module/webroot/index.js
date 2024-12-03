@@ -5,6 +5,7 @@ const noConnection = document.querySelector('.no-connection');
 const languageButton = document.querySelector('.language-button');
 const languageMenu = document.querySelector('.language-menu');
 const languageOptions = document.querySelectorAll('.language-option');
+const languageOverlay = document.getElementById('language-overlay');
 
 // Loading and Prompt Elements
 const loadingIndicator = document.querySelector('.loading');
@@ -22,6 +23,7 @@ const menu = document.querySelector('.menu');
 const menuButton = document.getElementById('menu-button');
 const menuOptions = document.getElementById('menu-options');
 const selectDenylistElement = document.getElementById('select-denylist');
+const menuOverlay = document.getElementById('menu-overlay');
 
 // Applist Elements
 const appTemplate = document.getElementById('app-template').content;
@@ -568,6 +570,7 @@ function setupMenuToggle() {
             menuOptions.classList.add('visible');
             menuIcon.classList.add('menu-open');
             menuIcon.classList.remove('menu-closed');
+            menuOverlay.style.display = 'flex';
             menuOpen = true;
             menuAnimating = false;
         }, 10);
@@ -580,12 +583,54 @@ function setupMenuToggle() {
             menuOptions.classList.add('hidden');
             menuIcon.classList.remove('menu-open');
             menuIcon.classList.add('menu-closed');
+            menuOverlay.style.display = 'none';
             setTimeout(() => {
                 menuOptions.style.display = 'none';
                 menuOpen = false;
                 menuAnimating = false;
             }, 200);
         }
+    }
+}
+
+// Function to setup the language menu
+function setupLanguageMenu() {
+    languageButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const isVisible = languageMenu.classList.contains("show");
+        if (isVisible) {
+            closeLanguageMenu();
+        } else {
+            openLanguageMenu();
+        }
+    });
+
+    document.addEventListener("click", (event) => {
+        if (!languageButton.contains(event.target) && !languageMenu.contains(event.target)) {
+            closeLanguageMenu();
+        }
+    });
+
+    languageOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            closeLanguageMenu();
+        });
+    });
+
+    window.addEventListener('scroll', () => {
+        if (languageMenu.classList.contains("show")) {
+            closeLanguageMenu();
+        }
+    });
+
+    function openLanguageMenu() {
+        languageMenu.classList.add("show");
+        languageOverlay.style.display = 'flex';
+    }
+
+    function closeLanguageMenu() {
+        languageMenu.classList.remove("show");
+        languageOverlay.style.display = 'none';
     }
 }
 
@@ -647,6 +692,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userLang = detectUserLanguage();
     await loadTranslations(userLang);
     setupMenuToggle();
+    setupLanguageMenu();
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.getElementById("select-all").addEventListener("click", selectAllApps);
     document.getElementById("deselect-all").addEventListener("click", deselectAllApps);
@@ -663,27 +709,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     runExtraScript();
 });
 
-// Toggle the visibility of the language menu when clicking the button
-languageButton.addEventListener("click", (event) => {
-    event.stopPropagation();
-    const isVisible = languageMenu.classList.contains("show");
-    if (isVisible) {
-        languageMenu.classList.remove("show");
-    } else {
-        languageMenu.classList.add("show");
-    }
-});
-document.addEventListener("click", (event) => {
-    if (!languageButton.contains(event.target) && !languageMenu.contains(event.target)) {
-        languageMenu.classList.remove("show");
-    }
-});
-languageOptions.forEach(option => {
-    option.addEventListener("click", () => {
-        languageMenu.classList.remove("show");
-    });
-});
-
 // Scroll event
 let lastScrollY = window.scrollY;
 const scrollThreshold = 40;
@@ -697,9 +722,6 @@ window.addEventListener('scroll', () => {
         title.style.transform = 'translateY(0)';
         searchMenuContainer.style.transform = 'translateY(0)';
         floatingBtn.style.transform = 'translateY(-120px)';
-    }
-    if (languageMenu.classList.contains("show")) {
-        languageMenu.classList.remove("show");
     }
     lastScrollY = window.scrollY;
 });

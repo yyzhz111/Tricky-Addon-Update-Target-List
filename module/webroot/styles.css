@@ -96,6 +96,17 @@ body {
     border-bottom: none;
 }
 
+.language-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: none;
+    z-index: 1100;
+    display: none;
+}
+
 .help-button {
     margin-right: auto;
     background: none;
@@ -444,6 +455,7 @@ body {
     padding: 5px 12px;
     top: 110%;
     right: 0;
+    z-index: 1200;
     transform: translateX(120%);
     transition: transform 0.2s ease;
     width: auto;
@@ -478,6 +490,17 @@ body {
 
 .menu-options li:last-child {
     border-bottom: none;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: none;
+    z-index: 1000;
+    display: none;
 }
 
 .card-box {
