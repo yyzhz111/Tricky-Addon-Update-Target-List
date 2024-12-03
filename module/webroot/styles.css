@@ -484,13 +484,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: cacl(100% - 30px);
 }
 
 .card {
     background-color: white;
     border: none;
     border-radius: 10px;
+    margin: 0 auto;
     margin-bottom: 10px;
     outline: none;
     padding: 12px;
