@@ -69,6 +69,8 @@ body {
     border-radius: 8px;
     opacity: 0;
     visibility: hidden;
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
     transform: translateY(-10px);
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
 }
@@ -386,7 +388,6 @@ body {
     z-index: 1000;
 }
 
-
 .search-input {
     position: absolute;
     border: none;
@@ -459,6 +460,8 @@ body {
     transform: translateX(120%);
     transition: transform 0.2s ease;
     width: auto;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
     white-space: nowrap;
 }
 
