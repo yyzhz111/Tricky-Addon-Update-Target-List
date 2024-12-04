@@ -53,19 +53,28 @@ let excludeList = [];
 let isRefreshing = false;
 let translations = {};
 let currentLang = 'en-US';
+let availableLanguages = ['en-US'];
+
+// Function to check for available language
+async function initializeAvailableLanguages() {
+    try {
+        const multiLang = await execCommand(`find ${basePath}webroot/locales -type f -name "*.json" ! -name "A-template.json" -exec basename -s .json {} \\;`);
+        availableLanguages = multiLang.trim().split('\n');
+    } catch (error) {
+        console.error('Failed to fetch available languages:', error);
+        availableLanguages = ['en-US'];
+    }
+}
 
 // Function to detect user's default language
 function detectUserLanguage() {
     const userLang = navigator.language || navigator.userLanguage;
     const langCode = userLang.split('-')[0];
-    const availableLanguages = ['en-US', 'ru-RU', 'tl-PH', 'zh-CN', 'zh-TW'];
     if (availableLanguages.includes(userLang)) {
         return userLang;
-    }
-    else if (availableLanguages.includes(langCode)) {
+    } else if (availableLanguages.includes(langCode)) {
         return langCode;
-    }
-    else {
+    } else {
         return 'en-US';
     }
 }
@@ -332,7 +341,7 @@ function deselectAllApps() {
 // Function to run the extra script
 async function runExtraScript() {
   try {
-    const scriptPath = `${basePath}get_extra.sh`;
+    const scriptPath = `${basePath}common/get_extra.sh`;
     const output = await execCommand(scriptPath);
     console.log("Extra script executed successfully.");
     noConnection.style.display = "none";
@@ -341,7 +350,7 @@ async function runExtraScript() {
       showPrompt("new_update");
       await execCommand(`
         su -c "mkdir -p '/data/adb/modules/TA_utl' &&
-        cp -rf '${basePath}temp/'* '/data/adb/modules/TA_utl/'"
+        cp -rf '${basePath}common/temp/'* '/data/adb/modules/TA_utl/'"
       `);
     } else {
       console.log("No update detected from extra script.");
@@ -356,7 +365,7 @@ async function runExtraScript() {
 // Function to read the exclude list and uncheck corresponding apps
 async function deselectUnnecessaryApps() {
     try {
-        const result = await execCommand(`cat ${basePath}exclude-list`);
+        const result = await execCommand(`cat ${basePath}common/exclude-list`);
         const UnnecessaryApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
         apps.forEach(app => {
@@ -423,7 +432,7 @@ async function selectDenylistApps() {
 // Function to replace aosp kb
 async function aospkb() {
     try {
-        const sourcePath = `${basePath}.default`;
+        const sourcePath = `${basePath}common/.default`;
         const destinationPath = "/data/adb/tricky_store/keybox.xml";
         await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("AOSP keybox copied successfully.");
@@ -436,7 +445,7 @@ async function aospkb() {
 
 // Function to replace valid kb
 async function extrakb() {
-    const sourcePath = `${basePath}.extra`;
+    const sourcePath = `${basePath}common/.extra`;
     const destinationPath = "/data/adb/tricky_store/keybox.xml";
     try {
         const fileExists = await execCommand(`[ -f ${sourcePath} ] && echo "exists"`);
@@ -550,7 +559,7 @@ async function fetchAppList() {
         
         let applistMap = {};
         try {
-            const applistResult = await execCommand(`cat ${basePath}applist`);
+            const applistResult = await execCommand(`cat ${basePath}common/applist`);
             applistMap = applistResult
                 .split("\n")
                 .reduce((map, line) => {
@@ -581,7 +590,7 @@ async function fetchAppList() {
                 try {
                     const apkPath = await execCommand(`pm path ${entry.packageName} | grep "base.apk" | awk -F: '{print $2}' | tr -d '\\r'`);
                     if (apkPath) {
-                        const appName = await execCommand(`${basePath}aapt dump badging ${apkPath.trim()} 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g"`);
+                        const appName = await execCommand(`${basePath}common/aapt dump badging ${apkPath.trim()} 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g"`);
                         entry.appName = appName.trim() || "Unknown App";
                     } else {
                         entry.appName = "Unknown App";
@@ -680,9 +689,9 @@ document.querySelector(".uninstall-container").addEventListener("click", async (
     try {
         await execCommand(`
             su -c "
-                if [ -d '${basePath}temp/' ]; then
+                if [ -d '${basePath}common/temp/' ]; then
                     mkdir -p '/data/adb/modules/TA_utl' &&
-                    cp -rf '${basePath}temp/'* '/data/adb/modules/TA_utl/' &&
+                    cp -rf '${basePath}common/temp/'* '/data/adb/modules/TA_utl/' &&
                     touch '/data/adb/modules/TA_utl/remove'
                 else
                     touch '/data/adb/modules/TA_utl/remove'
@@ -716,6 +725,7 @@ window.addEventListener('scroll', () => {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
+    await initializeAvailableLanguages();
     const userLang = detectUserLanguage();
     await loadTranslations(userLang);
     setupMenuToggle();
