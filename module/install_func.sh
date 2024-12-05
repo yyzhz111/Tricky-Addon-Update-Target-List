@@ -29,7 +29,7 @@ initialize() {
             NEW_MODID="$MODID"
         fi
     fi
-    sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/common/\"|" "$MODPATH/webroot/index.js" || {
+    sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/\"|" "$MODPATH/webroot/index.js" || {
         ui_print "! Failed to set path"
         abort
     }
