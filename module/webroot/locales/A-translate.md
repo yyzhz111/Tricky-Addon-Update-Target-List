@@ -16,10 +16,12 @@
 3. Rename it to `language_code-COUNTRY_CODE.json`, e.g., `en-US.json`.
 4. Translate the string value inside.
 5. Add `langauge-option` into `/module/webroot/index.html`.
+
 Format:
 ```xml
 <button class="language-option" data-lang="language_code-COUNTRY_CODE">languageName</button>
 ```
+
 Example:
 ```xml
 <div class="language-menu">
