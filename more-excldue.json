@@ -58,6 +58,14 @@
                 {
                     "name": "KSUWebUI",
                     "package-name": "io.github.a13e300.ksuwebui"
+                },
+                {
+                    "name": "Shizuku",
+                    "package-name": "moe.shizuku.privileged.api"
+                },
+                {
+                    "name": "MMRL",
+                    "package-name": "com.dergoogler.mmrl"
                 }
             ]
         },
