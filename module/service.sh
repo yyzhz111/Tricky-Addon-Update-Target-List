@@ -43,9 +43,7 @@ else
     if [ -d "$TS/webroot" ]; then
         rm -rf "$TS/webroot"
     fi
-    if [ -d "$MODPATH/common/temp" ]; then
-        ln -s "$MODPATH/webroot" "$TS/webroot"
-    fi
+    ln -s "$MODPATH/webroot" "$TS/webroot"
 fi
 
 until [ "$(getprop sys.boot_completed)" = "1" ]; do

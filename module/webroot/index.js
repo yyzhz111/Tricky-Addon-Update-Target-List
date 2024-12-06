@@ -1,4 +1,5 @@
 // Header Elements
+const headerBlock = document.querySelector('.header-block');
 const title = document.querySelector('.header');
 const helpButton = document.getElementById('help-button');
 const noConnection = document.querySelector('.no-connection');
@@ -706,16 +707,30 @@ document.querySelector(".uninstall-container").addEventListener("click", async (
     }
 });
 
+// Function to check if running in MMRL
+function adjustHeaderForMMRL() {
+    if (typeof ksu !== 'undefined' && ksu.mmrl) {
+        console.log("Running in MMRL");
+        title.style.top = 'var(--window-inset-top)';
+        const insetTop = getComputedStyle(document.documentElement).getPropertyValue('--window-inset-top');
+        const insetTopValue = parseInt(insetTop, 10);
+        searchMenuContainer.style.top = `${insetTopValue + 40}px`;
+        headerBlock.style.display = 'block';
+    }
+}
+
 // Scroll event
 let lastScrollY = window.scrollY;
 const scrollThreshold = 40;
 window.addEventListener('scroll', () => {
     if (isRefreshing) return;
     if (window.scrollY > lastScrollY && window.scrollY > scrollThreshold) {
-        title.style.transform = 'translateY(-100%)';
+        title.style.transform = 'translateY(-80px)';
+        headerBlock.style.transform = 'translateY(-80px)';
         searchMenuContainer.style.transform = 'translateY(-40px)';
         floatingBtn.style.transform = 'translateY(0)';
     } else if (window.scrollY < lastScrollY) {
+        headerBlock.style.transform = 'translateY(0)';
         title.style.transform = 'translateY(0)';
         searchMenuContainer.style.transform = 'translateY(0)';
         floatingBtn.style.transform = 'translateY(-120px)';
@@ -725,6 +740,7 @@ window.addEventListener('scroll', () => {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
+    adjustHeaderForMMRL();
     await initializeAvailableLanguages();
     const userLang = detectUserLanguage();
     await loadTranslations(userLang);

@@ -1,5 +1,7 @@
 body {
     background-color: #F5F5F5;
+    padding-top: var(--window-inset-top);
+    padding-bottom: var(--window-inset-bottom);
 }
 
 .no-scroll {
@@ -22,6 +24,18 @@ body {
     margin-right: auto;
     left: 0;
     right: 0;
+}
+
+.header-block {
+    background-color: #F5F5F5;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1100;
+    transition: transform 0.3s ease;
+    height: var(--window-inset-top);
 }
 
 #title {
@@ -287,6 +301,8 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
+    width: 75vw;
+    max-width: 800px;
     transform: translate(-50%, -50%);
     background: #fff;
     border-radius: 8px;
@@ -328,6 +344,10 @@ body {
     font-size: 14px;
 }
 
+.about-content p[data-i18n="disclaimer"] {
+    font-style: italic;
+}
+
 .about-content p span[data-i18n="telegram_channel"] {
     font-weight: bold;
 }
@@ -336,13 +356,9 @@ body {
     font-weight: bold;
 }
 
-.about-content p[data-i18n="disclaimer"] {
-    font-style: italic;
-}
-
 .about-content p[data-i18n="acknowledgment"] {
+    font-weight: bold;
     font-size: 18px;
-    text-align: left;
 }
 
 .about-content p:not([data-i18n]) {
@@ -698,7 +714,8 @@ body {
         background-color: #121212;
         color: #eee;
     }
-
+    
+    .header-block,
     .header {
         background-color: #121212;
     }
