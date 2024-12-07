@@ -23,9 +23,6 @@ initialize() {
             echo "- Setting to visible..."
             rm -rf "$COMPATH/temp"
             NEW_MODID="$MODID"
-            if [ "$KSU" ] && [ -d "/data/adb/modules/.TA_utl" ]; then
-                touch "/data/adb/modules/.TA_utl/remove"
-            fi
         else
             mkdir -p "$COMPATH/temp/common"
             cp "$COMPATH/.default" "$COMPATH/temp/common/.default"

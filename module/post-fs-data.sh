@@ -16,9 +16,9 @@ if [ ! -d "$TS" ] || [ -f "$TS/remove" ]; then
     exit 1
 fi
 
-if [ -f "$TS/action.sh" ]; then
-    rm -f "$TS/action.sh"
+if [ ! -d "$MODPATH/common/temp" ]; then
+    rm -rf "/data/adb/modules/.TA_utl"
 fi
-if [ -d "$TS/webroot" ]; then
-    rm -rf "$TS/webroot"
-fi
+
+rm -f "$TS/action.sh"
+rm -rf "$TS/webroot"
