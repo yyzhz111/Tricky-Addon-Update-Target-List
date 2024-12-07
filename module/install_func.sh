@@ -24,11 +24,10 @@ initialize() {
             rm -rf "$COMPATH/temp"
             NEW_MODID="$MODID"
         else
-            mkdir -p "$COMPATH/temp/common"
-            cp "$COMPATH/.default" "$COMPATH/temp/common/.default"
-            cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
-            cp "$MODPATH/uninstall.sh" "$COMPATH/temp/uninstall.sh"
+            tmp_dir
         fi
+    else
+        tmp_dir
     fi
     sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/\"|" "$MODPATH/webroot/index.js" || {
         ui_print "! Failed to set path"
@@ -42,6 +41,13 @@ initialize() {
     mv "$MODPATH/bin/$(getprop ro.product.cpu.abi)/aapt" "$COMPATH/aapt"
     set_perm $COMPATH/aapt 0 2000 0755
     rm -rf "$MODPATH/bin"
+}
+
+tmp_dir() {
+    mkdir -p "$COMPATH/temp/common"
+    cp "$COMPATH/.default" "$COMPATH/temp/common/.default"
+    cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
+    cp "$MODPATH/uninstall.sh" "$COMPATH/temp/uninstall.sh"
 }
 
 find_config() {
