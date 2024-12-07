@@ -8,6 +8,9 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.7.1
+- Link redirect quick fix
+
 ### v2.7
 - Abandoned `UpdateTargetList.sh`; No longer automatically update target on boot.  
 - Adapted with MMRL, Magisk user can uninstall KSUWebUIStandalone if you have latest MMRL installed, action button will redirect to MMRL if KSUWebUIStandalone not found.
