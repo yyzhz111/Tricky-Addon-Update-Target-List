@@ -348,14 +348,6 @@ body {
     font-size: 14px;
 }
 
-.about-content p span[data-i18n="telegram_channel"] {
-    font-weight: bold;
-}
-
-.about-content p span[data-i18n="github"] {
-    font-weight: bold;
-}
-
 .about-content p[data-i18n="disclaimer"] {
     font-style: italic;
 }
@@ -367,6 +359,25 @@ body {
 
 .about-content p:not([data-i18n]) {
     font-size: 16px;
+}
+
+#telegram {
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: #38A7ED;
+    color: #fff;
+    border-radius: 8px;
+    margin-right: 5px;
+    transition: background-color 0.2s ease;
+}
+
+#github {
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: #1E1E1E;
+    color: #fff;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
 }
 
 .search-menu-container {
@@ -751,6 +762,14 @@ body {
 
 .uninstall-container:active {
     background-color: #830000;
+}
+
+#telegram:active {
+    background-color: #1A78B3;
+}
+
+#github:active {
+    background-color: #585858;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -41,6 +41,10 @@ const loadingIndicator = document.querySelector('.loading');
 const floatingBtn = document.querySelector('.floating-btn');
 const prompt = document.getElementById('prompt');
 
+// About Elements
+const telegramLink = document.getElementById('telegram');
+const githubLink = document.getElementById('github');
+
 const basePath = "set-path";
 const ADDITIONAL_APPS = [
     "com.google.android.gms",
@@ -769,8 +773,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // Redirect to GitHub release page
-updateCard.addEventListener('click', () => {
-  window.location.href = 'https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest';
+updateCard.addEventListener('click', async() => {
+    try {
+        await execCommand('am start -a android.intent.action.VIEW -d https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest');
+    } catch (error) {
+        console.error('Error opening GitHub Release link:', error);
+    }
+});
+
+telegramLink.addEventListener('click', async () => {
+  try {
+    await execCommand('am start -a android.intent.action.VIEW -d https://t.me/kowchannel');
+  } catch (error) {
+    console.error('Error opening Telegram link:', error);
+  }
+});
+
+githubLink.addEventListener('click', async () => {
+  try {
+    await execCommand('am start -a android.intent.action.VIEW -d https://github.com/KOWX712/Tricky-Addon-Update-Target-List');
+  } catch (error) {
+    console.error('Error opening GitHub link:', error);
+  }
 });
 
 // Function to execute shell commands
