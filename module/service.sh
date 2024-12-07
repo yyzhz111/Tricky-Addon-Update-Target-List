@@ -21,11 +21,9 @@ if [ -d "$MODPATH/common/temp" ]; then
     if [ "$KSU" ] || [ "$APATCH" ]; then
         rm -f "$MODPATH/module.prop"
     fi
-    if [ ! -d "$HIDE_DIR" ]; then
+    if [[ "$MODPATH" != "$HIDE_DIR" ]]; then
+        rm -rf "$HIDE_DIR"
         mv "$MODPATH" "$HIDE_DIR"
-    elif [[ "$MODPATH" != "$HIDE_DIR" ]]; then
-        rm -rf "$MODPATH"
-        exit 0
     fi
     MODPATH="$HIDE_DIR"
     if [ -f "$MODPATH/action.sh" ]; then
