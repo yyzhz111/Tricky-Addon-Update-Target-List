@@ -1,13 +1,20 @@
 ### Tricky Addon: Update Target List
 A **KSU WebUI** to configure tricky store target.txt
 
-This module is not a part of Tricky Store, DO NOT report to Tricky Store if you encounter any issue.
+*This module is **not** a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered.*
 
 GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
 
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.7
+- Abandoned `UpdateTargetList.sh`; No longer automatically update target on boot.  
+- Adapted with MMRL, Magisk user can uninstall KSUWebUIStandalone if you have latest MMRL installed, action button will redirect to MMRL if KSUWebUIStandalone not found.
+- New update card for invisible module.
+- Improved UI.
+- Press any position of app card to select/deselct.
+
 ### v2.6
 - Invisible module, intergrate action button & webui on tricky store card. You can stil use visible option if you found any issue with invisble module. Thanks for idea from @backslashxx.
 - To uninstall invisble module, scroll down to the bottom of WebUI and press Uninstall WebUI.
@@ -35,7 +42,7 @@ Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 ### v2.4
 - Added aapt binary for app name display
 
-- **KSU WebUI**
+- **KSU WebUI:**
 - Added app name display
 
 ### v2.3
@@ -45,7 +52,7 @@ Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 - Abandoned action button in KernelSU and Apatch
 - Magisk action button: open WebUI, automatic download if not installed (optional)
 
-- **KSU WebUI**
+- **KSU WebUI:**
 - Option to select app from DenyList (Magisk)
 
 ### v2.2

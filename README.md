@@ -11,14 +11,16 @@ Configure Tricky Store target.txt with KSU WebUI.
 ### KernelSU & Apatch
 - KSU WebUI
 
-### Magisk (Action Button)
-- action.sh will open WebUI, automatic install [KSUWebUIStandalone](https://github.com/5ec1cff/KsuWebUIStandalone) if not installed.
+### Magisk
+- Action button to open WebUI
+- Support KSUWebUIStandalone and latest MMRL
+- Automatic install [KSUWebUIStandalone](https://github.com/5ec1cff/KsuWebUIStandalone) if none of them are installed.
 
 ### Module Visibility
 | Visibility | Behavior|
 | :--- | :--- |
 | Invisible | <li>Action/WebUI on the Tricky Store module card.</li><li>Uninstall by pressing the uninstall button at the bottom part of WebUI.</li> |
-| Visible | <li>For those who having trouble with KSUWebUIStandalone, such as</li><ul><li>using an old version of Magisk that lacks the action button</li><li>KSU built-in WebUI crashes</li></ul> |
+| Visible | <li>For those who having trouble with KSUWebUIStandalone, such as</li><ul><li>using an old version of Magisk that lacks the action button</li><li>KSU built-in WebUI freeze</li></ul> |
 
 ### What Can This Module Do
 | Feature | Status |
