@@ -7,6 +7,9 @@
     "boot_hash_input_placeholder": "Вставьте свой проверенный Boot Hash сюда",
     "uninstall_webui": "Удалить WebUI",
     
+    "update_available": "Доступна новая версия",
+    "redirect_to_release": "нажмите, чтобы скачать последнюю версию",
+
     "refresh": "Обновить",
     "select_all": "Выбрать все",
     "deselect_all": "Отменить выбор всех",

@@ -7,6 +7,9 @@
     "boot_hash_input_placeholder": "Paste your verified Boot Hash here",
     "uninstall_webui": "Uninstall WebUI",
     
+    "update_available": "A new version is ready",
+    "redirect_to_release": "tap to download the latest version",
+    
     "refresh": "Refresh",
     "select_all": "Select All",
     "deselect_all": "Deselect All",
@@ -33,7 +36,7 @@
     "by": "by ",
     "telegram_channel": "Telegram Channel",
     "github": "GitHub",
-    "disclaimer": "This WebUI is not a part of Tricky Store, DO NOT report to Tricky Store author if you encounter any issue.",
+    "disclaimer": "This module is not a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered.",
     "acknowledgment": "Acknowledgment",
 
     "no_internet": "Please check your Internet connection",

@@ -6,6 +6,9 @@
     "loading": "加载中...",
     "boot_hash_input_placeholder": "在此粘贴您的哈希值",
     "uninstall_webui": "卸载 WebUI",
+    
+    "update_available": "发现新的版本",
+    "redirect_to_release": "点击跳转 GitHub 下载最新版本",
    
     "refresh": "刷新",
     "select_all": "全选",

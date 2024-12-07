@@ -7,6 +7,9 @@
     "boot_hash_input_placeholder": "在此粘貼您的哈希值",
     "uninstall_webui": "卸載 WebUI",
 
+    "update_available": "發現新的版本",
+    "redirect_to_release": "點擊跳轉至 GitHub 下載最新版本",
+
     "refresh": "刷新",
     "select_all": "全選",
     "deselect_all": "取消全選",

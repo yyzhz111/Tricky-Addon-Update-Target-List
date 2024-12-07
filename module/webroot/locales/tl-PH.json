@@ -7,6 +7,9 @@
     "boot_hash_input_placeholder": "I-paste ang iyong verified Boot Hash dito",
     "uninstall_webui": "I-uninstall ang WebUI",
     
+    "update_available": "Handa na ang bagong bersyon",
+    "redirect_to_release": "i-tap para i-download ang pinakabagong bersyon",
+
     "refresh": "I-refresh",
     "select_all": "Piliin Lahat",
     "deselect_all": "Huwag Pumili ng Lahat",

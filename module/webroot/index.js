@@ -34,6 +34,7 @@ const saveButton = document.getElementById('boot-hash-save-button');
 // Applist Elements
 const appTemplate = document.getElementById('app-template').content;
 const appListContainer = document.getElementById('apps-list');
+const updateCard = document.getElementById('update-card');
 
 // Loading, Save and Prompt Elements
 const loadingIndicator = document.querySelector('.loading');
@@ -349,6 +350,7 @@ async function runExtraScript() {
     if (output.includes("update")) {
       console.log("Update detected from extra script.");
       showPrompt("new_update");
+      updateCard.style.display = "flex";
       await execCommand(`
         su -c "mkdir -p '/data/adb/modules/TA_utl' &&
         cp -rf '${basePath}common/temp/'* '/data/adb/modules/TA_utl/'"
@@ -539,7 +541,7 @@ function aboutMenu() {
         hideMenu();
     });
     aboutOverlay.addEventListener('click', (event) => {
-        if (!menu.contains(event.target)) {
+        if (!aboutMenu.contains(event.target)) {
             hideMenu();
         }
     });
@@ -630,6 +632,9 @@ async function fetchAppList() {
     }
     floatingBtn.style.transform = "translateY(-120px)";
     toggleableCheckbox();
+    if (appListContainer.firstChild !== updateCard) {
+        appListContainer.insertBefore(updateCard, appListContainer.firstChild);
+    }
 }
 
 // Make checkboxes toggleable
@@ -761,6 +766,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadingIndicator.style.display = "none";
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
     runExtraScript();
+});
+
+// Redirect to GitHub release page
+updateCard.addEventListener('click', () => {
+  window.location.href = 'https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest';
 });
 
 // Function to execute shell commands

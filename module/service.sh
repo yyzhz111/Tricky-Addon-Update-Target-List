@@ -18,6 +18,13 @@ elif [ ! -d "$TSPA" ] && [ -f "/storage/emulated/0/stop-tspa-auto-target" ]; the
     rm -f "/storage/emulated/0/stop-tspa-auto-target"
 fi
 
+if [ -f "$TS/action.sh" ]; then
+    rm -f "$TS/action.sh"
+fi
+if [ -d "$TS/webroot" ]; then
+    rm -rf "$TS/webroot"
+fi
+
 if [ -d "$MODPATH/common/temp" ]; then
     if [ "$KSU" ] || [ "$APATCH" ]; then
         rm -f "$MODPATH/module.prop"
@@ -29,22 +36,14 @@ if [ -d "$MODPATH/common/temp" ]; then
         exit 0
     fi
     MODPATH="$HIDE_DIR"
+    if [ -f "$MODPATH/action.sh" ]; then
+        ln -s "$MODPATH/action.sh" "$TS/action.sh"
+    fi
+    ln -s "$MODPATH/webroot" "$TS/webroot"
 fi
 
 OUTPUT_APP="$MODPATH/common/applist"
 OUTPUT_SKIP="$MODPATH/common/skiplist"
-
-if [ -f "$MODPATH/action.sh" ]; then
-    if [ -f "$TS/action.sh" ]; then
-        rm -f "$TS/action.sh"
-    fi
-    ln -s "$MODPATH/action.sh" "$TS/action.sh"
-else
-    if [ -d "$TS/webroot" ]; then
-        rm -rf "$TS/webroot"
-    fi
-    ln -s "$MODPATH/webroot" "$TS/webroot"
-fi
 
 until [ "$(getprop sys.boot_completed)" = "1" ]; do
     sleep 1
