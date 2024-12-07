@@ -1,7 +1,6 @@
 MODPATH=${0%/*}
 HIDE_DIR="/data/adb/modules/.TA_utl"
 TS="/data/adb/modules/tricky_store"
-SCRIPT_DIR="/data/adb/tricky_store"
 TSPA="/data/adb/modules/tsupport-advance"
 
 aapt() { "$MODPATH/common/aapt" "$@"; }
@@ -16,13 +15,6 @@ if [ -d "$TSPA" ]; then
     touch "/storage/emulated/0/stop-tspa-auto-target"
 elif [ ! -d "$TSPA" ] && [ -f "/storage/emulated/0/stop-tspa-auto-target" ]; then
     rm -f "/storage/emulated/0/stop-tspa-auto-target"
-fi
-
-if [ -f "$TS/action.sh" ]; then
-    rm -f "$TS/action.sh"
-fi
-if [ -d "$TS/webroot" ]; then
-    rm -rf "$TS/webroot"
 fi
 
 if [ -d "$MODPATH/common/temp" ]; then

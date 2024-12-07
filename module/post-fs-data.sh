@@ -15,3 +15,10 @@ if [ ! -d "$TS" ] || [ -f "$TS/remove" ]; then
     fi
     exit 1
 fi
+
+if [ -f "$TS/action.sh" ]; then
+    rm -f "$TS/action.sh"
+fi
+if [ -d "$TS/webroot" ]; then
+    rm -rf "$TS/webroot"
+fi

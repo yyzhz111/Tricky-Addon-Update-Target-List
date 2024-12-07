@@ -5,9 +5,7 @@ initialize() {
     if [ -d "/data/adb/modules/$NEW_MODID" ]; then
         rm -rf "/data/adb/modules/$NEW_MODID"
     fi
-    
-    cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
-    cp "$MODPATH/uninstall.sh" "$COMPATH/temp/uninstall.sh"
+
     set_perm $COMPATH/get_extra.sh 0 2000 0755
     set_perm $COMPATH/get_WebUI.sh 0 2000 0755
     
@@ -25,9 +23,14 @@ initialize() {
             echo "- Setting to visible..."
             rm -rf "$COMPATH/temp"
             NEW_MODID="$MODID"
+            if [ "$KSU" ] && [ -d "/data/adb/modules/.TA_utl" ]; then
+                touch "/data/adb/modules/.TA_utl/remove"
+            fi
         else
             mkdir -p "$COMPATH/temp/common"
             cp "$COMPATH/.default" "$COMPATH/temp/common/.default"
+            cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
+            cp "$MODPATH/uninstall.sh" "$COMPATH/temp/uninstall.sh"
         fi
     fi
     sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/\"|" "$MODPATH/webroot/index.js" || {
