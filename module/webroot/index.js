@@ -318,7 +318,7 @@ async function refreshAppList() {
     await new Promise(resolve => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
     if (noConnection.style.display === "flex") {
-        await runExtraScript();
+        await updateCheck();
     }
     await fetchAppList();
     loadingIndicator.style.display = 'none';
@@ -344,34 +344,46 @@ function deselectAllApps() {
     });
 }
 
-// Function to run the extra script
-async function runExtraScript() {
-  try {
-    const scriptPath = `${basePath}common/get_extra.sh`;
-    const output = await execCommand(scriptPath);
-    console.log("Extra script executed successfully.");
-    noConnection.style.display = "none";
-    if (output.includes("update")) {
-      console.log("Update detected from extra script.");
-      showPrompt("new_update");
-      updateCard.style.display = "flex";
-      await execCommand(`
+// Function to run the update check
+async function updateCheck() {
+    try {
+        const scriptPath = `sh ${basePath}common/get_extra.sh --update`;
+        const output = await execCommand(scriptPath);
+        console.log("update script executed successfully.");
+        noConnection.style.display = "none";
+        if (output.includes("update")) {
+            console.log("Update detected from extra script.");
+            showPrompt("new_update");
+            updateCard.style.display = "flex";
+            await execCommand(`
         su -c "mkdir -p '/data/adb/modules/TA_utl' &&
         cp -rf '${basePath}common/temp/'* '/data/adb/modules/TA_utl/'"
       `);
-    } else {
-      console.log("No update detected from extra script.");
+        } else {
+            console.log("No update detected from extra script.");
+        }
+    } catch (error) {
+        console.error("Failed to execute update script:", error);
+        showPrompt("no_internet", false);
+        noConnection.style.display = "flex";
     }
-  } catch (error) {
-    console.error("Failed to execute Extra script:", error);
-    showPrompt("no_internet", false);
-    noConnection.style.display = "flex";
-  }
 }
 
 // Function to read the exclude list and uncheck corresponding apps
 async function deselectUnnecessaryApps() {
     try {
+        const fileCheck = await execCommand(`test -f ${basePath}common/exclude-list && echo "exists" || echo "not found"`);
+        if (fileCheck.trim() === "not found") {
+            setTimeout(async () => {
+                await execCommand(`sh ${basePath}common/get_extra.sh --unnecessary`);
+            }, 100);
+            console.log("Exclude list not found. Running the unnecessary apps script.");
+        } else {
+            setTimeout(async () => {
+                await execCommand(`sh ${basePath}common/get_extra.sh --xposed`);
+            }, 100);
+            console.log("Exclude list found. Running xposed script.");
+        }
         const result = await execCommand(`cat ${basePath}common/exclude-list`);
         const UnnecessaryApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
@@ -380,10 +392,10 @@ async function deselectUnnecessaryApps() {
             const packageName = contentElement.getAttribute("data-package");
             const checkbox = app.querySelector(".checkbox");
             if (UnnecessaryApps.includes(packageName)) {
-                checkbox.checked = false; // Uncheck if found in more-exclude list
+                checkbox.checked = false;
             }
         });
-        console.log("unnecessary apps deselected successfully.");
+        console.log("Unnecessary apps deselected successfully.");
     } catch (error) {
         console.error("Failed to deselect unnecessary apps:", error);
     }
@@ -452,6 +464,9 @@ async function aospkb() {
 
 // Function to replace valid kb
 async function extrakb() {
+    setTimeout(async () => {
+        await execCommand(`sh ${basePath}common/get_extra.sh --kb`);
+    }, 100);
     const sourcePath = `${basePath}common/.extra`;
     const destinationPath = "/data/adb/tricky_store/keybox.xml";
     try {
@@ -468,7 +483,6 @@ async function extrakb() {
         showPrompt("no_valid_fallback", false);
     }
 }
-
 
 // Function to handle Verified Boot Hash
 async function setBootHash() {
@@ -563,7 +577,7 @@ async function fetchAppList() {
         } catch (error) {
             console.error("Failed to read target.txt file:", error);
         }
-        
+
         let applistMap = {};
         try {
             const applistResult = await execCommand(`cat ${basePath}common/applist`);
@@ -769,11 +783,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     checkMagisk();
     loadingIndicator.style.display = "none";
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
-    runExtraScript();
+    setTimeout(updateCheck, 0);
 });
 
 // Redirect to GitHub release page
-updateCard.addEventListener('click', async() => {
+updateCard.addEventListener('click', async () => {
     try {
         await execCommand('am start -a android.intent.action.VIEW -d https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest');
     } catch (error) {
@@ -782,19 +796,19 @@ updateCard.addEventListener('click', async() => {
 });
 
 telegramLink.addEventListener('click', async () => {
-  try {
-    await execCommand('am start -a android.intent.action.VIEW -d https://t.me/kowchannel');
-  } catch (error) {
-    console.error('Error opening Telegram link:', error);
-  }
+    try {
+        await execCommand('am start -a android.intent.action.VIEW -d https://t.me/kowchannel');
+    } catch (error) {
+        console.error('Error opening Telegram link:', error);
+    }
 });
 
 githubLink.addEventListener('click', async () => {
-  try {
-    await execCommand('am start -a android.intent.action.VIEW -d https://github.com/KOWX712/Tricky-Addon-Update-Target-List');
-  } catch (error) {
-    console.error('Error opening GitHub link:', error);
-  }
+    try {
+        await execCommand('am start -a android.intent.action.VIEW -d https://github.com/KOWX712/Tricky-Addon-Update-Target-List');
+    } catch (error) {
+        console.error('Error opening GitHub link:', error);
+    }
 });
 
 // Function to execute shell commands

@@ -1,26 +1,18 @@
 PACKAGE_NAME="io.github.a13e300.ksuwebui"
 MODID="set-id"
-BBPATH="/data/adb/modules/busybox-ndk/system/*/busybox \
-/data/adb/magisk/busybox \
+BBPATH="/data/adb/magisk/busybox \
 /data/adb/ksu/bin/busybox \
-/data/adb/ap/bin/busybox"
-            
-find_busybox() {    
-    for path in $BBPATH; do
-        if [ -f "$path" ]; then
-            BUSYBOX="$path"
-            return 0
-        fi
-    done
-    return 1
-}
+/data/adb/ap/bin/busybox \
+/data/adb/modules/busybox-ndk/system/*/busybox"
 
 check_wget() {
+    for path in $BBPATH; do
+        [ -f "$path" ] && BUSYBOX="$path" && break
+    done
     if ! command -v wget >/dev/null || grep -q "wget-curl" "$(command -v wget)"; then
-        if find_busybox; then
+        if [ -n "$BUSYBOX" ]; then
             wget() { "$BUSYBOX" wget "$@"; }
         else
-            echo "Error: busybox not found." > "$OUTPUT"
             exit 1
         fi
     fi

@@ -1,7 +1,6 @@
 URL="https://github.com/5ec1cff/KsuWebUIStandalone/releases/download/v1.0/KsuWebUI-1.0-34-release.apk"
 APK_DIR="$COMPATH"
 
-find_busybox
 check_wget
 
 echo "- Downloading the WebUI apk..."
