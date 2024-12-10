@@ -1,10 +1,12 @@
 MODPATH=${0%/*}
 HIDE_DIR="/data/adb/modules/.TA_utl"
 TS="/data/adb/modules/tricky_store"
+SCRIPT_DIR="/data/adb/tricky_store"
 TSPA="/data/adb/modules/tsupport-advance"
 
 aapt() { "$MODPATH/common/aapt" "$@"; }
 
+# Reset verified Boot Hash
 hash_value=$(grep -v '^#' "/data/adb/boot_hash" | tr -d '[:space:]')
 if [ -n "$hash_value" ]; then
     resetprop -n ro.boot.vbmeta.digest "$hash_value"
@@ -17,21 +19,23 @@ elif [ ! -d "$TSPA" ] && [ -f "/storage/emulated/0/stop-tspa-auto-target" ]; the
     rm -f "/storage/emulated/0/stop-tspa-auto-target"
 fi
 
-if [ -d "$MODPATH/common/temp" ]; then
-    if [ "$KSU" ] || [ "$APATCH" ]; then
-        rm -f "$MODPATH/module.prop"
-    fi
+# Hide module
+if [ -f "$MODPATH/action.sh" ]; then
     if [[ "$MODPATH" != "$HIDE_DIR" ]]; then
         rm -rf "$HIDE_DIR"
         mv "$MODPATH" "$HIDE_DIR"
     fi
     MODPATH="$HIDE_DIR"
-    if [ -f "$MODPATH/action.sh" ]; then
-        ln -s "$MODPATH/action.sh" "$TS/action.sh"
-    fi
-    ln -s "$MODPATH/webroot" "$TS/webroot"
+elif [ -d "$HIDE_DIR" ]; then
+    rm -rf "$HIDE_DIR"
 fi
+rm -f "$MODPATH/module.prop"
 
+# Symlink tricky store
+[ -f "$MODPATH/action.sh" ] && ln -s "$MODPATH/action.sh" "$TS/action.sh"
+ln -s "$MODPATH/webui" "$TS/webroot"
+
+# Optimization
 OUTPUT_APP="$MODPATH/common/applist"
 OUTPUT_SKIP="$MODPATH/common/skiplist"
 

@@ -1,35 +1,24 @@
 initialize() {
-    if [ -f "$SCRIPT_DIR/UpdateTargetList.sh" ]; then
-        rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
-    fi
-    if [ -d "/data/adb/modules/$NEW_MODID" ]; then
-        rm -rf "/data/adb/modules/$NEW_MODID"
-    fi
+    # Cleanup left over
+    [ -d "/data/adb/modules/$NEW_MODID" ] && rm -rf "/data/adb/modules/$NEW_MODID"
 
+    # Set permission
     set_perm $COMPATH/get_extra.sh 0 2000 0755
     set_perm $COMPATH/get_WebUI.sh 0 2000 0755
-    
+
+    # Handdle Magisk/non-Magisk root manager
     if [ "$ACTION" = "false" ]; then
         rm -f "$MODPATH/action.sh"
         rm -f "$COMPATH/get_WebUI.sh"
-        echo "**********************************************"
-        echo "- Tricky Addon's visibility in root manager?"
-        echo "  VOL [+]: Visible"
-        echo "  VOL [-]: Invisible (default)"
-        echo "**********************************************"
-
-        key_check
-        if [[ "$keycheck" == "KEY_VOLUMEUP" ]]; then
-            echo "- Setting to visible..."
-            rm -rf "$COMPATH/temp"
-            NEW_MODID="$MODID"
-        else
-            tmp_dir
-        fi
+        NEW_MODID="$MODID"
     else
-        tmp_dir
+        mkdir -p "$COMPATH/temp/common"
+        cp "$COMPATH/.default" "$COMPATH/temp/common/.default"
+        cp "$MODPATH/uninstall.sh" "$COMPATH/temp/uninstall.sh"
     fi
-    sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/\"|" "$MODPATH/webroot/index.js" || {
+
+    #Set specific path
+    sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/\"|" "$MODPATH/webui/index.js" || {
         ui_print "! Failed to set path"
         abort
     }
@@ -38,22 +27,17 @@ initialize() {
         abort
     }
     
+    # Set aapt binary
+    cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
     mv "$MODPATH/bin/$(getprop ro.product.cpu.abi)/aapt" "$COMPATH/aapt"
     set_perm $COMPATH/aapt 0 2000 0755
     rm -rf "$MODPATH/bin"
 }
 
-tmp_dir() {
-    mkdir -p "$COMPATH/temp/common"
-    cp "$COMPATH/.default" "$COMPATH/temp/common/.default"
-    cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
-    cp "$MODPATH/uninstall.sh" "$COMPATH/temp/uninstall.sh"
-}
-
 find_config() {
-    if [ -d "$CONFIG_DIR" ]; then
-        rm -rf "$CONFIG_DIR"
-    fi
+    # Remove legacy setup
+    [ -f "$SCRIPT_DIR/UpdateTargetList.sh" ] && rm -f "$SCRIPT_DIR/UpdateTargetList.sh"
+    [ -d "$CONFIG_DIR" ] && rm -rf "$CONFIG_DIR"
 }
 
 migrate_old_boot_hash() {
@@ -62,24 +46,4 @@ migrate_old_boot_hash() {
     else
         rm -f "$COMPATH/boot_hash"
     fi
-}
-
-key_check() {
-    while true; do
-        key_check=$(/system/bin/getevent -qlc 1)
-        key_event=$(echo "$key_check" | awk '{ print $3 }' | grep 'KEY_')
-        key_status=$(echo "$key_check" | awk '{ print $4 }')
-        if [[ "$key_event" == *"KEY_"* && "$key_status" == "DOWN" ]]; then
-            keycheck="$key_event"
-            break
-        fi
-    done
-    while true; do
-        key_check=$(/system/bin/getevent -qlc 1)
-        key_event=$(echo "$key_check" | awk '{ print $3 }' | grep 'KEY_')
-        key_status=$(echo "$key_check" | awk '{ print $4 }')
-        if [[ "$key_event" == *"KEY_"* && "$key_status" == "UP" ]]; then
-            break
-        fi
-    done
 }

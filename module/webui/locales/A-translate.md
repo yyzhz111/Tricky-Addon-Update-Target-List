@@ -1,5 +1,5 @@
 # Translation Guide
-## Fix Translation Error
+## Fix Bad Translation
 1. Fork this repository.
 2. Find your language string file in `/module/webroot/locales/`.
 3. Edit the string value with translated incorrectly.
@@ -8,7 +8,7 @@
 ---
 ## Add a New Language
 ### Simple
-- Contact me in Telegram to add a new translation langauge for you.
+- Contact me in Telegram to add a new translation langauge.
 
 ### Advanced
 1. Fork this repository.

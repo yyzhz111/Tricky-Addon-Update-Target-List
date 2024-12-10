@@ -6,18 +6,13 @@ while [ -z "$(ls -A /data/adb/modules/)" ]; do
 done
 
 if [ ! -d "$TS" ] || [ -f "$TS/remove" ]; then
-    if [ -d "$MODPATH/common/temp" ]; then
-        mkdir -p "/data/adb/modules/TA_utl"
-        cp -rf "$MODPATH/common/temp"/* "/data/adb/modules/TA_utl/"
+    if [ -f "$MODPATH/action.sh" ]; then
+        [ -d "/data/adb/modules/TA_utl" ] && rm -rf "/data/adb/modules/TA_utl"
+        cp -rf "$MODPATH/common/temp" "/data/adb/modules/TA_utl"
         touch "/data/adb/modules/TA_utl/remove"
     else
         touch "$MODPATH/remove"
     fi
-    exit 1
-fi
-
-if [ ! -d "$MODPATH/common/temp" ]; then
-    rm -rf "/data/adb/modules/.TA_utl"
 fi
 
 rm -f "$TS/action.sh"

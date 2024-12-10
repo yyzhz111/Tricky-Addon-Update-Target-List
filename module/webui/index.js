@@ -470,6 +470,7 @@ async function extrakb() {
     const sourcePath = `${basePath}common/.extra`;
     const destinationPath = "/data/adb/tricky_store/keybox.xml";
     try {
+        await new Promise(resolve => setTimeout(resolve, 300));
         const fileExists = await execCommand(`[ -f ${sourcePath} ] && echo "exists"`);
         if (fileExists.trim() !== "exists") {
             throw new Error(".extra file not found");
@@ -713,12 +714,14 @@ document.querySelector(".uninstall-container").addEventListener("click", async (
     try {
         await execCommand(`
             su -c "
-                if [ -d '${basePath}common/temp/' ]; then
-                    mkdir -p '/data/adb/modules/TA_utl' &&
-                    cp -rf '${basePath}common/temp/'* '/data/adb/modules/TA_utl/' &&
+                if [ -f '${basePath}action.sh' ]; then
+                    if [ -d "/data/adb/modules/TA_utl" ]; then
+                        rm -rf "/data/adb/modules/TA_utl"
+                    fi
+                    cp -rf '${basePath}common/temp' '/data/adb/modules/TA_utl' &&
                     touch '/data/adb/modules/TA_utl/remove'
                 else
-                    touch '/data/adb/modules/TA_utl/remove'
+                    touch '${basePath}remove'
                 fi
             "
         `);

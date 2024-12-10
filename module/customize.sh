@@ -33,7 +33,7 @@ fi
 ui_print "- Installing..."
 initialize
 
-ui_print "- Creating config directory..."
+ui_print "- Finalizing..."
 find_config
 migrate_old_boot_hash
 

@@ -18,7 +18,7 @@ install_webui
 echo "- Done."
 rm -f "$APK_PATH"
 echo "- Launching..."
-am start -n "${PACKAGE_NAME}/.WebUIActivity" -e id "$MODID" </dev/null 2>&1 | cat
+am start -n "${PACKAGE_NAME}/.WebUIActivity" -e id "tricky_store" </dev/null 2>&1 | cat
 if [ $? -ne 0 ]; then
     echo "Error: Failed to start application."
     exit 1
