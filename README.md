@@ -1,8 +1,11 @@
 # Tricky Addon - Update Target List
 Configure Tricky Store target.txt with KSU WebUI.
 
-> [!NOTE]
-> _This module is **not** a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered._
+[![Latest Release](https://img.shields.io/github/v/release/KOWX712/Tricky-Addon-Update-Target-List?label=Release&logo=github)](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
+[![Nightly Release](https://img.shields.io/badge/Nightly%20release-gray?logo=hackthebox&logoColor=eee)](https://nightly.link/KOWX712/Tricky-Addon-Update-Target-List/workflows/build/main?status=completed)
+
+> [!WARNING]
+> This module is **not** a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered.
 
 ## Requirements
 - [Tricky store](https://github.com/5ec1cff/TrickyStore) module installed
@@ -27,6 +30,7 @@ Configure Tricky Store target.txt with KSU WebUI.
 |:---|:---:|
 | Configure target.txt with app name display | ✅ |
 | Select apps from Magisk DenyList (optional) | ✅ |
+| Deselect [unnecessary apps](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/more-excldue.json) (optional) | ✅ |
 | Set verifiedBootHash (optional) | ✅ |
 | Provide AOSP Keybox (optional) | ✅ |
 | Valid Keybox (not guaranteed) | ❌ |
@@ -36,7 +40,7 @@ Configure Tricky Store target.txt with KSU WebUI.
 | Add system apps (GMS added by default) | ❌ |
 
 ## Translation
-- Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/module/webroot/locales/A-translate.md)
+- Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/module/webui/locales/A-translate.md)
 
 ## Acknowledgement
 - [j-hc/zygisk-detach](https://github.com/j-hc/zygisk-detach) - KSU WebUI template
