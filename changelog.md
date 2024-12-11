@@ -27,7 +27,7 @@ Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 - New way to detect Xposed module, now can catch all Xposed module apk package name in Deselect Unnecessary option, feedback in [Telegram](https://t.me/kowchannel) or [create issue](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/issues) if missed any.
 - **Initial support for multiple languages**
 - Language available: **en-US**, **ru-RU**, **tl-PH**, **zh-CN**, **zh-TW**
-- Add language or fix translation error? [Read here](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/tree/master/module/webroot/locales/A-translate.md).
+- Add language or fix translation error? [Read here](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/tree/master/module/webui/locales/A-translate.md).
 
 ### v2.6-beta.3
 - Check in [release notes](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/tag/v2.6-beta.3).

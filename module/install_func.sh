@@ -4,17 +4,15 @@ initialize() {
 
     # Set permission
     set_perm $COMPATH/get_extra.sh 0 2000 0755
-    set_perm $COMPATH/get_WebUI.sh 0 2000 0755
 
     # Handdle Magisk/non-Magisk root manager
     if [ "$ACTION" = "false" ]; then
         rm -f "$MODPATH/action.sh"
-        rm -f "$COMPATH/get_WebUI.sh"
         NEW_MODID="$MODID"
     else
-        mkdir -p "$COMPATH/temp/common"
-        cp "$COMPATH/.default" "$COMPATH/temp/common/.default"
-        cp "$MODPATH/uninstall.sh" "$COMPATH/temp/uninstall.sh"
+        mkdir -p "$COMPATH/update/common"
+        cp "$COMPATH/.default" "$COMPATH/update/common/.default"
+        cp "$MODPATH/uninstall.sh" "$COMPATH/update/uninstall.sh"
     fi
 
     #Set specific path
@@ -22,13 +20,9 @@ initialize() {
         ui_print "! Failed to set path"
         abort
     }
-    sed -i "s|\"set-id\"|\"$NEW_MODID\"|" "$COMPATH/util_func.sh" || {
-        ui_print "! Failed to set id"
-        abort
-    }
-    
+
     # Set aapt binary
-    cp "$MODPATH/module.prop" "$COMPATH/temp/module.prop"
+    cp "$MODPATH/module.prop" "$COMPATH/update/module.prop"
     mv "$MODPATH/bin/$(getprop ro.product.cpu.abi)/aapt" "$COMPATH/aapt"
     set_perm $COMPATH/aapt 0 2000 0755
     rm -rf "$MODPATH/bin"

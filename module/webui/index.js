@@ -356,9 +356,17 @@ async function updateCheck() {
             showPrompt("new_update");
             updateCard.style.display = "flex";
             await execCommand(`
-        su -c "mkdir -p '/data/adb/modules/TA_utl' &&
-        cp -rf '${basePath}common/temp/'* '/data/adb/modules/TA_utl/'"
-      `);
+                su -c "
+                    if [ -f '${basePath}action.sh' ]; then
+                        if [ -d "/data/adb/modules/TA_utl" ]; then
+                            rm -rf "/data/adb/modules/TA_utl"
+                        fi
+                        cp -rf '${basePath}common/update' '/data/adb/modules/TA_utl'
+                    else
+                        cp '${basePath}common/update/module.prop' '/data/adb/modules/TA_utl/module.prop'
+                    fi
+                "
+            `);
         } else {
             console.log("No update detected from extra script.");
         }
@@ -372,19 +380,19 @@ async function updateCheck() {
 // Function to read the exclude list and uncheck corresponding apps
 async function deselectUnnecessaryApps() {
     try {
-        const fileCheck = await execCommand(`test -f ${basePath}common/exclude-list && echo "exists" || echo "not found"`);
+        const fileCheck = await execCommand(`test -f ${basePath}common/tmp/exclude-list && echo "exists" || echo "not found"`);
         if (fileCheck.trim() === "not found") {
             setTimeout(async () => {
                 await execCommand(`sh ${basePath}common/get_extra.sh --unnecessary`);
-            }, 100);
+            }, 0);
             console.log("Exclude list not found. Running the unnecessary apps script.");
         } else {
             setTimeout(async () => {
                 await execCommand(`sh ${basePath}common/get_extra.sh --xposed`);
-            }, 100);
+            }, 0);
             console.log("Exclude list found. Running xposed script.");
         }
-        const result = await execCommand(`cat ${basePath}common/exclude-list`);
+        const result = await execCommand(`cat ${basePath}common/tmp/exclude-list`);
         const UnnecessaryApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
         apps.forEach(app => {
@@ -467,7 +475,7 @@ async function extrakb() {
     setTimeout(async () => {
         await execCommand(`sh ${basePath}common/get_extra.sh --kb`);
     }, 100);
-    const sourcePath = `${basePath}common/.extra`;
+    const sourcePath = `${basePath}common/tmp/.extra`;
     const destinationPath = "/data/adb/tricky_store/keybox.xml";
     try {
         await new Promise(resolve => setTimeout(resolve, 300));
@@ -581,7 +589,7 @@ async function fetchAppList() {
 
         let applistMap = {};
         try {
-            const applistResult = await execCommand(`cat ${basePath}common/applist`);
+            const applistResult = await execCommand(`cat ${basePath}common/tmp/applist`);
             applistMap = applistResult
                 .split("\n")
                 .reduce((map, line) => {
@@ -718,7 +726,7 @@ document.querySelector(".uninstall-container").addEventListener("click", async (
                     if [ -d "/data/adb/modules/TA_utl" ]; then
                         rm -rf "/data/adb/modules/TA_utl"
                     fi
-                    cp -rf '${basePath}common/temp' '/data/adb/modules/TA_utl' &&
+                    cp -rf '${basePath}common/update' '/data/adb/modules/TA_utl' &&
                     touch '/data/adb/modules/TA_utl/remove'
                 else
                     touch '${basePath}remove'

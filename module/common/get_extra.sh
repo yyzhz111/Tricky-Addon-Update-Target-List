@@ -1,20 +1,37 @@
 #!/system/bin/sh
 
 MODPATH=${0%/*}
-SKIPLIST="$MODPATH/skiplist"
-OUTPUT="$MODPATH/exclude-list"
-KBOUTPUT="$MODPATH/.extra"
+SKIPLIST="$MODPATH/tmp/skiplist"
+OUTPUT="$MODPATH/tmp/exclude-list"
+KBOUTPUT="$MODPATH/tmp/.extra"
+BBPATH="/data/adb/magisk/busybox \
+/data/adb/ksu/bin/busybox \
+/data/adb/ap/bin/busybox \
+/data/adb/modules/busybox-ndk/system/*/busybox"
 
-. $MODPATH/util_func.sh
+check_wget() {
+    for path in $BBPATH; do
+        [ -f "$path" ] && BUSYBOX="$path" && break
+    done
+    if ! command -v wget >/dev/null || grep -q "wget-curl" "$(command -v wget)"; then
+        if [ -n "$BUSYBOX" ]; then
+            wget() { "$BUSYBOX" wget "$@"; }
+        else
+            exit 1
+        fi
+    fi
+}
 
-check_wget
+aapt() { "$MODPATH/aapt" "$@"; }
 
 get_kb() {
+    check_wget
     wget --no-check-certificate -qO "$KBOUTPUT" "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra"
     [ -s "$KBOUTPUT" ] || rm -f "$KBOUTPUT"
 }
 
 get_unnecessary() {
+    check_wget
     if [ ! -s "$OUTPUT" ] || [ ! -f "$OUTPUT" ]; then
         wget --no-check-certificate -q -O - "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-excldue.json" 2>/dev/null | \
         grep -o '"package-name": *"[^"]*"' | \
@@ -34,10 +51,11 @@ get_xposed() {
 }
 
 check_update() {
-    if [ -d "$MODPATH/temp" ]; then
+    check_wget
+    if [ -d "$MODPATH/update" ]; then
         JSON=$(wget --no-check-certificate -q -O - "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json")
         REMOTE_VERSION=$(echo "$JSON" | grep -o '"versionCode": *[0-9]*' | awk -F: '{print $2}' | tr -d ' ')
-        LOCAL_VERSION=$(grep -o 'versionCode=[0-9]*' "$MODPATH/temp/module.prop" | awk -F= '{print $2}')
+        LOCAL_VERSION=$(grep -o 'versionCode=[0-9]*' "$MODPATH/update/module.prop" | awk -F= '{print $2}')
         if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ]; then
             echo "update"
         fi

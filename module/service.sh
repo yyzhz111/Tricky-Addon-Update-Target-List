@@ -36,13 +36,14 @@ rm -f "$MODPATH/module.prop"
 ln -s "$MODPATH/webui" "$TS/webroot"
 
 # Optimization
-OUTPUT_APP="$MODPATH/common/applist"
-OUTPUT_SKIP="$MODPATH/common/skiplist"
+OUTPUT_APP="$MODPATH/common/tmp/applist"
+OUTPUT_SKIP="$MODPATH/common/tmp/skiplist"
 
 until [ "$(getprop sys.boot_completed)" = "1" ]; do
     sleep 1
 done
 
+mkdir -p "$MODPATH/common/tmp"
 echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_APP"
 echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_SKIP"
 pm list packages -3 </dev/null 2>&1 | cat | awk -F: '{print $2}' | while read -r PACKAGE; do

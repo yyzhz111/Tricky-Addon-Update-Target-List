@@ -39,5 +39,11 @@ migrate_old_boot_hash
 
 rm -f "$MODPATH/install_func.sh"
 
+ui_print " "
+ui_print "! This module is not a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered."
+ui_print " "
+
+sleep 1
+
 ui_print "- Installation completed successfully! "
 ui_print " "
