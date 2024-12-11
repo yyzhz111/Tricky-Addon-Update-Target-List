@@ -318,7 +318,12 @@ async function refreshAppList() {
     await new Promise(resolve => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
     if (noConnection.style.display === "flex") {
-        await updateCheck();
+        try {
+            await updateCheck();
+            await execCommand(`[ -f ${basePath}common/tmp/exclude-list ] && rm -f "${basePath}common/tmp/exclude-list"`);
+        } catch (error) {
+            console.error("Error occurred:", error);
+        }
     }
     await fetchAppList();
     loadingIndicator.style.display = 'none';
