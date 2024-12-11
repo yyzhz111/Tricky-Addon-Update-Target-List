@@ -392,6 +392,7 @@ async function deselectUnnecessaryApps() {
             }, 0);
             console.log("Exclude list found. Running xposed script.");
         }
+        await new Promise(resolve => setTimeout(resolve, 100));
         const result = await execCommand(`cat ${basePath}common/tmp/exclude-list`);
         const UnnecessaryApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
