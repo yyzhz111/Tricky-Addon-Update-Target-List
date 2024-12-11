@@ -2,7 +2,7 @@
 Configure Tricky Store target.txt with KSU WebUI.
 
 [![Latest Release](https://img.shields.io/github/v/release/KOWX712/Tricky-Addon-Update-Target-List?label=Release&logo=github)](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
-[![Nightly Release](https://img.shields.io/badge/Nightly%20release-gray?logo=hackthebox&logoColor=eee)](https://nightly.link/KOWX712/Tricky-Addon-Update-Target-List/workflows/build/main?status=completed)
+[![Nightly Release](https://custom-icon-badges.demolab.com/badge/Nightly-canary_build-640064?logo=nightly-logo)](https://nightly.link/KOWX712/Tricky-Addon-Update-Target-List/workflows/build/main?status=completed)
 
 > [!WARNING]
 > This module is **not** a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered.
@@ -18,12 +18,6 @@ Configure Tricky Store target.txt with KSU WebUI.
 - Action button to open WebUI
 - Support KSUWebUIStandalone and latest MMRL
 - Automatic install [KSUWebUIStandalone](https://github.com/5ec1cff/KsuWebUIStandalone) if none of them are installed.
-
-### Module Visibility
-| Visibility | Behavior|
-| :--- | :--- |
-| Invisible | <li>Action/WebUI on the Tricky Store module card.</li><li>Uninstall by pressing the uninstall button at the bottom part of WebUI.</li> |
-| Visible | <li>For those who having trouble with KSUWebUIStandalone, such as</li><ul><li>using an old version of Magisk that lacks the action button</li><li>KSU built-in WebUI freeze</li></ul> |
 
 ### What Can This Module Do
 | Feature | Status |
