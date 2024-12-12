@@ -8,7 +8,7 @@
 
 ###################################################
 # Configurable exclude and addition list
-# DO NOT remove default package names here
+# Don't remove default package names here
 ###################################################
 
 EXCLUDE="
@@ -39,7 +39,6 @@ ADDITION=$(echo "$ADDITION" | tr '\n' ' ' | sed 's/^ //;s/ $//')
 
 # Add all non-system apps to the target file and remove exclusions
 su -c pm list packages -3 </dev/null 2>&1 | cat | awk -F: '{print $2}' | grep -Ev "$EXCLUDE" > /data/adb/tricky_store/target.txt
-sleep 1
 
 # Add additional apps to the target file if they are not already present
 for app in $ADDITION; do

@@ -4,7 +4,10 @@
 - Recommend to run with MT manager
 
 ## Changelog
-### v2.1~2.8
+### v2.8
+- Remove wait time
+
+### v2.1~2.7.1
 - Remain same with v2.0
 
 ### v2.0
@@ -31,7 +34,6 @@
 - Synched some code with module script
 
 ## Link
-[Telegram channel](https://t.me/kowchannel)
-
-[GitHub Release](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest)
-
+[![release](https://custom-icon-badges.demolab.com/badge/-Download-F25278?style=for-the-badge&logo=download&logoColor=white)](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases)
+[![issue](https://custom-icon-badges.demolab.com/badge/-Open%20Issue-palegreen?style=for-the-badge&logoColor=black&logo=issue-opened)](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/issues)
+[![Telegram](https://custom-icon-badges.demolab.com/badge/-KOW's%20little%20world-blue?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/kowchannel)
