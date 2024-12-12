@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="title">Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/styles.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="/mmrl/insets.css" />
     <script type="module" crossorigin src="/index.js"></script>
@@ -16,13 +17,13 @@
     <div class="header-block"></div>
     <div class="header">
         <div id="title" data-i18n="title"></div>
-        <button id="help-button" class="help-button"><i class="fa fa-question-circle"></i></button>
+        <button id="help-button" class="help-button"><svg xmlns="http://www.w3.org/2000/svg" height="21px" viewBox="0 -1060 960 990" width="21px" fill="#6E6E6E"><path d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm-36-154h74q0-33 7.5-52t42.5-52q26-26 41-49.5t15-56.5q0-56-41-86t-97-30q-57 0-92.5 30T342-618l66 26q5-18 22.5-39t53.5-21q32 0 48 17.5t16 38.5q0 20-12 37.5T506-526q-44 39-54 59t-10 73Zm38 314q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg></button>
         <div class="no-connection">
-            <img src="wifi-slash.svg" alt="No Connection Icon" class="wifi-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -920 960 960" width="20px" fill="#6E6E6E"><path d="M790-56 414-434q-47 11-87.5 33T254-346l-84-86q32-32 69-56t79-42l-90-90q-41 21-76.5 46.5T84-516L0-602q32-32 66.5-57.5T140-708l-84-84 56-56 736 736-58 56Zm-310-64q-42 0-71-29.5T380-220q0-42 29-71t71-29q42 0 71 29t29 71q0 41-29 70.5T480-120Zm236-238-29-29-29-29-144-144q81 8 151.5 41T790-432l-74 74Zm160-158q-77-77-178.5-120.5T480-680q-21 0-40.5 1.5T400-674L298-776q44-12 89.5-18t92.5-6q142 0 265 53t215 145l-84 86Z"/></svg>
         </div>
         <div class="language-dropdown">
             <button class="language-button">
-                <i class="fa fa-compass"></i>
+                <i class="material-icons">language</i>
             </button>
             <div class="language-menu">
                 <button class="language-option" data-lang="en-US">English</button>
@@ -49,7 +50,9 @@
     <!-- Menu Options -->
     <div class="search-menu-container">
         <div class="search-card">
-            <span class="search-icon"><i class="fa fa-search"></i></span>
+            <span class="search-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="24px" fill="#6E6E6E"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+            </span>
             <input type="text" class="search-input" id="search" placeholder="Search" data-i18n="search_placeholder">
             <button class="clear-btn" id="clear-btn">&#x2715;</button>
         </div>
@@ -125,7 +128,10 @@
                 <p data-i18n="disclaimer"></p>
                 <br>
                 <p>
-                    <span id="telegram" data-i18n="telegram_channel"></span><span id="github" data-i18n="github"></span>
+                    <div class="link">
+                        <i class="fa fa-telegram" id="telegram" aria-hidden="true"> <span id="link-text" data-i18n="telegram_channel"></span></i>
+                        <i class="fa fa-github" id="github" aria-hidden="true"> <span id="link-text" data-i18n="github"></span></i>
+                    </div>
                 </p>
                 <br>
                 <p data-i18n="acknowledgment"></p>
@@ -137,7 +143,7 @@
     <!-- Footer -->
     <div class="footer">
         <div class="uninstall-container hidden-uninstall">
-            <i class="fa fa-trash"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
             <span data-i18n="uninstall_webui"></span>
         </div>
     </div>

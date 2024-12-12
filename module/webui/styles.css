@@ -45,17 +45,11 @@ body {
 }
 
 .no-connection {
-    padding-bottom: 2px;
+    padding: 0;
     display: none;
-    position: relative;
     margin-right: 0px;
-    color: #7E7E7E;
-}
-
-.no-connection .wifi-icon {
-    width: 22px;
-    height: 22px;
-    filter: invert(0.6) sepia(0) saturate(0) hue-rotate(180deg) brightness(0.8) contrast(1);
+    background: none;
+    border: none;
 }
 
 .language-dropdown {
@@ -64,10 +58,9 @@ body {
 }
 
 .language-button {
+    padding-top: 5px;
     background: none;
     border: none;
-    font-size: 23px;
-    color: #333;
 }
 
 .language-menu {
@@ -125,12 +118,10 @@ body {
 }
 
 .help-button {
+    padding-left: 5px;
     margin-right: auto;
     background: none;
     border: none;
-    font-size: 22px;
-    align-items: center;
-    justify-content: center;
 }
 
 .help-overlay {
@@ -361,23 +352,34 @@ body {
     font-size: 16px;
 }
 
+.link{
+    flex: 0 1 auto;
+}
+
 #telegram {
-    font-weight: bold;
+    font-size: 18px;
     padding: 5px 10px;
     background-color: #38A7ED;
     color: #fff;
     border-radius: 8px;
-    margin-right: 5px;
+    margin-right: 3px;
+    margin-bottom: 5px;
     transition: background-color 0.2s ease;
 }
 
 #github {
-    font-weight: bold;
+    font-size: 18px;
     padding: 5px 10px;
-    background-color: #1E1E1E;
+    background-color: #606060;
     color: #fff;
     border-radius: 8px;
+    margin-bottom: 5px;
     transition: background-color 0.2s ease;
+}
+
+#link-text {
+    font-size: 17px;
+    font-weight: bold;
 }
 
 .search-menu-container {
@@ -410,8 +412,8 @@ body {
 
 .search-icon {
     position: absolute;
-    left: 18px;
-    font-size: 15px;
+    padding-top: 5px;
+    left: 15px;
     z-index: 1000;
 }
 
@@ -577,7 +579,7 @@ body {
 .card {
     background-color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     margin: 0 auto;
     margin-bottom: 10px;
     outline: none;
@@ -734,8 +736,6 @@ body {
 
 .uninstall-container i {
     margin-right: 5px;
-    font-size: 18px;
-    color: #fff;
 }
 
 .uninstall-container span {
@@ -769,13 +769,13 @@ body {
 }
 
 #github:active {
-    background-color: #585858;
+    background-color: #4D4D4D;
 }
 
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #121212;
-        color: #eee;
+        color: #fff;
     }
     
     .header-block,
