@@ -33,15 +33,14 @@ Configure Tricky Store target.txt with KSU WebUI.
 | Periodically update target and add new apps | ❌ |
 | Add system apps (GMS added by default) | ❌ |
 
-## Translation
+## Localization
 - Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/module/webui/locales/A-translate.md)
 
 ## Acknowledgement
 - [j-hc/zygisk-detach](https://github.com/j-hc/zygisk-detach) - KSU WebUI template
 
 ## Links
-Download: [GitHub release](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases)
-
-Update history: Read [Changelog](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/changelog.md)
-
-Telegram channel: [KOW's Little World](https://t.me/kowchannel)
+[![release](https://custom-icon-badges.demolab.com/badge/-Download-F25278?style=for-the-badge&logo=download&logoColor=white)](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases)
+[![issue](https://custom-icon-badges.demolab.com/badge/-Open%20Issue-palegreen?style=for-the-badge&logoColor=black&logo=issue-opened)](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/issues)
+[![changelog](https://custom-icon-badges.demolab.com/badge/-Update%20History-orange?style=for-the-badge&logo=history&logoColor=white)](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/changelog.md)
+[![Telegram](https://custom-icon-badges.demolab.com/badge/-KOW's%20little%20world-blue?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/kowchannel)
