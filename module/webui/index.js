@@ -64,7 +64,7 @@ let availableLanguages = ['en-US'];
 // Function to check for available language
 async function initializeAvailableLanguages() {
     try {
-        const multiLang = await execCommand(`find ${basePath}webroot/locales -type f -name "*.json" ! -name "A-template.json" -exec basename -s .json {} \\;`);
+        const multiLang = await execCommand(`find ${basePath}webui/locales -type f -name "*.json" ! -name "A-template.json" -exec basename -s .json {} \\;`);
         availableLanguages = multiLang.trim().split('\n');
     } catch (error) {
         console.error('Failed to fetch available languages:', error);
