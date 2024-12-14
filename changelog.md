@@ -8,6 +8,11 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.8
+- Fixed all KSUWebUIStandalone freeze issue, removed visible option.
+- Reduced WebUI loading time.
+- Added Japanese. Thanks to @reindex-ot.
+
 ### v2.7.1
 - Link redirect quick fix
 
