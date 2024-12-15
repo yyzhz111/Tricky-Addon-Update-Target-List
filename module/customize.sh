@@ -23,10 +23,7 @@ else
     abort " "; 
 fi
 
-if [ ! -d "$TS" ]; then
-    ui_print "! Tricky store module is not installed"
-    abort
-fi
+[ -d "$TS" ] || ui_print "! Warning: Tricky store module not found"
 
 . "$MODPATH/install_func.sh"
 
