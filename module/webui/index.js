@@ -418,14 +418,8 @@ async function deselectUnnecessaryApps() {
 // Function to check if Magisk
 async function checkMagisk() {
     try {
-        const hasDenylistCondition = await execCommand(`
-            if [ ! -f "/data/adb/apd" ] && [ ! -f "/data/adb/ksud" ]; then
-                echo "OK"
-            else
-                echo ""
-            fi
-        `);
-        if (hasDenylistCondition.trim() === "OK") {
+        const magiskEnv = await execCommand(`command -v magisk >/dev/null 2>&1 && echo "OK"`);
+        if (magiskEnv.trim() === "OK") {
             console.log("Denylist conditions met, displaying element.");
             selectDenylistElement.style.display = "flex";
         } else {
@@ -798,9 +792,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("about").addEventListener("click", aboutMenu);
     await fetchAppList();
     checkMagisk();
+    updateCheck();
     loadingIndicator.style.display = "none";
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
-    setTimeout(updateCheck, 0);
 });
 
 // Redirect to GitHub release page

@@ -352,7 +352,7 @@ body {
     font-size: 16px;
 }
 
-.link{
+.link {
     flex: 0 1 auto;
 }
 
@@ -777,7 +777,7 @@ body {
         background-color: #121212;
         color: #fff;
     }
-    
+
     .header-block,
     .header {
         background-color: #121212;
@@ -802,7 +802,7 @@ body {
     .update-card {
         background-color: #4D4D4D;
     }
-    
+
     .search-card {
         border: 1px solid #6E6E6E;
     }
@@ -823,7 +823,7 @@ body {
     .menu-options li {
         border-bottom: 1px solid #6E6E6E;
     }
-    
+
     .language-option:active,
     .menu-options li:active,
     .card:active,

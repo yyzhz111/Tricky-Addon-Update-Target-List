@@ -11,12 +11,12 @@ aapt() { "$MODPATH/aapt" "$@"; }
 # wget = low pref, no ssl.
 # curl, has ssl on android, we use it if found
 download() {
-	if command -v curl > /dev/null 2>&1; then
-		curl --connect-timeout 3 -s "$1"
-        else
-		busybox wget -T 3 --no-check-certificate -qO - "$1"
-        fi
-}      
+    if command -v curl >/dev/null 2>&1; then
+        timeout 3 curl -s "$1"
+    else
+        timeout 3 busybox wget --no-check-certificate -qO - "$1"
+    fi
+}
 
 get_kb() {
     download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra" > "$KBOUTPUT" 
@@ -28,7 +28,7 @@ get_xposed() {
         APK_PATH=$(pm path "$PACKAGE" | grep "base.apk" | cut -d':' -f2 | tr -d '\r')
         if [ -n "$APK_PATH" ]; then
             if aapt dump xmltree "$APK_PATH" AndroidManifest.xml 2>/dev/null | grep -qE "xposed.category|xposeddescription"; then
-                echo "$PACKAGE" >> "$OUTPUT"
+                echo "$PACKAGE" >>"$OUTPUT"
             fi
         fi
     done
@@ -36,9 +36,7 @@ get_xposed() {
 
 get_unnecessary() {
     if [ ! -s "$OUTPUT" ] || [ ! -f "$OUTPUT" ]; then
-        download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-excldue.json" 2>/dev/null | \
-        grep -o '"package-name": *"[^"]*"' | \
-        awk -F'"' '{print $4}' > "$OUTPUT"
+        download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-exclude.json" 2>/dev/null | grep -o '"package-name": *"[^"]*"' | awk -F'"' '{print $4}' >"$OUTPUT"
     fi
     get_xposed
 }
@@ -54,9 +52,21 @@ check_update() {
     fi
 }
 
-case "$1" in 
-	--kb) get_kb; exit ;;
-	--unnecessary) get_unnecessary; exit ;;
-	--xposed) get_xposed; exit ;;
-	--update) check_update; exit ;;
+case "$1" in
+--kb)
+    get_kb
+    exit
+    ;;
+--unnecessary)
+    get_unnecessary
+    exit
+    ;;
+--xposed)
+    get_xposed
+    exit
+    ;;
+--update)
+    check_update
+    exit
+    ;;
 esac
