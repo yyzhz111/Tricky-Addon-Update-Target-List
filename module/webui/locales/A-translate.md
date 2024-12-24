@@ -15,17 +15,4 @@
 2. Make a copy of `/module/webroot/locales/A-template.json`
 3. Rename it to `language_code-COUNTRY_CODE.json`, e.g., `en-US.json`.
 4. Translate the string value inside.
-5. Add `langauge-option` into `/module/webroot/index.html`.
-
-Format:
-```xml
-<button class="language-option" data-lang="language_code-COUNTRY_CODE">languageName</button>
-```
-
-Example:
-```xml
-<div class="language-menu">
-    <button class="language-option" data-lang="en-US">English</button>
-</div>
-```
-Finally, Create a Pull Request.
+6. Create a Pull Request.

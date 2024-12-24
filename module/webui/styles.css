@@ -295,12 +295,12 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 75vw;
+    width: 90vw;
     max-width: 800px;
     transform: translate(-50%, -50%);
     background: #fff;
-    border-radius: 8px;
-    padding: 25px 30px;
+    border-radius: 15px;
+    padding: 30px 0;
     z-index: 1200;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     z-index: 1200;
@@ -321,8 +321,10 @@ body {
     color: #ccc;
 }
 
+.link,
 .about-content p {
     margin: 0;
+    padding: 0 30px;
     font-size: 16px;
     text-align: left;
 }
@@ -348,33 +350,35 @@ body {
     font-size: 18px;
 }
 
-.about-content p:not([data-i18n]) {
-    font-size: 16px;
+.link-icon {
+    display: inline-block;
+    font-style: normal;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    transition: background-color 0.2s ease;
 }
 
-.link {
-    flex: 0 1 auto;
+.link-icon svg {
+    padding-bottom: 3px;
+    vertical-align: bottom;
+    height: 17px;
 }
 
 #telegram {
     font-size: 18px;
-    padding: 5px 10px;
+    padding: 3px 10px;
     background-color: #38A7ED;
     color: #fff;
-    border-radius: 8px;
-    margin-right: 3px;
-    margin-bottom: 5px;
-    transition: background-color 0.2s ease;
+    fill: #fff;
 }
 
 #github {
     font-size: 18px;
-    padding: 5px 10px;
+    padding: 3px 10px;
     background-color: #606060;
     color: #fff;
-    border-radius: 8px;
-    margin-bottom: 5px;
-    transition: background-color 0.2s ease;
+    fill: #fff;
 }
 
 #link-text {
@@ -464,6 +468,7 @@ body {
 
 .menu-icon {
     display: inline-block;
+    fill: #000;
     transition: transform 0.2s ease;
 }
 
@@ -790,7 +795,11 @@ body {
     .help-button {
         color: #fff;
     }
-
+    
+    .menu-icon {
+        fill: #eee;
+    }
+    
     .help-menu,
     .about-menu,
     .boot-hash-card,

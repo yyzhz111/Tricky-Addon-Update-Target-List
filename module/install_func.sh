@@ -16,10 +16,7 @@ initialize() {
     fi
 
     #Set specific path
-    sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/\"|" "$MODPATH/webui/index.js" || {
-        ui_print "! Failed to set path"
-        abort
-    }
+    sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/\"|" "$MODPATH/webui/js/main.js" || abort "! Failed to set path"
 
     # Set aapt binary
     cp "$MODPATH/module.prop" "$COMPATH/update/module.prop"

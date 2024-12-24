@@ -47,10 +47,27 @@ check_update() {
         REMOTE_VERSION=$(echo "$JSON" | grep -o '"versionCode": *[0-9]*' | awk -F: '{print $2}' | tr -d ' ')
         LOCAL_VERSION=$(grep -o 'versionCode=[0-9]*' "$MODPATH/update/module.prop" | awk -F= '{print $2}')
         if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ]; then
-            echo "update"
+            if [ "$MODPATH" = "/data/adb/modules/.TA_utl/common" ]; then
+                [ -d "/data/adb/modules/TA_utl" ] && rm -rf "/data/adb/modules/TA_utl"
+                cp -rf "$MODPATH/update" "/data/adb/modules/TA_utl"
+            else
+                cp -f "$MODPATH/update/module.prop" "/data/adb/modules/TA_utl/module.prop"
+            fi
+        echo "update"
         fi
     fi
 }
+
+uninstall() {
+    if [ "$MODPATH" = "/data/adb/modules/.TA_utl/common" ]; then
+        [ -d "/data/adb/modules/TA_utl" ] && rm -rf "/data/adb/modules/TA_utl"
+        cp -rf "$MODPATH/update" "/data/adb/modules/TA_utl"
+    else
+        cp -f "$MODPATH/update/module.prop" "/data/adb/modules/TA_utl/module.prop"
+    fi
+    touch "/data/adb/modules/TA_utl/remove"
+}
+
 
 case "$1" in
 --kb)
@@ -67,6 +84,10 @@ case "$1" in
     ;;
 --update)
     check_update
+    exit
+    ;;
+--uninstall)
+    uninstall
     exit
     ;;
 esac
