@@ -63,6 +63,10 @@ body {
     border: none;
 }
 
+.language-icon {
+    fill: #000;
+}
+
 .language-menu {
     display: flex;
     padding: 3px 10px;
@@ -789,13 +793,13 @@ body {
         background-color: #121212;
     }
 
-    .language-button,
     .language-option,
     .input-box,
     .help-button {
         color: #fff;
     }
     
+    .language-icon,
     .menu-icon {
         fill: #eee;
     }
