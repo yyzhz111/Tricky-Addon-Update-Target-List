@@ -1,54 +1,74 @@
 {
-    "title": "Tricky Addon - I-update ang Target List",
-    "search_placeholder": "Maghanap",
-    "save_and_update_button": "I-save",
-    "boot_hash_save_button": "I-save",
-    "loading": "Naglo-load...",
-    "boot_hash_input_placeholder": "I-paste ang iyong verified Boot Hash dito",
-    "uninstall_webui": "I-uninstall ang WebUI",
-    
-    "update_available": "Handa na ang bagong bersyon",
-    "redirect_to_release": "i-tap para i-download ang pinakabagong bersyon",
-
-    "refresh": "I-refresh",
-    "select_all": "Piliin Lahat",
-    "deselect_all": "Huwag Pumili ng Lahat",
-    "select_denylist": "Piliin mula sa DenyList",
-    "deselect_unnecessary": "Huwag Pumili ng Hindi Kinakailangan",
-    "set_aosp_keybox": "I-set ang AOSP Keybox",
-    "set_valid_keybox": "I-set ang Valid Keybox",
-    "set_verified_boot_hash": "I-set ang Verified Boot Hash",
-    "about": "Tungkol",
-    
-    "help_instructions": "Mga Tagubilin",
-    "save_and_update_description": "I-save ang kasalukuyang configuration sa target.txt.",
-    "refresh_description": "I-refresh ang listahan ng apps at exclude list.",
-    "select_deselect": "Piliin & Huwag Pumili ng Lahat",
-    "select_description": "Piliin o huwag piliin ang lahat ng apps sa kasalukuyang interface.",
-    "select_denylist_description": "Available lang sa Magisk, piliin ang mga app na nasa DenyList. Inirerekomenda.",
-    "deselect_unnecessary_description": "Hindi kinakailangang kategorya: Xposed module, root manager, root-related apps, at mga karaniwang apps na hindi kailanman nire-refresh ang bootloader status. Nangangailangan ng koneksyon sa internet.",
-    "set_keybox": "I-set ang AOSP at Valid Keybox",
-    "set_aosp_keybox_description": "Palitan ang tricky store keybox.xml. Palitan ang AOSP keybox kung walang valid keybox. Nangangailangan ng koneksyon sa internet ang valid keybox option.",
-    "set_verified_boot_hash_description": "Kunin ang verifiedBootHash mula sa Key Attestation Demo. Ayusin ang abnormal na boot state sa pamamagitan ng pag-reset ng ro.boot.vbmeta.digest.",
-    
-    "module_name_line1": "Tricky Addon",
-    "module_name_line2": "I-update ang Target List",
-    "by": "ni ",
-    "telegram_channel": "Telegram Channel",
-    "github": "GitHub",
-    "disclaimer": "Ang WebUI na ito ay hindi bahagi ng Tricky Store, HUWAG i-report sa may-akda ng Tricky Store kung makaranas ka ng anumang isyu.",
-    "acknowledgment": "Pagkilala",
-    
-    "no_internet": "Pakitingnan ang iyong koneksyon sa Internet",
-    "aosp_key_set": "Matagumpay na na-set ang AOSP Keybox",
-    "key_set_error": "Nabigong i-update ang keybox",
-    "valid_key_set": "Matagumpay na na-set ang Valid Keybox",
-    "no_valid_fallback": "Walang valid na keybox na natagpuan, pinalitan ng AOSP keybox.",
-    "boot_hash_set": "Matagumpay na na-save ang Verified Boot Hash",
-    "boot_hash_set_error": "Nabigong i-update ang Verified Boot Hash",
-    "saved_target": "Na-save ang configuration sa target.txt",
-    "save_error": "Nabigong i-save ang config",
-    "uninstall_prompt": "Mawawala ang WebUI pagkatapos ng reboot",
-    "uninstall_failed": "Nabigong i-uninstall ang WebUI",
-    "new_update": "May bagong update na available!"
+    "header": {
+        "title": "Tricky Addon - I-update ang Target List"
+    },
+    "help": {
+        "help_instructions": "Mga Tagubilin",
+        "save_and_update": "I-save",
+        "save_and_update_description": "I-save ang kasalukuyang configuration sa target.txt.",
+        "refresh": "I-refresh",
+        "refresh_description": "I-refresh ang listahan ng apps at exclude list.",
+        "select_deselect": "Piliin & Huwag Pumili ng Lahat",
+        "select_description": "Piliin o huwag piliin ang lahat ng apps sa kasalukuyang interface.",
+        "select_denylist": "Piliin mula sa DenyList",
+        "select_denylist_description": "Available lang sa Magisk, piliin ang mga app na nasa DenyList. Inirerekomenda.",
+        "deselect_unnecessary": "Huwag Pumili ng Hindi Kinakailangan",
+        "deselect_unnecessary_description": "Hindi kinakailangang kategorya: Xposed module, root manager, root-related apps, at mga karaniwang apps na hindi kailanman nire-refresh ang bootloader status. Nangangailangan ng koneksyon sa internet.",
+        "set_keybox": "I-set ang AOSP at Valid Keybox",
+        "set_keybox_description": "Palitan ang tricky store keybox.xml. Palitan ang AOSP keybox kung walang valid keybox. Nangangailangan ng koneksyon sa internet ang valid keybox option.",
+        "set_verified_boot_hash": "I-set ang Verified Boot Hash",
+        "set_verified_boot_hash_description": "Kunin ang verifiedBootHash mula sa Key Attestation Demo. Ayusin ang abnormal na boot state sa pamamagitan ng pag-reset ng ro.boot.vbmeta.digest."
+    },
+    "update_banner": {
+        "update_available": "Handa na ang bagong bersyon",
+        "redirect_to_release": "i-tap para i-download ang pinakabagong bersyon"
+    },
+    "search_bar": {
+        "search_placeholder": "Maghanap"
+    },
+    "functional_button": {
+        "save_and_update_button": "I-save",
+        "uninstall_webui": "I-uninstall ang WebUI"
+    },
+    "loading": {
+        "loading": "Naglo-load..."
+    },
+    "menu": {
+        "refresh": "I-refresh",
+        "select_all": "Piliin Lahat",
+        "deselect_all": "Huwag Pumili ng Lahat",
+        "select_denylist": "Piliin mula sa DenyList",
+        "deselect_unnecessary": "Huwag Pumili ng Hindi Kinakailangan",
+        "set_aosp_keybox": "I-set ang AOSP Keybox",
+        "set_valid_keybox": "I-set ang Valid Keybox",
+        "set_verified_boot_hash": "I-set ang Verified Boot Hash",
+        "about": "Tungkol"
+    },
+    "reset_vbmeta": {
+        "boot_hash_input_placeholder": "I-paste ang iyong verified Boot Hash dito",
+        "boot_hash_save_button": "I-save"
+    },
+    "about": {
+        "module_name_line1": "Tricky Addon",
+        "module_name_line2": "I-update ang Target List",
+        "by": "ni",
+        "telegram_channel": "Telegram Channel",
+        "github": "GitHub",
+        "disclaimer": "Ang WebUI na ito ay hindi bahagi ng Tricky Store, HUWAG i-report sa may-akda ng Tricky Store kung makaranas ka ng anumang isyu.",
+        "acknowledgment": "Pagkilala"
+    },
+    "prompt": {
+        "no_internet": "Pakitingnan ang iyong koneksyon sa Internet",
+        "aosp_key_set": "Matagumpay na na-set ang AOSP Keybox",
+        "key_set_error": "Nabigong i-update ang keybox",
+        "valid_key_set": "Matagumpay na na-set ang Valid Keybox",
+        "no_valid_fallback": "Walang valid na keybox na natagpuan, pinalitan ng AOSP keybox.",
+        "boot_hash_set": "Matagumpay na na-save ang Verified Boot Hash",
+        "boot_hash_set_error": "Nabigong i-update ang Verified Boot Hash",
+        "saved_target": "Na-save ang configuration sa target.txt",
+        "save_error": "Nabigong i-save ang config",
+        "uninstall_prompt": "Mawawala ang WebUI pagkatapos ng reboot",
+        "uninstall_failed": "Nabigong i-uninstall ang WebUI",
+        "new_update": "May bagong update na available!"
+    }
 }

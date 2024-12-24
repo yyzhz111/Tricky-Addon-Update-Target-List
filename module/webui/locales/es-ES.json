@@ -1,54 +1,74 @@
 {
-    "title": "Tricky Addon - Update Target List",
-    "search_placeholder": "Buscar",
-    "save_and_update_button": "Guardar",
-    "boot_hash_save_button": "Guardar",
-    "loading": "Cargando...",
-    "boot_hash_input_placeholder": "Pega tu Boot Hash verificado aquí",
-    "uninstall_webui": "Desinstalar WebUI",
-    
-    "update_available": "Una nueva versión disponible",
-    "redirect_to_release": "Haz clic aquí para descargar la última versión.",
-    
-    "refresh": "Actualizar",
-    "select_all": "Seleccionar Todo",
-    "deselect_all": "Deseleccionar Todo",
-    "select_denylist": "Seleccionar desde DenyList",
-    "deselect_unnecessary": "Deseleccionar innecesarios",
-    "set_aosp_keybox": "Configurar AOSP Keybox",
-    "set_valid_keybox": "Configurar Keybox Válido",
-    "set_verified_boot_hash": "Configurar Boot Hash Verificado",
-    "about": "Acerca de",
-    
-    "help_instructions": "Instrucciones",
-    "save_and_update_description": "Guardar la configuración actual en target.txt.",
-    "refresh_description": "Actualizar lista de aplicaciones y lista de exclusión.",
-    "select_deselect": "Seleccionar y deseleccionar todo",
-    "select_description": "Seleccionar o deseleccionar todas las aplicaciones en la interfaz actual.",
-    "select_denylist_description": "Disponible solo en Magisk, selecciona aplicaciones que están en la DenyList. Recomendado.",
-    "deselect_unnecessary_description": "Categorías innecesarias: módulos Xposed, administradores de root, aplicaciones relacionadas con root y aplicaciones generales que nunca verifican el estado del bootloader. Esta opción requiere conexión a Internet.",
-    "set_keybox": "Configurar AOSP y Keybox Válido",
-    "set_aosp_keybox_description": "Reemplazar el archivo keybox.xml de Tricky Store. Se utilizará el AOSP Keybox si no se encuentra un keybox válido. Esta opción requiere conexión a Internet.",
-    "set_verified_boot_hash_description": "Obtén el valor de verifiedBootHash a través de Key Attestation Demo. Corrige un estado de arranque anormal restableciendo el valor de ro.boot.vbmeta.digest.",
-
-    "module_name_line1": "Tricky Addon",
-    "module_name_line2": "Update Target List",
-    "by": "por ",
-    "telegram_channel": "Canal de Telegram",
-    "github": "GitHub",
-    "disclaimer": "Este módulo no forma parte del módulo Tricky Store. NO reportes problemas al autor de Tricky Store en caso de encontrarlos.",
-    "acknowledgment": "Agradecimientos",
-
-    "no_internet": "Por favor, verifica que tu conexión a Internet esté activa.",
-    "aosp_key_set": "AOSP Keybox configurado correctamente",
-    "key_set_error": "Error al actualizar el Keybox",
-    "valid_key_set": "Keybox válido configurado correctamente",
-    "no_valid_fallback": "No se encontró un keybox válido, reemplazado con AOSP Keybox.",
-    "boot_hash_set": "Boot Hash verificado guardado correctamente",
-    "boot_hash_set_error": "Error al actualizar el Boot Hash verificado",
-    "saved_target": "Configuración guardada en target.txt",
-    "save_error": "Error al guardar la configuración",
-    "uninstall_prompt": "El WebUI se eliminará después de reiniciar",
-    "uninstall_failed": "Error al desinstalar el WebUI",
-    "new_update": "¡Una nueva actualización está disponible!"
+    "header": {
+        "title": "Tricky Addon - Update Target List"
+    },
+    "help": {
+        "help_instructions": "Instrucciones",
+        "save_and_update": "Guardar",
+        "save_and_update_description": "Guardar la configuración actual en target.txt.",
+        "refresh": "Actualizar",
+        "refresh_description": "Actualizar lista de aplicaciones y lista de exclusión.",
+        "select_deselect": "Seleccionar y Deseleccionar Todo",
+        "select_description": "Seleccionar o deseleccionar todas las aplicaciones en la interfaz actual.",
+        "select_denylist": "Seleccionar desde DenyList",
+        "select_denylist_description": "Disponible solo en Magisk, selecciona aplicaciones que están en la DenyList. Recomendado.",
+        "deselect_unnecessary": "Deseleccionar innecesarios",
+        "deselect_unnecessary_description": "Categorías innecesarias: módulos Xposed, gestores de root, aplicaciones relacionadas con root y aplicaciones generales que nunca verifican el estado del bootloader. Esta opción requiere conexión a Internet.",
+        "set_keybox": "Configurar AOSP y Keybox Válido",
+        "set_keybox_description": "Reemplazar el archivo keybox.xml de Tricky Store. El AOSP Keybox será reemplazado si no hay un keybox válido. Esta opción requiere conexión a Internet.",
+        "set_verified_boot_hash": "Configurar Boot Hash Verificado",
+        "set_verified_boot_hash_description": "Obtén el valor de verifiedBootHash del Key Attestation Demo. Corrige un estado de arranque anormal reiniciando ro.boot.vbmeta.digest."
+    },
+    "update_banner": {
+        "update_available": "Una nueva versión está lista",
+        "redirect_to_release": "toca para descargar la última versión"
+    },
+    "search_bar": {
+        "search_placeholder": "Buscar"
+    },
+    "functional_button": {
+        "save_and_update_button": "Guardar",
+        "uninstall_webui": "Desinstalar WebUI"
+    },
+    "loading": {
+        "loading": "Cargando..."
+    },
+    "menu": {
+        "refresh": "Actualizar",
+        "select_all": "Seleccionar Todo",
+        "deselect_all": "Deseleccionar Todo",
+        "select_denylist": "Seleccionar desde DenyList",
+        "deselect_unnecessary": "Deseleccionar innecesarios",
+        "set_aosp_keybox": "Configurar AOSP Keybox",
+        "set_valid_keybox": "Configurar Keybox Válido",
+        "set_verified_boot_hash": "Configurar Boot Hash Verificado",
+        "about": "Acerca de"
+    },
+    "reset_vbmeta": {
+        "boot_hash_input_placeholder": "Pega aquí tu Boot Hash verificado",
+        "boot_hash_save_button": "Guardar"
+    },
+    "about": {
+        "module_name_line1": "Tricky Addon",
+        "module_name_line2": "Update Target List",
+        "by": "por",
+        "telegram_channel": "Canal de Telegram",
+        "github": "GitHub",
+        "disclaimer": "Este módulo no es parte del módulo Tricky Store. NO reportes problemas al autor de Tricky Store si los encuentras.",
+        "acknowledgment": "Agradecimientos"
+    },
+    "prompt": {
+        "no_internet": "Por favor, verifica tu conexión a Internet",
+        "aosp_key_set": "AOSP Keybox configurado correctamente",
+        "key_set_error": "Error al actualizar el Keybox",
+        "valid_key_set": "Keybox válido configurado correctamente",
+        "no_valid_fallback": "No se encontró un keybox válido, reemplazado con AOSP Keybox.",
+        "boot_hash_set": "Boot Hash verificado guardado correctamente",
+        "boot_hash_set_error": "Error al actualizar el Boot Hash verificado",
+        "saved_target": "Configuración guardada en target.txt",
+        "save_error": "Error al guardar la configuración",
+        "uninstall_prompt": "El WebUI se eliminará después de reiniciar",
+        "uninstall_failed": "Error al desinstalar el WebUI",
+        "new_update": "¡Una nueva actualización está disponible!"
+    }
 }

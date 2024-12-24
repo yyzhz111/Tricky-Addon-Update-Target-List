@@ -103,16 +103,16 @@ async function loadTranslations(lang) {
 // Function to apply translations to all elements with data-i18n attributes
 function applyTranslations() {
     document.querySelectorAll("[data-i18n]").forEach((el) => {
-        const key = el.getAttribute("data-i18n");
-        if (translations[key]) {
+        const keyString = el.getAttribute("data-i18n");
+        const translation = keyString.split('.').reduce((acc, key) => acc && acc[key], translations);
+        if (translation) {
             if (el.hasAttribute("placeholder")) {
-                el.setAttribute("placeholder", translations[key]);
+                el.setAttribute("placeholder", translation);
             } else {
-                el.textContent = translations[key];
+                el.textContent = translation;
             }
         }
     });
-    updateHelpMenu();
 }
 
 // Language selection event listener
@@ -190,33 +190,6 @@ clearBtn.addEventListener("click", () => {
         app.style.display = "block";
     });
 });
-
-// Function to dynamically update the help menu
-function updateHelpMenu() {
-    helpList.innerHTML = "";
-    const helpSections = [
-        { title: "save_and_update_button", description: "save_and_update_description" },
-        { title: "refresh", description: "refresh_description" },
-        { title: "select_deselect", description: "select_description" },
-        { title: "select_denylist", description: "select_denylist_description" },
-        { title: "deselect_unnecessary", description: "deselect_unnecessary_description" },
-        { title: "set_keybox", description: "set_aosp_keybox_description" },
-        { title: "set_verified_boot_hash", description: "set_verified_boot_hash_description" }
-    ];
-    helpSections.forEach((section) => {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `<strong data-i18n="${section.title}">${translations[section.title]}</strong>`;
-        const description = document.createElement("ul");
-        const descriptionItem = document.createElement("li");
-        descriptionItem.textContent = translations[section.description] || `[Missing: ${section.description}]`;
-        description.appendChild(descriptionItem);
-        listItem.appendChild(description);
-        helpList.appendChild(listItem);
-        const emptyLine = document.createElement("li");
-        emptyLine.innerHTML = "<br>";
-        helpList.appendChild(emptyLine);
-    });
-}
 
 // Function to setup the help menu
 function setupHelpOverlay() {
@@ -358,7 +331,7 @@ async function updateCheck() {
         noConnection.style.display = "none";
         if (output.includes("update")) {
             console.log("Update detected from extra script.");
-            showPrompt("new_update");
+            showPrompt("prompt.new_update");
             updateCard.style.display = "flex";
             await execCommand(`
                 su -c "
@@ -377,7 +350,7 @@ async function updateCheck() {
         }
     } catch (error) {
         console.error("Failed to execute update script:", error);
-        showPrompt("no_internet", false);
+        showPrompt("prompt.no_internet", false);
         noConnection.style.display = "flex";
     }
 }
@@ -463,10 +436,10 @@ async function aospkb() {
         const destinationPath = "/data/adb/tricky_store/keybox.xml";
         await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("AOSP keybox copied successfully.");
-        showPrompt("aosp_key_set");
+        showPrompt("prompt.aosp_key_set");
     } catch (error) {
         console.error("Failed to copy AOSP keybox:", error);
-        showPrompt("key_set_error", false);
+        showPrompt("prompt.key_set_error", false);
     }
 }
 
@@ -485,11 +458,11 @@ async function extrakb() {
         }
         await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("Valid keybox copied successfully.");
-        showPrompt("valid_key_set");
+        showPrompt("prompt.valid_key_set");
     } catch (error) {
         console.error("Failed to copy valid keybox:", error);
         await aospkb();
-        showPrompt("no_valid_fallback", false);
+        showPrompt("prompt.no_valid_fallback", false);
     }
 }
 
@@ -529,11 +502,11 @@ async function setBootHash() {
         try {
             await execCommand(`echo "${inputValue}" > /data/adb/boot_hash`);
             await execCommand(`su -c resetprop -n ro.boot.vbmeta.digest ${inputValue}`);
-            showPrompt("boot_hash_set");
+            showPrompt("prompt.boot_hash_set");
             closeCard();
         } catch (error) {
             console.error("Failed to update boot_hash:", error);
-            showPrompt("boot_hash_set_error", false);
+            showPrompt("prompt.boot_hash_set_error", false);
         }
     });
     bootHashOverlay.addEventListener("click", (event) => {
@@ -680,7 +653,7 @@ function toggleableCheckbox() {
 
 // Function to show the prompt with a success or error message
 function showPrompt(key, isSuccess = true) {
-    const message = translations[key] || key;
+    const message = key.split('.').reduce((acc, k) => acc && acc[k], translations) || key;
     prompt.textContent = message;
     prompt.classList.toggle('error', !isSuccess);
     if (window.promptTimeout) {
@@ -693,7 +666,7 @@ function showPrompt(key, isSuccess = true) {
             prompt.classList.remove('visible');
             prompt.classList.add('hidden');
         }, 3000);
-    }, 500);
+    }, 200);
 }
 
 // Save configure
@@ -709,10 +682,10 @@ document.getElementById("save").addEventListener("click", async () => {
         const updatedTargetContent = finalAppsList.join("\n");
         await execCommand(`echo "${updatedTargetContent}" > /data/adb/tricky_store/target.txt`);
         console.log("target.txt updated successfully.");
-        showPrompt("saved_target");
+        showPrompt("prompt.saved_target");
     } catch (error) {
         console.error("Failed to update target.txt:", error);
-        showPrompt("save_error", false);
+        showPrompt("prompt.save_error", false);
     }
     await refreshAppList();
 });
@@ -733,11 +706,11 @@ document.querySelector(".uninstall-container").addEventListener("click", async (
                 fi
             "
         `);
-        showPrompt("uninstall_prompt");
+        showPrompt("prompt.uninstall_prompt");
     } catch (error) {
         console.error("Failed to execute uninstall command:", error);
         console.log("Error message:", error.message);
-        showPrompt("uninstall_failed", false);
+        showPrompt("prompt.uninstall_failed", false);
     }
 });
 

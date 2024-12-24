@@ -1,54 +1,74 @@
 {
-    "title": "Tricky Addon - Обновить список целей",
-    "search_placeholder": "Поиск",
-    "save_and_update_button": "Сохранить",
-    "boot_hash_save_button": "Сохранить",
-    "loading": "Загрузка...",
-    "boot_hash_input_placeholder": "Вставьте свой проверенный Boot Hash сюда",
-    "uninstall_webui": "Удалить WebUI",
-    
-    "update_available": "Доступна новая версия",
-    "redirect_to_release": "нажмите, чтобы скачать последнюю версию",
-
-    "refresh": "Обновить",
-    "select_all": "Выбрать все",
-    "deselect_all": "Отменить выбор всех",
-    "select_denylist": "Выбрать из DenyList",
-    "deselect_unnecessary": "Отменить выбор ненужных",
-    "set_aosp_keybox": "Установить AOSP Keybox",
-    "set_valid_keybox": "Установить действующий Keybox",
-    "set_verified_boot_hash": "Установить Verified Boot Hash",
-    "about": "О программе",
-    
-    "help_instructions": "Инструкции",
-    "save_and_update_description": "Сохранить текущую конфигурацию в target.txt.",
-    "refresh_description": "Обновить список приложений и список исключений.",
-    "select_deselect": "Выбрать и отменить выбор всех",
-    "select_description": "Выбрать или отменить выбор всех приложений в текущем интерфейсе.",
-    "select_denylist_description": "Доступно только в Magisk, выберите приложения, которые находятся в DenyList. Рекомендуется.",
-    "deselect_unnecessary_description": "Ненужные категории: модули Xposed, менеджеры root, приложения, связанные с root, и общие приложения, которые никогда не проверяют статус загрузчика. Этот параметр требует подключения к интернету.",
-    "set_keybox": "Установить AOSP и действующий Keybox",
-    "set_aosp_keybox_description": "Замените tricky store keybox.xml. AOSP keybox будет заменен, если не будет найден действующий keybox. Опция с действующим keybox требует подключения к интернету.",
-    "set_verified_boot_hash_description": "Получите значение verifiedBootHash из Key Attestation Demo. Исправьте аномальное состояние загрузки, сбросив ro.boot.vbmeta.digest.",
-    
-    "module_name_line1": "Tricky Addon",
-    "module_name_line2": "Обновить список целей",
-    "by": "от ",
-    "telegram_channel": "Канал в Telegram",
-    "github": "GitHub",
-    "disclaimer": "Этот WebUI не является частью Tricky Store, НЕ сообщайте автору Tricky Store о любых возникающих проблемах.",
-    "acknowledgment": "Благодарности",
-    
-    "no_internet": "Пожалуйста, проверьте ваше подключение к интернету",
-    "aosp_key_set": "AOSP keybox успешно установлен",
-    "key_set_error": "Не удалось обновить keybox",
-    "valid_key_set": "Действующий keybox успешно установлен",
-    "no_valid_fallback": "Не найден действующий keybox, заменен на AOSP keybox.",
-    "boot_hash_set": "Verified Boot Hash успешно сохранен",
-    "boot_hash_set_error": "Не удалось обновить Verified Boot Hash",
-    "saved_target": "Конфигурация сохранена в target.txt",
-    "save_error": "Не удалось сохранить конфигурацию",
-    "uninstall_prompt": "WebUI будет удален после перезагрузки",
-    "uninstall_failed": "Не удалось удалить WebUI",
-    "new_update": "Доступно новое обновление!"
+    "header": {
+        "title": "Tricky Addon - Обновить список целей"
+    },
+    "help": {
+        "help_instructions": "Инструкции",
+        "save_and_update": "Сохранить",
+        "save_and_update_description": "Сохранить текущую конфигурацию в target.txt.",
+        "refresh": "Обновить",
+        "refresh_description": "Обновить список приложений и список исключений.",
+        "select_deselect": "Выбрать и отменить выбор всех",
+        "select_description": "Выбрать или отменить выбор всех приложений в текущем интерфейсе.",
+        "select_denylist": "Выбрать из DenyList",
+        "select_denylist_description": "Доступно только в Magisk, выберите приложения, которые находятся в DenyList. Рекомендуется.",
+        "deselect_unnecessary": "Отменить выбор ненужных",
+        "deselect_unnecessary_description": "Ненужные категории: модули Xposed, менеджеры root, приложения, связанные с root, и общие приложения, которые никогда не проверяют статус загрузчика. Этот параметр требует подключения к интернету.",
+        "set_keybox": "Установить AOSP и действующий Keybox",
+        "set_keybox_description": "Замените tricky store keybox.xml. AOSP keybox будет заменен, если не будет найден действующий keybox. Опция с действующим keybox требует подключения к интернету.",
+        "set_verified_boot_hash": "Установить Verified Boot Hash",
+        "set_verified_boot_hash_description": "Получите значение verifiedBootHash из Key Attestation Demo. Исправьте аномальное состояние загрузки, сбросив ro.boot.vbmeta.digest."
+    },
+    "update_banner": {
+        "update_available": "Доступна новая версия",
+        "redirect_to_release": "нажмите, чтобы скачать последнюю версию"
+    },
+    "search_bar": {
+        "search_placeholder": "Поиск"
+    },
+    "functional_button": {
+        "save_and_update_button": "Сохранить",
+        "uninstall_webui": "Удалить WebUI"
+    },
+    "loading": {
+        "loading": "Загрузка..."
+    },
+    "menu": {
+        "refresh": "Обновить",
+        "select_all": "Выбрать все",
+        "deselect_all": "Отменить выбор всех",
+        "select_denylist": "Выбрать из DenyList",
+        "deselect_unnecessary": "Отменить выбор ненужных",
+        "set_aosp_keybox": "Установить AOSP Keybox",
+        "set_valid_keybox": "Установить действующий Keybox",
+        "set_verified_boot_hash": "Установить Verified Boot Hash",
+        "about": "О программе"
+    },
+    "reset_vbmeta": {
+        "boot_hash_input_placeholder": "Вставьте свой проверенный Boot Hash сюда",
+        "boot_hash_save_button": "Сохранить"
+    },
+    "about": {
+        "module_name_line1": "Tricky Addon",
+        "module_name_line2": "Обновить список целей",
+        "by": "от",
+        "telegram_channel": "Канал в Telegram",
+        "github": "GitHub",
+        "disclaimer": "Этот WebUI не является частью Tricky Store, НЕ сообщайте автору Tricky Store о любых возникающих проблемах.",
+        "acknowledgment": "Благодарности"
+    },
+    "prompt": {
+        "no_internet": "Пожалуйста, проверьте ваше подключение к интернету",
+        "aosp_key_set": "AOSP keybox успешно установлен",
+        "key_set_error": "Не удалось обновить keybox",
+        "valid_key_set": "Действующий keybox успешно установлен",
+        "no_valid_fallback": "Не найден действующий keybox, заменен на AOSP keybox.",
+        "boot_hash_set": "Verified Boot Hash успешно сохранен",
+        "boot_hash_set_error": "Не удалось обновить Verified Boot Hash",
+        "saved_target": "Конфигурация сохранена в target.txt",
+        "save_error": "Не удалось сохранить конфигурацию",
+        "uninstall_prompt": "WebUI будет удален после перезагрузки",
+        "uninstall_failed": "Не удалось удалить WebUI",
+        "new_update": "Доступно новое обновление!"
+    }
 }

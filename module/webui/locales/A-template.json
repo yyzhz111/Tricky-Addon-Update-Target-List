@@ -1,54 +1,74 @@
 {
-    "title": "Tricky Addon - Update Target List",
-    "search_placeholder": "Search",
-    "save_and_update_button": "Save",
-    "boot_hash_save_button": "Save",
-    "loading": "Loading...",
-    "boot_hash_input_placeholder": "Paste your verified Boot Hash here",
-    "uninstall_webui": "Uninstall WebUI",
-    
-    "update_available": "A new version is ready",
-    "redirect_to_release": "tap to download the latest version",
-    
-    "refresh": "Refresh",
-    "select_all": "Select All",
-    "deselect_all": "Deselect All",
-    "select_denylist": "Select From DenyList",
-    "deselect_unnecessary": "Deselect Unnecessary",
-    "set_aosp_keybox": "Set AOSP Keybox",
-    "set_valid_keybox": "Set Valid Keybox",
-    "set_verified_boot_hash": "Set Verified Boot Hash",
-    "about": "About",
-    
-    "help_instructions": "Instructions",
-    "save_and_update_description": "Save current configure to target.txt.",
-    "refresh_description": "Refresh app list and exclude list.",
-    "select_deselect": "Select & Deselect All",
-    "select_description": "Select or deselect all apps in the current interface.",
-    "select_denylist_description": "Available in Magisk only, select apps that are in the DenyList. Recommended.",
-    "deselect_unnecessary_description": "Unnecessary category: Xposed module, root manager, root-related apps, and general apps that never check bootloader status. This option requires an Internet connection.",
-    "set_keybox": "Set AOSP & Valid Keybox",
-    "set_aosp_keybox_description": "Replace tricky store keybox.xml. AOSP keybox will be replaced if there's no more valid keybox. Valid keybox option requires Internet connection.",
-    "set_verified_boot_hash_description": "Get verifiedBootHash value from Key Attestation Demo. Fix abnormal boot state by resetting ro.boot.vbmeta.digest.",
-
-    "module_name_line1": "Tricky Addon",
-    "module_name_line2": "Update Target List",
-    "by": "by ",
-    "telegram_channel": "Telegram Channel",
-    "github": "GitHub",
-    "disclaimer": "This module is not a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered.",
-    "acknowledgment": "Acknowledgment",
-
-    "no_internet": "Please check your Internet connection",
-    "aosp_key_set": "AOSP keybox set successfully",
-    "key_set_error": "Failed to update keybox",
-    "valid_key_set": "Valid keybox set successfully",
-    "no_valid_fallback": "No valid keybox found, replaced with AOSP keybox.",
-    "boot_hash_set": "Verified Boot Hash saved successfully",
-    "boot_hash_set_error": "Failed to update Verified Boot Hash",
-    "saved_target": "Config saved to target.txt",
-    "save_error": "Failed to save config",
-    "uninstall_prompt": "WebUI will be removed after reboot",
-    "uninstall_failed": "Failed to uninstall WebUI",
-    "new_update": "A new update is available!"
+    "header": {
+        "title": "Tricky Addon - Update Target List"
+    },
+    "help": {
+        "help_instructions": "Instructions",
+        "save_and_update": "Save",
+        "save_and_update_description": "Save current configure to target.txt.",
+        "refresh": "Refresh",
+        "refresh_description": "Refresh app list and exclude list.",
+        "select_deselect": "Select & Deselect All",
+        "select_description": "Select or deselect all apps in the current interface.",
+        "select_denylist": "Select From DenyList",
+        "select_denylist_description": "Available in Magisk only, select apps that are in the DenyList. Recommended.",
+        "deselect_unnecessary": "Deselect Unnecessary",
+        "deselect_unnecessary_description": "Unnecessary category: Xposed module, root manager, root-related apps, and general apps that never check bootloader status. This option requires an Internet connection.",
+        "set_keybox": "Set AOSP & Valid Keybox",
+        "set_keybox_description": "Replace tricky store keybox.xml. AOSP keybox will be replaced if there's no more valid keybox. Valid keybox option requires Internet connection.",
+        "set_verified_boot_hash": "Set Verified Boot Hash",
+        "set_verified_boot_hash_description": "Get verifiedBootHash value from Key Attestation Demo. Fix abnormal boot state by resetting ro.boot.vbmeta.digest."
+    },
+    "update_banner": {
+        "update_available": "A new version is ready",
+        "redirect_to_release": "tap to download the latest version"
+    },
+    "search_bar": {
+        "search_placeholder": "Search"
+    },
+    "functional_button": {
+        "save_and_update_button": "Save",
+        "uninstall_webui": "Uninstall WebUI"
+    },
+    "loading": {
+        "loading": "Loading..."
+    },
+    "menu": {
+        "refresh": "Refresh",
+        "select_all": "Select All",
+        "deselect_all": "Deselect All",
+        "select_denylist": "Select From DenyList",
+        "deselect_unnecessary": "Deselect Unnecessary",
+        "set_aosp_keybox": "Set AOSP Keybox",
+        "set_valid_keybox": "Set Valid Keybox",
+        "set_verified_boot_hash": "Set Verified Boot Hash",
+        "about": "About"
+    },
+    "reset_vbmeta": {
+        "boot_hash_input_placeholder": "Paste your verified Boot Hash here",
+        "boot_hash_save_button": "Save"
+    },
+    "about": {
+        "module_name_line1": "Tricky Addon",
+        "module_name_line2": "Update Target List",
+        "by": "by",
+        "telegram_channel": "Telegram Channel",
+        "github": "GitHub",
+        "disclaimer": "This module is not a part of the Tricky Store module. DO NOT report any issues to Tricky Store if encountered.",
+        "acknowledgment": "Acknowledgment"
+    },
+    "prompt": {
+        "no_internet": "Please check your Internet connection",
+        "aosp_key_set": "AOSP keybox set successfully",
+        "key_set_error": "Failed to update keybox",
+        "valid_key_set": "Valid keybox set successfully",
+        "no_valid_fallback": "No valid keybox found, replaced with AOSP keybox.",
+        "boot_hash_set": "Verified Boot Hash saved successfully",
+        "boot_hash_set_error": "Failed to update Verified Boot Hash",
+        "saved_target": "Config saved to target.txt",
+        "save_error": "Failed to save config",
+        "uninstall_prompt": "WebUI will be removed after reboot",
+        "uninstall_failed": "Failed to uninstall WebUI",
+        "new_update": "A new update is available!"
+    }
 }
