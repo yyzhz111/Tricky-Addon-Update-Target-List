@@ -1,4 +1,4 @@
-import { basePath, execCommand, floatingBtn } from './main.js';
+import { basePath, execCommand, floatingBtn, appsWithExclamation, appsWithQuestion } from './main.js';
 
 const appTemplate = document.getElementById('app-template').content;
 export const appListContainer = document.getElementById('apps-list');
@@ -10,7 +10,7 @@ export async function fetchAppList() {
         let targetList = [];
         try {
             const targetFileContent = await execCommand('cat /data/adb/tricky_store/target.txt');
-            targetList = targetFileContent.split("\n").filter(app => app.trim() !== ''); // Filter out empty lines
+            targetList = processTargetList(targetFileContent);
             console.log("Current target list:", targetList);
         } catch (error) {
             console.error("Failed to read target.txt file:", error);
@@ -91,6 +91,25 @@ export async function fetchAppList() {
     if (appListContainer.firstChild !== updateCard) {
         appListContainer.insertBefore(updateCard, appListContainer.firstChild);
     }
+}
+
+// Function to save app with ! and ? then process target list
+function processTargetList(targetFileContent) {
+    appsWithExclamation.length = 0;
+    appsWithQuestion.length = 0;
+    const targetList = targetFileContent
+        .split("\n")
+        .map(app => {
+            const trimmedApp = app.trim();
+            if (trimmedApp.endsWith('!')) {
+                appsWithExclamation.push(trimmedApp.slice(0, -1));
+            } else if (trimmedApp.endsWith('?')) {
+                appsWithQuestion.push(trimmedApp.slice(0, -1));
+            }
+            return trimmedApp.replace(/[!?]/g, '');
+        })
+        .filter(app => app.trim() !== '');
+    return targetList;
 }
 
 // Make checkboxes toggleable

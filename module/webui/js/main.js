@@ -20,12 +20,9 @@ const prompt = document.getElementById('prompt');
 export const floatingBtn = document.querySelector('.floating-btn');
 
 export const basePath = "set-path";
-const ADDITIONAL_APPS = [
-    "com.google.android.gms",
-    "io.github.vvb2060.keyattestation",
-    "io.github.vvb2060.mahoshojo",
-    "icu.nullptr.nativetest"
-];
+export const appsWithExclamation = [];
+export const appsWithQuestion = [];
+const ADDITIONAL_APPS = [ "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ];
 
 // Variables
 let e = 0;
@@ -112,7 +109,7 @@ export function showPrompt(key, isSuccess = true) {
     }, 200);
 }
 
-// Save configure
+// Save configure and preserve ! and ? in target.txt
 document.getElementById("save").addEventListener("click", async () => {
     const selectedApps = Array.from(appListContainer.querySelectorAll(".checkbox:checked"))
         .map(checkbox => checkbox.closest(".card").querySelector(".content").getAttribute("data-package"));
@@ -122,10 +119,25 @@ document.getElementById("save").addEventListener("click", async () => {
     });
     finalAppsList = Array.from(finalAppsList);
     try {
-        const updatedTargetContent = finalAppsList.join("\n");
+        const modifiedAppsList = finalAppsList.map(app => {
+            if (appsWithExclamation.includes(app)) {
+                return `${app}!`;
+            } else if (appsWithQuestion.includes(app)) {
+                return `${app}?`;
+            }
+            return app;
+        });
+        const updatedTargetContent = modifiedAppsList.join("\n");
         await execCommand(`echo "${updatedTargetContent}" > /data/adb/tricky_store/target.txt`);
         console.log("target.txt updated successfully.");
         showPrompt("prompt.saved_target");
+        for (const app of appsWithExclamation) {
+            await execCommand(`sed -i 's/^${app}$/${app}!/' /data/adb/tricky_store/target.txt`);
+        }
+        for (const app of appsWithQuestion) {
+            await execCommand(`sed -i 's/^${app}$/${app}?/' /data/adb/tricky_store/target.txt`);
+        }
+        console.log("App names modified in target.txt.");
     } catch (error) {
         console.error("Failed to update target.txt:", error);
         showPrompt("prompt.save_error", false);
