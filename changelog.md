@@ -8,6 +8,13 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v2.9
+- Preserve `!` and `?` during update target in WebUi.
+- Optimized scripts, thanks to @backslashxx.
+- Fixed freeze in weak connection.
+- Added Spanish, thanks to @Keinta15.
+- Removed rescriction on installation but module will still be removed if tricky store is not found after reboot.
+
 ### v2.8
 - Fixed all KSUWebUIStandalone freeze issue, removed visible option.
 - Reduced WebUI loading time.
