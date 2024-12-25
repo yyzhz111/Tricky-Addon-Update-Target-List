@@ -1,0 +1,87 @@
+.boot-hash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1200;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.boot-hash-card {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1200;
+    padding: 20px;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.boot-hash-overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.boot-hash-card.show {
+    display: flex;
+    opacity: 1;
+}
+
+.input-box {
+    width: calc(100% - 20px);
+    height: 100px;
+    resize: none;
+    padding: 9px;
+    font-size: 16px;
+    background-color: #FFF;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.boot-hash-save-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 38px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    margin-left: auto;
+    transition: background-color 0.2s ease;
+}
+
+.boot-hash-save-button:active {
+    background-color: #003d80;
+}
+
+@media (prefers-color-scheme: dark) {
+    .boot-hash-card {
+        background-color: #343434;
+    }
+
+    .input-box {
+        color: #fff;
+        background-color: #343434;
+        border: 1px solid #6E6E6E;
+    }
+}

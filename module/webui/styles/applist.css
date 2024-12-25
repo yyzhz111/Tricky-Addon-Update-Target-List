@@ -1,0 +1,92 @@
+.card-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#apps-list {
+    margin-top: 100px;
+    flex-direction: column;
+}
+
+.update-card {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #DCDCDC;
+    border: none;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    outline: none;
+    padding: 12px;
+    width: calc(100% - 30px);
+    max-width: 900px;
+    transition: background-color 0.2s ease;
+}
+
+#update-available {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+#redirect-to-release {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.card {
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    outline: none;
+    padding: 12px;
+    width: calc(100% - 30px);
+    max-width: 900px;
+    transition: background-color 0.2s ease;
+}
+
+.card:active,
+.update-card:active {
+    background-color: #C8C8C8;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.name {
+    display: inline-block;
+    margin: 0;
+    font-size: 15.5px;
+    max-width: calc(100% - 30px);
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.checkbox {
+    margin-left: auto;
+    transform: scale(1.15);
+}
+
+@media (prefers-color-scheme: dark) {
+    .card {
+        background-color: #343434;
+    }
+
+    .update-card {
+        background-color: #4D4D4D;
+    }
+
+    .card:active,
+    .update-card:active {
+        background-color: #616161;
+    }
+}

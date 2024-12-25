@@ -1,0 +1,236 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    height: 40px;
+    width: calc(100% - 10px);
+    max-width: 1100px;
+    background-color: #F5F5F5;
+    transition: transform 0.3s ease;
+    z-index: 1100;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.header-block {
+    background-color: #F5F5F5;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1100;
+    transition: transform 0.3s ease;
+    height: var(--window-inset-top);
+}
+
+#title {
+    padding-left: 5px;
+    font-size: 16.5px;
+    font-weight: bold;
+}
+
+.no-connection {
+    padding: 0;
+    display: none;
+    margin-right: 0px;
+    background: none;
+    border: none;
+}
+
+.language-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.language-button {
+    padding-top: 5px;
+    background: none;
+    border: none;
+}
+
+.language-icon {
+    fill: #000;
+}
+
+.language-menu {
+    display: flex;
+    padding: 3px 10px;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1800;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    opacity: 0;
+    visibility: hidden;
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+
+.language-menu.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-option {
+    padding: 8px 5px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+    white-space: nowrap;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.2s ease;
+}
+
+.language-option:last-child {
+    border-bottom: none;
+}
+
+.language-option:active {
+    background-color: #C8C8C8;
+}
+
+.language-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: none;
+    z-index: 1100;
+    display: none;
+}
+
+.help-button {
+    padding-left: 5px;
+    margin-right: auto;
+    background: none;
+    border: none;
+}
+
+.help-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.help-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+.help-overlay.hide {
+    opacity: 0;
+}
+
+.help-menu {
+    position: relative;
+    width: 90vw;
+    max-width: 800px;
+    background-color: white;
+    padding: 10px 0;
+    border-radius: 15px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.close-help {
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #ccc;
+}
+
+.help-content {
+    max-height: 85vh;
+    padding: 0 30px;
+    overflow-y: auto;
+}
+
+.help-content p {
+    font-size: 26px;
+}
+
+.help-content ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.help-content ul li {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.help-content ul ul li {
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.help-content ul ul ul li {
+    color: #777777;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.help-content ul ul ul li a {
+    color: inherit;
+}
+
+@media (prefers-color-scheme: dark) {
+    .header-block,
+    .header {
+        background-color: #121212;
+    }
+
+    .language-option,
+    .help-button {
+        color: #fff;
+    }
+    
+    .language-icon {
+        fill: #eee;
+    }
+    
+    .help-menu {
+        background-color: #343434;
+    }
+
+    .language-menu {
+        background-color: #343434;
+        border: 1px solid #6E6E6E;
+    }
+
+    .language-option {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .language-option:active {
+        background-color: #616161;
+    }
+}

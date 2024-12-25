@@ -1,0 +1,124 @@
+.about-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.about-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90vw;
+    max-width: 800px;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px 0;
+    z-index: 1200;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1200;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: opacity 0.2s ease;
+}
+
+.close-about {
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.link,
+.about-content p {
+    margin: 0;
+    padding: 0 30px;
+    font-size: 16px;
+    text-align: left;
+}
+
+#module_name_line1 {
+    font-size: 26px;
+}
+
+#module_name_line2 {
+    font-size: 22px;
+}
+
+#authored {
+    font-size: 14px;
+}
+
+#disclaimer {
+    font-style: italic;
+}
+
+#acknowledgment {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.link-icon {
+    display: inline-block;
+    font-style: normal;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.link-icon svg {
+    padding-bottom: 3px;
+    vertical-align: bottom;
+    height: 17px;
+}
+
+#telegram {
+    font-size: 18px;
+    padding: 3px 10px;
+    background-color: #38A7ED;
+    color: #fff;
+    fill: #fff;
+}
+
+#telegram:active {
+    background-color: #1A78B3;
+}
+
+#github {
+    font-size: 18px;
+    padding: 3px 10px;
+    background-color: #606060;
+    color: #fff;
+    fill: #fff;
+}
+
+#github:active {
+    background-color: #4D4D4D;
+}
+
+
+#link-text {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+@media (prefers-color-scheme: dark) {
+    .about-menu {
+        background-color: #343434;
+    }
+}
