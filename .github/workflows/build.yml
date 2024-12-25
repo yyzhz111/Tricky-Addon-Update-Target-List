@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - 'module/**'
+  pull_request:
+    paths:
+      - 'module/**'
   workflow_dispatch:
 
 jobs:
@@ -40,12 +43,16 @@ jobs:
       - name: Check if valid to release
         id: check_tag
         run: |
-          VERSION=$(grep '^version=' module/module.prop | sed 's/version=//')
-          git fetch --tags
-          if git tag | grep -qx "^$VERSION"; then
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo "version_tag_exists=true" >> $GITHUB_OUTPUT
           else
-            echo "version_tag_exists=false" >> $GITHUB_OUTPUT
+            VERSION=$(grep '^version=' module/module.prop | sed 's/version=//')
+            git fetch --tags
+            if git tag | grep -qx "^$VERSION"; then
+              echo "version_tag_exists=true" >> $GITHUB_OUTPUT
+            else
+              echo "version_tag_exists=false" >> $GITHUB_OUTPUT
+            fi
           fi
 
   release:
