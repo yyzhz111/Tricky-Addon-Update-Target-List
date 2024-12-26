@@ -23,7 +23,8 @@
     padding: 12px;
     width: calc(100% - 30px);
     max-width: 900px;
-    transition: background-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 #update-available {
@@ -39,7 +40,7 @@
 }
 
 .card {
-    background-color: white;
+    background-color: #fff;
     border: none;
     border-radius: 12px;
     margin: 0 auto;
@@ -49,11 +50,8 @@
     width: calc(100% - 30px);
     max-width: 900px;
     transition: background-color 0.2s ease;
-}
-
-.card:active,
-.update-card:active {
-    background-color: #C8C8C8;
+    position: relative;
+    overflow: hidden;
 }
 
 .content {
@@ -83,10 +81,5 @@
 
     .update-card {
         background-color: #4D4D4D;
-    }
-
-    .card:active,
-    .update-card:active {
-        background-color: #616161;
     }
 }

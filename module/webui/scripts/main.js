@@ -1,18 +1,13 @@
-import { aboutMenu } from './about.js';
 import { appListContainer, updateCard, fetchAppList } from './applist.js';
-import { setupHelpOverlay } from './help.js';
 import { initializeAvailableLanguages, detectUserLanguage, loadTranslations, setupLanguageMenu, translations } from './language.js';
-import { selectAllApps, deselectAllApps, selectDenylistApps, deselectUnnecessaryApps, aospkb, extrakb } from './menu_option.js';
+import { aospkb } from './menu_option.js';
 import { searchMenuContainer, searchInput, clearBtn, setupMenuToggle } from './search_menu.js';
-import { setBootHash } from './vbmeta-digest.js';
+import { updateCheck } from './update.js';
 
 // Header Elements
 const headerBlock = document.querySelector('.header-block');
 const title = document.querySelector('.header');
-const noConnection = document.querySelector('.no-connection');
-
-// Menu Elements
-const selectDenylistElement = document.getElementById('select-denylist');
+export const noConnection = document.querySelector('.no-connection');
 
 // Loading, Save and Prompt Elements
 const loadingIndicator = document.querySelector('.loading');
@@ -23,10 +18,23 @@ export const basePath = "set-path";
 export const appsWithExclamation = [];
 export const appsWithQuestion = [];
 const ADDITIONAL_APPS = [ "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ];
+const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container'];
 
 // Variables
 let e = 0;
 let isRefreshing = false;
+
+// Function to load the version from module.prop
+async function getModuleVersion() {
+    const moduleVersion = document.getElementById('module-version');
+    try {
+        const version = await execCommand(`grep '^version=' ${basePath}common/update/module.prop | cut -d'=' -f2`);
+        moduleVersion.textContent = version;
+    } catch (error) {
+        console.error("Failed to read version from module.prop:", error);
+        updateVersion("Error reading version from module.prop");
+    }
+}
 
 // Function to refresh app list
 async function refreshAppList() {
@@ -43,48 +51,29 @@ async function refreshAppList() {
     window.scrollTo(0, 0);
     if (noConnection.style.display === "flex") {
         try {
-            await updateCheck();
+            updateCheck();
             await execCommand(`[ -f ${basePath}common/tmp/exclude-list ] && rm -f "${basePath}common/tmp/exclude-list"`);
         } catch (error) {
             console.error("Error occurred:", error);
         }
     }
     await fetchAppList();
+    applyRippleEffect();
     loadingIndicator.style.display = 'none';
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
     isRefreshing = false;
 }
 
-// Function to run the update check
-async function updateCheck() {
-    try {
-        const scriptPath = `sh ${basePath}common/get_extra.sh --update`;
-        const output = await execCommand(scriptPath);
-        console.log("update script executed successfully.");
-        noConnection.style.display = "none";
-        if (output.includes("update")) {
-            console.log("Update detected from extra script.");
-            showPrompt("prompt.new_update");
-            updateCard.style.display = "flex";
-        } else {
-            console.log("No update detected from extra script.");
-        }
-    } catch (error) {
-        console.error("Failed to execute update script:", error);
-        showPrompt("prompt.no_internet", false);
-        noConnection.style.display = "flex";
-    }
-}
-
 // Function to check if Magisk
 async function checkMagisk() {
+    const selectDenylistElement = document.getElementById('select-denylist');
     try {
         const magiskEnv = await execCommand(`command -v magisk >/dev/null 2>&1 && echo "OK"`);
         if (magiskEnv.trim() === "OK") {
             console.log("Denylist conditions met, displaying element.");
             selectDenylistElement.style.display = "flex";
         } else {
-            console.log("ksud or apd detected, leaving denylist element hidden.");
+            console.log("not running on Magisk, leaving denylist element hidden.");
         }
     } catch (error) {
         console.error("Error while checking denylist conditions:", error);
@@ -169,6 +158,35 @@ function adjustHeaderForMMRL() {
     }
 }
 
+// Function to apply ripple effect
+function applyRippleEffect() {
+    rippleClasses.forEach(selector => {
+        document.querySelectorAll(selector).forEach(element => {
+            element.addEventListener("click", function(event) {
+                const ripple = document.createElement("span");
+                ripple.classList.add("ripple");
+
+                const rect = element.getBoundingClientRect();
+                const width = rect.width;
+                const size = Math.max(rect.width, rect.height);
+                const x = event.clientX - rect.left - size / 2;
+                const y = event.clientY - rect.top - size / 2;
+
+                let duration = 0.3 + (width / 800) * 0.5;
+                duration = Math.min(0.8, Math.max(0.2, duration));
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                ripple.style.animationDuration = `${duration}s`;
+                element.appendChild(ripple);
+                ripple.addEventListener("animationend", () => {
+                    ripple.remove();
+                });
+            });
+        });
+    });
+}
+
 // Scroll event
 let lastScrollY = window.scrollY;
 const scrollThreshold = 40;
@@ -191,25 +209,19 @@ window.addEventListener('scroll', () => {
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
     adjustHeaderForMMRL();
+    getModuleVersion();
     await initializeAvailableLanguages();
     const userLang = detectUserLanguage();
     await loadTranslations(userLang);
     setupMenuToggle();
     setupLanguageMenu();
-    setupHelpOverlay();
-    document.getElementById("refresh").addEventListener("click", refreshAppList);
-    document.getElementById("select-all").addEventListener("click", selectAllApps);
-    document.getElementById("deselect-all").addEventListener("click", deselectAllApps);
-    document.getElementById("select-denylist").addEventListener("click", selectDenylistApps);
-    document.getElementById("deselect-unnecessary").addEventListener("click", deselectUnnecessaryApps);
-    document.getElementById("aospkb").addEventListener("click", aospkb);
-    document.getElementById("extrakb").addEventListener("click", extrakb);
-    document.getElementById("boot-hash").addEventListener("click", setBootHash);
-    document.getElementById("about").addEventListener("click", aboutMenu);
     await fetchAppList();
+    applyRippleEffect();
     checkMagisk();
     updateCheck();
     loadingIndicator.style.display = "none";
+    document.getElementById("refresh").addEventListener("click", refreshAppList);
+    document.getElementById("aospkb").addEventListener("click", aospkb);
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
 });
 

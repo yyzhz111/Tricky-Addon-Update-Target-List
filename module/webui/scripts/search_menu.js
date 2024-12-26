@@ -44,10 +44,7 @@ clearBtn.addEventListener("click", () => {
 
 // Function to toggle menu option
 export function setupMenuToggle() {
-    let menuOpen = false;
-    let menuAnimating = false;
     menuButton.addEventListener('click', (event) => {
-        if (menuAnimating) return;
         event.stopPropagation();
         if (menuOptions.classList.contains('visible')) {
             closeMenu();
@@ -73,31 +70,15 @@ export function setupMenuToggle() {
         });
     });
     function openMenu() {
-        menuAnimating = true;
-        menuOptions.style.display = 'block';
         setTimeout(() => {
-            menuOptions.classList.remove('hidden');
             menuOptions.classList.add('visible');
             menuIcon.classList.add('menu-open');
-            menuIcon.classList.remove('menu-closed');
             menuOverlay.style.display = 'flex';
-            menuOpen = true;
-            menuAnimating = false;
         }, 10);
     }
     function closeMenu() {
-        if (menuOptions.classList.contains('visible')) {
-            menuAnimating = true;
-            menuOptions.classList.remove('visible');
-            menuOptions.classList.add('hidden');
-            menuIcon.classList.remove('menu-open');
-            menuIcon.classList.add('menu-closed');
-            menuOverlay.style.display = 'none';
-            setTimeout(() => {
-                menuOptions.style.display = 'none';
-                menuOpen = false;
-                menuAnimating = false;
-            }, 200);
-        }
+        menuOptions.classList.remove('visible');
+        menuIcon.classList.remove('menu-open');
+        menuOverlay.style.display = 'none';
     }
 }

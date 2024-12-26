@@ -42,19 +42,17 @@ get_unnecessary() {
 }
 
 check_update() {
-    if [ -d "$MODPATH/update" ]; then
-        JSON=$(download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
-        REMOTE_VERSION=$(echo "$JSON" | grep -o '"versionCode": *[0-9]*' | awk -F: '{print $2}' | tr -d ' ')
-        LOCAL_VERSION=$(grep -o 'versionCode=[0-9]*' "$MODPATH/update/module.prop" | awk -F= '{print $2}')
-        if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ]; then
-            if [ "$MODPATH" = "/data/adb/modules/.TA_utl/common" ]; then
-                [ -d "/data/adb/modules/TA_utl" ] && rm -rf "/data/adb/modules/TA_utl"
-                cp -rf "$MODPATH/update" "/data/adb/modules/TA_utl"
-            else
-                cp -f "$MODPATH/update/module.prop" "/data/adb/modules/TA_utl/module.prop"
-            fi
-        echo "update"
+    JSON=$(download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
+    REMOTE_VERSION=$(echo "$JSON" | grep -o '"versionCode": *[0-9]*' | awk -F: '{print $2}' | tr -d ' ')
+    LOCAL_VERSION=$(grep -o 'versionCode=[0-9]*' "$MODPATH/update/module.prop" | awk -F= '{print $2}')
+    if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ]; then
+        if [ "$MODPATH" = "/data/adb/modules/.TA_utl/common" ]; then
+            [ -d "/data/adb/modules/TA_utl" ] && rm -rf "/data/adb/modules/TA_utl"
+            cp -rf "$MODPATH/update" "/data/adb/modules/TA_utl"
+        else
+            cp -f "$MODPATH/update/module.prop" "/data/adb/modules/TA_utl/module.prop"
         fi
+        echo "update"
     fi
 }
 

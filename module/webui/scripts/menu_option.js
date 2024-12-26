@@ -10,22 +10,18 @@ function toggleCheckboxes(shouldCheck) {
 }
 
 // Function to select all visible apps
-export function selectAllApps() {
-    toggleCheckboxes(true);
-}
+document.getElementById("select-all").addEventListener("click", () => toggleCheckboxes(true));
 
 // Function to deselect all visible apps
-export function deselectAllApps() {
-    toggleCheckboxes(false);
-}
+document.getElementById("deselect-all").addEventListener("click", () => toggleCheckboxes(false));
 
 // Function to read the denylist and check corresponding apps
-export async function selectDenylistApps() {
+document.getElementById("select-denylist").addEventListener("click", async () => {
     try {
         const result = await execCommand(`magisk --denylist ls 2>/dev/null | awk -F'|' '{print $1}' | grep -v "isolated" | sort | uniq`);
         const denylistApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
-        await deselectAllApps();
+        toggleCheckboxes(false);
         apps.forEach(app => {
             const contentElement = app.querySelector(".content");
             const packageName = contentElement.getAttribute("data-package");
@@ -38,10 +34,10 @@ export async function selectDenylistApps() {
     } catch (error) {
         console.error("Failed to select Denylist apps:", error);
     }
-}
+});
 
 // Function to read the exclude list and uncheck corresponding apps
-export async function deselectUnnecessaryApps() {
+document.getElementById("deselect-unnecessary").addEventListener("click", async () => {
     try {
         const fileCheck = await execCommand(`test -f ${basePath}common/tmp/exclude-list && echo "exists" || echo "not found"`);
         if (fileCheck.trim() === "not found") {
@@ -71,7 +67,7 @@ export async function deselectUnnecessaryApps() {
     } catch (error) {
         console.error("Failed to deselect unnecessary apps:", error);
     }
-}
+});
 
 // Function to replace aosp kb
 export async function aospkb() {
@@ -88,7 +84,7 @@ export async function aospkb() {
 }
 
 // Function to replace valid kb
-export async function extrakb() {
+document.getElementById("extrakb").addEventListener("click", async () => {
     setTimeout(async () => {
         await execCommand(`sh ${basePath}common/get_extra.sh --kb`);
     }, 100);
@@ -108,4 +104,4 @@ export async function extrakb() {
         await aospkb();
         showPrompt("prompt.no_valid_fallback", false);
     }
-}
+});

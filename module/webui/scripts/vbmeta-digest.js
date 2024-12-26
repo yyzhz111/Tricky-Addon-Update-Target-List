@@ -6,7 +6,7 @@ const inputBox = document.getElementById('boot-hash-input');
 const saveButton = document.getElementById('boot-hash-save-button');
 
 // Function to handle Verified Boot Hash
-export async function setBootHash() {
+document.getElementById("boot-hash").addEventListener("click", async () => {
     const showCard = () => {
         bootHashOverlay.style.display = "flex";
         card.style.display = "flex";
@@ -51,4 +51,4 @@ export async function setBootHash() {
     bootHashOverlay.addEventListener("click", (event) => {
         if (event.target === bootHashOverlay) closeCard();
     });
-}
+});

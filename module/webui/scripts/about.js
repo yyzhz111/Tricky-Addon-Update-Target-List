@@ -4,7 +4,7 @@ const telegramLink = document.getElementById('telegram');
 const githubLink = document.getElementById('github');
 
 // Function to show about overlay
-export function aboutMenu() {
+document.getElementById("about").addEventListener("click", () => {
     const aboutOverlay = document.getElementById('about-overlay');
     const aboutMenu = document.getElementById('about-menu');
     const closeAbout = document.getElementById('close-about');
@@ -35,7 +35,7 @@ export function aboutMenu() {
         }
     });
     menu.addEventListener('click', (event) => event.stopPropagation());
-}
+});
 
 // Event listener for link redirect
 telegramLink.addEventListener('click', async () => {

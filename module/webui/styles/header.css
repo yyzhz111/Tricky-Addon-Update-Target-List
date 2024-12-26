@@ -28,6 +28,7 @@
     height: var(--window-inset-top);
 }
 
+#module-version,
 #title {
     padding-left: 5px;
     font-size: 16.5px;
@@ -94,14 +95,12 @@
     white-space: nowrap;
     border-bottom: 1px solid #ccc;
     transition: background-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .language-option:last-child {
     border-bottom: none;
-}
-
-.language-option:active {
-    background-color: #C8C8C8;
 }
 
 .language-overlay {
@@ -228,9 +227,5 @@
 
     .language-option {
         border-bottom: 1px solid #6E6E6E;
-    }
-
-    .language-option:active {
-        background-color: #616161;
     }
 }

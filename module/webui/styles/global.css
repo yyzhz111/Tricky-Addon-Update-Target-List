@@ -32,10 +32,7 @@ body {
     font-weight: bold;
     transition: transform 0.3s ease-in-out, background-color 0.2s ease;
     border-radius: 50px 50px;
-}
-
-.floating-btn:active {
-    background-color: #003d80;
+    overflow: hidden;
 }
 
 .prompt {
@@ -132,11 +129,7 @@ body {
     border-radius: 8px;
     background-color: #CE0000;
     white-space: nowrap;
-    transition: background-color 0.2s ease;
-}
-
-.uninstall-container:active {
-    background-color: #830000;
+    overflow: hidden;
 }
 
 .uninstall-container i {
@@ -153,9 +146,30 @@ body {
     display: none;
 }
 
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple-animation ease-out;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #121212;
         color: #fff;
     }
+
+    .ripple {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
 }
