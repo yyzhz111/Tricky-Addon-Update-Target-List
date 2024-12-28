@@ -1,4 +1,4 @@
-import { basePath, execCommand, showPrompt } from './main.js';
+import { basePath, execCommand, showPrompt, toast } from './main.js';
 
 // Function to check or uncheck all app
 function toggleCheckboxes(shouldCheck) {
@@ -32,6 +32,7 @@ document.getElementById("select-denylist").addEventListener("click", async () =>
         });
         console.log("Denylist apps selected successfully.");
     } catch (error) {
+        toast("Failed to read DenyList!");
         console.error("Failed to select Denylist apps:", error);
     }
 });
@@ -65,6 +66,7 @@ document.getElementById("deselect-unnecessary").addEventListener("click", async 
         });
         console.log("Unnecessary apps deselected successfully.");
     } catch (error) {
+        toast("Failed!");
         console.error("Failed to deselect unnecessary apps:", error);
     }
 });

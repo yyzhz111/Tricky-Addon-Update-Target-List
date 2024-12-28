@@ -1,4 +1,4 @@
-import { basePath, execCommand } from './main.js';
+import { basePath, execCommand, toast } from './main.js';
 
 const languageButton = document.querySelector('.language-button');
 const languageMenu = document.querySelector('.language-menu');
@@ -16,6 +16,7 @@ export async function initializeAvailableLanguages() {
         availableLanguages = multiLang.trim().split('\n');
         generateLanguageMenu();
     } catch (error) {
+        toast("Failed to get available langauge!");
         console.error('Failed to fetch available languages:', error);
         availableLanguages = ['en-US'];
     }
@@ -41,6 +42,7 @@ export async function loadTranslations(lang) {
         translations = await response.json();
         applyTranslations();
     } catch (error) {
+        toast(`Failed to load translation for ${lang}!`);
         console.error(`Error loading translations for ${lang}:`, error);
         if (lang !== 'en-US') {
             console.log("Falling back to English.");

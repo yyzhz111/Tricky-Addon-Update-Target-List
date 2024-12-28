@@ -33,7 +33,7 @@ async function getModuleVersion() {
         moduleVersion.textContent = version;
     } catch (error) {
         console.error("Failed to read version from module.prop:", error);
-        updateVersion("Error reading version from module.prop");
+        updateVersion("Error");
     }
 }
 
@@ -55,6 +55,7 @@ async function refreshAppList() {
             updateCheck();
             await execCommand(`[ -f ${basePath}common/tmp/exclude-list ] && rm -f "${basePath}common/tmp/exclude-list"`);
         } catch (error) {
+            toast("Failed!");
             console.error("Error occurred:", error);
         }
     }
@@ -77,6 +78,7 @@ async function checkMagisk() {
             console.log("not running on Magisk, leaving denylist element hidden.");
         }
     } catch (error) {
+        toast("Failed to check Magisk!");
         console.error("Error while checking denylist conditions:", error);
     }
 }
@@ -106,7 +108,7 @@ export async function linkRedirect(link) {
     try {
         await execCommand(`am start -a android.intent.action.VIEW -d ${link}`);
     } catch (error) {
-        toast('error!');
+        toast("Failed!");
         console.error('Error redirect link:', error);
     }
 }
@@ -199,7 +201,7 @@ function applyRippleEffect() {
                 const y = event.clientY - rect.top - size / 2;
 
                 // Determine animation duration
-                let duration = 0.2 + (width / 800) * 0.5;
+                let duration = 0.2 + (width / 800) * 0.4;
                 duration = Math.min(0.8, Math.max(0.2, duration));
 
                 // Set ripple styles
@@ -289,6 +291,7 @@ updateCard.addEventListener('click', async () => {
     try {
         await execCommand('am start -a android.intent.action.VIEW -d https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest');
     } catch (error) {
+        toast("Failed!");
         console.error('Error opening GitHub Release link:', error);
     }
 });
