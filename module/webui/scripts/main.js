@@ -12,13 +12,14 @@ export const noConnection = document.querySelector('.no-connection');
 // Loading, Save and Prompt Elements
 const loadingIndicator = document.querySelector('.loading');
 const prompt = document.getElementById('prompt');
+const floatingCard = document.querySelector('.floating-card');
 export const floatingBtn = document.querySelector('.floating-btn');
 
 export const basePath = "set-path";
 export const appsWithExclamation = [];
 export const appsWithQuestion = [];
 const ADDITIONAL_APPS = [ "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ];
-const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container'];
+const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container', '.boot-hash-save-button', '.boot-hash-value'];
 
 // Variables
 let e = 0;
@@ -41,7 +42,7 @@ async function refreshAppList() {
     isRefreshing = true;
     title.style.transform = 'translateY(0)';
     searchMenuContainer.style.transform = 'translateY(0)';
-    floatingBtn.style.transform = 'translateY(0)';
+    hideFloatingBtn();
     searchInput.value = '';
     clearBtn.style.display = "none";
     appListContainer.innerHTML = '';
@@ -89,13 +90,25 @@ export function showPrompt(key, isSuccess = true) {
         clearTimeout(window.promptTimeout);
     }
     setTimeout(() => {
-        prompt.classList.add('visible');
-        prompt.classList.remove('hidden');
+        if (typeof ksu !== 'undefined' && ksu.mmrl) {
+            prompt.style.transform = 'translateY(calc((var(--window-inset-bottom) + 60%) * -1))';
+        } else {
+            prompt.style.transform = 'translateY(-60%)';
+        }
         window.promptTimeout = setTimeout(() => {
-            prompt.classList.remove('visible');
-            prompt.classList.add('hidden');
+            prompt.style.transform = 'translateY(100%)';
         }, 3000);
     }, 200);
+}
+
+// Function to redirect link on external browser
+export async function linkRedirect(link) {
+    try {
+        await execCommand(`am start -a android.intent.action.VIEW -d ${link}`);
+    } catch (error) {
+        toast('error!');
+        console.error('Error redirect link:', error);
+    }
 }
 
 // Save configure and preserve ! and ? in target.txt
@@ -155,6 +168,16 @@ function adjustHeaderForMMRL() {
         const insetTopValue = parseInt(insetTop, 10);
         searchMenuContainer.style.top = `${insetTopValue + 40}px`;
         headerBlock.style.display = 'block';
+        floatingCard.style.bottom = 'calc(var(--window-inset-bottom) + 50px)';
+    }
+}
+
+// Funtion to adapt floating button hide in MMRL
+function hideFloatingBtn() {
+    if (typeof ksu !== 'undefined' && ksu.mmrl) {
+        floatingBtn.style.transform = 'translateY(calc(var(--window-inset-bottom) + 120px))';
+    } else {
+        floatingBtn.style.transform = 'translateY(120px)';
     }
 }
 
@@ -162,26 +185,55 @@ function adjustHeaderForMMRL() {
 function applyRippleEffect() {
     rippleClasses.forEach(selector => {
         document.querySelectorAll(selector).forEach(element => {
-            element.addEventListener("click", function(event) {
+            element.addEventListener("pointerdown", function (event) {
+                if (isScrolling) return;
+                
                 const ripple = document.createElement("span");
                 ripple.classList.add("ripple");
 
+                // Calculate ripple size and position
                 const rect = element.getBoundingClientRect();
                 const width = rect.width;
                 const size = Math.max(rect.width, rect.height);
                 const x = event.clientX - rect.left - size / 2;
                 const y = event.clientY - rect.top - size / 2;
 
-                let duration = 0.3 + (width / 800) * 0.5;
+                // Determine animation duration
+                let duration = 0.2 + (width / 800) * 0.5;
                 duration = Math.min(0.8, Math.max(0.2, duration));
+
+                // Set ripple styles
                 ripple.style.width = ripple.style.height = `${size}px`;
                 ripple.style.left = `${x}px`;
                 ripple.style.top = `${y}px`;
                 ripple.style.animationDuration = `${duration}s`;
+                ripple.style.transition = `opacity ${duration}s ease`;
+
+                // Adaptive color
+                const computedStyle = window.getComputedStyle(element);
+                const bgColor = computedStyle.backgroundColor || "rgba(0, 0, 0, 0)";
+                const textColor = computedStyle.color;
+                const isDarkColor = (color) => {
+                    const rgb = color.match(/\d+/g);
+                    if (!rgb) return false;
+                    const [r, g, b] = rgb.map(Number);
+                    return (r * 0.299 + g * 0.587 + b * 0.114) < 128; // Luma formula
+                };
+                ripple.style.backgroundColor = isDarkColor(bgColor) ? "rgba(255, 255, 255, 0.2)" : "";
+
+                // Append ripple and handle cleanup
                 element.appendChild(ripple);
-                ripple.addEventListener("animationend", () => {
-                    ripple.remove();
-                });
+                const handlePointerUp = () => {
+                    ripple.classList.add("end");
+                    setTimeout(() => {
+                        ripple.classList.remove("end");
+                        ripple.remove();
+                    }, duration * 1000);
+                    element.removeEventListener("pointerup", handlePointerUp);
+                    element.removeEventListener("pointercancel", handlePointerUp);
+                };
+                element.addEventListener("pointerup", handlePointerUp);
+                element.addEventListener("pointercancel", handlePointerUp);
             });
         });
     });
@@ -189,19 +241,26 @@ function applyRippleEffect() {
 
 // Scroll event
 let lastScrollY = window.scrollY;
+let isScrolling = false;
+let scrollTimeout;
 const scrollThreshold = 40;
 window.addEventListener('scroll', () => {
+    isScrolling = true;
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+    }, 200);
     if (isRefreshing) return;
     if (window.scrollY > lastScrollY && window.scrollY > scrollThreshold) {
         title.style.transform = 'translateY(-80px)';
         headerBlock.style.transform = 'translateY(-80px)';
         searchMenuContainer.style.transform = 'translateY(-40px)';
-        floatingBtn.style.transform = 'translateY(0)';
+        hideFloatingBtn();
     } else if (window.scrollY < lastScrollY) {
         headerBlock.style.transform = 'translateY(0)';
         title.style.transform = 'translateY(0)';
         searchMenuContainer.style.transform = 'translateY(0)';
-        floatingBtn.style.transform = 'translateY(-120px)';
+        floatingBtn.style.transform = 'translateY(0)';
     }
     lastScrollY = window.scrollY;
 });
@@ -254,4 +313,9 @@ export async function execCommand(command) {
             reject(error);
         }
     });
+}
+
+// Function to toast message
+export function toast(message) {
+    ksu.toast(message);
 }

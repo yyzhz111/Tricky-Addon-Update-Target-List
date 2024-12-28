@@ -42,15 +42,30 @@
     opacity: 1;
 }
 
-.input-box {
-    width: calc(100% - 20px);
+.boot-hash-value {
+    width: 100%;
     height: 100px;
-    resize: none;
-    padding: 9px;
     font-size: 16px;
     background-color: #FFF;
     border: 1px solid #ccc;
     border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.input-box {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 9px;
+    box-sizing: border-box;
+    background-color: transparent;
+    outline-color: #007bff;
 }
 
 .button-container {
@@ -67,11 +82,9 @@
     background-color: #007bff;
     color: white;
     margin-left: auto;
-    transition: background-color 0.2s ease;
-}
-
-.boot-hash-save-button:active {
-    background-color: #003d80;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -81,6 +94,9 @@
 
     .input-box {
         color: #fff;
+    }
+    
+    .boot-hash-value {
         background-color: #343434;
         border: 1px solid #6E6E6E;
     }

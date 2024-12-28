@@ -53,14 +53,17 @@
 
 #module_name_line1 {
     font-size: 26px;
+    user-select: none;
 }
 
 #module_name_line2 {
     font-size: 22px;
+    user-select: none;
 }
 
 #authored {
     font-size: 14px;
+    user-select: none;
 }
 
 #disclaimer {
@@ -70,6 +73,7 @@
 #acknowledgment {
     font-weight: bold;
     font-size: 18px;
+    user-select: none;
 }
 
 .link-icon {
@@ -95,6 +99,7 @@
     background-color: #38A7ED;
     color: #fff;
     fill: #fff;
+    user-select: none;
 }
 
 #github {
@@ -103,6 +108,7 @@
     background-color: #606060;
     color: #fff;
     fill: #fff;
+    user-select: none;
 }
 
 #link-text {

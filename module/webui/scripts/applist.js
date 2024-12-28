@@ -86,7 +86,7 @@ export async function fetchAppList() {
     } catch (error) {
         console.error("Failed to fetch or render app list with names:", error);
     }
-    floatingBtn.style.transform = "translateY(-120px)";
+    floatingBtn.style.transform = 'translateY(0)';
     toggleableCheckbox();
     if (appListContainer.firstChild !== updateCard) {
         appListContainer.insertBefore(updateCard, appListContainer.firstChild);
@@ -119,9 +119,7 @@ function toggleableCheckbox() {
         const content = card.querySelector(".content");
         const checkbox = content.querySelector(".checkbox");
         content.addEventListener("click", (event) => {
-            if (event.target !== checkbox) {
-                checkbox.checked = !checkbox.checked;
-            }
+            checkbox.checked = !checkbox.checked;
         });
     });
 }

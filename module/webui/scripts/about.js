@@ -1,4 +1,4 @@
-import { execCommand } from './main.js';
+import { execCommand, linkRedirect } from './main.js';
 
 const telegramLink = document.getElementById('telegram');
 const githubLink = document.getElementById('github');
@@ -38,17 +38,9 @@ document.getElementById("about").addEventListener("click", () => {
 });
 
 // Event listener for link redirect
-telegramLink.addEventListener('click', async () => {
-    try {
-        await execCommand('am start -a android.intent.action.VIEW -d https://t.me/kowchannel');
-    } catch (error) {
-        console.error('Error opening Telegram link:', error);
-    }
+telegramLink.addEventListener('click', function() {
+    linkRedirect('https://t.me/kowchannel');
 });
-githubLink.addEventListener('click', async () => {
-    try {
-        await execCommand('am start -a android.intent.action.VIEW -d https://github.com/KOWX712/Tricky-Addon-Update-Target-List');
-    } catch (error) {
-        console.error('Error opening GitHub link:', error);
-    }
+githubLink.addEventListener('click', function() {
+    linkRedirect('https://github.com/KOWX712/Tricky-Addon-Update-Target-List');
 });
