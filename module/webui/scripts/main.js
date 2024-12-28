@@ -70,8 +70,8 @@ async function refreshAppList() {
 async function checkMagisk() {
     const selectDenylistElement = document.getElementById('select-denylist');
     try {
-        const magiskEnv = await execCommand(`command -v magisk >/dev/null 2>&1 && echo "OK"`);
-        if (magiskEnv.trim() === "OK") {
+        const magiskEnv = await execCommand(`command -v magisk >/dev/null 2>&1 || echo "NO"`);
+        if (magiskEnv.trim() !== "NO") {
             console.log("Denylist conditions met, displaying element.");
             selectDenylistElement.style.display = "flex";
         } else {
