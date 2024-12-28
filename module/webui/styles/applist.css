@@ -46,7 +46,7 @@
     margin: 0 auto;
     margin-bottom: 10px;
     outline: none;
-    padding: 10px;
+    padding: 13px;
     width: calc(100% - 30px);
     max-width: 900px;
     transition: background-color 0.2s ease;
@@ -113,12 +113,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 7px;
     box-sizing: border-box;
     transition: border-color 0.2s ease;
     border: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
 }
 
 #normal-indicator {
@@ -130,7 +132,7 @@
 }
 
 #generate-indicator {
-    background-color: #6C00FF;
+    background-color: #51FF00;
 }
 
 .mode-input[type="radio"]:checked ~ .mode-icon .status-indicator {
@@ -190,8 +192,8 @@
 }
 
 .checkbox-checked-generate:checked + .custom-checkbox {
-    border-color: #6C00FF;
-    background-color: #6C00FF;
+    border-color: #51FF00;
+    background-color: #51FF00;
 }
 
 .checkbox-checked-hack:checked + .custom-checkbox {

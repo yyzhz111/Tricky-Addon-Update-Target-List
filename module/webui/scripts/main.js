@@ -19,7 +19,7 @@ export const basePath = "set-path";
 export const appsWithExclamation = [];
 export const appsWithQuestion = [];
 const ADDITIONAL_APPS = [ "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ];
-const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container', '.boot-hash-save-button', '.boot-hash-value'];
+const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container', '.boot-hash-save-button', '.boot-hash-value', '.status-indicator'];
 
 // Variables
 let e = 0;
@@ -201,7 +201,7 @@ function applyRippleEffect() {
                 const y = event.clientY - rect.top - size / 2;
 
                 // Determine animation duration
-                let duration = 0.2 + (width / 800) * 0.4;
+                let duration = 0.3 + (width / 800) * 0.3;
                 duration = Math.min(0.8, Math.max(0.2, duration));
 
                 // Set ripple styles
