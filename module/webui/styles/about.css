@@ -67,7 +67,14 @@
 }
 
 #disclaimer {
-    font-style: italic;
+    font-family: serif;
+    width: calc(100% - 80px);
+    padding: 8px 10px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 10px;
+    background-color: #F5F5F5;
 }
 
 #acknowledgment {
@@ -119,5 +126,9 @@
 @media (prefers-color-scheme: dark) {
     .about-menu {
         background-color: #343434;
+    }
+
+    #disclaimer {
+        background-color: #6E6E6E;
     }
 }

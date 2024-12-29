@@ -65,7 +65,7 @@
     display: none;
     flex-direction: row;
     gap: 10px;
-    padding: 10px;
+    padding: 10px 12px;
     position: absolute;
     left: 0;
     right: 0;
@@ -74,7 +74,7 @@
     background-color: #B1B1B1;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border: 1px solid #ccc;
-    border-radius: 12px;
+    border-radius: 50px 50px;
     opacity: 0;
     transform: scale(0);
     transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -113,11 +113,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 7px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px 50px;
     box-sizing: border-box;
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
     border: 3px solid transparent;
     position: relative;
     overflow: hidden;
@@ -132,10 +132,11 @@
 }
 
 #generate-indicator {
-    background-color: #51FF00;
+    background-color: #36DB2B;
 }
 
 .mode-input[type="radio"]:checked ~ .mode-icon .status-indicator {
+    transform: scale(1.1);
     border-color: #fff;
 }
 
@@ -192,8 +193,8 @@
 }
 
 .checkbox-checked-generate:checked + .custom-checkbox {
-    border-color: #51FF00;
-    background-color: #51FF00;
+    border-color: #36DB2B;
+    background-color: #36DB2B;
 }
 
 .checkbox-checked-hack:checked + .custom-checkbox {

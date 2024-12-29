@@ -219,7 +219,7 @@ function applyRippleEffect() {
                     const rgb = color.match(/\d+/g);
                     if (!rgb) return false;
                     const [r, g, b] = rgb.map(Number);
-                    return (r * 0.299 + g * 0.587 + b * 0.114) < 128; // Luma formula
+                    return (r * 0.299 + g * 0.587 + b * 0.114) < 96; // Luma formula
                 };
                 ripple.style.backgroundColor = isDarkColor(bgColor) ? "rgba(255, 255, 255, 0.2)" : "";
 

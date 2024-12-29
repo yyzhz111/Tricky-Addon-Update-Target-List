@@ -37,7 +37,7 @@ export async function fetchAppList() {
             console.warn("Applist file not found or could not be loaded. Skipping applist lookup.");
         }
 
-        const result = await execCommand('pm list packages -3; pm path com.google.android.gms >/dev/null 2>&1 && echo "package:com.google.android.gms"');
+        const result = await execCommand('pm list packages -3; pm path com.google.android.gms >/dev/null 2>&1 && echo "package:com.google.android.gms" || true');
         const appEntries = result
             .split("\n")
             .map(line => {
@@ -116,7 +116,7 @@ export async function fetchAppList() {
     }
     const checkboxes = appListContainer.querySelectorAll(".checkbox");
     setupRadioButtonListeners();
-    setupCardHoldListener();
+    setupModeMenu();
     updateCheckboxColor();
 }
 
@@ -192,7 +192,7 @@ function setupRadioButtonListeners() {
 }
 
 // Hold to open menu
-function setupCardHoldListener() {
+function setupModeMenu() {
     let holdTimeout;
     function showMode(card) {
         const modeElement = card.querySelector(".mode");
@@ -229,7 +229,6 @@ function setupCardHoldListener() {
         card.addEventListener("pointercancel", () => clearTimeout(holdTimeout));
     });
 
-    // Close on click/scroll
     document.addEventListener("click", (event) => {
         if (!event.target.closest(".mode") || modeOverlay.contains(event.target)) {
             hideAllModes();
