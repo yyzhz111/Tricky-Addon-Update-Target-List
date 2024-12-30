@@ -269,6 +269,7 @@ window.addEventListener('scroll', () => {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
+    hideFloatingBtn();
     adjustHeaderForMMRL();
     getModuleVersion();
     await initializeAvailableLanguages();
@@ -281,6 +282,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     checkMagisk();
     updateCheck();
     loadingIndicator.style.display = "none";
+    floatingBtn.style.opacity = '1';
+    setTimeout(() => {
+        floatingBtn.style.transform = 'translateY(0)';
+    }, 10);
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.getElementById("aospkb").addEventListener("click", aospkb);
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
