@@ -30,13 +30,85 @@
 #update-available {
     font-size: 20px;
     font-weight: bold;
+    text-align: center;
     margin-top: 15px;
     margin-bottom: 0;
+    user-select: none;
 }
 
 #redirect-to-release {
+    text-align: center;
     margin-top: 5px;
     margin-bottom: 15px;
+    user-select: none;
+}
+
+.update-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1800;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.update-menu {
+    position: relative;
+    width: 90vw;
+    max-width: 800px;
+    background-color: white;
+    padding: 10px 0;
+    border-radius: 15px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.close-update {
+    position: absolute;
+    top: 15px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #ccc;
+}
+
+.update-content {
+    max-height: 85vh;
+    padding: 0 30px;
+    overflow-y: auto;
+    user-select: none;
+}
+
+.update-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.install,
+.reboot {
+    margin-left: 0;
+    margin-bottom: 15px;
+    color: #3B3B3B;
+    background-color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px 50px;
+    font-size: 18px;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+
+.reboot {
+    display: none;
 }
 
 .card {
@@ -243,9 +315,19 @@
     .update-card {
         background-color: #4D4D4D;
     }
-    
+
     .mode {
         background-color: #343434;
         border: 1px solid #6E6E6E;
+    }
+
+    .install,
+    .reboot {
+        background-color: #343434;
+        color: #C2C2C2;
+    }
+
+    .update-menu {
+        background-color: #343434;
     }
 }

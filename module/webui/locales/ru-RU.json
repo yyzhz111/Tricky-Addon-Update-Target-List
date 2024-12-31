@@ -20,9 +20,12 @@
         "set_verified_boot_hash": "Установить Verified Boot Hash",
         "set_verified_boot_hash_description": "Получите значение verifiedBootHash из Key Attestation Demo. Исправьте аномальное состояние загрузки, сбросив ro.boot.vbmeta.digest."
     },
-    "update_banner": {
+    "update": {
         "update_available": "Доступна новая версия",
-        "redirect_to_release": "нажмите, чтобы скачать последнюю версию"
+        "redirect_to_release": "нажмите, чтобы скачать последнюю версию",
+        "changelog": "Список изменений",
+        "install": "Установить",
+        "reboot": "Перезагрузить"
     },
     "search_bar": {
         "search_placeholder": "Поиск"
@@ -70,6 +73,14 @@
         "save_error": "Не удалось сохранить конфигурацию",
         "uninstall_prompt": "WebUI будет удален после перезагрузки",
         "uninstall_failed": "Не удалось удалить WebUI",
-        "new_update": "Доступно новое обновление!"
+        "new_update": "Доступно новое обновление!",
+        "downloading": "Загрузка нового обновления...",
+        "downloaded": "Загрузка завершена",
+        "download_fail": "Не удалось загрузить обновление",
+        "installing": "Установка обновления...",
+        "installed": "Успешно установлено, перезагрузите устройство.",
+        "install_fail": "Не удалось установить, обновите вручную",
+        "rebooting": "Перезагрузка...",
+        "reboot_fail": "Не удалось перезагрузить, перезагрузите вручную"
     }
 }

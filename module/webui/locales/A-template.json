@@ -14,15 +14,18 @@
         "select_denylist": "Select From DenyList",
         "select_denylist_description": "Available in Magisk only, select apps that are in the DenyList. Recommended.",
         "deselect_unnecessary": "Deselect Unnecessary",
-        "deselect_unnecessary_description": "Unnecessary category: Xposed module, root manager, root-related apps, and general apps that never check bootloader status. This option requires an Internet connection.",
+        "deselect_unnecessary_description": "Unnecessary category: Xposed module, root manager, root-related apps, and general apps that never check bootloader status. This option requires Internet connection.",
         "set_keybox": "Set AOSP & Valid Keybox",
         "set_keybox_description": "Replace tricky store keybox.xml. AOSP keybox will be replaced if there's no more valid keybox. Valid keybox option requires Internet connection.",
         "set_verified_boot_hash": "Set Verified Boot Hash",
         "set_verified_boot_hash_description": "Get verifiedBootHash value from Key Attestation Demo. Fix abnormal boot state by resetting ro.boot.vbmeta.digest."
     },
-    "update_banner": {
+    "update": {
         "update_available": "A new version is ready",
-        "redirect_to_release": "tap to download the latest version"
+        "redirect_to_release": "tap to download the latest version",
+        "changelog": "Changelog",
+        "install": "Install",
+        "reboot": "Reboot"
     },
     "search_bar": {
         "search_placeholder": "Search"
@@ -70,6 +73,14 @@
         "save_error": "Failed to save config",
         "uninstall_prompt": "WebUI will be removed after reboot",
         "uninstall_failed": "Failed to uninstall WebUI",
-        "new_update": "A new update is available!"
+        "new_update": "A new update is available!",
+        "downloading": "Downloading new update...",
+        "downloaded": "Download completed",
+        "download_fail": "Fail to download update",
+        "installing": "Installing update...",
+        "installed": "Installed successfully, reboot now.",
+        "install_fail": "Fail to install, please update manual",
+        "rebooting": "Rebooting...",
+        "reboot_fail": "Fail to reboot, please reboot manually"
     }
 }

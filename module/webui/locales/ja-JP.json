@@ -20,9 +20,12 @@
         "set_verified_boot_hash": "確認付きブートハッシュを設定",
         "set_verified_boot_hash_description": "Key Attestation Demo から確認付きブートハッシュの値を取得します。ro.boot.vbmeta.digest をリセットして異常なブート状態を修正します。"
     },
-    "update_banner": {
+    "update": {
         "update_available": "新しいバージョンの準備完了",
-        "redirect_to_release": "タップで最新のバージョンをダウンロード"
+        "redirect_to_release": "タップで最新のバージョンをダウンロード",
+        "changelog": "変更履歴",
+        "install": "インストール",
+        "reboot": "再起動"
     },
     "search_bar": {
         "search_placeholder": "検索"
@@ -70,6 +73,14 @@
         "save_error": "設定の保存に失敗しました。",
         "uninstall_prompt": "WebUI は再起動後に削除されます。",
         "uninstall_failed": "WebUI のアンインストールに失敗しました。",
-        "new_update": "新しいバージョンがあります！"
+        "new_update": "新しいバージョンがあります！",
+        "downloading": "新しい更新をダウンロード中...",
+        "downloaded": "ダウンロードが完了しました",
+        "download_fail": "更新のダウンロードに失敗しました",
+        "installing": "更新をインストール中...",
+        "installed": "正常にインストールされました。再起動してください。",
+        "install_fail": "インストールに失敗しました。手動で更新してください。",
+        "rebooting": "再起動中...",
+        "reboot_fail": "再起動に失敗しました。手動で再起動してください。"
     }
 }

@@ -235,7 +235,7 @@ function setupModeMenu() {
         } else if (event.target.closest(".status-indicator")) {
             setTimeout(() => {
                 hideAllModes();
-            }, 200);
+            }, 300);
         }
     });
     window.addEventListener("scroll", hideAllModes);

@@ -1,4 +1,4 @@
-import { appListContainer, updateCard, fetchAppList } from './applist.js';
+import { appListContainer, fetchAppList } from './applist.js';
 import { initializeAvailableLanguages, detectUserLanguage, loadTranslations, setupLanguageMenu, translations } from './language.js';
 import { aospkb } from './menu_option.js';
 import { searchMenuContainer, searchInput, clearBtn, setupMenuToggle } from './search_menu.js';
@@ -19,7 +19,7 @@ export const basePath = "set-path";
 export const appsWithExclamation = [];
 export const appsWithQuestion = [];
 const ADDITIONAL_APPS = [ "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ];
-const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container', '.boot-hash-save-button', '.boot-hash-value', '.status-indicator'];
+const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container', '.boot-hash-save-button', '.boot-hash-value', '.status-indicator', '.reboot', '.install'];
 
 // Variables
 let e = 0;
@@ -84,7 +84,7 @@ async function checkMagisk() {
 }
 
 // Function to show the prompt with a success or error message
-export function showPrompt(key, isSuccess = true) {
+export function showPrompt(key, isSuccess = true, duration = 3000) {
     const message = key.split('.').reduce((acc, k) => acc && acc[k], translations) || key;
     prompt.textContent = message;
     prompt.classList.toggle('error', !isSuccess);
@@ -99,8 +99,8 @@ export function showPrompt(key, isSuccess = true) {
         }
         window.promptTimeout = setTimeout(() => {
             prompt.style.transform = 'translateY(100%)';
-        }, 3000);
-    }, 200);
+        }, duration);
+    }, 100);
 }
 
 // Function to redirect link on external browser
@@ -289,16 +289,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.getElementById("aospkb").addEventListener("click", aospkb);
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
-});
-
-// Redirect to GitHub release page
-updateCard.addEventListener('click', async () => {
-    try {
-        await execCommand('am start -a android.intent.action.VIEW -d https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases/latest');
-    } catch (error) {
-        toast("Failed!");
-        console.error('Error opening GitHub Release link:', error);
-    }
 });
 
 // Function to execute shell commands

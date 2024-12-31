@@ -45,7 +45,7 @@ check_update() {
     JSON=$(download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
     REMOTE_VERSION=$(echo "$JSON" | grep -o '"versionCode": *[0-9]*' | awk -F: '{print $2}' | tr -d ' ')
     LOCAL_VERSION=$(grep -o 'versionCode=[0-9]*' "$MODPATH/update/module.prop" | awk -F= '{print $2}')
-    if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ]; then
+    if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ] && [ ! -f "/data/adb/modules/TA_utl/update" ]; then
         if [ "$MODPATH" = "/data/adb/modules/.TA_utl/common" ]; then
             [ -d "/data/adb/modules/TA_utl" ] && rm -rf "/data/adb/modules/TA_utl"
             cp -rf "$MODPATH/update" "/data/adb/modules/TA_utl"
@@ -66,6 +66,43 @@ uninstall() {
     touch "/data/adb/modules/TA_utl/remove"
 }
 
+get_update() {
+    JSON=$(download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
+    ZIP_URL=$(echo "$JSON" | grep -o '"zipUrl": "[^"]*"' | cut -d '"' -f 4) || exit 1
+    CHANGELOG_URL=$(echo "$JSON" | grep -o '"changelog": "[^"]*"' | cut -d '"' -f 4) || exit 1
+    busybox wget --no-check-certificate -qO "$MODPATH/tmp/module.zip" "$ZIP_URL" || exit 1
+    busybox wget --no-check-certificate -qO "$MODPATH/tmp/changelog.md" "$CHANGELOG_URL" || exit 1
+}
+
+install_update() {
+    if command -v magisk >/dev/null 2>&1; then
+        magisk --install-module "$MODPATH/tmp/module.zip"
+    elif command -v apd >/dev/null 2>&1; then
+        apd module install "$MODPATH/tmp/module.zip"
+    elif command -v ksud >/dev/null 2>&1; then
+        ksud module install "$MODPATH/tmp/module.zip"
+    else
+        exit 1
+    fi
+    rm -f "$MODPATH/tmp/module.zip"
+    rm -f "$MODPATH/tmp/changelog.md"
+}
+
+release_note() {
+awk '
+    /^### v[0-9]+\.[0-9]+$/ { 
+        if (!found) {
+            version = $2; 
+            found = 1; 
+            next 
+        } else {
+            exit 
+        }
+    }
+    found && !/^###/ { content = content $0 "\n" }
+    END { if (found) { print version; print content } }
+' "$MODPATH/tmp/changelog.md"
+}
 
 case "$1" in
 --kb)
@@ -86,6 +123,18 @@ case "$1" in
     ;;
 --uninstall)
     uninstall
+    exit
+    ;;
+--get-update)
+    get_update
+    exit
+    ;;
+--install-update)
+    install_update
+    exit
+    ;;
+--release-note)
+    release_note
     exit
     ;;
 esac

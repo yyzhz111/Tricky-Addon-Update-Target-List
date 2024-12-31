@@ -20,9 +20,12 @@
         "set_verified_boot_hash": "Configurar Boot Hash Verificado",
         "set_verified_boot_hash_description": "Obtén el valor de verifiedBootHash del Key Attestation Demo. Corrige un estado de arranque anormal reiniciando ro.boot.vbmeta.digest."
     },
-    "update_banner": {
+    "update": {
         "update_available": "Una nueva versión está lista",
-        "redirect_to_release": "toca para descargar la última versión"
+        "redirect_to_release": "toca para descargar la última versión",
+        "changelog": "Registro de cambios",
+        "install": "Instalar",
+        "reboot": "Reiniciar"
     },
     "search_bar": {
         "search_placeholder": "Buscar"
@@ -70,6 +73,14 @@
         "save_error": "Error al guardar la configuración",
         "uninstall_prompt": "El WebUI se eliminará después de reiniciar",
         "uninstall_failed": "Error al desinstalar el WebUI",
-        "new_update": "¡Una nueva actualización está disponible!"
+        "new_update": "¡Una nueva actualización está disponible!",
+        "downloading": "Descargando nueva actualización...",
+        "downloaded": "Descarga completada",
+        "download_fail": "Error al descargar la actualización",
+        "installing": "Instalando actualización...",
+        "installed": "Instalado con éxito, reinicia ahora.",
+        "install_fail": "Error al instalar, actualiza manualmente",
+        "rebooting": "Reiniciando...",
+        "reboot_fail": "Error al reiniciar, reinicia manualmente"
     }
 }
