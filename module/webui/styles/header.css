@@ -65,7 +65,7 @@
     flex-direction: column;
     position: absolute;
     right: 0;
-    background-color: #fff;
+    background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1800;
     border: 1px solid #ccc;
@@ -88,14 +88,13 @@
 .language-option {
     padding: 8px 5px;
     text-align: left;
-    background: none;
+    color: #333;
+    background-color: white;
     border: none;
     font-size: 16px;
-    color: #333;
     width: 100%;
     white-space: nowrap;
     border-bottom: 1px solid #ccc;
-    transition: background-color 0.2s ease;
     position: relative;
     overflow: hidden;
     user-select: none;
@@ -210,7 +209,6 @@
         background-color: #121212;
     }
 
-    .language-option,
     .help-button {
         color: #fff;
     }
@@ -218,8 +216,10 @@
     .language-icon {
         fill: #eee;
     }
-    
+
+    .language-option,
     .help-menu {
+        color: #eee;
         background-color: #343434;
     }
 

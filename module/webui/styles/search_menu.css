@@ -134,6 +134,7 @@
     cursor: default;
     padding: 12px 4px;
     text-align: left;
+    background-color: white;
     border-bottom: 1px solid #ccc;
     position: relative;
     overflow: hidden;
@@ -179,10 +180,7 @@
     }
 
     .menu-options li {
+        background-color: #343434;
         border-bottom: 1px solid #6E6E6E;
-    }
-
-    .menu-options li:active {
-        background-color: #616161;
     }
 }
