@@ -46,26 +46,29 @@ function setupUpdateMenu() {
         }, 200);
     }
     updateCard.addEventListener('click', async () => {
-         try {
-             const module = await execCommand(`[ -f ${basePath}common/tmp/module.zip ] || echo "false"`);
-             if (module.trim() === "false") {
-                 showPrompt("prompt.downloading");
-                 await new Promise(resolve => setTimeout(resolve, 200));
-                 await execCommand(`sh ${basePath}common/get_extra.sh --get-update`);
-                 showPrompt("prompt.downloaded");
-             }
-             const changelog = await execCommand(`sh ${basePath}common/get_extra.sh --release-note`);
-             const lines = changelog.split('\n');
-             const formattedChangelog = `
-                 <span style="font-weight: bold; font-size: 18px;">${lines[0]}</span><br>
-                 ${lines.slice(1).join('<br>')}
-             `;
-             releaseNotes.innerHTML = formattedChangelog;
-             openUpdateMenu();
-         } catch (error) {
-             showPrompt("prompt.download_fail", false);
-             console.error('Error download module update:', error);
-         }
+        try {
+            const module = await execCommand(`[ -f ${basePath}common/tmp/module.zip ] || echo "false"`);
+            if (module.trim() === "false") {
+                showPrompt("prompt.downloading");
+                await new Promise(resolve => setTimeout(resolve, 200));
+                await execCommand(`sh ${basePath}common/get_extra.sh --get-update`);
+                showPrompt("prompt.downloaded");
+            }
+            const changelog = await execCommand(`sh ${basePath}common/get_extra.sh --release-note`);
+            const lines = changelog
+                .split('\n')
+                .filter(line => line.trim() !== '')
+                .map(line => line.startsWith('- ') ? line.slice(2) : line);
+            const formattedChangelog = `
+                    <li class="changelog-title">${lines[0]}</li>
+                    ${lines.slice(1).map(line => `<li>${line}</li>`).join('')}
+            `;
+            releaseNotes.innerHTML = formattedChangelog;
+            openUpdateMenu();
+        } catch (error) {
+            showPrompt("prompt.download_fail", false);
+            console.error('Error download module update:', error);
+        }
     });
     closeUpdate.addEventListener("click", closeUpdateMenu);
     UpdateMenu.addEventListener("click", (event) => {

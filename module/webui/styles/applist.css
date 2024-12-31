@@ -83,11 +83,32 @@
     max-height: 85vh;
     padding: 0 30px;
     overflow-y: auto;
-    user-select: none;
+}
+
+.update-content ul {
+    padding-left: 0;
+    margin: 0;
+}
+
+.changelog-title {
+    font-weight: bold;
+    font-size: 22px;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.update-content ul li {
+    margin-bottom: 5px;
+}
+
+.update-content ul li:not(:first-child) {
+    list-style-type: disc;
+    margin-left: 15px;
 }
 
 .update-button-container {
     width: 100%;
+    padding: 0;
     display: flex;
     justify-content: flex-end;
 }
@@ -95,6 +116,7 @@
 .install,
 .reboot {
     margin-left: 0;
+    margin-top: 10px;
     margin-bottom: 15px;
     color: #3B3B3B;
     background-color: #fff;
