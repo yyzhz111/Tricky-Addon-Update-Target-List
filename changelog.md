@@ -8,8 +8,16 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v3.0
+- Animation improvement: new checkbox animation, new touch ripple animation, and more.
+- Adjust save button and prompt position in MMRL.
+- Long press on app to select `!` and `?` mode, use this only when the app cannot work without this.
+- Display gms in app list.
+- Show module version in header.
+- Rewrite update method, you can now update module directly in WebUI.
+
 ### v2.9
-- Preserve `!` and `?` during update target in WebUi.
+- Preserve `!` and `?` during update target in WebUI.
 - Optimized scripts, thanks to @backslashxx.
 - Fixed freeze in weak connection.
 - Added Spanish, thanks to @Keinta15.

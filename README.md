@@ -23,15 +23,15 @@ Configure Tricky Store target.txt with KSU WebUI.
 | Feature | Status |
 |:---|:---:|
 | Configure target.txt with app name display | ✅ |
-| Select apps from Magisk DenyList (optional) | ✅ |
-| Deselect [unnecessary apps](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/more-excldue.json) (optional) | ✅ |
-| Set verifiedBootHash (optional) | ✅ |
-| Provide AOSP Keybox (optional) | ✅ |
-| Valid Keybox (not guaranteed) | ❌ |
-| Shamiko Whitelist switch ([Why?](https://github.com/rushizgithub/shamiko?tab=readme-ov-file#whitelist)) | ❌ |
-| Add `!` or `?` to the target ([Not needed](https://github.com/5ec1cff/TrickyStore/releases/tag/1.1.0)) | ❌ |
-| Periodically update target and add new apps | ❌ |
-| Add system apps (GMS added by default) | ❌ |
+| Long press to choose `!` or `?` mode for the app. [Auto](https://github.com/5ec1cff/TrickyStore/releases/tag/1.1.0)<br>Use this only  when the app cannot work without this. | ✅ |
+| Select apps from Magisk DenyList `optional` | ✅ |
+| Deselect [unnecessary apps](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/more-excldue.json) `optional` | ✅ |
+| Set verifiedBootHash `optional` | ✅ |
+| Provide AOSP Keybox `optional` | ✅ |
+| Valid Keybox `not guaranteed` | ❌ |
+| Shamiko Whitelist switch. [Why?](https://github.com/rushizgithub/shamiko?tab=readme-ov-file#whitelist) | ❌ |
+| Periodically add all app to target.txt | ❌ |
+| Add system apps `GMS added by default` | ❌ |
 
 ## Localization
 - Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/module/webui/locales/A-translate.md)
