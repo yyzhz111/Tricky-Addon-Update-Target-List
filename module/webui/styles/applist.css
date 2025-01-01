@@ -118,10 +118,12 @@
     margin-left: 0;
     margin-top: 10px;
     margin-bottom: 15px;
-    color: #3B3B3B;
+    font-weight: bold;
+    color: #333;
     background-color: #fff;
     border: none;
     padding: 10px 15px;
+    border: 1px solid #3B3B3B;
     border-radius: 50px 50px;
     font-size: 18px;
     position: relative;
@@ -131,6 +133,9 @@
 
 .reboot {
     display: none;
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid #007bff;
 }
 
 .card {
@@ -343,10 +348,10 @@
         border: 1px solid #6E6E6E;
     }
 
-    .install,
-    .reboot {
+    .install {
+        color: #eee;
         background-color: #343434;
-        color: #C2C2C2;
+        border: 1px solid #C2C2C2;
     }
 
     .update-menu {
