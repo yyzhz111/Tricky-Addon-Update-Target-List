@@ -98,9 +98,9 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
     display: flex;
     position: absolute;
-    padding: 5px 12px;
     top: 110%;
     right: 0;
     z-index: 1200;
@@ -131,17 +131,33 @@
 }
 
 .menu-options li {
-    cursor: default;
-    padding: 12px 4px;
+    padding: 12px 15px;
     text-align: left;
     background-color: white;
-    border-bottom: 1px solid #ccc;
     position: relative;
     overflow: hidden;
 }
 
+.menu-options li::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    width: calc(100% - 30px);
+    height: 1px;
+    background-color: #ccc;
+}
+
+.menu-options li:last-child::after {
+    content: none;
+}
+
+.menu-options li:first-child {
+    padding-top: 16px;
+}
+
 .menu-options li:last-child {
-    border-bottom: none;
+    padding-bottom: 16px;
 }
 
 .menu-overlay {
@@ -181,6 +197,9 @@
 
     .menu-options li {
         background-color: #343434;
-        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .menu-options li::after {
+        background-color: #6E6E6E
     }
 }

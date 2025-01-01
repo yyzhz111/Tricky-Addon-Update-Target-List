@@ -93,8 +93,10 @@ export function setupLanguageMenu() {
         }
     });
     function openLanguageMenu() {
-        languageMenu.classList.add("show");
         languageOverlay.style.display = 'flex';
+        setTimeout(() => {
+            languageMenu.classList.add("show");
+        }, 10);
     }
     function closeLanguageMenu() {
         languageMenu.classList.remove("show");

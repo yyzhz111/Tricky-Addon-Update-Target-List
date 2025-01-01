@@ -61,7 +61,6 @@
 
 .language-menu {
     display: flex;
-    padding: 3px 10px;
     flex-direction: column;
     position: absolute;
     right: 0;
@@ -70,23 +69,22 @@
     z-index: 1800;
     border: 1px solid #ccc;
     border-radius: 8px;
+    box-sizing: border-box;
     opacity: 0;
-    visibility: hidden;
     max-height: calc(100vh - 50px);
     overflow-y: auto;
-    transform: translateY(-10px);
+    transform: translateY(-30px) scale(0);
+    transform-origin: top right;
     transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .language-menu.show {
-    display: block;
     opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 .language-option {
-    padding: 8px 5px;
+    padding: 8px 10px;
     text-align: left;
     color: #333;
     background-color: white;
@@ -94,14 +92,31 @@
     font-size: 16px;
     width: 100%;
     white-space: nowrap;
-    border-bottom: 1px solid #ccc;
     position: relative;
     overflow: hidden;
     user-select: none;
 }
 
+.language-option::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    width: calc(100% - 20px);
+    height: 1px;
+    background-color: #ccc;
+}
+
+.language-option:last-child::after {
+    content: none;
+}
+
+.language-option:first-child {
+    padding-top: 10px;
+}
+
 .language-option:last-child {
-    border-bottom: none;
+    padding-bottom: 10px;
 }
 
 .language-overlay {
@@ -228,7 +243,7 @@
         border: 1px solid #6E6E6E;
     }
 
-    .language-option {
-        border-bottom: 1px solid #6E6E6E;
+    .language-option::after {
+        background-color: #6E6E6E;
     }
 }

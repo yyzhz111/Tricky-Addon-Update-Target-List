@@ -60,8 +60,8 @@ function setupUpdateMenu() {
                 .filter(line => line.trim() !== '')
                 .map(line => line.startsWith('- ') ? line.slice(2) : line);
             const formattedChangelog = `
-                    <li class="changelog-title">${lines[0]}</li>
-                    ${lines.slice(1).map(line => `<li>${line}</li>`).join('')}
+                <li class="changelog-title">${lines[0]}</li>
+                ${lines.slice(1).map(line => `<li>${line}</li>`).join('')}
             `;
             releaseNotes.innerHTML = formattedChangelog;
             openUpdateMenu();
