@@ -1,4 +1,4 @@
-## Tricky Addon Lite: Update Target List Script
+## Tricky Addon Lite: Update Target List Script (EOL)
 - Script only, **NOT Module**
 - Run with root priviledge
 - Recommend to run with MT manager

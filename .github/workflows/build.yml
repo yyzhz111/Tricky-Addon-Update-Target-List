@@ -94,13 +94,12 @@ jobs:
             FILES="TrickyAddonModule-${VERSION}.zip"
           else
             PRERELEASE=false
-            FORMATTED_RELEASE_NOTES=$(echo -e "### Tricky Addon module\n$RELEASE_NOTES\n---\n### Tricky Addon Lite - script only\n- Check on [changelog](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/tree/main/lite-script_only#tricky-addon-lite-update-target-list-script)")
-            FILES="TrickyAddonModule-${VERSION}.zip,TrickyAddonLite_ScriptOnly_Extract-${VERSION}.zip"
+            FORMATTED_RELEASE_NOTES=$(echo -e "### Tricky Addon module\n$RELEASE_NOTES\n")
+            FILES="TrickyAddonModule-${VERSION}.zip"
           fi
 
           echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_ENV
           echo "ZIP_NAME=TrickyAddonModule-${VERSION}.zip" >> $GITHUB_ENV
-          echo "LITE_SCRIPT_ONLY_ZIP_NAME=TrickyAddonLite_ScriptOnly_Extract-${VERSION}.zip" >> $GITHUB_ENV
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo "$FORMATTED_RELEASE_NOTES" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
@@ -111,12 +110,6 @@ jobs:
         run: |
           cd module && zip -r "../${{ env.ZIP_NAME }}" ./*
           echo "Created zip file: ${{ env.ZIP_NAME }}"
-
-      - name: Compress lite-script_only folder
-        if: ${{ env.PRERELEASE == 'false' }}
-        run: |
-          cd lite-script_only && zip -r "../${{ env.LITE_SCRIPT_ONLY_ZIP_NAME }}" ./*
-          echo "Created zip file: ${{ env.LITE_SCRIPT_ONLY_ZIP_NAME }}"
 
       - name: Create release
         uses: softprops/action-gh-release@v2
