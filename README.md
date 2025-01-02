@@ -25,7 +25,7 @@ Configure Tricky Store target.txt with KSU WebUI.
 | Configure target.txt with app name display | ✅ |
 | Long press to choose `!` or `?` mode for the app. [Auto](https://github.com/5ec1cff/TrickyStore/releases/tag/1.1.0)<br>Use this only  when the app cannot work without this. | ✅ |
 | Select apps from Magisk DenyList `optional` | ✅ |
-| Deselect [unnecessary apps](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/more-excldue.json) `optional` | ✅ |
+| Deselect [unnecessary apps](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/more-exclude.json) `optional` | ✅ |
 | Set verifiedBootHash `optional` | ✅ |
 | Provide AOSP Keybox `optional` | ✅ |
 | Valid Keybox `not guaranteed` | ❌ |
