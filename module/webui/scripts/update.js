@@ -1,4 +1,4 @@
-import { basePath, execCommand, showPrompt, noConnection } from './main.js';
+import { basePath, execCommand, showPrompt, noConnection, linkRedirect } from './main.js';
 import { updateCard } from './applist.js';
 
 const updateCardText = document.getElementById('redirect-to-release');
@@ -55,14 +55,23 @@ function setupUpdateMenu() {
                 showPrompt("prompt.downloaded");
             }
             const changelog = await execCommand(`sh ${basePath}common/get_extra.sh --release-note`);
-            const lines = changelog
+            window.linkRedirect = linkRedirect;
+            marked.setOptions({
+                sanitize: true,
+                walkTokens(token) {
+                    if (token.type === 'link') {
+                        const href = token.href;
+                        token.href = "javascript:void(0);";
+                        token.type = "html";
+                        token.text = `<a href="javascript:void(0);" onclick="linkRedirect('${href}')">${token.text}</a>`;
+                    }
+                }
+            });
+            const cleanedChangelog = changelog
                 .split('\n')
                 .filter(line => line.trim() !== '')
-                .map(line => line.startsWith('- ') ? line.slice(2) : line);
-            const formattedChangelog = `
-                <li class="changelog-title">${lines[0]}</li>
-                ${lines.slice(1).map(line => `<li>${line}</li>`).join('')}
-            `;
+                .join('\n');
+            const formattedChangelog = marked.parse(cleanedChangelog);
             releaseNotes.innerHTML = formattedChangelog;
             openUpdateMenu();
         } catch (error) {

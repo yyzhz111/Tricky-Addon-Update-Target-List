@@ -85,37 +85,39 @@
     overflow-y: auto;
 }
 
+.update-content h3 {
+    font-size: 22px;
+}
+
 .update-content ul {
     padding-left: 0;
     margin: 0;
 }
 
-.changelog-title {
-    font-weight: bold;
-    font-size: 22px;
-    list-style-type: none;
-    padding-left: 0;
-}
-
 .update-content ul li {
+    margin-left: 15px;
     margin-bottom: 5px;
+    list-style-type: disc;
 }
 
-.update-content ul li:not(:first-child) {
-    list-style-type: disc;
-    margin-left: 15px;
+.update-content a {
+    color: #6E6E6E;
+    cursor: none;
+}
+
+.update-content a:active {
+    color: blue;
 }
 
 .update-button-container {
     width: 100%;
-    padding: 0;
+    padding-top: 10px;
     display: flex;
     justify-content: flex-end;
 }
 
 .install,
 .reboot {
-    margin-left: 0;
     margin-top: 10px;
     margin-bottom: 15px;
     font-weight: bold;
@@ -356,5 +358,9 @@
 
     .update-menu {
         background-color: #343434;
+    }
+
+    .update-content a {
+        color: #C2C2C2;
     }
 }

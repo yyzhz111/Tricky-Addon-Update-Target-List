@@ -92,7 +92,7 @@ release_note() {
 awk '
     /^### v[0-9]+\.[0-9]+$/ { 
         if (!found) {
-            version = $2; 
+            version = $0;
             found = 1; 
             next 
         } else {
