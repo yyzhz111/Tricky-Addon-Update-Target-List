@@ -4,6 +4,7 @@ const appTemplate = document.getElementById('app-template').content;
 const modeOverlay = document.querySelector('.mode-overlay');
 export const appListContainer = document.getElementById('apps-list');
 export const updateCard = document.getElementById('update-card');
+export let modeActive = false;
 
 // Fetch and render applist
 export async function fetchAppList() {
@@ -197,6 +198,7 @@ function setupModeMenu() {
     function showMode(card) {
         const modeElement = card.querySelector(".mode");
         if (modeElement) {
+            modeActive = true;
             modeElement.style.display = "flex";
             modeOverlay.style.display = "flex";
             setTimeout(() => {
@@ -207,6 +209,7 @@ function setupModeMenu() {
     function hideAllModes() {
         const allModeElements = appListContainer.querySelectorAll(".mode");
         allModeElements.forEach((modeElement) => {
+            modeActive = false;
             modeElement.classList.remove('show');
             modeOverlay.style.display = "none";
             setTimeout(() => {

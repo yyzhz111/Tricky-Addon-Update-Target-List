@@ -1,4 +1,4 @@
-import { appListContainer, fetchAppList } from './applist.js';
+import { appListContainer, fetchAppList, modeActive } from './applist.js';
 import { initializeAvailableLanguages, detectUserLanguage, loadTranslations, setupLanguageMenu, translations } from './language.js';
 import { aospkb } from './menu_option.js';
 import { searchMenuContainer, searchInput, clearBtn, setupMenuToggle } from './search_menu.js';
@@ -19,7 +19,7 @@ export const basePath = "set-path";
 export const appsWithExclamation = [];
 export const appsWithQuestion = [];
 const ADDITIONAL_APPS = [ "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ];
-const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container', '.boot-hash-save-button', '.boot-hash-value', '.status-indicator', '.reboot', '.install'];
+const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container', '.boot-hash-save-button', '.boot-hash-value', '.reboot', '.install'];
 
 // Variables
 let e = 0;
@@ -189,6 +189,7 @@ function applyRippleEffect() {
         document.querySelectorAll(selector).forEach(element => {
             element.addEventListener("pointerdown", function (event) {
                 if (isScrolling) return;
+                if (modeActive) return;
                 
                 const ripple = document.createElement("span");
                 ripple.classList.add("ripple");
