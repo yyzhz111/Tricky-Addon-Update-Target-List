@@ -16,6 +16,7 @@
     <script type="module" crossorigin src="scripts/about.js"></script>
     <script type="module" crossorigin src="scripts/help.js"></script>
     <script type="module" crossorigin src="scripts/vbmeta-digest.js"></script>
+    <script src="scripts/marked.min.js"></script>
 </head>
 
 <body>
@@ -233,6 +234,7 @@
                 <br>
                 <p id="acknowledgment" data-i18n="about.acknowledgment"></p>
                 <p>j-hc/zygisk-detach: WebUI template</p>
+                <p>markedjs/marked: Markdown Support</p>
             </div>
         </div>
     </div>
@@ -243,7 +245,7 @@
             <button class="close-update">&#x2715;</button>
             <div class="update-content">
                 <h1 data-i18n="update.changelog"></h1>
-                <ul class="changelog"></ul>
+                <div class="changelog"></div>
                 <div class="update-button-container">
                     <button class="install" data-i18n="update.install"></button>
                     <button class="reboot" data-i18n="update.reboot"></button>

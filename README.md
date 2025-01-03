@@ -38,6 +38,7 @@ Configure Tricky Store target.txt with KSU WebUI.
 
 ## Acknowledgement
 - [j-hc/zygisk-detach](https://github.com/j-hc/zygisk-detach) - KSU WebUI template
+- [markedjs/marked](https://github.com/markedjs/marked) - Markdown Support
 
 ## Links
 [![release](https://custom-icon-badges.demolab.com/badge/-Download-F25278?style=for-the-badge&logo=download&logoColor=white)](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/releases)
