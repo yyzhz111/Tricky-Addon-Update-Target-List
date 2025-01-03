@@ -22,7 +22,7 @@
     },
     "update": {
         "update_available": "发现新的版本",
-        "redirect_to_release": "点击跳转 GitHub 下载最新版本",
+        "redirect_to_release": "点击下载最新版本",
         "changelog": "更新日志",
         "install": "安装",
         "reboot": "重启"
