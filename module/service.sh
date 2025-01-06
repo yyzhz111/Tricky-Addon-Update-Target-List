@@ -46,7 +46,7 @@ done
 
 mkdir -p "$MODPATH/common/tmp"
 pm list packages -3 2>/dev/null | awk -F: '{print $2}' > "$OUTPUT_TMP"
-pm path com.google.android.gms >/dev/null 2>&1 && echo "com.google.android.gms" >> "$OUTPUT_TMP"
+pm list package -3 | grep -q com.google.android.gms || { pm path com.google.android.gms >/dev/null 2>&1 && echo "com.google.android.gms" >> "$OUTPUT_TMP"; }
 
 echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_APP"
 echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_SKIP"
