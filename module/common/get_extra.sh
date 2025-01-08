@@ -1,6 +1,6 @@
 #!/bin/sh
-PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:/data/data/com.termux/files/usr/bin:$PATH
 MODPATH=${0%/*}
+ORG_PATH="$PATH"
 SKIPLIST="$MODPATH/tmp/skiplist"
 OUTPUT="$MODPATH/tmp/exclude-list"
 KBOUTPUT="$MODPATH/tmp/.extra"
@@ -11,15 +11,29 @@ aapt() { "$MODPATH/aapt" "$@"; }
 # wget = low pref, no ssl.
 # curl, has ssl on android, we use it if found
 download() {
+    local type=${1#--}
+    local url=$2
+    local output=$3
+
+    PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:/data/data/com.termux/files/usr/bin:$PATH
     if command -v curl >/dev/null 2>&1; then
-        timeout 3 curl -s "$1"
+        if [ "$type" = "output" ]; then
+            timeout 10 curl -Lo "$output" "$url"
+        else
+            timeout 3 curl -s "$url"
+        fi
     else
-        timeout 3 busybox wget --no-check-certificate -qO - "$1"
+        if [ "$type" = "output" ]; then
+            timeout 10 busybox wget --no-check-certificate -qO "$output" "$url"
+        else
+            timeout 3 busybox wget --no-check-certificate -qO- "$url"
+        fi
     fi
+    PATH="$ORG_PATH"
 }
 
 get_kb() {
-    download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra" > "$KBOUTPUT" 
+    download --output "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra" "$KBOUTPUT" 
     [ -s "$KBOUTPUT" ] || rm -f "$KBOUTPUT"
 }
 
@@ -36,13 +50,14 @@ get_xposed() {
 
 get_unnecessary() {
     if [ ! -s "$OUTPUT" ] || [ ! -f "$OUTPUT" ]; then
-        download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-exclude.json" 2>/dev/null | grep -o '"package-name": *"[^"]*"' | awk -F'"' '{print $4}' >"$OUTPUT"
+        JSON=$(download --fetch "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-exclude.json") || exit 1
+        echo "$JSON" | grep -o '"package-name": *"[^"]*"' | awk -F'"' '{print $4}' >"$OUTPUT"
     fi
     get_xposed
 }
 
 check_update() {
-    JSON=$(download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
+    JSON=$(download --fetch "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
     REMOTE_VERSION=$(echo "$JSON" | grep -o '"versionCode": *[0-9]*' | awk -F: '{print $2}' | tr -d ' ')
     LOCAL_VERSION=$(grep -o 'versionCode=[0-9]*' "$MODPATH/update/module.prop" | awk -F= '{print $2}')
     if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ] && [ ! -f "/data/adb/modules/TA_utl/update" ]; then
@@ -67,11 +82,11 @@ uninstall() {
 }
 
 get_update() {
-    JSON=$(download "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
+    JSON=$(download --fetch "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
     ZIP_URL=$(echo "$JSON" | grep -o '"zipUrl": "[^"]*"' | cut -d '"' -f 4) || exit 1
     CHANGELOG_URL=$(echo "$JSON" | grep -o '"changelog": "[^"]*"' | cut -d '"' -f 4) || exit 1
-    busybox wget --no-check-certificate -qO "$MODPATH/tmp/module.zip" "$ZIP_URL" || exit 1
-    busybox wget --no-check-certificate -qO "$MODPATH/tmp/changelog.md" "$CHANGELOG_URL" || exit 1
+    download --output "$ZIP_URL" "$MODPATH/tmp/module.zip" || exit 1
+    download --output "$CHANGELOG_URL" "$MODPATH/tmp/changelog.md" || exit 1
 }
 
 install_update() {
