@@ -15,5 +15,5 @@ if [ ! -d "$TS" ] || [ -f "$TS/remove" ]; then
     fi
 fi
 
-rm -f "$TS/action.sh"
-rm -rf "$TS/webroot"
+[ -L "$TS/webroot" ] && rm -f "$TS/webroot"
+[ -L "$TS/action.sh" ] && rm -f "$TS/action.sh"

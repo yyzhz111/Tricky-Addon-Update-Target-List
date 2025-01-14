@@ -11,7 +11,7 @@ fi
 rm -rf "/data/adb/modules/.TA_utl"
 rm -f "/data/adb/boot_hash"
 if [ -d "$TS" ]; then
-    rm -f "$TS/action.sh"
-    rm -rf "$TS/webroot"
+    [ -L "$TS/webroot" ] && rm -f "$TS/webroot"
+    [ -L "$TS/action.sh" ] && rm -f "$TS/action.sh"
 fi
 xxd -r -p "$MODPATH/common/.default" | base64 -d > "$SCRIPT_DIR/keybox.xml"
