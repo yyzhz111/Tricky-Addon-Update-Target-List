@@ -76,7 +76,7 @@ export async function aospkb() {
     try {
         const sourcePath = `${basePath}common/.default`;
         const destinationPath = "/data/adb/tricky_store/keybox.xml";
-        await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
+        await execCommand(`mv -f ${destinationPath} ${destinationPath}.bak && xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("AOSP keybox copied successfully.");
         showPrompt("prompt.aosp_key_set");
     } catch (error) {
@@ -98,7 +98,7 @@ document.getElementById("extrakb").addEventListener("click", async () => {
         if (fileExists.trim() !== "exists") {
             throw new Error(".extra file not found");
         }
-        await execCommand(`xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
+        await execCommand(`mv -f ${destinationPath} ${destinationPath}.bak && xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
         console.log("Valid keybox copied successfully.");
         showPrompt("prompt.valid_key_set");
     } catch (error) {
