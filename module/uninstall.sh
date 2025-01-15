@@ -14,4 +14,5 @@ if [ -d "$TS" ]; then
     [ -L "$TS/webroot" ] && rm -f "$TS/webroot"
     [ -L "$TS/action.sh" ] && rm -f "$TS/action.sh"
 fi
+mv -f "$SCRIPT_DIR/keybox.xml" "$SCRIPT_DIR/keybox.xml.bak"
 xxd -r -p "$MODPATH/common/.default" | base64 -d > "$SCRIPT_DIR/keybox.xml"
