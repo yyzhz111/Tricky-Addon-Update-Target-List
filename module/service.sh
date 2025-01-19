@@ -21,7 +21,7 @@ fi
 
 # Hide module
 if [ -f "$MODPATH/action.sh" ]; then
-    if [[ "$MODPATH" != "$HIDE_DIR" ]]; then
+    if [ "$MODPATH" != "$HIDE_DIR" ]; then
         rm -rf "$HIDE_DIR"
         mv "$MODPATH" "$HIDE_DIR"
     fi
@@ -32,8 +32,12 @@ fi
 rm -f "$MODPATH/module.prop"
 
 # Symlink tricky store
-[ -f "$MODPATH/action.sh" ] && ln -s "$MODPATH/action.sh" "$TS/action.sh"
-ln -s "$MODPATH/webui" "$TS/webroot"
+if [ -f "$MODPATH/action.sh" ] && [ ! -f "$TS/action.sh" ] && [ ! -L "$TS/action.sh" ]; then
+    ln -s "$MODPATH/action.sh" "$TS/action.sh"
+fi
+if [ ! -d "$TS/webroot" ] && [ ! -L "$TS/webroot" ]; then
+    ln -s "$MODPATH/webui" "$TS/webroot"
+fi
 
 # Optimization
 OUTPUT_APP="$MODPATH/common/tmp/applist"
@@ -46,7 +50,9 @@ done
 
 mkdir -p "$MODPATH/common/tmp"
 pm list packages -3 2>/dev/null | awk -F: '{print $2}' > "$OUTPUT_TMP"
-pm list package -3 | grep -q com.google.android.gms || { pm path com.google.android.gms >/dev/null 2>&1 && echo "com.google.android.gms" >> "$OUTPUT_TMP"; }
+
+SYSTEM_APP="com.google.android.gms|com.google.android.gsf|com.android.vending"
+pm list package -s | awk -F: '{print $2}' | grep -Ex "$SYSTEM_APP" >> "$OUTPUT_TMP"
 
 echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_APP"
 echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_SKIP"
