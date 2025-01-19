@@ -58,6 +58,7 @@ echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT
 echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_SKIP"
 cat "$OUTPUT_TMP" | while read -r PACKAGE; do
     APK_PATH=$(pm path "$PACKAGE" 2>/dev/null | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r')
+    [ -z "$APK_PATH" ] && APK_PATH=$(pm path "$PACKAGE" 2>/dev/null | grep ".apk" | awk -F: '{print $2}' | tr -d '\r')
     if [ -n "$APK_PATH" ]; then
         APP_NAME=$(aapt dump badging "$APK_PATH" 2>/dev/null | grep "application-label:" | sed "s/application-label://g; s/'//g")
         echo "app-name: $APP_NAME, package-name: $PACKAGE" >> "$OUTPUT_APP"
