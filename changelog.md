@@ -8,6 +8,13 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v3.1
+- Added `com.google.android.gsf` and `com.android.vending` into WebUI app list. (#10, [@ChiseWaguri](https://github.com/ChiseWaguri))
+- Fixed multiple instances of GMS appeared in the app list when GMS isn't a system app.
+- Added auto backup `keybox.xml` to `keybox.xml.bak` before replacing it.
+- Minor animation improvements and code optimizations.
+- [Markdown support](https://github.com/markedjs/marked) for future update changelog in WebUI.
+
 ### v3.0
 - Animation improvement: new checkbox animation, new touch ripple animation, and more.
 - Adjust save button and prompt position in MMRL.
