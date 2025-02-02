@@ -12,6 +12,14 @@ if [ -n "$hash_value" ]; then
     resetprop -n ro.boot.vbmeta.digest "$hash_value"
 fi
 
+# Reset vendor patch if different with security patch
+security_patch=$(getprop ro.build.version.security_patch)
+vendor_patch=$(getprop ro.vendor.build.security_patch)
+
+if [ "$vendor_patch" != "$security_patch" ]; then
+    resetprop ro.vendor.build.security_patch "$security_patch"
+fi
+
 # Disable TSupport-A auto update target to prevent overwrite
 if [ -d "$TSPA" ]; then
     touch "/storage/emulated/0/stop-tspa-auto-target"
