@@ -12,7 +12,7 @@ Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 - Add `android` and `com.android.vending` by default.
 - Handle `ro.vendor.build.security_patch` if the value is different.
 - Updated Japanese translation (#11, @reindex-ot)
-- Addded Turkish translation (@berkmirsat)
+- Added Turkish translation (@berkmirsat)
 
 ### v3.1
 - Added `com.google.android.gsf` and `com.android.vending` into WebUI app list. (#10, @ChiseWaguri)
