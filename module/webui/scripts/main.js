@@ -132,7 +132,7 @@ document.getElementById("save").addEventListener("click", async () => {
             return app;
         });
         const updatedTargetContent = modifiedAppsList.join("\n");
-        await execCommand(`echo "${updatedTargetContent}" > /data/adb/tricky_store/target.txt`);
+        await execCommand(`echo "${updatedTargetContent}" | sort -u > /data/adb/tricky_store/target.txt`);
         console.log("target.txt updated successfully.");
         showPrompt("prompt.saved_target");
         for (const app of appsWithExclamation) {

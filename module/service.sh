@@ -6,6 +6,23 @@ TSPA="/data/adb/modules/tsupport-advance"
 
 aapt() { "$MODPATH/common/aapt" "$@"; }
 
+add_denylist_to_target() {
+    exclamation_target=$(grep '!' "/data/adb/tricky_store/target.txt" | sed 's/!$//')
+    question_target=$(grep '?' "/data/adb/tricky_store/target.txt" | sed 's/?$//')
+    target=$(sed 's/[!?]$//' /data/adb/tricky_store/target.txt)
+    denylist=$(magisk --denylist ls 2>/dev/null | awk -F'|' '{print $1}' | grep -v "isolated")
+    
+    printf "%s\n" "$target" "$denylist" | sort -u > "/data/adb/tricky_store/target.txt"
+
+    for target in $exclamation_target; do
+        sed -i "s/^$target$/$target!/" "/data/adb/tricky_store/target.txt"
+    done
+
+    for target in $question_target; do
+        sed -i "s/^$target$/$target?/" "/data/adb/tricky_store/target.txt"
+    done
+}
+
 # Reset verified Boot Hash
 hash_value=$(grep -v '^#' "/data/adb/boot_hash" | tr -d '[:space:]')
 if [ -n "$hash_value" ]; then
@@ -15,7 +32,6 @@ fi
 # Reset vendor patch if different with security patch
 security_patch=$(getprop ro.build.version.security_patch)
 vendor_patch=$(getprop ro.vendor.build.security_patch)
-
 if [ "$vendor_patch" != "$security_patch" ]; then
     resetprop ro.vendor.build.security_patch "$security_patch"
 fi
@@ -27,16 +43,23 @@ elif [ ! -d "$TSPA" ] && [ -f "/storage/emulated/0/stop-tspa-auto-target" ]; the
     rm -f "/storage/emulated/0/stop-tspa-auto-target"
 fi
 
-# Hide module
+# Magisk operation
 if [ -f "$MODPATH/action.sh" ]; then
+    # Hide module from Magisk manager
     if [ "$MODPATH" != "$HIDE_DIR" ]; then
         rm -rf "$HIDE_DIR"
         mv "$MODPATH" "$HIDE_DIR"
     fi
     MODPATH="$HIDE_DIR"
-elif [ -d "$HIDE_DIR" ]; then
-    rm -rf "$HIDE_DIR"
+    
+    # Add target from denylist
+    # To trigger this, choose "Select from DenyList" in WebUI once
+    [ -f "/data/adb/tricky_store/target_from_denylist" ] && add_denylist_to_target
+else
+    [ -d "$HIDE_DIR" ] && rm -rf "$HIDE_DIR"
 fi
+
+# Hide module from APatch, KernelSU, KSUWebUIStandalone, MMRL
 rm -f "$MODPATH/module.prop"
 
 # Symlink tricky store

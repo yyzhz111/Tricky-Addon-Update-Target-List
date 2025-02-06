@@ -18,10 +18,9 @@ document.getElementById("deselect-all").addEventListener("click", () => toggleCh
 // Function to read the denylist and check corresponding apps
 document.getElementById("select-denylist").addEventListener("click", async () => {
     try {
-        const result = await execCommand(`magisk --denylist ls 2>/dev/null | awk -F'|' '{print $1}' | grep -v "isolated" | sort | uniq`);
+        const result = await execCommand(`magisk --denylist ls 2>/dev/null | awk -F'|' '{print $1}' | grep -v "isolated" | sort -u`);
         const denylistApps = result.split("\n").map(app => app.trim()).filter(Boolean);
         const apps = document.querySelectorAll(".card");
-        toggleCheckboxes(false);
         apps.forEach(app => {
             const contentElement = app.querySelector(".content");
             const packageName = contentElement.getAttribute("data-package");
@@ -30,6 +29,7 @@ document.getElementById("select-denylist").addEventListener("click", async () =>
                 checkbox.checked = true;
             }
         });
+        await execCommand('touch "/data/adb/tricky_store/target_from_denylist"');
         console.log("Denylist apps selected successfully.");
     } catch (error) {
         toast("Failed to read DenyList!");
