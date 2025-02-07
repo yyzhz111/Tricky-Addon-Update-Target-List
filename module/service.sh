@@ -1,7 +1,7 @@
 MODPATH=${0%/*}
 HIDE_DIR="/data/adb/modules/.TA_utl"
 TS="/data/adb/modules/tricky_store"
-SCRIPT_DIR="/data/adb/tricky_store"
+TARGET_DIR="/data/adb/tricky_store"
 TSPA="/data/adb/modules/tsupport-advance"
 
 aapt() { "$MODPATH/common/aapt" "$@"; }
@@ -33,7 +33,12 @@ fi
 security_patch=$(getprop ro.build.version.security_patch)
 vendor_patch=$(getprop ro.vendor.build.security_patch)
 if [ "$vendor_patch" != "$security_patch" ]; then
-    resetprop ro.vendor.build.security_patch "$security_patch"
+    TS_version=$(grep "versionCode=" "$TS/module.prop" | cut -d'=' -f2)
+    if [ "$TS_version" -lt 158 ]; then
+        resetprop -n ro.vendor.build.security_patch "$security_patch"
+    else
+        printf "boot=%s\nvendor=%s\n" "$security_patch" "$security_patch" > "$TARGET_DIR/security_patch.txt"
+    fi
 fi
 
 # Disable TSupport-A auto update target to prevent overwrite
