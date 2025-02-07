@@ -14,22 +14,22 @@ abort() {
 }
 
 download() {
-    local type=${1#--}
-    local url=$2
-    local output=$3
+    download_type=${1#--}
+    download_url=$2
+    download_output=$3
 
     PATH=/data/adb/magisk:/data/data/com.termux/files/usr/bin:$PATH
     if command -v curl >/dev/null 2>&1; then
-        if [ "$type" = "output" ]; then
-            timeout 10 curl -Lo "$output" "$url"
+        if [ "$download_type" = "output" ]; then
+            timeout 10 curl -Lo "$download_output" "$download_url"
         else
-            timeout 2 curl -s "$url"
+            timeout 2 curl -s "$download_url"
         fi
     else
-        if [ "$type" = "output" ]; then
-            timeout 10 busybox wget --no-check-certificate -qO "$output" "$url"
+        if [ "$download_type" = "output" ]; then
+            timeout 10 busybox wget --no-check-certificate -qO "$download_output" "$download_url"
         else
-            timeout 2 busybox wget --no-check-certificate -qO- "$url"
+            timeout 2 busybox wget --no-check-certificate -qO- "$download_url"
         fi
     fi
     PATH="$ORG_PATH"

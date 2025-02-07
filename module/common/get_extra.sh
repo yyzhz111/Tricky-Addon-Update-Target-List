@@ -5,28 +5,35 @@ SKIPLIST="$MODPATH/tmp/skiplist"
 OUTPUT="$MODPATH/tmp/exclude-list"
 KBOUTPUT="$MODPATH/tmp/.extra"
 
+if [ "$MODPATH" = "/data/adb/modules/.TA_utl/common" ]; then
+    MODDIR="/data/adb/modules/.TA_utl"
+    MAGISK="true"
+else
+    MODDIR="/data/adb/modules/TA_utl"
+fi
+
 aapt() { "$MODPATH/aapt" "$@"; }
 
 # probe for downloaders
 # wget = low pref, no ssl.
 # curl, has ssl on android, we use it if found
 download() {
-    local type=${1#--}
-    local url=$2
-    local output=$3
+    download_type=${1#--}
+    download_url=$2
+    download_output=$3
 
     PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:/data/data/com.termux/files/usr/bin:$PATH
     if command -v curl >/dev/null 2>&1; then
-        if [ "$type" = "output" ]; then
-            timeout 10 curl -Lo "$output" "$url"
+        if [ "$download_type" = "output" ]; then
+            timeout 10 curl -Lo "$download_output" "$download_url"
         else
-            timeout 3 curl -s "$url"
+            timeout 3 curl -s "$download_url"
         fi
     else
-        if [ "$type" = "output" ]; then
-            timeout 10 busybox wget --no-check-certificate -qO "$output" "$url"
+        if [ "$download_type" = "output" ]; then
+            timeout 10 busybox wget --no-check-certificate -qO "$download_output" "$download_url"
         else
-            timeout 3 busybox wget --no-check-certificate -qO- "$url"
+            timeout 3 busybox wget --no-check-certificate -qO- "$download_url"
         fi
     fi
     PATH="$ORG_PATH"
@@ -57,11 +64,12 @@ get_unnecessary() {
 }
 
 check_update() {
+    [ -f "$MODDIR/disable" ] && rm -f "$MODDIR/disable"
     JSON=$(download --fetch "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
     REMOTE_VERSION=$(echo "$JSON" | grep -o '"versionCode": *[0-9]*' | awk -F: '{print $2}' | tr -d ' ')
     LOCAL_VERSION=$(grep -o 'versionCode=[0-9]*' "$MODPATH/update/module.prop" | awk -F= '{print $2}')
     if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ] && [ ! -f "/data/adb/modules/TA_utl/update" ]; then
-        if [ "$MODPATH" = "/data/adb/modules/.TA_utl/common" ]; then
+        if [ "$MAGISK" = "true" ]; then
             [ -d "/data/adb/modules/TA_utl" ] && rm -rf "/data/adb/modules/TA_utl"
             cp -rf "$MODPATH/update" "/data/adb/modules/TA_utl"
         else
@@ -72,8 +80,7 @@ check_update() {
 }
 
 uninstall() {
-    if [ "$MODPATH" = "/data/adb/modules/.TA_utl/common" ]; then
-        [ -d "/data/adb/modules/TA_utl" ] && rm -rf "/data/adb/modules/TA_utl"
+    if [ "$MAGISK" = "true" ]; then
         cp -rf "$MODPATH/update" "/data/adb/modules/TA_utl"
     else
         cp -f "$MODPATH/update/module.prop" "/data/adb/modules/TA_utl/module.prop"
@@ -99,6 +106,7 @@ install_update() {
     else
         exit 1
     fi
+
     rm -f "$MODPATH/tmp/module.zip"
     rm -f "$MODPATH/tmp/changelog.md"
 }
