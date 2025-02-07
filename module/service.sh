@@ -29,18 +29,27 @@ if [ -n "$hash_value" ]; then
     resetprop -n ro.boot.vbmeta.digest "$hash_value"
 fi
 
-# Reset vendor patch if different with security patch
-security_patch=$(getprop ro.build.version.security_patch)
-vendor_patch=$(getprop ro.vendor.build.security_patch)
-if [ "$vendor_patch" != "$security_patch" ]; then
-    TS_version=$(grep "versionCode=" "$TS/module.prop" | cut -d'=' -f2)
-    if [ "$TS_version" -lt 158 ]; then
-        resetprop -n ro.vendor.build.security_patch "$security_patch"
-    else
-        printf "boot=%s\nvendor=%s\n" "$security_patch" "$security_patch" > "$TARGET_DIR/security_patch.txt"
+# Spoof security patch if older than 1 year
+vendor_patch=$(getprop ro.vendor.build.security_patch | sed 's/-//g')
+vendor_patch_after_1y=$(echo "$vendor_patch + 10000" | bc)
+TODAY=$(date +%Y%m%d)
+if [ "$TODAY" -ge "$vendor_patch_after_1y" ]; then
+    [ -f "/data/adb/modules/playintegrityfix/pif.json" ] && PIF="/data/adb/modules/playintegrityfix/pif.json"
+    [ -f "/data/adb/pif.json" ] && PIF="/data/adb/pif.json"
+    [ -f "/data/adb/modules/playintegrityfix/custom.pif.json" ] && PIF="/data/adb/modules/playintegrityfix/custom.pif.json"
+    security_patch=$(grep '"SECURITY_PATCH"' "$PIF" | sed 's/.*: "//; s/".*//')
+    [ -z "$security_patch" ] && security_patch=$(getprop ro.build.version.security_patch)
+
+    formatted_security_patch=$(echo "$security_patch" | sed 's/-//g')
+    if [ -n "$formatted_security_patch" ]; then
+        TS_version=$(grep "versionCode=" "$TS/module.prop" | cut -d'=' -f2)
+        if [ "$TS_version" -lt 158 ]; then
+            resetprop ro.vendor.build.security_patch "$security_patch"
+            resetprop ro.build.version.security_patch "$security_patch"
+        else
+            echo "all=$formatted_security_patch" > "$TARGET_DIR/security_patch.txt"
+        fi
     fi
-else
-    rm -f "$TARGET_DIR/security_patch.txt"
 fi
 
 # Disable TSupport-A auto update target to prevent overwrite
