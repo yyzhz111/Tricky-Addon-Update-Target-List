@@ -8,19 +8,23 @@ MODID=`grep_prop id $TMPDIR/module.prop`
 NEW_MODID=".TA_utl"
 kb="$COMPATH/.default"
 
-ui_print " ";
+ui_print " "
 if [ "$APATCH" ]; then
     ui_print "- APatch:$APATCH_VER│$APATCH_VER_CODE"
     ACTION=false
 elif [ "$KSU" ]; then
-    ui_print "- KSU:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
+    if [ "$KSU_NEXT" ]; then
+        ui_print "- KernelSU Next:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
+    else
+        ui_print "- KernelSU:$KSU_KERNEL_VER_CODE│$KSU_VER_CODE"
+    fi
     ACTION=false
 elif [ "$MAGISK_VER_CODE" ]; then
     ui_print "- Magisk:$MAGISK_VER│$MAGISK_VER_CODE"
 else
-    ui_print " "; 
-    ui_print "! recovery is not supported"; 
-    abort " "; 
+    ui_print " "
+    ui_print "! recovery is not supported"
+    abort " "
 fi
 
 [ -d "$TS" ] || ui_print "! Warning: Tricky store module not found"
