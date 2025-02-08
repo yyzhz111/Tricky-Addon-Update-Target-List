@@ -16,7 +16,9 @@
         "deselect_unnecessary": "Huwag Pumili ng Hindi Kinakailangan",
         "deselect_unnecessary_description": "Hindi kinakailangang kategorya: Xposed module, root manager, root-related apps, at mga karaniwang apps na hindi kailanman nire-refresh ang bootloader status. Nangangailangan ng koneksyon sa internet.",
         "set_keybox": "I-set ang AOSP at Valid Keybox",
-        "set_keybox_description": "Palitan ang tricky store keybox.xml. Palitan ang AOSP keybox kung walang valid keybox. Nangangailangan ng koneksyon sa internet ang valid keybox option.",
+        "set_keybox_description": "Palitan ang tricky store keybox. Palitan ang AOSP keybox kung walang valid keybox. Nangangailangan ng koneksyon sa internet ang valid keybox option.",
+        "set_custom_keybox": "I-set ang Custom Keybox",
+        "set_custom_keybox_description": "Mag-import ng custom keybox mula sa iyong device storage. Sumusuporta lamang ng xml file.",
         "set_verified_boot_hash": "I-set ang Verified Boot Hash",
         "set_verified_boot_hash_description": "Kunin ang verifiedBootHash mula sa Key Attestation Demo. Ayusin ang abnormal na boot state sa pamamagitan ng pag-reset ng ro.boot.vbmeta.digest."
     },
@@ -45,6 +47,7 @@
         "deselect_unnecessary": "Huwag Pumili ng Hindi Kinakailangan",
         "set_aosp_keybox": "I-set ang AOSP Keybox",
         "set_valid_keybox": "I-set ang Valid Keybox",
+        "set_custom_keybox": "I-set ang Custom Keybox",
         "set_verified_boot_hash": "I-set ang Verified Boot Hash",
         "about": "Tungkol"
     },
@@ -81,6 +84,9 @@
         "installed": "Matagumpay na na-install, mag-reboot na ngayon.",
         "install_fail": "Nabigo ang pag-install, pakisubukang mag-update nang manu-mano",
         "rebooting": "Nag-re-reboot...",
-        "reboot_fail": "Nabigo ang pag-reboot, pakisubukang mag-reboot nang manu-mano"
+        "reboot_fail": "Nabigo ang pag-reboot, pakisubukang mag-reboot nang manu-mano",
+        "custom_key_set": "Matagumpay na na-set ang Custom Keybox",
+        "custom_key_set_error": "Nabigong i-set ang Custom Keybox",
+        "no_file_selected": "Walang napiling file"
     }
 }

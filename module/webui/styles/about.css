@@ -41,6 +41,7 @@
     border: none;
     font-size: 18px;
     color: #ccc;
+    user-select: none;
 }
 
 .link,

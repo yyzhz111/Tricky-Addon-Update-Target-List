@@ -17,6 +17,8 @@
         "deselect_unnecessary_description": "Categorías innecesarias: módulos Xposed, gestores de root, aplicaciones relacionadas con root y aplicaciones generales que nunca verifican el estado del bootloader. Esta opción requiere conexión a Internet.",
         "set_keybox": "Configurar AOSP y Keybox Válido",
         "set_keybox_description": "Reemplazar el archivo keybox.xml de Tricky Store. El AOSP Keybox será reemplazado si no hay un keybox válido. Esta opción requiere conexión a Internet.",
+        "set_custom_keybox": "Establecer Keybox Personalizado",
+        "set_custom_keybox_description": "Importar keybox desde el almacenamiento de tu dispositivo. Solo soporta archivos xml.",
         "set_verified_boot_hash": "Configurar Boot Hash Verificado",
         "set_verified_boot_hash_description": "Obtén el valor de verifiedBootHash del Key Attestation Demo. Corrige un estado de arranque anormal reiniciando ro.boot.vbmeta.digest."
     },
@@ -45,6 +47,7 @@
         "deselect_unnecessary": "Deseleccionar innecesarios",
         "set_aosp_keybox": "Configurar AOSP Keybox",
         "set_valid_keybox": "Configurar Keybox Válido",
+        "set_custom_keybox": "Establecer Keybox Personalizado",
         "set_verified_boot_hash": "Configurar Boot Hash Verificado",
         "about": "Acerca de"
     },
@@ -81,6 +84,9 @@
         "installed": "Instalado con éxito, reinicia ahora.",
         "install_fail": "Error al instalar, actualiza manualmente",
         "rebooting": "Reiniciando...",
-        "reboot_fail": "Error al reiniciar, reinicia manualmente"
+        "reboot_fail": "Error al reiniciar, reinicia manualmente",
+        "custom_key_set": "Keybox personalizado establecido con éxito",
+        "custom_key_set_error": "Error al establecer el keybox personalizado",
+        "no_file_selected": "Ningún archivo seleccionado"
     }
 }

@@ -17,6 +17,8 @@
         "deselect_unnecessary_description": "非必要分類：Xposed 模組、root 管理器、與 root 相關的應用，以及從不檢查 bootloader 狀態的通用應用。此功能需連網使用。",
         "set_keybox": "設置 AOSP & 有效密鑰",
         "set_keybox_description": "替換 Tricky Store 的密鑰（keybox.xml）。如果沒有有效密鑰，將替換為 AOSP 密鑰。有效密鑰選項需連網使用。",
+        "set_custom_keybox": "設置自定義密鑰",
+        "set_custom_keybox_description": "從設備存儲導入自定義密鑰。僅支持 xml 文件。",
         "set_verified_boot_hash": "設置哈希值",
         "set_verified_boot_hash_description": "從 Key Attestation Demo 獲取 verifiedBootHash（哈希值）。通過重置 ro.boot.vbmeta.digest 修復異常 boot 狀態。"
     },
@@ -45,6 +47,7 @@
         "deselect_unnecessary": "取消選擇非必要應用",
         "set_aosp_keybox": "設置 AOSP 密鑰",
         "set_valid_keybox": "設置有效密鑰",
+        "set_custom_keybox": "設置自定義密鑰",
         "set_verified_boot_hash": "設置哈希值",
         "about": "關於"
     },
@@ -81,6 +84,9 @@
         "installed": "安裝完成，重啟生效",
         "install_fail": "安裝失敗，請手動更新",
         "rebooting": "正在重啟...",
-        "reboot_fail": "重啟失敗，請手動重啟"
+        "reboot_fail": "重啟失敗，請手動重啟",
+        "custom_key_set": "成功設置自定義密鑰",
+        "custom_key_set_error": "設置自定義密鑰失敗",
+        "no_file_selected": "未選擇文件"
     }
 }

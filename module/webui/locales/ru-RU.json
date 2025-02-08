@@ -17,6 +17,8 @@
         "deselect_unnecessary_description": "Ненужные категории: модули Xposed, менеджеры root, приложения, связанные с root, и общие приложения, которые никогда не проверяют статус загрузчика. Этот параметр требует подключения к интернету.",
         "set_keybox": "Установить AOSP и действующий Keybox",
         "set_keybox_description": "Замените tricky store keybox.xml. AOSP keybox будет заменен, если не будет найден действующий keybox. Опция с действующим keybox требует подключения к интернету.",
+        "set_custom_keybox": "Установить пользовательский Keybox",
+        "set_custom_keybox_description": "Импортируйте файл keybox из вашего устройства в хранилище. Поддерживаются только xml файлы.",
         "set_verified_boot_hash": "Установить Verified Boot Hash",
         "set_verified_boot_hash_description": "Получите значение verifiedBootHash из Key Attestation Demo. Исправьте аномальное состояние загрузки, сбросив ro.boot.vbmeta.digest."
     },
@@ -45,6 +47,7 @@
         "deselect_unnecessary": "Отменить выбор ненужных",
         "set_aosp_keybox": "Установить AOSP Keybox",
         "set_valid_keybox": "Установить действующий Keybox",
+        "set_custom_keybox": "Установить пользовательский Keybox",
         "set_verified_boot_hash": "Установить Verified Boot Hash",
         "about": "О программе"
     },
@@ -81,6 +84,9 @@
         "installed": "Успешно установлено, перезагрузите устройство.",
         "install_fail": "Не удалось установить, обновите вручную",
         "rebooting": "Перезагрузка...",
-        "reboot_fail": "Не удалось перезагрузить, перезагрузите вручную"
+        "reboot_fail": "Не удалось перезагрузить, перезагрузите вручную",
+        "custom_key_set": "Пользовательский keybox успешно установлен",
+        "custom_key_set_error": "Не удалось установить пользовательский keybox",
+        "no_file_selected": "Файл не выбран"
     }
 }

@@ -17,6 +17,8 @@
         "deselect_unnecessary_description": "不要なカテゴリー: Xposed モジュール、root マネージャー、root 関連アプリ、Bootloader の状態を確認しない一般的なアプリです。このオプションはインターネット接続が必要です。",
         "set_keybox": "AOSP と 有効な Keybox",
         "set_keybox_description": "Tricky Store の keybox.xml を置き換えます。有効な Keybox がなくなった場合は、AOSP Keybox に置き換えられます。インターネット接続が必要です。",
+        "set_custom_keybox": "カスタム Keybox を設定",
+        "set_custom_keybox_description": "デバイスのストレージからカスタム Keybox ファイルをインポートします。xml ファイルのみ対応。",
         "set_verified_boot_hash": "確認付きブートハッシュを設定",
         "set_verified_boot_hash_description": "Key Attestation Demo から確認付きブートハッシュの値を取得します。ro.boot.vbmeta.digest をリセットして異常なブート状態を修正します。"
     },
@@ -45,6 +47,7 @@
         "deselect_unnecessary": "不要な選択を解除",
         "set_aosp_keybox": "AOSP Keybox を設定",
         "set_valid_keybox": "有効な Keybox を設定",
+        "set_custom_keybox": "カスタム Keybox を設定",
         "set_verified_boot_hash": "確認付きブートハッシュを設定",
         "about": "このアドオンについて"
     },
@@ -81,6 +84,9 @@
         "installed": "正常にインストールされました。再起動してください。",
         "install_fail": "インストールに失敗しました。手動で更新してください。",
         "rebooting": "再起動中...",
-        "reboot_fail": "再起動に失敗しました。手動で再起動してください。"
+        "reboot_fail": "再起動に失敗しました。手動で再起動してください。",
+        "custom_key_set": "カスタム Keybox の設定に成功しました",
+        "custom_key_set_error": "カスタム Keybox の設定に失敗しました",
+        "no_file_selected": "ファイルが選択されていません"
     }
 }

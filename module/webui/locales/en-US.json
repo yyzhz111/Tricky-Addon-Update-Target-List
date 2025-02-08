@@ -17,6 +17,8 @@
         "deselect_unnecessary_description": "Unnecessary category: Xposed module, root manager, root-related apps, and general apps that never check bootloader status. This option requires Internet connection.",
         "set_keybox": "Set AOSP & Valid Keybox",
         "set_keybox_description": "Replace tricky store keybox.xml. AOSP keybox will be replaced if there's no more valid keybox. Valid keybox option requires Internet connection.",
+        "set_custom_keybox": "Set Custom Keybox",
+        "set_custom_keybox_description": "Import keybox from your device storage. Only support xml file.",
         "set_verified_boot_hash": "Set Verified Boot Hash",
         "set_verified_boot_hash_description": "Get verifiedBootHash value from Key Attestation Demo. Fix abnormal boot state by resetting ro.boot.vbmeta.digest."
     },
@@ -45,6 +47,7 @@
         "deselect_unnecessary": "Deselect Unnecessary",
         "set_aosp_keybox": "Set AOSP Keybox",
         "set_valid_keybox": "Set Valid Keybox",
+        "set_custom_keybox": "Set Custom Keybox",
         "set_verified_boot_hash": "Set Verified Boot Hash",
         "about": "About"
     },
@@ -81,6 +84,9 @@
         "installed": "Installed successfully, reboot now.",
         "install_fail": "Fail to install, please update manual",
         "rebooting": "Rebooting...",
-        "reboot_fail": "Fail to reboot, please reboot manually"
+        "reboot_fail": "Fail to reboot, please reboot manually",
+        "custom_key_set": "Custom keybox set successfully",
+        "custom_key_set_error": "Failed to set custom keybox",
+        "no_file_selected": "No file selected"
     }
 }

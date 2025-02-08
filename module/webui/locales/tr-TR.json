@@ -12,13 +12,15 @@
         "select_deselect": "Tümünü Seç & Seçimi Kaldır",
         "select_description": "Mevcut arayüzdeki tüm uygulamaları seç veya seçimini kaldır.",
         "select_denylist": "Reddetme Listesinden Seç",
-        "select_denylist_description": "Yalnızca Magisk’te mevcut, Reddetme Listesindeki uygulamaları seç. Tavsiye edilir.",
+        "select_denylist_description": "Yalnızca Magisk'te mevcut, Reddetme Listesindeki uygulamaları seç. Tavsiye edilir.",
         "deselect_unnecessary": "Gereksizleri Seçme",
         "deselect_unnecessary_description": "Gereksiz kategori: Xposed modülü, root yöneticisi, root ile ilgili uygulamalar ve asla bootloader durumunu kontrol etmeyen genel uygulamalar. Bu seçenek internet bağlantısı gerektirir.",
         "set_keybox": "AOSP & Geçerli Keybox Ayarla",
         "set_keybox_description": "Tricky Store'daki keybox.xml dosyasını değiştirir. Eğer geçerli bir keybox yoksa AOSP keybox ile değiştirilecektir. Geçerli keybox seçeneği internet bağlantısı gerektirir.",
+        "set_custom_keybox": "Özel Keybox Ayarla",
+        "set_custom_keybox_description": "Cihaz depolamasından bir keybox dosyasını içe aktarın. Sadece xml dosyaları desteklenir.",
         "set_verified_boot_hash": "Doğrulanmış Boot Hash Ayarla",
-        "set_verified_boot_hash_description": "Key Attestation Demo’dan verifiedBootHash değerini alın. Abnormal boot durumunu ro.boot.vbmeta.digest’i sıfırlayarak düzeltin."
+        "set_verified_boot_hash_description": "Key Attestation Demo'dan verifiedBootHash değerini alın. Abnormal boot durumunu ro.boot.vbmeta.digest'i sıfırlayarak düzeltin."
     },
     "update": {
         "update_available": "Yeni bir sürüm hazır",
@@ -32,7 +34,7 @@
     },
     "functional_button": {
         "save_and_update_button": "Kaydet",
-        "uninstall_webui": "WebUI’ı Kaldır"
+        "uninstall_webui": "WebUI'ı Kaldır"
     },
     "loading": {
         "loading": "Yükleniyor..."
@@ -45,11 +47,12 @@
         "deselect_unnecessary": "Gereksizleri Seçme",
         "set_aosp_keybox": "AOSP Keybox Ayarla",
         "set_valid_keybox": "Geçerli Keybox Ayarla",
+        "set_custom_keybox": "Özel Keybox Ayarla",
         "set_verified_boot_hash": "Doğrulanmış Boot Hash Ayarla",
         "about": "Hakkında"
     },
     "reset_vbmeta": {
-        "boot_hash_input_placeholder": "Doğrulanmış Boot Hash’inizi buraya yapıştırın",
+        "boot_hash_input_placeholder": "Doğrulanmış Boot Hash'inizi buraya yapıştırın",
         "boot_hash_save_button": "Kaydet"
     },
     "about": {
@@ -58,7 +61,7 @@
         "by": "tarafından",
         "telegram_channel": "Telegram Kanalı",
         "github": "GitHub",
-        "disclaimer": "Bu modül, Tricky Store modülünün bir parçası değildir. Herhangi bir sorun yaşarsanız, lütfen bunu Tricky Store’a rapor etmeyin.",
+        "disclaimer": "Bu modül, Tricky Store modülünün bir parçası değildir. Herhangi bir sorun yaşarsanız, lütfen bunu Tricky Store'a rapor etmeyin.",
         "acknowledgment": "Teşekkür"
     },
     "prompt": {
@@ -81,6 +84,9 @@
         "installed": "Başarıyla yüklendi, şimdi yeniden başlatın.",
         "install_fail": "Yükleme başarısız oldu, lütfen manuel olarak güncelleyin",
         "rebooting": "Yeniden başlatılıyor...",
-        "reboot_fail": "Yeniden başlatma başarısız, lütfen manuel olarak yeniden başlatın"
+        "reboot_fail": "Yeniden başlatma başarısız, lütfen manuel olarak yeniden başlatın",
+        "custom_key_set": "Özel keybox başarıyla ayarlandı",
+        "custom_key_set_error": "Özel keybox ayarlanamadı",
+        "no_file_selected": "Dosya seçilmedi"
     }
 }

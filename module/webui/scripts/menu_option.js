@@ -1,4 +1,4 @@
-import { basePath, execCommand, showPrompt, toast } from './main.js';
+import { basePath, execCommand, showPrompt, toast, applyRippleEffect } from './main.js';
 
 // Function to check or uncheck all app
 function toggleCheckboxes(shouldCheck) {
@@ -86,7 +86,7 @@ export async function aospkb() {
 }
 
 // Function to replace valid kb
-document.getElementById("extrakb").addEventListener("click", async () => {
+document.getElementById("validkb").addEventListener("click", async () => {
     setTimeout(async () => {
         await execCommand(`sh ${basePath}common/get_extra.sh --kb`);
     }, 100);
@@ -106,4 +106,180 @@ document.getElementById("extrakb").addEventListener("click", async () => {
         await aospkb();
         showPrompt("prompt.no_valid_fallback", false);
     }
+});
+
+// Add file selector dialog elements dynamically
+const fileSelector = document.createElement('div');
+fileSelector.className = 'file-selector-overlay';
+fileSelector.innerHTML = `
+    <div class="file-selector">
+        <div class="file-selector-header">
+            <button class="back-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M400-80 0-480l400-400 56 57-343 343 343 343-56 57Z"/></svg>
+            </button>
+            <div class="current-path">/storage/emulated/0/Download</div>
+            <button class="close-selector">&#x2715;</button>
+        </div>
+        <div class="file-list"></div>
+    </div>
+`;
+document.body.appendChild(fileSelector);
+
+// Add styles for animations
+const style = document.createElement('style');
+style.textContent = `
+    .file-selector-overlay {
+        transition: opacity 0.3s ease;
+        opacity: 0;
+    }
+    .file-selector-overlay.visible {
+        opacity: 1;
+    }
+    .file-list {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .file-list.switching {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+`;
+document.head.appendChild(style);
+
+let currentPath = '/storage/emulated/0/Download';
+
+// Function to list files in directory
+async function listFiles(path, skipAnimation = false) {
+    const fileList = document.querySelector('.file-list');
+    if (!skipAnimation) {
+        fileList.classList.add('switching');
+        await new Promise(resolve => setTimeout(resolve, 150));
+    }
+    try {
+        const result = await execCommand(`find "${path}" -maxdepth 1 -type f -name "*.xml" -o -type d ! -name ".*" | sort`);
+        const items = result.split('\n').filter(Boolean).map(item => ({
+            path: item,
+            name: item.split('/').pop(),
+            isDirectory: !item.endsWith('.xml')
+        }));
+        fileList.innerHTML = '';
+
+        // Add back button item if not in root directory
+        if (currentPath !== '/storage/emulated/0') {
+            const backItem = document.createElement('div');
+            backItem.className = 'file-item';
+            backItem.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+                    <path d="M141-160q-24 0-42-18.5T81-220v-520q0-23 18-41.5t42-18.5h280l60 60h340q23 0 41.5 18.5T881-680v460q0 23-18.5 41.5T821-160H141Z"/>
+                </svg>
+                <span>..</span>
+            `;
+            backItem.addEventListener('click', async () => {
+                currentPath = currentPath.split('/').slice(0, -1).join('/');
+                if (currentPath === '') currentPath = '/storage/emulated/0';
+                const currentPathElement = document.querySelector('.current-path');
+                currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
+                currentPathElement.scrollTo({ 
+                    left: currentPathElement.scrollWidth,
+                    behavior: 'smooth'
+                });
+                await listFiles(currentPath);
+            });
+            
+            fileList.appendChild(backItem);
+        }
+        items.forEach(item => {
+            if (item.path === path) return;
+            const itemElement = document.createElement('div');
+            itemElement.className = 'file-item';
+            itemElement.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+                    ${item.isDirectory ? 
+                        '<path d="M141-160q-24 0-42-18.5T81-220v-520q0-23 18-41.5t42-18.5h280l60 60h340q23 0 41.5 18.5T881-680v460q0 23-18.5 41.5T821-160H141Z"/>' :
+                        '<path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>'}
+                </svg>
+                <span>${item.name}</span>
+            `;
+            itemElement.addEventListener('click', async () => {
+                if (item.isDirectory) {
+                    currentPath = item.path;
+                    const currentPathElement = document.querySelector('.current-path');
+                    currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
+                    currentPathElement.scrollTo({ 
+                        left: currentPathElement.scrollWidth,
+                        behavior: 'smooth'
+                    });
+                    await listFiles(item.path);
+                } else {
+                    try {
+                        const content = await execCommand(`cat "${item.path}"`);
+                        await execCommand(`mv -f /data/adb/tricky_store/keybox.xml /data/adb/tricky_store/keybox.xml.bak 2>/dev/null && echo '${content}' > /data/adb/tricky_store/keybox.xml`);
+                        fileSelector.style.display = 'none';
+                        showPrompt('prompt.custom_key_set');
+                    } catch (error) {
+                        console.error('Error processing file:', error);
+                        showPrompt('prompt.custom_key_set_error');
+                    }
+                }
+            });
+            fileList.appendChild(itemElement);
+        });
+        
+        if (!skipAnimation) {
+            fileList.classList.remove('switching');
+        }
+    } catch (error) {
+        console.error('Error listing files:', error);
+        if (!skipAnimation) {
+            fileList.classList.remove('switching');
+        }
+    }
+    applyRippleEffect();
+}
+
+// Back button handler
+document.querySelector('.back-button').addEventListener('click', async () => {
+    if (currentPath === '/storage/emulated/0') return;
+    currentPath = currentPath.split('/').slice(0, -1).join('/');
+    if (currentPath === '') currentPath = '/storage/emulated/0';
+    const currentPathElement = document.querySelector('.current-path');
+    currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
+    currentPathElement.scrollTo({ 
+        left: currentPathElement.scrollWidth,
+        behavior: 'smooth'
+    });
+    await listFiles(currentPath);
+});
+
+// Close custom keybox selector
+document.querySelector('.close-selector').addEventListener('click', () => {
+    fileSelector.classList.remove('visible');
+    document.body.classList.remove("no-scroll");
+    setTimeout(() => {
+        fileSelector.style.display = 'none';
+    }, 300);
+});
+fileSelector.addEventListener('click', (event) => {
+    if (event.target === fileSelector) {
+        fileSelector.classList.remove('visible');
+        document.body.classList.remove("no-scroll");
+        setTimeout(() => {
+            fileSelector.style.display = 'none';
+        }, 300);
+    }
+});
+
+// Open custom keybox selector
+document.getElementById('customkb').addEventListener('click', async () => {
+    fileSelector.style.display = 'flex';
+    document.body.classList.add("no-scroll");
+    fileSelector.offsetHeight;
+    fileSelector.classList.add('visible');
+    currentPath = '/storage/emulated/0/Download';
+    const currentPathElement = document.querySelector('.current-path');
+    currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
+    currentPathElement.scrollTo({ 
+        left: currentPathElement.scrollWidth,
+        behavior: 'smooth'
+    });
+    await listFiles(currentPath, true);
 });
