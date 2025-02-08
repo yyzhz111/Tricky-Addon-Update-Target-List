@@ -41,7 +41,8 @@ if [ "$TODAY" -ge "$vendor_patch_after_1y" ]; then
     [ -z "$security_patch" ] && security_patch=$(getprop ro.build.version.security_patch)
 
     formatted_security_patch=$(echo "$security_patch" | sed 's/-//g')
-    if [ -n "$formatted_security_patch" ]; then
+    security_patch_after_1y=$(echo "$formatted_security_patch + 10000" | bc)
+    if [ -n "$formatted_security_patch" ] && [ "$TODAY" -lt "$security_patch_after_1y" ]; then
         TS_version=$(grep "versionCode=" "$TS/module.prop" | cut -d'=' -f2)
         if [ "$TS_version" -lt 158 ]; then
             resetprop ro.vendor.build.security_patch "$security_patch"
