@@ -8,6 +8,10 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v3.3.1
+- Fixed security patch logic, use pif.json to get security patch date.
+- No auto config `security_patch.txt` for security patch lesser than one year.
+
 ### v3.3
 - Support auto config `security_patch.txt` for Tricky Store v1.2.1 or higher.
 - No longer need to add `!` to Play Store for devices that have security patch older than one year to get strong integrity in new A13+ check.
