@@ -147,6 +147,23 @@ document.head.appendChild(style);
 
 let currentPath = '/storage/emulated/0/Download';
 
+function updateCurrentPath() {
+    const currentPathElement = document.querySelector('.current-path');
+    const segments = currentPath.split('/').filter(Boolean);
+    
+    // Create spans with data-path attribute for each segment
+    const pathHTML = segments.map((segment, index) => {
+        const fullPath = '/' + segments.slice(0, index + 1).join('/');
+        return `<span class="path-segment" data-path="${fullPath}">${segment}</span>`;
+    }).join('<span class="separator">›</span>');
+    
+    currentPathElement.innerHTML = pathHTML;
+    currentPathElement.scrollTo({ 
+        left: currentPathElement.scrollWidth,
+        behavior: 'smooth'
+    });
+}
+
 // Function to list files in directory
 async function listFiles(path, skipAnimation = false) {
     const fileList = document.querySelector('.file-list');
@@ -234,7 +251,33 @@ async function listFiles(path, skipAnimation = false) {
         }
     }
     applyRippleEffect();
+    updateCurrentPath();
 }
+
+// Update click handler to use data-path attribute
+document.querySelector('.current-path').addEventListener('click', async (event) => {
+    const segment = event.target.closest('.path-segment');
+    if (!segment) return;
+    
+    const targetPath = segment.dataset.path;
+    if (!targetPath || targetPath === currentPath) return;
+    
+    // Return if already at /storage/emulated/0
+    const clickedSegment = segment.textContent;
+    if ((clickedSegment === 'storage' || clickedSegment === 'emulated') && 
+        currentPath === '/storage/emulated/0') {
+        return;
+    }
+
+    // Always stay within /storage/emulated/0
+    if (targetPath.split('/').length <= 3) {
+        currentPath = '/storage/emulated/0';
+    } else {
+        currentPath = targetPath;
+    }
+    updateCurrentPath();
+    await listFiles(currentPath);
+});
 
 // Back button handler
 document.querySelector('.back-button').addEventListener('click', async () => {
