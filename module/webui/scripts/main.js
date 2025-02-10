@@ -162,15 +162,23 @@ document.querySelector(".uninstall-container").addEventListener("click", async (
 });
 
 // Function to check if running in MMRL
-function adjustHeaderForMMRL() {
+function checkMMRL() {
     if (typeof ksu !== 'undefined' && ksu.mmrl) {
-        console.log("Running in MMRL");
+        // Adjust elements position for MMRL
         title.style.top = 'var(--window-inset-top)';
         const insetTop = getComputedStyle(document.documentElement).getPropertyValue('--window-inset-top');
         const insetTopValue = parseInt(insetTop, 10);
         searchMenuContainer.style.top = `${insetTopValue + 40}px`;
         headerBlock.style.display = 'block';
         floatingCard.style.bottom = 'calc(var(--window-inset-bottom) + 50px)';
+
+        // Request API permission, supported version: 33045+
+        try {
+            $tricky_store.requestAdvancedKernelSUAPI();
+            $tricky_store.requestFileSystemAPI();
+        } catch (error) {
+            console.log("Error requesting API:", error);
+        }
     }
 }
 
@@ -273,8 +281,8 @@ window.addEventListener('scroll', () => {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
+    checkMMRL();
     hideFloatingBtn();
-    adjustHeaderForMMRL();
     getModuleVersion();
     await initializeAvailableLanguages();
     const userLang = detectUserLanguage();
