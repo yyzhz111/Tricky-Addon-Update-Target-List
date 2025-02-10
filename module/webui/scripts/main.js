@@ -10,6 +10,7 @@ const title = document.querySelector('.header');
 export const noConnection = document.querySelector('.no-connection');
 
 // Loading, Save and Prompt Elements
+const permissionPopup = document.getElementById('permission-popup');
 const loadingIndicator = document.querySelector('.loading');
 const prompt = document.getElementById('prompt');
 const floatingCard = document.querySelector('.floating-card');
@@ -24,6 +25,7 @@ const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '
 // Variables
 let e = 0;
 let isRefreshing = false;
+let MMRL_API = true;
 
 // Function to load the version from module.prop
 async function getModuleVersion() {
@@ -162,7 +164,7 @@ document.querySelector(".uninstall-container").addEventListener("click", async (
 });
 
 // Function to check if running in MMRL
-function checkMMRL() {
+async function checkMMRL() {
     if (typeof ksu !== 'undefined' && ksu.mmrl) {
         // Adjust elements position for MMRL
         title.style.top = 'var(--window-inset-top)';
@@ -178,6 +180,16 @@ function checkMMRL() {
             $tricky_store.requestFileSystemAPI();
         } catch (error) {
             console.log("Error requesting API:", error);
+        }
+
+        // Check permissions
+        try {
+            await execCommand('ls /data/adb/modules');
+            MMRL_API = true;
+        } catch (error) {
+            console.error('Permission check failed:', error);
+            permissionPopup.classList.remove('hidden');
+            MMRL_API = false;
         }
     }
 }
@@ -281,7 +293,8 @@ window.addEventListener('scroll', () => {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
-    checkMMRL();
+    await checkMMRL();
+    if (!MMRL_API) return;
     hideFloatingBtn();
     getModuleVersion();
     await initializeAvailableLanguages();
