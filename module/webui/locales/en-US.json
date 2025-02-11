@@ -19,6 +19,8 @@
         "set_keybox_description": "Replace tricky store keybox.xml. AOSP keybox will be replaced if there's no more valid keybox. Valid keybox option requires Internet connection.",
         "set_custom_keybox": "Set Custom Keybox",
         "set_custom_keybox_description": "Import keybox from your device storage. Only support xml file.",
+        "set_security_patch": "Set Security Patch",
+        "set_security_patch_description": "Set custom security patch spoof. Auto config will use security patch from PIF module, enabled by default. Leave blank and save to disable auto config.",
         "set_verified_boot_hash": "Set Verified Boot Hash",
         "set_verified_boot_hash_description": "Get verifiedBootHash value from Key Attestation Demo. Fix abnormal boot state by resetting ro.boot.vbmeta.digest."
     },
@@ -49,6 +51,7 @@
         "set_valid_keybox": "Set Valid Keybox",
         "set_custom_keybox": "Set Custom Keybox",
         "set_verified_boot_hash": "Set Verified Boot Hash",
+        "set_security_patch": "Set Security Patch",
         "about": "About"
     },
     "reset_vbmeta": {
@@ -88,5 +91,19 @@
         "custom_key_set": "Custom keybox set successfully",
         "custom_key_set_error": "Failed to set custom keybox",
         "no_file_selected": "No file selected"
+    },
+    "security_patch": {
+        "advanced_mode": "Advanced Mode",
+        "auto": "Auto",
+        "save": "Save",
+        "auto_success": "Auto config enabled successfully, reboot to apply.",
+        "auto_failed": "Failed to enable auto config",
+        "save_success": "Security patch saved successfully",
+        "save_failed": "Failed to save security patch",
+        "value_empty": "Value cannot be empty",
+        "invalid_all": "Invalid format.",
+        "invalid_boot": "Invalid boot format.",
+        "invalid_system": "Invalid system format.",
+        "invalid_vendor": "Invalid vendor format."
     }
 }

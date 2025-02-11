@@ -19,6 +19,8 @@
         "set_keybox_description": "替換 Tricky Store 的密鑰（keybox.xml）。如果沒有有效密鑰，將替換為 AOSP 密鑰。有效密鑰選項需連網使用。",
         "set_custom_keybox": "設置自定義密鑰",
         "set_custom_keybox_description": "從設備存儲導入自定義密鑰。僅支持 xml 文件。",
+        "set_security_patch": "設置安全補丁",
+        "set_security_patch_description": "設置自定義安全補丁。自動配置將使用 PIF 模組的安全補丁，預設啟用。留空保存則禁用自動配置。",
         "set_verified_boot_hash": "設置哈希值",
         "set_verified_boot_hash_description": "從 Key Attestation Demo 獲取 verifiedBootHash（哈希值）。通過重置 ro.boot.vbmeta.digest 修復異常 boot 狀態。"
     },
@@ -48,6 +50,7 @@
         "set_aosp_keybox": "設置 AOSP 密鑰",
         "set_valid_keybox": "設置有效密鑰",
         "set_custom_keybox": "設置自定義密鑰",
+        "set_security_patch": "設置安全補丁",
         "set_verified_boot_hash": "設置哈希值",
         "about": "關於"
     },
@@ -88,5 +91,19 @@
         "custom_key_set": "成功設置自定義密鑰",
         "custom_key_set_error": "設置自定義密鑰失敗",
         "no_file_selected": "未選擇文件"
+    },
+    "security_patch": {
+        "advanced_mode": "進階模式",
+        "auto": "自動",
+        "save": "保存",
+        "auto_success": "自動配置成功啟用，重啟生效。",
+        "auto_failed": "無法啟用自動配置",
+        "save_success": "安全補丁成功保存",
+        "save_failed": "保存安全補丁失敗",
+        "value_empty": "值不能為空",
+        "invalid_all": "無效格式。",
+        "invalid_boot": "無效啟動格式。",
+        "invalid_system": "無效系統格式。",
+        "invalid_vendor": "無效供應商格式。"
     }
 }

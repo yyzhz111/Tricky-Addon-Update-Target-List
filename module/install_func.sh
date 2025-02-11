@@ -41,15 +41,9 @@ migrate_config() {
 
     # Migrate security_patch config*
     if [ ! -s "/data/adb/security_patch" ]; then
-        echo "#Tricky Addon security patch config" > "/data/adb/security_patch"
+        echo "#Tricky Addon security patch auto config" > "/data/adb/security_patch"
     fi
-    for value in auto_config custom_config all system vendor boot; do
-        if ! grep -q "^$value=" "/data/adb/security_patch"; then
-            if [ "$value" = "auto_config" ]; then
-                echo "$value=1" >> "/data/adb/security_patch"
-            else
-                echo "$value=0" >> "/data/adb/security_patch"
-            fi
-        fi
-    done
+    if ! grep -q "^auto_config=" "/data/adb/security_patch"; then
+        echo "auto_config=1" >> "/data/adb/security_patch"
+    fi
 }

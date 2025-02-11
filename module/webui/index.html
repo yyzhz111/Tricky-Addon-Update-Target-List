@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="styles/boot-hash.css" type="text/css">
     <link rel="stylesheet" href="styles/header.css" type="text/css">
     <link rel="stylesheet" href="styles/search_menu.css" type="text/css">
+    <link rel="stylesheet" href="styles/security-patch.css" type="text/css">
     <script type="module" crossorigin src="scripts/main.js"></script>
     <script type="module" crossorigin src="scripts/about.js"></script>
     <script type="module" crossorigin src="scripts/help.js"></script>
@@ -79,6 +80,7 @@
                     <li id="validkb" data-i18n="menu.set_valid_keybox"></li>
                     <li id="customkb" data-i18n="menu.set_custom_keybox"></li>
                     <li id="boot-hash" data-i18n="menu.set_verified_boot_hash"></li>
+                    <li id="security-patch" data-i18n="menu.set_security_patch"></li>
                     <li id="about" data-i18n="menu.about"></li>
                 </ul>
             </div>
@@ -193,6 +195,13 @@
                         </ul>
                     </li>
                     <br>
+                    <li id="set_security_patch">
+                        <strong data-i18n="help.set_security_patch"></strong>
+                        <ul>
+                            <li data-i18n="help.set_security_patch_description"></li>
+                        </ul>
+                    </li>
+                    <br>
                     <li id="set_verified_boot_hash">
                         <strong data-i18n="help.set_verified_boot_hash"></strong>
                         <ul>
@@ -281,6 +290,44 @@
         <div class="uninstall-container hidden-uninstall">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" /></svg>
             <span data-i18n="functional_button.uninstall_webui"></span>
+        </div>
+    </div>
+
+    <!-- Security Patch Overlay -->
+    <div id="security-patch-overlay" class="security-patch-overlay"></div>
+    <div id="security-patch-card" class="security-patch-card">
+        <div class="security-patch-content">
+            <div class="advanced-toggle">
+                <input type="checkbox" id="advanced-mode" class="advanced-checkbox">
+                <label for="advanced-mode" data-i18n="security_patch.advanced_mode">Advanced Mode</label>
+            </div>
+            
+            <div id="normal-mode-inputs" class="normal-mode-inputs">
+                <div class="input-group">
+                    <label id="security_patch-all">All</label>
+                    <input type="text" id="all-patch" placeholder="20250101" maxlength="8">
+                </div>
+            </div>
+
+            <div id="advanced-mode-inputs" class="advanced-mode-inputs hidden">
+                <div class="input-group">
+                    <label id="security_patch-boot">Boot</label>
+                    <input type="text" id="boot-patch" placeholder="202501">
+                </div>
+                <div class="input-group">
+                    <label id="security_patch-system">System</label>
+                    <input type="text" id="system-patch" placeholder="2025-01-01">
+                </div>
+                <div class="input-group">
+                    <label id="security_patch-vendor">Vendor</label>
+                    <input type="text" id="vendor-patch" placeholder="2025-01-01">
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button id="auto-config" class="auto-button" data-i18n="security_patch.auto">Auto</button>
+                <button id="save-patch" class="save-button" data-i18n="security_patch.save">Save</button>
+            </div>
         </div>
     </div>
 </body>

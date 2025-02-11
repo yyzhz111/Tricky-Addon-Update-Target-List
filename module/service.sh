@@ -48,22 +48,9 @@ set_security_patch() {
     fi
 }
 
-# Spoof security patch if older than 1 year
+# Spoof security patch
 if grep -q "^auto_config=1" "/data/adb/security_patch"; then
-    # Auto config
     set_security_patch
-elif grep -q "^custom_config=1" "/data/adb/security_patch"; then
-    # Custom config
-    if ! grep -q "^all=0" "/data/adb/security_patch"; then
-        echo "all=$(grep "^all=" "/data/adb/security_patch" | cut -d'=' -f2)" > "$TARGET_DIR/security_patch.txt"
-    else
-        > "$TARGET_DIR/security_patch.txt"
-        for value in system vendor boot; do
-            if grep -q "^$value=" "/data/adb/security_patch"; then
-                echo "$value=$(grep "^$value=" "/data/adb/security_patch" | cut -d'=' -f2)" >> "$TARGET_DIR/security_patch.txt"
-            fi
-        done
-    fi
 fi
 
 # Reset verified Boot Hash

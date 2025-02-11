@@ -19,6 +19,8 @@
         "set_keybox_description": "Замените tricky store keybox.xml. AOSP keybox будет заменен, если не будет найден действующий keybox. Опция с действующим keybox требует подключения к интернету.",
         "set_custom_keybox": "Установить пользовательский Keybox",
         "set_custom_keybox_description": "Импортируйте файл keybox из вашего устройства в хранилище. Поддерживаются только xml файлы.",
+        "set_security_patch": "Установить Security Patch",
+        "set_security_patch_description": "Установите пользовательский патч безопасности. Автоматическая настройка будет использовать патч безопасности из модуля PIF, включен по умолчанию. Оставьте пустым и сохраните, чтобы отключить автоматическую настройку.",
         "set_verified_boot_hash": "Установить Verified Boot Hash",
         "set_verified_boot_hash_description": "Получите значение verifiedBootHash из Key Attestation Demo. Исправьте аномальное состояние загрузки, сбросив ro.boot.vbmeta.digest."
     },
@@ -48,6 +50,7 @@
         "set_aosp_keybox": "Установить AOSP Keybox",
         "set_valid_keybox": "Установить действующий Keybox",
         "set_custom_keybox": "Установить пользовательский Keybox",
+        "set_security_patch": "Установить Security Patch",
         "set_verified_boot_hash": "Установить Verified Boot Hash",
         "about": "О программе"
     },
@@ -88,5 +91,19 @@
         "custom_key_set": "Пользовательский keybox успешно установлен",
         "custom_key_set_error": "Не удалось установить пользовательский keybox",
         "no_file_selected": "Файл не выбран"
+    },
+    "security_patch": {
+        "advanced_mode": "Расширенный режим",
+        "auto": "Авто",
+        "save": "Сохранить",
+        "auto_success": "Автоматическая конфигурация успешно включена, перезагрузите для применения.",
+        "auto_failed": "Не удалось включить автоматическую конфигурацию",
+        "save_success": "Патч безопасности успешно сохранен",
+        "save_failed": "Не удалось сохранить патч безопасности",
+        "value_empty": "Значение не может быть пустым",
+        "invalid_all": "Неверный формат.",
+        "invalid_boot": "Неверный формат загрузки.",
+        "invalid_system": "Неверный формат системы.",
+        "invalid_vendor": "Неверный формат поставщика."
     }
 }

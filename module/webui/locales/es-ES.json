@@ -19,6 +19,8 @@
         "set_keybox_description": "Reemplazar el archivo keybox.xml de Tricky Store. El AOSP Keybox será reemplazado si no hay un keybox válido. Esta opción requiere conexión a Internet.",
         "set_custom_keybox": "Establecer Keybox Personalizado",
         "set_custom_keybox_description": "Importar keybox desde el almacenamiento de tu dispositivo. Solo soporta archivos xml.",
+        "set_security_patch": "Configurar Parche de Seguridad",
+        "set_security_patch_description": "Configurar parche de seguridad personalizado. La configuración automática usará el parche de seguridad de PIF, habilitado por defecto. Deja en blanco y guarda para deshabilitar la configuración automática.",
         "set_verified_boot_hash": "Configurar Boot Hash Verificado",
         "set_verified_boot_hash_description": "Obtén el valor de verifiedBootHash del Key Attestation Demo. Corrige un estado de arranque anormal reiniciando ro.boot.vbmeta.digest."
     },
@@ -48,6 +50,7 @@
         "set_aosp_keybox": "Configurar AOSP Keybox",
         "set_valid_keybox": "Configurar Keybox Válido",
         "set_custom_keybox": "Establecer Keybox Personalizado",
+        "set_security_patch": "Configurar Parche de Seguridad",
         "set_verified_boot_hash": "Configurar Boot Hash Verificado",
         "about": "Acerca de"
     },
@@ -57,7 +60,7 @@
     },
     "about": {
         "module_name_line1": "Tricky Addon",
-        "module_name_line2": "Update Target List",
+        "module_name_line2": "Actualizar Lista de Objetivos",
         "by": "por",
         "telegram_channel": "Canal de Telegram",
         "github": "GitHub",
@@ -88,5 +91,19 @@
         "custom_key_set": "Keybox personalizado establecido con éxito",
         "custom_key_set_error": "Error al establecer el keybox personalizado",
         "no_file_selected": "Ningún archivo seleccionado"
+    },
+    "security_patch": {
+        "advanced_mode": "Modo Avanzado",
+        "auto": "Automático",
+        "save": "Guardar",
+        "auto_success": "Configuración automática habilitada con éxito, reinicia para aplicar.",
+        "auto_failed": "Error al habilitar la configuración automática",
+        "save_success": "Parche de seguridad guardado con éxito",
+        "save_failed": "Error al guardar el parche de seguridad",
+        "value_empty": "El valor no puede estar vacío",
+        "invalid_all": "Formato inválido.",
+        "invalid_boot": "Formato de arranque inválido.",
+        "invalid_system": "Formato de sistema inválido.",
+        "invalid_vendor": "Formato de proveedor inválido."
     }
 }

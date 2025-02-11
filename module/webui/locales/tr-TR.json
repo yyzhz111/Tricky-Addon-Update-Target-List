@@ -19,6 +19,8 @@
         "set_keybox_description": "Tricky Store'daki keybox.xml dosyasını değiştirir. Eğer geçerli bir keybox yoksa AOSP keybox ile değiştirilecektir. Geçerli keybox seçeneği internet bağlantısı gerektirir.",
         "set_custom_keybox": "Özel Keybox Ayarla",
         "set_custom_keybox_description": "Cihaz depolamasından bir keybox dosyasını içe aktarın. Sadece xml dosyaları desteklenir.",
+        "set_security_patch": "Güvenlik Parçası Ayarla",
+        "set_security_patch_description": "Özel güvenlik parçasını ayarlayın. Otomatik yapılandırma PIF modülünün güvenlik parçasını kullanacaktır. Boş bırakın ve kaydedin ki otomatik yapılandırma devre dışı bırakılsın.",
         "set_verified_boot_hash": "Doğrulanmış Boot Hash Ayarla",
         "set_verified_boot_hash_description": "Key Attestation Demo'dan verifiedBootHash değerini alın. Abnormal boot durumunu ro.boot.vbmeta.digest'i sıfırlayarak düzeltin."
     },
@@ -48,6 +50,7 @@
         "set_aosp_keybox": "AOSP Keybox Ayarla",
         "set_valid_keybox": "Geçerli Keybox Ayarla",
         "set_custom_keybox": "Özel Keybox Ayarla",
+        "set_security_patch": "Güvenlik Parçası Ayarla",
         "set_verified_boot_hash": "Doğrulanmış Boot Hash Ayarla",
         "about": "Hakkında"
     },
@@ -88,5 +91,19 @@
         "custom_key_set": "Özel keybox başarıyla ayarlandı",
         "custom_key_set_error": "Özel keybox ayarlanamadı",
         "no_file_selected": "Dosya seçilmedi"
+    },
+    "security_patch": {
+        "advanced_mode": "Gelişmiş Mod",
+        "auto": "Otomatik",
+        "save": "Kaydet",
+        "auto_success": "Otomatik yapılandırma başarıyla etkinleştirildi, yeniden başlatın.",
+        "auto_failed": "Otomatik yapılandırma etkinleştirilemedi",
+        "save_success": "Güvenlik parçası başarıyla kaydedildi",
+        "save_failed": "Güvenlik parçası kaydedilemedi",
+        "value_empty": "Değer boş olamaz",
+        "invalid_all": "Geçersiz format",
+        "invalid_boot": "Geçersiz başlatma formatı",
+        "invalid_system": "Geçersiz sistem formatı",
+        "invalid_vendor": "Geçersiz sağlayıcı formatı"
     }
 }

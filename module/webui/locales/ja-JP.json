@@ -19,6 +19,8 @@
         "set_keybox_description": "Tricky Store の keybox.xml を置き換えます。有効な Keybox がなくなった場合は、AOSP Keybox に置き換えられます。インターネット接続が必要です。",
         "set_custom_keybox": "カスタム Keybox を設定",
         "set_custom_keybox_description": "デバイスのストレージからカスタム Keybox ファイルをインポートします。xml ファイルのみ対応。",
+        "set_security_patch": "セキュリティパッチを設定",
+        "set_security_patch_description": "カスタムセキュリティパッチの設定。自動設定は PIF モジュールのセキュリティパッチを使用します。空白のまま保存すると自動設定を無効にします。",
         "set_verified_boot_hash": "確認付きブートハッシュを設定",
         "set_verified_boot_hash_description": "Key Attestation Demo から確認付きブートハッシュの値を取得します。ro.boot.vbmeta.digest をリセットして異常なブート状態を修正します。"
     },
@@ -49,6 +51,7 @@
         "set_valid_keybox": "有効な Keybox を設定",
         "set_custom_keybox": "カスタム Keybox を設定",
         "set_verified_boot_hash": "確認付きブートハッシュを設定",
+        "set_security_patch": "セキュリティパッチを設定",
         "about": "このアドオンについて"
     },
     "reset_vbmeta": {
@@ -88,5 +91,19 @@
         "custom_key_set": "カスタム Keybox の設定に成功しました",
         "custom_key_set_error": "カスタム Keybox の設定に失敗しました",
         "no_file_selected": "ファイルが選択されていません"
+    },
+    "security_patch": {
+        "advanced_mode": "高度なモード",
+        "auto": "自動",
+        "save": "保存",
+        "auto_success": "自動設定が正常に有効になりました。適用するには再起動してください。",
+        "auto_failed": "自動設定を有効にできませんでした",
+        "save_success": "セキュリティパッチが正常に保存されました",
+        "save_failed": "セキュリティパッチの保存に失敗しました",
+        "value_empty": "値は空にできません",
+        "invalid_all": "無効な形式です。",
+        "invalid_boot": "無効なブート形式です。",
+        "invalid_system": "無効なシステム形式です。",
+        "invalid_vendor": "無効なベンダー形式です。"
     }
 }
