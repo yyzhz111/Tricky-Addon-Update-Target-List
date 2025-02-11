@@ -93,7 +93,8 @@
         "no_file_selected": "ファイルが選択されていません"
     },
     "security_patch": {
-        "advanced_mode": "高度なモード",
+        "title": "セキュリティ补丁",
+        "advanced_mode": "高度",
         "auto": "自動",
         "save": "保存",
         "auto_success": "自動設定が正常に有効になりました。適用するには再起動してください。",

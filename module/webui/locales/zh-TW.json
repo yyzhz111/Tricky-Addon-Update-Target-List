@@ -93,7 +93,8 @@
         "no_file_selected": "未選擇文件"
     },
     "security_patch": {
-        "advanced_mode": "進階模式",
+        "title": "安全補丁",
+        "advanced_mode": "進階",
         "auto": "自動",
         "save": "保存",
         "auto_success": "自動配置成功啟用，重啟生效。",

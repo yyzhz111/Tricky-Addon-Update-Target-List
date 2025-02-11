@@ -93,7 +93,8 @@
         "no_file_selected": "Ningún archivo seleccionado"
     },
     "security_patch": {
-        "advanced_mode": "Modo Avanzado",
+        "title": "Parche de Seguridad",
+        "advanced_mode": "Avanzado",
         "auto": "Automático",
         "save": "Guardar",
         "auto_success": "Configuración automática habilitada con éxito, reinicia para aplicar.",

@@ -93,7 +93,8 @@
         "no_file_selected": "Dosya seçilmedi"
     },
     "security_patch": {
-        "advanced_mode": "Gelişmiş Mod",
+        "title": "Güvenlik Yaması",
+        "advanced_mode": "Gelişmiş",
         "auto": "Otomatik",
         "save": "Kaydet",
         "auto_success": "Otomatik yapılandırma başarıyla etkinleştirildi, yeniden başlatın.",

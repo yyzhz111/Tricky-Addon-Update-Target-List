@@ -93,7 +93,8 @@
         "no_file_selected": "No file selected"
     },
     "security_patch": {
-        "advanced_mode": "Advanced Mode",
+        "title": "Security Patch",
+        "advanced_mode": "Advanced",
         "auto": "Auto",
         "save": "Save",
         "auto_success": "Auto config enabled successfully, reboot to apply.",

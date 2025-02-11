@@ -93,7 +93,8 @@
         "no_file_selected": "Walang napiling file"
     },
     "security_patch": {
-        "advanced_mode": "Advanced Mode",
+        "title": "Security Patch",
+        "advanced_mode": "Advanced",
         "auto": "Auto",
         "save": "I-save",
         "auto_success": "Matagumpay na na-enable ang auto config, mag-reboot upang i-apply.",
