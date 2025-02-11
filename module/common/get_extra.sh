@@ -127,6 +127,30 @@ awk '
 ' "$MODPATH/tmp/changelog.md"
 }
 
+set_security_patch() {
+    # Find pif.json
+    [ -f "/data/adb/modules/playintegrityfix/pif.json" ] && PIF="/data/adb/modules/playintegrityfix/pif.json"
+    [ -f "/data/adb/pif.json" ] && PIF="/data/adb/pif.json"
+    [ -f "/data/adb/modules/playintegrityfix/custom.pif.json" ] && PIF="/data/adb/modules/playintegrityfix/custom.pif.json"
+    
+    security_patch=$(grep '"SECURITY_PATCH"' "$PIF" | sed 's/.*: "//; s/".*//')
+    [ -z "$security_patch" ] && security_patch=$(getprop ro.build.version.security_patch) # Fallback
+
+    formatted_security_patch=$(echo "$security_patch" | sed 's/-//g')
+    security_patch_after_1y=$(echo "$formatted_security_patch + 10000" | bc)
+    TODAY=$(date +%Y%m%d)
+    if [ -n "$formatted_security_patch" ] && [ "$TODAY" -lt "$security_patch_after_1y" ]; then
+        TS_version=$(grep "versionCode=" "$TS/module.prop" | cut -d'=' -f2)
+        if [ "$TS_version" -lt 158 ]; then
+            resetprop ro.vendor.build.security_patch "$security_patch"
+            resetprop ro.build.version.security_patch "$security_patch"
+        fi
+        echo "all=$formatted_security_patch" > "/data/adb/tricky_store/security_patch.txt"
+    else 
+        echo "not set"
+    fi
+}
+
 case "$1" in
 --kb)
     get_kb
@@ -158,6 +182,10 @@ case "$1" in
     ;;
 --release-note)
     release_note
+    exit
+    ;;
+--security-patch)
+    set_security_patch
     exit
     ;;
 esac

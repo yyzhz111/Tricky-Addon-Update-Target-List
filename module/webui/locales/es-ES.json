@@ -97,14 +97,14 @@
         "advanced_mode": "Avanzado",
         "auto": "Automático",
         "save": "Guardar",
-        "auto_success": "Configuración automática habilitada con éxito, reinicia para aplicar.",
+        "auto_success": "Configuración automática habilitada con éxito",
         "auto_failed": "Error al habilitar la configuración automática",
         "save_success": "Parche de seguridad guardado con éxito",
         "save_failed": "Error al guardar el parche de seguridad",
-        "value_empty": "La configuración del parche de seguridad está deshabilitada.",
-        "invalid_all": "Formato inválido.",
-        "invalid_boot": "Formato de arranque inválido.",
-        "invalid_system": "Formato de sistema inválido.",
-        "invalid_vendor": "Formato de proveedor inválido."
+        "value_empty": "La configuración del parche de seguridad está deshabilitada",
+        "invalid_all": "Formato inválido",
+        "invalid_boot": "Formato de arranque inválido",
+        "invalid_system": "Formato de sistema inválido",
+        "invalid_vendor": "Formato de proveedor inválido"
     }
 }

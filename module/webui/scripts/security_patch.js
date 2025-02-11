@@ -1,4 +1,4 @@
-import { execCommand, showPrompt } from './main.js';
+import { basePath, execCommand, showPrompt } from './main.js';
 
 const overlay = document.getElementById('security-patch-overlay');
 const card = document.getElementById('security-patch-card');
@@ -133,12 +133,17 @@ export function securityPatch() {
     // Auto config button
     autoButton.addEventListener('click', async () => {
         try {
-            await execCommand(`sed -i "s/^auto_config=.*/auto_config=1/" /data/adb/security_patch`);
-            allPatchInput.value = '';
-            bootPatchInput.value = '';
-            systemPatchInput.value = '';
-            vendorPatchInput.value = '';
-            showPrompt('security_patch.auto_success');
+            const output = await execCommand(`sh ${basePath}common/get_extra.sh --security-patch`);
+            if (output.trim() === "not set") {
+                showPrompt('security_patch.auto_failed', false);
+            } else {
+                await execCommand(`sed -i "s/^auto_config=.*/auto_config=1/" /data/adb/security_patch`);
+                allPatchInput.value = '';
+                bootPatchInput.value = '';
+                systemPatchInput.value = '';
+                vendorPatchInput.value = '';
+                showPrompt('security_patch.auto_success');
+            }
         } catch (error) {
             showPrompt('security_patch.auto_failed', false);
         }

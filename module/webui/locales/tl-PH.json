@@ -97,14 +97,14 @@
         "advanced_mode": "Advanced",
         "auto": "Auto",
         "save": "I-save",
-        "auto_success": "Matagumpay na na-enable ang auto config, mag-reboot upang i-apply.",
+        "auto_success": "Matagumpay na na-enable ang auto config",
         "auto_failed": "Nabigong i-enable ang auto config",
         "save_success": "Matagumpay na na-save ang security patch",
         "save_failed": "Nabigong i-save ang security patch",
-        "value_empty": "Naka-disable ang configuration ng security patch.",
-        "invalid_all": "Invalid format.",
-        "invalid_boot": "Invalid boot format.",
-        "invalid_system": "Invalid system format.",
-        "invalid_vendor": "Invalid vendor format."
+        "value_empty": "Naka-disable ang configuration ng security patch",
+        "invalid_all": "Invalid format",
+        "invalid_boot": "Invalid boot format",
+        "invalid_system": "Invalid system format",
+        "invalid_vendor": "Invalid vendor format"
     }
 }

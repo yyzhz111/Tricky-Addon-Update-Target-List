@@ -97,14 +97,14 @@
         "advanced_mode": "高度",
         "auto": "自動",
         "save": "保存",
-        "auto_success": "自動設定が正常に有効になりました。適用するには再起動してください。",
+        "auto_success": "自動配置已成功啟用",
         "auto_failed": "自動設定を有効にできませんでした",
         "save_success": "セキュリティパッチが正常に保存されました",
         "save_failed": "セキュリティパッチの保存に失敗しました",
-        "value_empty": "セキュリティパッチの設定は無効です。",
-        "invalid_all": "無効な形式です。",
-        "invalid_boot": "無効なブート形式です。",
-        "invalid_system": "無効なシステム形式です。",
-        "invalid_vendor": "無効なベンダー形式です。"
+        "value_empty": "セキュリティパッチの設定は無効です",
+        "invalid_all": "無効な形式です",
+        "invalid_boot": "無効なブート形式です",
+        "invalid_system": "無効なシステム形式です",
+        "invalid_vendor": "無効なベンダー形式です"
     }
 }
