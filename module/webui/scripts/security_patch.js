@@ -13,15 +13,24 @@ const autoButton = document.getElementById('auto-config');
 const saveButton = document.getElementById('save-patch');
 
 export function showSecurityPatchDialog() {
+
     overlay.style.display = 'block';
     card.style.display = 'block';
-    loadCurrentConfig();
+    setTimeout(() => {
+        overlay.style.opacity = '1';
+        card.style.opacity = '1';
+        loadCurrentConfig();
+    }, 10);
 }
 
 // Hide security patch dialog
 function hideSecurityPatchDialog() {
-    overlay.style.display = 'none';
-    card.style.display = 'none';
+    overlay.style.opacity = '0';
+    card.style.opacity = '0';
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        card.style.display = 'none';
+    }, 200);
 }
 
 // Load current configuration

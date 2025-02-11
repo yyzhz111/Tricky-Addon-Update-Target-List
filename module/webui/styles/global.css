@@ -47,7 +47,7 @@ body {
     color: white;
     font-size: 15px;
     padding: 5px 10px;
-    z-index: 2000;
+    z-index: 2050;
     width: auto;
     max-width: calc(100% - 40px);
     transform: translateY(100%);

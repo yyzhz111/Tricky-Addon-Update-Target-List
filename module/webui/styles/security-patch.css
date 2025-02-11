@@ -7,6 +7,8 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 2000;
+    transition: opacity 0.2s ease;
+    opacity: 0;
 }
 
 .security-patch-card {
@@ -22,6 +24,8 @@
     z-index: 2001;
     width: calc(90% - 40px);
     max-width: 400px;
+    transition: opacity 0.2s ease;
+    opacity: 0;
 }
 
 .security-patch-content {
@@ -102,7 +106,7 @@
     }
 
     .input-group input {
-        background-color: #343434;
+        background-color: #232323;
         color: #fff;
         border: 1px solid #6E6E6E;
     }
