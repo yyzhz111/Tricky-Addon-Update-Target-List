@@ -14,16 +14,18 @@
 .security-patch-card {
     display: none;
     position: fixed;
-    top: 50%;
+    top: 10%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     background-color: white;
-    padding: 20px;
+    padding: 30px;
     border-radius: 15px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 2001;
-    width: calc(90% - 40px);
-    max-width: 400px;
+    width: calc(90% - 60px);
+    max-width: 300px;
+    max-height: 90%;
+    overflow-y: auto;
     transition: opacity 0.2s ease;
     opacity: 0;
 }
@@ -61,14 +63,14 @@
 }
 
 .button-container {
-    display: flex;
+    width: 100%;
     gap: 10px;
-    justify-content: flex-end;
     margin-top: 10px;
 }
 
 .auto-button, .save-button {
-    padding: 10px 20px;
+    width: 100%;
+    padding: 10px;
     border: none;
     border-radius: 12px;
     font-size: 18px;
@@ -78,8 +80,7 @@
 }
 
 .auto-button {
-    background-color: #6E6E6E;
-    color: white;
+    background-color: #ddd;
 }
 
 .save-button {
@@ -109,5 +110,10 @@
         background-color: #232323;
         color: #fff;
         border: 1px solid #6E6E6E;
+    }
+
+    .auto-button {
+        background-color: #6E6E6E;
+        color: white;
     }
 }

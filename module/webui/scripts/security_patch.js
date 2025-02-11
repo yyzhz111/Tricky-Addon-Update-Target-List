@@ -12,7 +12,9 @@ const vendorPatchInput = document.getElementById('vendor-patch');
 const autoButton = document.getElementById('auto-config');
 const saveButton = document.getElementById('save-patch');
 
-export function showSecurityPatchDialog() {
+// Show security patch dialog
+function showSecurityPatchDialog() {
+    document.body.classList.add("no-scroll");
     overlay.style.display = 'block';
     card.style.display = 'block';
     setTimeout(() => {
@@ -24,6 +26,7 @@ export function showSecurityPatchDialog() {
 
 // Hide security patch dialog
 function hideSecurityPatchDialog() {
+    document.body.classList.remove("no-scroll");
     overlay.style.opacity = '0';
     card.style.opacity = '0';
     setTimeout(() => {
