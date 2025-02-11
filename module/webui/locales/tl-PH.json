@@ -100,7 +100,7 @@
         "auto_failed": "Nabigong i-enable ang auto config",
         "save_success": "Matagumpay na na-save ang security patch",
         "save_failed": "Nabigong i-save ang security patch",
-        "value_empty": "Hindi pwedeng walang laman ang value",
+        "value_empty": "Naka-disable ang configuration ng security patch.",
         "invalid_all": "Invalid format.",
         "invalid_boot": "Invalid boot format.",
         "invalid_system": "Invalid system format.",

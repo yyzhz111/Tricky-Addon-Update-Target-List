@@ -100,7 +100,7 @@
         "auto_failed": "Failed to enable auto config",
         "save_success": "Security patch saved successfully",
         "save_failed": "Failed to save security patch",
-        "value_empty": "Value cannot be empty",
+        "value_empty": "Security patch configuration is disabled.",
         "invalid_all": "Invalid format.",
         "invalid_boot": "Invalid boot format.",
         "invalid_system": "Invalid system format.",

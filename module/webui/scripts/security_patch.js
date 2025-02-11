@@ -13,7 +13,6 @@ const autoButton = document.getElementById('auto-config');
 const saveButton = document.getElementById('save-patch');
 
 export function showSecurityPatchDialog() {
-
     overlay.style.display = 'block';
     card.style.display = 'block';
     setTimeout(() => {
@@ -132,6 +131,10 @@ export function securityPatch() {
     autoButton.addEventListener('click', async () => {
         try {
             await execCommand(`sed -i "s/^auto_config=.*/auto_config=1/" /data/adb/security_patch`);
+            allPatchInput.value = '';
+            bootPatchInput.value = '';
+            systemPatchInput.value = '';
+            vendorPatchInput.value = '';
             showPrompt('security_patch.auto_success');
         } catch (error) {
             showPrompt('security_patch.auto_failed');
@@ -146,7 +149,17 @@ export function securityPatch() {
             // Normal mode validation
             const allValue = allPatchInput.value.trim();
             if (!allValue) {
-                showPrompt('security_patch.value_empty');
+                // Allow saving empty value
+                try {
+                    await execCommand(`
+                        sed -i "s/^auto_config=.*/auto_config=0/" /data/adb/security_patch
+                        > /data/adb/tricky_store/security_patch.txt
+                    `);
+                    showPrompt('security_patch.value_empty');
+                } catch (error) {
+                    showPrompt('security_patch.save_failed');
+                }
+                hideSecurityPatchDialog();
                 return;
             }
             if (!isValid8Digit(allValue)) {
@@ -158,6 +171,9 @@ export function securityPatch() {
                     sed -i "s/^auto_config=.*/auto_config=0/" /data/adb/security_patch
                     echo all=${allValue} > /data/adb/tricky_store/security_patch.txt
                 `);
+                bootPatchInput.value = '';
+                systemPatchInput.value = '';
+                vendorPatchInput.value = '';
                 showPrompt('security_patch.save_success');
             } catch (error) {
                 showPrompt('security_patch.save_failed');
@@ -169,7 +185,17 @@ export function securityPatch() {
             const vendorValue = vendorPatchInput.value.trim();
 
             if (!bootValue && !systemValue && !vendorValue) {
-                showPrompt('security_patch.value_empty');
+                // Allow saving empty values for advanced mode as well
+                try {
+                    await execCommand(`
+                        sed -i "s/^auto_config=.*/auto_config=0/" /data/adb/security_patch
+                        > /data/adb/tricky_store/security_patch.txt
+                    `);
+                    showPrompt('security_patch.value_empty');
+                } catch (error) {
+                    showPrompt('security_patch.save_failed');
+                }
+                hideSecurityPatchDialog();
                 return;
             }
 
@@ -198,6 +224,7 @@ export function securityPatch() {
                     sed -i "s/^auto_config=.*/auto_config=0/" /data/adb/security_patch
                     echo "${config.join(' ')}" > /data/adb/tricky_store/security_patch.txt
                 `);
+                allPatchInput.value = '';
                 showPrompt('security_patch.save_success');
                 hideSecurityPatchDialog();
             } catch (error) {

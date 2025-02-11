@@ -100,7 +100,7 @@
         "auto_failed": "无法启用自动配置",
         "save_success": "安全补丁成功保存",
         "save_failed": "保存安全补丁失败",
-        "value_empty": "值不能为空",
+        "value_empty": "安全补丁配置已禁用。",
         "invalid_all": "无效格式。",
         "invalid_boot": "无效启动格式。",
         "invalid_system": "无效系统格式。",
