@@ -140,7 +140,7 @@ export function securityPatch() {
             vendorPatchInput.value = '';
             showPrompt('security_patch.auto_success');
         } catch (error) {
-            showPrompt('security_patch.auto_failed');
+            showPrompt('security_patch.auto_failed', false);
         }
         hideSecurityPatchDialog();
         loadCurrentConfig();
@@ -160,13 +160,13 @@ export function securityPatch() {
                     `);
                     showPrompt('security_patch.value_empty');
                 } catch (error) {
-                    showPrompt('security_patch.save_failed');
+                    showPrompt('security_patch.save_failed', false);
                 }
                 hideSecurityPatchDialog();
                 return;
             }
             if (!isValid8Digit(allValue)) {
-                showPrompt('security_patch.invalid_all');
+                showPrompt('security_patch.invalid_all', false);
                 return;
             }
             try {
@@ -179,7 +179,7 @@ export function securityPatch() {
                 vendorPatchInput.value = '';
                 showPrompt('security_patch.save_success');
             } catch (error) {
-                showPrompt('security_patch.save_failed');
+                showPrompt('security_patch.save_failed', false);
             }
         } else {
             // Advanced mode validation
@@ -196,24 +196,24 @@ export function securityPatch() {
                     `);
                     showPrompt('security_patch.value_empty');
                 } catch (error) {
-                    showPrompt('security_patch.save_failed');
+                    showPrompt('security_patch.save_failed', false);
                 }
                 hideSecurityPatchDialog();
                 return;
             }
 
             if (bootValue && !isValid6Digit(bootValue)) {
-                showPrompt('security_patch.invalid_boot');
+                showPrompt('security_patch.invalid_boot', false);
                 return;
             }
 
             if (systemValue && !isValidDateFormat(systemValue)) {
-                showPrompt('security_patch.invalid_system');
+                showPrompt('security_patch.invalid_system', false);
                 return;
             }
 
             if (vendorValue && !isValidDateFormat(vendorValue)) {
-                showPrompt('security_patch.invalid_vendor');
+                showPrompt('security_patch.invalid_vendor', false);
                 return;
             }
 
@@ -231,7 +231,7 @@ export function securityPatch() {
                 showPrompt('security_patch.save_success');
                 hideSecurityPatchDialog();
             } catch (error) {
-                showPrompt('security_patch.save_failed');
+                showPrompt('security_patch.save_failed', false);
             }
         }
         hideSecurityPatchDialog();
