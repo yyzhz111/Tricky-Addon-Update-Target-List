@@ -41,7 +41,7 @@ async function loadCurrentConfig() {
         const result = await execCommand('cat /data/adb/security_patch');
         if (result) {
             const lines = result.split('\n');
-            let autoConfig = '1', allValue = '0', bootValue = '0', systemValue = '0', vendorValue = '0';
+            let autoConfig = '1', allValue = '0', systemValue = '0', bootValue = '0', vendorValue = '0';
             for (const line of lines) {
                 if (line.startsWith('auto_config=')) {
                     autoConfig = line.split('=')[1];
@@ -50,8 +50,8 @@ async function loadCurrentConfig() {
 
             if (autoConfig === '1') {
                 allValue = null;
-                bootValue = null;
                 systemValue = null;
+                bootValue = null;
                 vendorValue = null;
                 overlay.classList.add('hidden');
             } else {
@@ -64,13 +64,13 @@ async function loadCurrentConfig() {
                             allValue = line.split('=')[1] || null;
                             if (allValue !== null) allPatchInput.value = allValue;
                         }
-                        if (line.startsWith('boot=')) {
-                            bootValue = line.split('=')[1] || null;
-                            if (bootValue !== null) bootPatchInput.value = bootValue;
-                        }
                         if (line.startsWith('system=')) {
                             systemValue = line.split('=')[1] || null;
                             if (systemValue !== null) systemPatchInput.value = systemValue;
+                        }
+                        if (line.startsWith('boot=')) {
+                            bootValue = line.split('=')[1] || null;
+                            if (bootValue !== null) bootPatchInput.value = bootValue;
                         }
                         if (line.startsWith('vendor=')) {
                             vendorValue = line.split('=')[1] || null;
@@ -139,8 +139,8 @@ export function securityPatch() {
             } else {
                 await execCommand(`sed -i "s/^auto_config=.*/auto_config=1/" /data/adb/security_patch`);
                 allPatchInput.value = '';
-                bootPatchInput.value = '';
                 systemPatchInput.value = '';
+                bootPatchInput.value = '';
                 vendorPatchInput.value = '';
                 showPrompt('security_patch.auto_success');
             }
@@ -179,8 +179,8 @@ export function securityPatch() {
                     sed -i "s/^auto_config=.*/auto_config=0/" /data/adb/security_patch
                     echo all=${allValue} > /data/adb/tricky_store/security_patch.txt
                 `);
-                bootPatchInput.value = '';
                 systemPatchInput.value = '';
+                bootPatchInput.value = '';
                 vendorPatchInput.value = '';
                 showPrompt('security_patch.save_success');
             } catch (error) {
@@ -207,13 +207,13 @@ export function securityPatch() {
                 return;
             }
 
-            if (bootValue && !isValid6Digit(bootValue)) {
-                showPrompt('security_patch.invalid_boot', false);
+            if (systemValue && !isValid6Digit(systemValue)) {
+                showPrompt('security_patch.invalid_system', false);
                 return;
             }
 
-            if (systemValue && !isValidDateFormat(systemValue)) {
-                showPrompt('security_patch.invalid_system', false);
+            if (bootValue && !isValidDateFormat(bootValue)) {
+                showPrompt('security_patch.invalid_boot', false);
                 return;
             }
 
@@ -224,13 +224,13 @@ export function securityPatch() {
 
             try {
                 const config = [
-                    bootValue ? `boot=${bootValue}` : '',
                     systemValue ? `system=${systemValue}` : '',
+                    bootValue ? `boot=${bootValue}` : '',
                     vendorValue ? `vendor=${vendorValue}` : ''
                 ].filter(Boolean);
                 await execCommand(`
                     sed -i "s/^auto_config=.*/auto_config=0/" /data/adb/security_patch
-                    echo "${config.join(' ')}" > /data/adb/tricky_store/security_patch.txt
+                    echo "${config.filter(Boolean).join('\n')}" > /data/adb/tricky_store/security_patch.txt
                 `);
                 allPatchInput.value = '';
                 showPrompt('security_patch.save_success');
