@@ -63,18 +63,26 @@ async function loadCurrentConfig() {
                         if (line.startsWith('all=')) {
                             allValue = line.split('=')[1] || null;
                             if (allValue !== null) allPatchInput.value = allValue;
+                        } else {
+                            allValue = null;
                         }
                         if (line.startsWith('system=')) {
                             systemValue = line.split('=')[1] || null;
                             if (systemValue !== null) systemPatchInput.value = systemValue;
+                        } else {
+                            systemValue = null;
                         }
                         if (line.startsWith('boot=')) {
                             bootValue = line.split('=')[1] || null;
                             if (bootValue !== null) bootPatchInput.value = bootValue;
+                        } else {
+                            bootValue = null;
                         }
                         if (line.startsWith('vendor=')) {
                             vendorValue = line.split('=')[1] || null;
                             if (vendorValue !== null) vendorPatchInput.value = vendorValue;
+                        } else {
+                            vendorValue = null;
                         }
                     }
                 }
