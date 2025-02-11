@@ -36,7 +36,7 @@ initialize
 
 ui_print "- Finalizing..."
 find_config
-migrate_old_boot_hash
+migrate_config
 
 rm -f "$MODPATH/install_func.sh"
 

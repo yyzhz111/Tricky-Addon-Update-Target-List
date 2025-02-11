@@ -23,17 +23,11 @@ add_denylist_to_target() {
     done
 }
 
-# Reset verified Boot Hash
-hash_value=$(grep -v '^#' "/data/adb/boot_hash" | tr -d '[:space:]')
-if [ -n "$hash_value" ]; then
-    resetprop -n ro.boot.vbmeta.digest "$hash_value"
-fi
-
-# Spoof security patch if older than 1 year
-vendor_patch=$(getprop ro.vendor.build.security_patch | sed 's/-//g')
-vendor_patch_after_1y=$(echo "$vendor_patch + 10000" | bc)
-TODAY=$(date +%Y%m%d)
-if [ "$TODAY" -ge "$vendor_patch_after_1y" ]; then
+set_security_patch() {
+    vendor_patch=$(getprop ro.vendor.build.security_patch | sed 's/-//g')
+    vendor_patch_after_1y=$(echo "$vendor_patch + 10000" | bc)
+    TODAY=$(date +%Y%m%d)
+    if [ "$TODAY" -ge "$vendor_patch_after_1y" ]; then
     [ -f "/data/adb/modules/playintegrityfix/pif.json" ] && PIF="/data/adb/modules/playintegrityfix/pif.json"
     [ -f "/data/adb/pif.json" ] && PIF="/data/adb/pif.json"
     [ -f "/data/adb/modules/playintegrityfix/custom.pif.json" ] && PIF="/data/adb/modules/playintegrityfix/custom.pif.json"
@@ -50,8 +44,34 @@ if [ "$TODAY" -ge "$vendor_patch_after_1y" ]; then
         else
             echo "all=$formatted_security_patch" > "$TARGET_DIR/security_patch.txt"
         fi
+        fi
+    fi
+}
+
+# Spoof security patch if older than 1 year
+if grep -q "^auto_config=1" "/data/adb/security_patch"; then
+    # Auto config
+    set_security_patch
+elif grep -q "^custom_config=1" "/data/adb/security_patch"; then
+    # Custom config
+    if ! grep -q "^all=0" "/data/adb/security_patch"; then
+        echo "all=$(grep "^all=" "/data/adb/security_patch" | cut -d'=' -f2)" > "$TARGET_DIR/security_patch.txt"
+    else
+        > "$TARGET_DIR/security_patch.txt"
+        for value in system vendor boot; do
+            if grep -q "^$value=" "/data/adb/security_patch"; then
+                echo "$value=$(grep "^$value=" "/data/adb/security_patch" | cut -d'=' -f2)" >> "$TARGET_DIR/security_patch.txt"
+            fi
+        done
     fi
 fi
+
+# Reset verified Boot Hash
+hash_value=$(grep -v '^#' "/data/adb/boot_hash" | tr -d '[:space:]')
+if [ -n "$hash_value" ]; then
+    resetprop -n ro.boot.vbmeta.digest "$hash_value"
+fi
+
 
 # Disable TSupport-A auto update target to prevent overwrite
 if [ -d "$TSPA" ]; then

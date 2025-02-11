@@ -31,10 +31,25 @@ find_config() {
     [ -d "$CONFIG_DIR" ] && rm -rf "$CONFIG_DIR"
 }
 
-migrate_old_boot_hash() {
+migrate_config() {
+    # Migrate boot_hash
     if [ ! -f "/data/adb/boot_hash" ]; then
         mv "$COMPATH/boot_hash" "/data/adb/boot_hash"
     else
         rm -f "$COMPATH/boot_hash"
     fi
+
+    # Migrate security_patch config*
+    if [ ! -s "/data/adb/security_patch" ]; then
+        echo "#Tricky Addon security patch config" > "/data/adb/security_patch"
+    fi
+    for value in auto_config custom_config all system vendor boot; do
+        if ! grep -q "^$value=" "/data/adb/security_patch"; then
+            if [ "$value" = "auto_config" ]; then
+                echo "$value=1" >> "/data/adb/security_patch"
+            else
+                echo "$value=0" >> "/data/adb/security_patch"
+            fi
+        fi
+    done
 }
