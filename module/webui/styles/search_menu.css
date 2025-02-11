@@ -6,7 +6,7 @@
     width: calc(100% - 20px);
     max-width: 1100px;
     z-index: 1000;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.4s ease;
     margin-left: auto;
     margin-right: auto;
     left: 0;
@@ -86,7 +86,7 @@
     display: inline-block;
     fill: #000;
     transform: rotate(0deg);
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.2s ease;
 }
 
 .menu-icon.menu-open {
@@ -110,7 +110,7 @@
     white-space: nowrap;
     visibility: hidden;
     transform: translateX(120%);
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 0.2s ease;
     user-select: none;
 }
 
