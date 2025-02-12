@@ -176,10 +176,17 @@ export function securityPatch() {
                 showPrompt('security_patch.auto_failed', false);
             } else {
                 await execCommand(`sed -i "s/^auto_config=.*/auto_config=1/" /data/adb/security_patch`);
+                // Reset inputs
                 allPatchInput.value = '';
                 systemPatchInput.value = '';
                 bootPatchInput.value = '';
                 vendorPatchInput.value = '';
+
+                // Uncheck advanced mode
+                advancedToggle.checked = false;
+                normalInputs.classList.remove('hidden');
+                advancedInputs.classList.add('hidden');
+
                 showPrompt('security_patch.auto_success');
             }
         } catch (error) {
@@ -207,6 +214,7 @@ export function securityPatch() {
             const value = `all=${allValue}`;
             const result = await handleSecurityPatch('manual', value);
             if (result) {
+                // Reset inputs
                 systemPatchInput.value = '';
                 bootPatchInput.value = '';
                 vendorPatchInput.value = '';
@@ -247,6 +255,7 @@ export function securityPatch() {
             const value = config.filter(Boolean).join('\n');
             const result = await handleSecurityPatch('manual', value);
             if (result) {
+                // Reset inputs
                 allPatchInput.value = '';
             }
         }
