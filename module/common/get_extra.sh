@@ -146,6 +146,7 @@ set_security_patch() {
             resetprop ro.build.version.security_patch "$security_patch"
         fi
         echo "all=$formatted_security_patch" > "/data/adb/tricky_store/security_patch.txt"
+        chmod 644 "/data/adb/tricky_store/security_patch.txt"
     else 
         echo "not set"
     fi
