@@ -71,16 +71,29 @@ document.getElementById("deselect-unnecessary").addEventListener("click", async 
     }
 });
 
+// Function to backup previous keybox and set new keybox
+async function setKeybox(path) {
+    try {
+        await execCommand(`
+            mv -f /data/adb/tricky_store/keybox.xml /data/adb/tricky_store/keybox.xml.bak 2>/dev/null
+            echo '${path}' > /data/adb/tricky_store/keybox.xml
+            chmod 644 /data/adb/tricky_store/keybox.xml
+            `);
+        return true;
+    } catch (error) {
+        console.error("Failed to set keybox:", error);
+        return false;
+    }
+}
+
 // Function to replace aosp kb
 export async function aospkb() {
-    try {
-        const sourcePath = `${basePath}common/.default`;
-        const destinationPath = "/data/adb/tricky_store/keybox.xml";
-        await execCommand(`mv -f ${destinationPath} ${destinationPath}.bak && xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
+    const source = await execCommand(`xxd -r -p ${basePath}common/.default | base64 -d`);
+    const result = await setKeybox(source);
+    if (result) {
         console.log("AOSP keybox copied successfully.");
         showPrompt("prompt.aosp_key_set");
-    } catch (error) {
-        console.error("Failed to copy AOSP keybox:", error);
+    } else {
         showPrompt("prompt.key_set_error", false);
     }
 }
@@ -91,18 +104,20 @@ document.getElementById("validkb").addEventListener("click", async () => {
         await execCommand(`sh ${basePath}common/get_extra.sh --kb`);
     }, 100);
     const sourcePath = `${basePath}common/tmp/.extra`;
-    const destinationPath = "/data/adb/tricky_store/keybox.xml";
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const fileExists = await execCommand(`[ -f ${sourcePath} ] && echo "exists"`);
     try {
-        await new Promise(resolve => setTimeout(resolve, 300));
-        const fileExists = await execCommand(`[ -f ${sourcePath} ] && echo "exists"`);
         if (fileExists.trim() !== "exists") {
             throw new Error(".extra file not found");
         }
-        await execCommand(`mv -f ${destinationPath} ${destinationPath}.bak && xxd -r -p ${sourcePath} | base64 -d > ${destinationPath}`);
-        console.log("Valid keybox copied successfully.");
-        showPrompt("prompt.valid_key_set");
+        const source = await execCommand(`xxd -r -p ${sourcePath} | base64 -d`);
+        const result = await setKeybox(source);
+        if (result) {
+            showPrompt("prompt.valid_key_set");
+        } else {
+            throw new Error("Failed to copy valid keybox");
+        }
     } catch (error) {
-        console.error("Failed to copy valid keybox:", error);
         await aospkb();
         showPrompt("prompt.no_valid_fallback", false);
     }
@@ -227,13 +242,12 @@ async function listFiles(path, skipAnimation = false) {
                     });
                     await listFiles(item.path);
                 } else {
-                    try {
-                        const content = await execCommand(`cat "${item.path}"`);
-                        await execCommand(`mv -f /data/adb/tricky_store/keybox.xml /data/adb/tricky_store/keybox.xml.bak 2>/dev/null && echo '${content}' > /data/adb/tricky_store/keybox.xml`);
+                    const source = await execCommand(`cat "${item.path}"`);
+                    const result = await setKeybox(source);
+                    if (result) {
                         fileSelector.style.display = 'none';
                         showPrompt('prompt.custom_key_set');
-                    } catch (error) {
-                        console.error('Error processing file:', error);
+                    } else {
                         showPrompt('prompt.custom_key_set_error');
                     }
                 }
