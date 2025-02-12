@@ -112,7 +112,8 @@
 
 .input-group input {
     padding: 15px;
-    border: 1px solid #ddd;
+    background-color: #F5F5F5;
+    border: 1px solid #ccc;
     outline-color: #007bff;
     border-radius: 10px;
     font-size: 16px;
