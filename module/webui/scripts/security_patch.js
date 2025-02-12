@@ -131,6 +131,55 @@ async function loadCurrentConfig() {
     }
 }
 
+// Unified date formatting function
+window.formatDate = function(input, type) {
+    let value = input.value.replace(/-/g, '');
+    let formatted = value.slice(0, 4);
+
+    // Allow 'no' input
+    if (value === 'no') {
+        input.value = 'no';
+        input.setSelectionRange(2, 2);
+        return 'no';
+    }
+
+    if (value.startsWith('n')) {
+        // Only allow 'o' after 'n'
+        if (value.length > 1 && value[1] !== 'o') {
+            value = 'n';
+        }
+        formatted = value.slice(0, 2);
+        if (value.length > 2) {
+            input.value = formatted;
+            input.setSelectionRange(2, 2);
+            return formatted;
+        }
+    } else {
+        // Add hyphens on 5th and 7th character
+        if (value.length >= 4) {
+            formatted += '-'+ value.slice(4, 6);
+        }
+        if (value.length >= 6) {
+            formatted += '-'+ value.slice(6, 8);
+        }
+    }
+
+    // Handle backspace/delete
+    const lastChar = value.slice(-1);
+    if (lastChar === '-' || (isNaN(lastChar) && !['n'].includes(lastChar))) {
+        formatted = formatted.slice(0, -1);
+    }
+
+    // Update input value
+    const startPos = input.selectionStart;
+    input.value = formatted;
+    const newLength = formatted.length;
+    const shouldMoveCursor = (value.length === 4 || value.length === 6) && newLength > startPos;
+    input.setSelectionRange(shouldMoveCursor ? newLength : startPos, shouldMoveCursor ? newLength : startPos);
+
+    return formatted;
+}
+
 // Validate date format YYYY-MM-DD
 function isValidDateFormat(date) {
     if (date === 'no') return true;
@@ -221,7 +270,7 @@ export function securityPatch() {
             }
         } else {
             // Advanced mode validation
-            const bootValue = bootPatchInput.value.trim();
+            const bootValue = formatDate(bootPatchInput, 'boot');
             const systemValue = systemPatchInput.value.trim();
             const vendorValue = vendorPatchInput.value.trim();
 
