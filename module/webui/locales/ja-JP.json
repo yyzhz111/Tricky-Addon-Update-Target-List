@@ -103,8 +103,8 @@
         "save_failed": "セキュリティパッチの保存に失敗しました",
         "value_empty": "セキュリティパッチの設定は無効です",
         "invalid_all": "無効な形式です",
-        "invalid_boot": "無効なブート形式です",
-        "invalid_system": "無効なシステム形式です",
-        "invalid_vendor": "無効なベンダー形式です"
+        "invalid_boot": "無効な boot 形式です",
+        "invalid_system": "無効な system 形式です",
+        "invalid_vendor": "無効な vendor 形式です"
     }
 }

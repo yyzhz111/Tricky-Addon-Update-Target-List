@@ -103,8 +103,8 @@
         "save_failed": "保存安全補丁失敗",
         "value_empty": "安全補丁配置已禁用",
         "invalid_all": "無效格式",
-        "invalid_boot": "無效啟動格式",
-        "invalid_system": "無效系統格式",
-        "invalid_vendor": "無效供應商格式"
+        "invalid_boot": "無效 boot 格式",
+        "invalid_system": "無效 system 格式",
+        "invalid_vendor": "無效 vendor 格式"
     }
 }

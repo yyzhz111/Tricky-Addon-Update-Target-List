@@ -103,8 +103,8 @@
         "save_failed": "保存安全补丁失败",
         "value_empty": "安全补丁配置已禁用",
         "invalid_all": "无效格式",
-        "invalid_boot": "无效启动格式",
-        "invalid_system": "无效系统格式",
-        "invalid_vendor": "无效供应商格式"
+        "invalid_boot": "无效 boot 格式",
+        "invalid_system": "无效 system 格式",
+        "invalid_vendor": "无效 vendor 格式"
     }
 }

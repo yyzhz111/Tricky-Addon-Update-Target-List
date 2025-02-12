@@ -103,8 +103,8 @@
         "save_failed": "Güvenlik yaması kaydedilemedi",
         "value_empty": "Güvenlik yaması yapılandırması devre dışı bırakıldı",
         "invalid_all": "Geçersiz format",
-        "invalid_boot": "Geçersiz başlatma formatı",
-        "invalid_system": "Geçersiz sistem formatı",
-        "invalid_vendor": "Geçersiz sağlayıcı formatı"
+        "invalid_boot": "Geçersiz boot formatı",
+        "invalid_system": "Geçersiz system formatı",
+        "invalid_vendor": "Geçersiz vendor formatı"
     }
 }
