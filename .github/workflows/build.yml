@@ -21,17 +21,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 2
+          fetch-depth: 0
           fetch-tags: true
 
       - name: Extract Module Info
         id: extract_info
         run: |
-          MODULE_VERSION=$(grep -oP '^version=\K.*' module/module.prop)
-          BUILD_COUNT=$((1000 + ${{ github.run_number }}))
-          ARTIFACT_NAME="TrickyAddonModule-${MODULE_VERSION}-canary-${BUILD_COUNT}"
+          MODULE_VERSION=$(grep '^version=' module/module.prop | sed 's/version=//')
+          COMMIT_NUM=$(git rev-list --count HEAD)
+          BUILD_COUNT=${{ github.run_number }}
+          ARTIFACT_NAME="TrickyAddonModule-${MODULE_VERSION}-${COMMIT_NUM}${BUILD_COUNT}-canary"
+          sed -i "s/^version=.*/& (${COMMIT_NUM}${BUILD_COUNT}-canary)/" module/module.prop
           echo "MODULE_VERSION=${MODULE_VERSION}" >> $GITHUB_ENV
           echo "ARTIFACT_NAME=${ARTIFACT_NAME}" >> $GITHUB_ENV
+          echo "VERSION=${MODULE_VERSION}" >> $GITHUB_ENV
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -46,9 +49,9 @@ jobs:
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo "version_tag_exists=true" >> $GITHUB_OUTPUT
           else
-            VERSION=$(grep '^version=' module/module.prop | sed 's/version=//')
             git fetch --tags
-            if git tag | grep -qx "^$VERSION"; then
+            VERSION=${{ env.VERSION }}
+            if git tag | grep -qx "^${VERSION}"; then
               echo "version_tag_exists=true" >> $GITHUB_OUTPUT
             else
               echo "version_tag_exists=false" >> $GITHUB_OUTPUT
