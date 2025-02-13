@@ -155,6 +155,14 @@ window.formatDate = function(input, type) {
             return formatted;
         }
     } else {
+        // Only allow numbers if not starting with 'n'
+        const numbersOnly = value.replace(/\D/g, '');
+        if (numbersOnly !== value) {
+            input.value = numbersOnly;
+            value = numbersOnly;
+            formatted = numbersOnly.slice(0, 4);
+        }
+        
         // Add hyphens on 5th and 7th character
         if (value.length >= 4) {
             formatted += '-'+ value.slice(4, 6);
