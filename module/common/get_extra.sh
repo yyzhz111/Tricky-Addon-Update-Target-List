@@ -92,6 +92,7 @@ get_update() {
     JSON=$(download --fetch "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/update.json") || exit 1
     ZIP_URL=$(echo "$JSON" | grep -o '"zipUrl": "[^"]*"' | cut -d '"' -f 4) || exit 1
     CHANGELOG_URL=$(echo "$JSON" | grep -o '"changelog": "[^"]*"' | cut -d '"' -f 4) || exit 1
+    echo "$JSON" | grep '"version"' | sed 's/.*: "//; s/".*//' > "$MODPATH/tmp/version" || exit 1
     download --output "$ZIP_URL" "$MODPATH/tmp/module.zip" || exit 1
     download --output "$CHANGELOG_URL" "$MODPATH/tmp/changelog.md" || exit 1
 }
@@ -109,22 +110,20 @@ install_update() {
 
     rm -f "$MODPATH/tmp/module.zip"
     rm -f "$MODPATH/tmp/changelog.md"
+    rm -f "$MODPATH/tmp/version"
 }
 
 release_note() {
-awk '
-    /^### v[0-9]+\.[0-9]+$/ { 
-        if (!found) {
-            version = $0;
+    VERSION=$(grep 'v' "$MODPATH/tmp/version")
+    awk -v header="### $VERSION" '
+        $0 == header { 
+            print; 
             found = 1; 
             next 
-        } else {
-            exit 
         }
-    }
-    found && !/^###/ { content = content $0 "\n" }
-    END { if (found) { print version; print content } }
-' "$MODPATH/tmp/changelog.md"
+        found && /^###/ { exit }
+        found { print }
+    ' "$MODPATH/tmp/changelog.md"
 }
 
 set_security_patch() {
