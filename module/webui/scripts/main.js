@@ -198,7 +198,6 @@ async function checkMMRL() {
         // Request API permission, supported version: 33045+
         try {
             $tricky_store.requestAdvancedKernelSUAPI();
-            $tricky_store.requestFileSystemAPI();
         } catch (error) {
             console.log("Error requesting API:", error);
         }
@@ -232,28 +231,28 @@ export function applyRippleEffect() {
                 element.addEventListener("pointerdown", function (event) {
                     if (isScrolling) return;
                     if (modeActive) return;
-                    
+
                     const ripple = document.createElement("span");
                     ripple.classList.add("ripple");
-    
+
                     // Calculate ripple size and position
                     const rect = element.getBoundingClientRect();
                     const width = rect.width;
                     const size = Math.max(rect.width, rect.height);
                     const x = event.clientX - rect.left - size / 2;
                     const y = event.clientY - rect.top - size / 2;
-    
+
                     // Determine animation duration
                     let duration = 0.3 + (width / 800) * 0.3;
                     duration = Math.min(0.8, Math.max(0.2, duration));
-    
+
                     // Set ripple styles
                     ripple.style.width = ripple.style.height = `${size}px`;
                     ripple.style.left = `${x}px`;
                     ripple.style.top = `${y}px`;
                     ripple.style.animationDuration = `${duration}s`;
                     ripple.style.transition = `opacity ${duration}s ease`;
-    
+
                     // Adaptive color
                     const computedStyle = window.getComputedStyle(element);
                     const bgColor = computedStyle.backgroundColor || "rgba(0, 0, 0, 0)";
@@ -265,7 +264,7 @@ export function applyRippleEffect() {
                         return (r * 0.299 + g * 0.587 + b * 0.114) < 96; // Luma formula
                     };
                     ripple.style.backgroundColor = isDarkColor(bgColor) ? "rgba(255, 255, 255, 0.2)" : "";
-    
+
                     // Append ripple and handle cleanup
                     element.appendChild(ripple);
                     const handlePointerUp = () => {
