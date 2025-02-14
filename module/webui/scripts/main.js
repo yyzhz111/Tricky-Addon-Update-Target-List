@@ -195,6 +195,13 @@ async function checkMMRL() {
         headerBlock.style.display = 'block';
         floatingCard.style.bottom = 'calc(var(--window-inset-bottom) + 50px)';
 
+        // Set status bars theme based on device theme
+        try {
+            $tricky_store.setLightStatusBars(!window.matchMedia('(prefers-color-scheme: dark)').matches)
+        } catch (error) {
+            console.log("Error setting status bars theme:", error)
+        }
+
         // Request API permission, supported version: 33045+
         try {
             $tricky_store.requestAdvancedKernelSUAPI();
