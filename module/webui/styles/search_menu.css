@@ -114,7 +114,8 @@
     user-select: none;
 }
 
-#select-denylist {
+#select-denylist,
+#security-patch {
     display: none;
 }
 

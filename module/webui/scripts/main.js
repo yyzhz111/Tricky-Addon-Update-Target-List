@@ -69,6 +69,26 @@ async function refreshAppList() {
     isRefreshing = false;
 }
 
+// Function to check tricky store version
+async function checkTrickyStoreVersion() {
+    const securityPatchElement = document.getElementById('security-patch');
+    try {
+        const version = await execCommand(`
+            TS_version=$(grep "versionCode=" "/data/adb/modules/tricky_store/module.prop" | cut -d'=' -f2)
+            [ "$TS_version" -ge 158 ] || echo "NO"
+        `);
+        if (version.trim() !== "NO") {
+            console.log("Tricky Store version is 158 or higher, displaying element.");
+            securityPatchElement.style.display = "flex";
+        } else {
+            console.log("Tricky Store version is below 158, leaving security patch element hidden.");
+        }
+    } catch (error) {
+        toast("Failed to check Tricky Store version!");
+        console.error("Error while checking Tricky Store version:", error);
+    }
+}
+
 // Function to check if Magisk
 async function checkMagisk() {
     const selectDenylistElement = document.getElementById('select-denylist');
@@ -305,6 +325,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupLanguageMenu();
     await fetchAppList();
     applyRippleEffect();
+    checkTrickyStoreVersion();
     checkMagisk();
     updateCheck();
     securityPatch();
