@@ -27,7 +27,9 @@ Configure Tricky Store target.txt with KSU WebUI.
 | Select apps from Magisk DenyList `optional`                                                                                                                                  |   ✅    |
 | Deselect [unnecessary apps](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/more-exclude.json) `optional`                                               |   ✅    |
 | Set verifiedBootHash `optional`                                                                                                                                              |   ✅    |
+| Auto config [security patch](https://github.com/5ec1cff/TrickyStore?tab=readme-ov-file#customize-security-patch-level-121), customizable in WebUI                            |   ✅    |
 | Provide AOSP Keybox `optional`                                                                                                                                               |   ✅    |
+| Import custom Keybox from device storage                                                                                                                        |   ✅    |
 | Valid Keybox `not guaranteed`                                                                                                                                                |   ❌    |
 | Shamiko Whitelist switch. [Why?](https://github.com/rushizgithub/shamiko?tab=readme-ov-file#whitelist)                                                                       |   ❌    |
 | Periodically add all app to target.txt                                                                                                                                       |   ❌    |
