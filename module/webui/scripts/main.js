@@ -21,7 +21,7 @@ export const basePath = "set-path";
 export const appsWithExclamation = [];
 export const appsWithQuestion = [];
 const ADDITIONAL_APPS = [ "android", "com.android.vending", "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ]; // Always keep default apps in target.txt
-const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container', '.boot-hash-save-button', '.boot-hash-value', '.reboot', '.install', '.file-item', '.save-button', '.auto-button'];
+const rippleClasses = ['.language-option', '.menu-button', '.menu-options li', '.search-card', '.card', '.update-card', '.link-icon', '.floating-btn', '.uninstall-container', '.boot-hash-save-button', '.boot-hash-value', '.reboot', '.install', '.file-item', '.save-button', '.auto-button', '.get-button'];
 
 // Variables
 let e = 0;

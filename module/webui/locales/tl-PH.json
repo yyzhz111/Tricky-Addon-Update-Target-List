@@ -95,8 +95,10 @@
     "security_patch": {
         "title": "Security Patch",
         "advanced_mode": "Advanced",
+        "get_date": "Kunin ang Petsa ng Security Patch",
         "auto": "Auto",
         "save": "I-save",
+        "get_failed": "Hindi makuha ang petsa ng security patch",
         "auto_success": "Matagumpay na na-enable ang auto config",
         "auto_failed": "Nabigong i-enable ang auto config",
         "save_success": "Matagumpay na na-save ang security patch",

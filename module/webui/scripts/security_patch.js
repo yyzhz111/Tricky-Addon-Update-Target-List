@@ -9,6 +9,7 @@ const allPatchInput = document.getElementById('all-patch');
 const bootPatchInput = document.getElementById('boot-patch');
 const systemPatchInput = document.getElementById('system-patch');
 const vendorPatchInput = document.getElementById('vendor-patch');
+const getButton = document.getElementById('get-patch');
 const autoButton = document.getElementById('auto-config');
 const saveButton = document.getElementById('save-patch');
 
@@ -318,5 +319,21 @@ export function securityPatch() {
         }
         hideSecurityPatchDialog();
         loadCurrentConfig();
+    });
+
+    // Get button
+    getButton.addEventListener('click', async () => {
+        try {
+            const output = await execCommand(`sh ${basePath}common/get_extra.sh --get-security-patch`);
+            advancedToggle.checked = true;
+            normalInputs.classList.add('hidden');
+            advancedInputs.classList.remove('hidden');
+
+            systemPatchInput.value = 'prop';
+            bootPatchInput.value = output;
+            vendorPatchInput.value = output;
+        } catch (error) {
+            showPrompt('security_patch.get_failed', false);
+        }
     });
 }

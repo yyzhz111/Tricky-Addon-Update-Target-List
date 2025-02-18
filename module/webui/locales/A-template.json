@@ -95,8 +95,10 @@
     "security_patch": {
         "title": "Security Patch",
         "advanced_mode": "Advanced",
+        "get_date": "Get Security Patch Date",
         "auto": "Auto",
         "save": "Save",
+        "get_failed": "Failed to fetch security patch date",
         "auto_success": "Auto config enabled successfully",
         "auto_failed": "Failed to enable auto config",
         "save_success": "Security patch saved successfully",

@@ -95,8 +95,10 @@
     "security_patch": {
         "title": "Parche de Seguridad",
         "advanced_mode": "Avanzado",
+        "get_date": "Obtener Fecha del Parche de Seguridad",
         "auto": "Automático",
         "save": "Guardar",
+        "get_failed": "Error al obtener la fecha del parche de seguridad",
         "auto_success": "Configuración automática habilitada con éxito",
         "auto_failed": "Error al habilitar la configuración automática",
         "save_success": "Parche de seguridad guardado con éxito",

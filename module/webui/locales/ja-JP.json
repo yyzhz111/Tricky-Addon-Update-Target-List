@@ -95,8 +95,10 @@
     "security_patch": {
         "title": "セキュリティ补丁",
         "advanced_mode": "高度",
+        "get_date": "セキュリティパッチの日付を取得",
         "auto": "自動",
         "save": "保存",
+        "get_failed": "セキュリティパッチの日付の取得に失敗しました",
         "auto_success": "自動配置已成功啟用",
         "auto_failed": "自動設定を有効にできませんでした",
         "save_success": "セキュリティパッチが正常に保存されました",

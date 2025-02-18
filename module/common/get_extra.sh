@@ -153,6 +153,11 @@ set_security_patch() {
     fi
 }
 
+get_latest_security_patch() {
+    security_patch=$(download --fetch https://source.android.com/docs/security/bulletin/pixel | grep -o "<td>[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}</td>" | head -n 1 | sed 's/<td>\(.*\)<\/td>/\1/')
+    [ -n "$security_patch" ] && echo "$security_patch" || exit 1
+}
+
 case "$1" in
 --kb)
     get_kb
@@ -188,6 +193,10 @@ case "$1" in
     ;;
 --security-patch)
     set_security_patch
+    exit
+    ;;
+--get-security-patch)
+    get_latest_security_patch
     exit
     ;;
 esac

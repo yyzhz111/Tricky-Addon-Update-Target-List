@@ -127,7 +127,9 @@
     margin-top: 10px;
 }
 
-.auto-button, .save-button {
+.get-button,
+.auto-button,
+.save-button {
     width: 100%;
     padding: 12px;
     border: none;
@@ -139,6 +141,7 @@
     transition: background-color 0.2s ease;
 }
 
+.get-button,
 .auto-button {
     background-color: #ddd;
     user-select: none;
@@ -174,6 +177,7 @@
         border: 1px solid #6E6E6E;
     }
 
+    .get-button,
     .auto-button {
         background-color: #6E6E6E;
         color: white;

@@ -95,8 +95,10 @@
     "security_patch": {
         "title": "Güvenlik Yaması",
         "advanced_mode": "Gelişmiş",
+        "get_date": "Güvenlik Yaması Tarihini Al",
         "auto": "Otomatik",
         "save": "Kaydet",
+        "get_failed": "Güvenlik yaması tarihi alınamadı",
         "auto_success": "Otomatik yapılandırma başarıyla etkinleştirildi",
         "auto_failed": "Otomatik yapılandırma etkinleştirilemedi",
         "save_success": "Güvenlik yaması başarıyla kaydedildi",

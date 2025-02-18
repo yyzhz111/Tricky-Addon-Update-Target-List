@@ -95,8 +95,10 @@
     "security_patch": {
         "title": "安全补丁",
         "advanced_mode": "高级",
+        "get_date": "获取安全补丁日期",
         "auto": "自动",
         "save": "保存",
+        "get_failed": "获取安全补丁日期失败",
         "auto_success": "自动配置成功启用",
         "auto_failed": "无法启用自动配置",
         "save_success": "安全补丁成功保存",
