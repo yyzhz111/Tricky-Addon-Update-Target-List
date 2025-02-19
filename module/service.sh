@@ -90,7 +90,7 @@ echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT
 # Check Xposed module
 { 
     pm list packages -3 2>/dev/null
-    pm list package -s | grep -E "$SYSTEM_APP"
+    pm list package -s | grep -E "$SYSTEM_APP" 2>/dev/null || true
 } | awk -F: '{print $2}' | while read -r PACKAGE; do
     # Get APK path for the package
     APK_PATH=$(pm path "$PACKAGE" 2>/dev/null | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r')
