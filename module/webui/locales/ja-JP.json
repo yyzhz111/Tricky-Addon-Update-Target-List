@@ -54,9 +54,10 @@
         "set_security_patch": "セキュリティパッチを設定",
         "about": "このアドオンについて"
     },
-    "reset_vbmeta": {
-        "boot_hash_input_placeholder": "確認付きブートハッシュをここに貼り付け",
-        "boot_hash_save_button": "保存"
+    "boot_hash": {
+        "title": "ブートハッシュ",
+        "input_placeholder": "確認付きブートハッシュをここに貼り付け",
+        "save_button": "保存"
     },
     "about": {
         "module_name_line1": "Tricky Addon",

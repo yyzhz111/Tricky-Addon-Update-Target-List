@@ -54,9 +54,10 @@
         "set_verified_boot_hash": "設置哈希值",
         "about": "關於"
     },
-    "reset_vbmeta": {
-        "boot_hash_input_placeholder": "在此貼上您的哈希值",
-        "boot_hash_save_button": "保存"
+    "boot_hash": {
+        "title": "哈希值",
+        "input_placeholder": "在此貼上您的哈希值",
+        "save_button": "保存"
     },
     "about": {
         "module_name_line1": "TS 插件",

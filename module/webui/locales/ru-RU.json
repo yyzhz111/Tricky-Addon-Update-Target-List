@@ -54,9 +54,10 @@
         "set_verified_boot_hash": "Установить Verified Boot Hash",
         "about": "О программе"
     },
-    "reset_vbmeta": {
-        "boot_hash_input_placeholder": "Вставьте свой проверенный Boot Hash сюда",
-        "boot_hash_save_button": "Сохранить"
+    "boot_hash": {
+        "title": "Boot Hash",
+        "input_placeholder": "Вставьте свой проверенный Boot Hash сюда",
+        "save_button": "Сохранить"
     },
     "about": {
         "module_name_line1": "Tricky Addon",

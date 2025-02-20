@@ -54,9 +54,10 @@
         "set_verified_boot_hash": "Doğrulanmış Boot Hash Ayarla",
         "about": "Hakkında"
     },
-    "reset_vbmeta": {
-        "boot_hash_input_placeholder": "Doğrulanmış Boot Hash'inizi buraya yapıştırın",
-        "boot_hash_save_button": "Kaydet"
+    "boot_hash": {
+        "title": "Boot Hash",
+        "input_placeholder": "Doğrulanmış Boot Hash'inizi buraya yapıştırın",
+        "save_button": "Kaydet"
     },
     "about": {
         "module_name_line1": "Tricky Addon",

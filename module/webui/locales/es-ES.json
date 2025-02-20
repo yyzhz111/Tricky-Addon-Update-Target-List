@@ -54,9 +54,10 @@
         "set_verified_boot_hash": "Configurar Boot Hash Verificado",
         "about": "Acerca de"
     },
-    "reset_vbmeta": {
-        "boot_hash_input_placeholder": "Pega aquí tu Boot Hash verificado",
-        "boot_hash_save_button": "Guardar"
+    "boot_hash": {
+        "title": "Boot Hash",
+        "input_placeholder": "Pega aquí tu Boot Hash verificado",
+        "save_button": "Guardar"
     },
     "about": {
         "module_name_line1": "Tricky Addon",

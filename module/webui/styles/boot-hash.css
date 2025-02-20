@@ -15,16 +15,16 @@
 
 .boot-hash-card {
     position: fixed;
-    top: 30%;
+    top: 10%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80vw;
-    max-width: 600px;
+    transform: translateX(-50%);
+    width: calc(90% - 60px);
+    max-width: 300px;
     background-color: #fff;
     border-radius: 18px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     z-index: 1200;
-    padding: 20px;
+    padding: 30px;
     display: none;
     flex-direction: column;
     gap: 15px;
@@ -40,6 +40,13 @@
 .boot-hash-card.show {
     display: flex;
     opacity: 1;
+}
+
+.boot-hash-title {
+    width: 100%;
+    font-size: 26px;
+    text-align: center;
+    user-select: none;
 }
 
 .boot-hash-value {
@@ -68,20 +75,21 @@
     outline-color: #007bff;
 }
 
-.button-container {
+.boot-hash-button-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .boot-hash-save-button {
-    padding: 10px 20px;
+    width: 50%;
+    padding: 12px;
     border: none;
-    border-radius: 38px;
+    border-radius: 12px;
     font-size: 18px;
     font-weight: bold;
     background-color: #007bff;
     color: white;
-    margin-left: auto;
     position: relative;
     overflow: hidden;
     user-select: none;

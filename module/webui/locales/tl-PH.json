@@ -54,9 +54,10 @@
         "set_security_patch": "I-set ang Security Patch",
         "about": "Tungkol"
     },
-    "reset_vbmeta": {
-        "boot_hash_input_placeholder": "I-paste ang iyong verified Boot Hash dito",
-        "boot_hash_save_button": "I-save"
+    "boot_hash": {
+        "title": "Boot Hash",
+        "input_placeholder": "I-paste ang iyong verified Boot Hash dito",
+        "save_button": "I-save"
     },
     "about": {
         "module_name_line1": "Tricky Addon",

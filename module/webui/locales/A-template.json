@@ -54,9 +54,10 @@
         "set_security_patch": "Set Security Patch",
         "about": "About"
     },
-    "reset_vbmeta": {
-        "boot_hash_input_placeholder": "Paste your verified Boot Hash here",
-        "boot_hash_save_button": "Save"
+    "boot_hash": {
+        "title": "Boot Hash",
+        "input_placeholder": "Paste your verified Boot Hash here",
+        "save_button": "Save"
     },
     "about": {
         "module_name_line1": "Tricky Addon",
