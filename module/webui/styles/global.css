@@ -73,17 +73,20 @@ body {
 
 .footer {
     display: flex;
-    justify-content: flex-end;
-    max-width: 1100px;
+    justify-content: center;
     margin-bottom: 70px;
 }
 
 .uninstall-container {
     padding: 12px;
+    width: calc(100% - 30px);
+    max-width: 900px;
     display: flex;
+    justify-content: center;
     align-items: center;
     border-radius: 12px;
-    background-color: #CE0000;
+    border: 3px solid #FF3636;
+    background-color: #F5F5F5;
     white-space: nowrap;
     overflow: hidden;
     user-select: none;
@@ -96,7 +99,7 @@ body {
 .uninstall-container span {
     font-size: 16px;
     font-weight: bold;
-    color: #fff;
+    color: #FF3636;
 }
 
 .uninstall-container.hidden-uninstall {
@@ -264,6 +267,10 @@ body {
     body {
         background-color: #121212;
         color: #fff;
+    }
+
+    .uninstall-container {
+        background-color: #121212;
     }
 
     .file-selector {
