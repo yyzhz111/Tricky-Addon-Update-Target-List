@@ -219,12 +219,8 @@
     <div id="boot-hash-overlay" class="boot-hash-overlay"></div>
     <div id="boot-hash-card" class="boot-hash-card">
         <div class="boot-hash-title" data-i18n="boot_hash.title"></div>
-        <div class="boot-hash-value ripple-element">
-            <textarea id="boot-hash-input" class="input-box" placeholder="Paste your verified Boot Hash here" data-i18n="boot_hash.input_placeholder"></textarea>
-        </div>
-        <div class="boot-hash-button-container">
-            <button id="boot-hash-save-button" class="boot-hash-save-button ripple-element" data-i18n="boot_hash.save_button"></button>
-        </div>
+        <textarea id="boot-hash-input" class="boot-hash-input" placeholder="Paste your verified Boot Hash here" data-i18n="boot_hash.input_placeholder" oninput="window.trimInput(this)"></textarea>
+        <button id="boot-hash-save-button" class="boot-hash-save-button ripple-element" data-i18n="boot_hash.save_button"></button>
     </div>
 
     <!-- About Overlay -->

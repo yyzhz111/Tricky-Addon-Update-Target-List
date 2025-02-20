@@ -5,6 +5,11 @@ const card = document.getElementById('boot-hash-card');
 const inputBox = document.getElementById('boot-hash-input');
 const saveButton = document.getElementById('boot-hash-save-button');
 
+// Remove empty spaces from input
+window.trimInput = (input) => {
+    input.value = input.value.replace(/\s+/g, '');
+};
+
 // Function to handle Verified Boot Hash
 document.getElementById("boot-hash").addEventListener("click", async () => {
     const showCard = () => {
@@ -50,5 +55,12 @@ document.getElementById("boot-hash").addEventListener("click", async () => {
     });
     bootHashOverlay.addEventListener("click", (event) => {
         if (event.target === bootHashOverlay) closeCard();
+    });
+
+    // Enter to save
+    inputBox.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            saveButton.click();
+        }
     });
 });
