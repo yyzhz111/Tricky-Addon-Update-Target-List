@@ -24,7 +24,6 @@
     height: calc(100% - 2px);
     width: calc(100% - 60px);
     position: absolute;
-    overflow: hidden;
 }
 
 .search-icon {
@@ -78,8 +77,6 @@
     justify-content: center;
     z-index: 200;
     align-items: center;
-    position: relative;
-    overflow: hidden;
 }
 
 .menu-icon {
@@ -135,8 +132,6 @@
     padding: 12px 15px;
     text-align: left;
     background-color: white;
-    position: relative;
-    overflow: hidden;
 }
 
 .menu-options li::after {

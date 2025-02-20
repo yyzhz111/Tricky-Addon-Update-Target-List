@@ -23,8 +23,6 @@
     padding: 12px;
     width: calc(100% - 30px);
     max-width: 900px;
-    position: relative;
-    overflow: hidden;
 }
 
 #update-available {
@@ -156,8 +154,6 @@
     width: calc(100% - 30px);
     max-width: 900px;
     transition: background-color 0.2s ease;
-    position: relative;
-    overflow: hidden;
 }
 
 .content {
@@ -225,8 +221,6 @@
     box-sizing: border-box;
     transition: all 0.2s ease;
     border: 3px solid transparent;
-    position: relative;
-    overflow: hidden;
 }
 
 #normal-indicator {

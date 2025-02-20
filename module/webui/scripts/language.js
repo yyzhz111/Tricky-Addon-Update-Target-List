@@ -128,7 +128,7 @@ async function generateLanguageMenu() {
     const sortedLanguages = languageData.sort((a, b) => a.name.localeCompare(b.name));
     sortedLanguages.forEach(({ lang, name }) => {
         const button = document.createElement('button');
-        button.classList.add('language-option');
+        button.classList.add('language-option', 'ripple-element');
         button.setAttribute('data-lang', lang);
         button.textContent = name;
         languageMenu.appendChild(button);

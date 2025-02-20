@@ -33,7 +33,6 @@ body {
     font-weight: bold;
     transition: transform 0.4s ease;
     border-radius: 50px 50px;
-    overflow: hidden;
     user-select: none;
 }
 
@@ -234,6 +233,11 @@ body {
     color: #333;
     margin: 10px 0;
     font-size: 16px;
+}
+
+.ripple-element {
+    position: relative;
+    overflow: hidden;
 }
 
 .ripple {
