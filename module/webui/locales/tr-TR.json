@@ -98,6 +98,8 @@
         "get_date": "Güvenlik Yaması Tarihini Al",
         "auto": "Otomatik",
         "save": "Kaydet",
+        "fetching": "Alınıyor...",
+        "fetched": "Tamamlandı",
         "get_failed": "Güvenlik yaması tarihi alınamadı",
         "auto_success": "Otomatik yapılandırma başarıyla etkinleştirildi",
         "auto_failed": "Otomatik yapılandırma etkinleştirilemedi",

@@ -98,6 +98,8 @@
         "get_date": "Obtener Fecha del Parche de Seguridad",
         "auto": "Automático",
         "save": "Guardar",
+        "fetching": "Obteniendo...",
+        "fetched": "Completado",
         "get_failed": "Error al obtener la fecha del parche de seguridad",
         "auto_success": "Configuración automática habilitada con éxito",
         "auto_failed": "Error al habilitar la configuración automática",

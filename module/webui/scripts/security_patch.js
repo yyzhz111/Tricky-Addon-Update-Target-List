@@ -324,7 +324,10 @@ export function securityPatch() {
     // Get button
     getButton.addEventListener('click', async () => {
         try {
+            showPrompt('security_patch.fetching');
+            await new Promise(resolve => setTimeout(resolve, 200));
             const output = await execCommand(`sh ${basePath}common/get_extra.sh --get-security-patch`);
+            showPrompt('security_patch.fetched', true, 1000);
             advancedToggle.checked = true;
             normalInputs.classList.add('hidden');
             advancedInputs.classList.remove('hidden');

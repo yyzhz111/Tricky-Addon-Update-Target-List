@@ -98,6 +98,8 @@
         "get_date": "获取安全补丁日期",
         "auto": "自动",
         "save": "保存",
+        "fetching": "获取中...",
+        "fetched": "完成",
         "get_failed": "获取安全补丁日期失败",
         "auto_success": "自动配置成功启用",
         "auto_failed": "无法启用自动配置",
