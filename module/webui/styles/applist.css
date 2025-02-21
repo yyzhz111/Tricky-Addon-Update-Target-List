@@ -16,12 +16,13 @@
     align-items: center;
     background-color: #DCDCDC;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
+    box-sizing: border-box;
     margin: 0 auto;
     margin-bottom: 10px;
     outline: none;
     padding: 12px;
-    width: calc(100% - 30px);
+    width: calc(100% - 5px);
     max-width: 900px;
 }
 
@@ -146,12 +147,13 @@
 .card {
     background-color: #fff;
     border: none;
+    box-sizing: border-box;
     border-radius: 12px;
     margin: 0 auto;
     margin-bottom: 10px;
     outline: none;
-    padding: 13px;
-    width: calc(100% - 30px);
+    padding: 12px;
+    width: calc(100% - 5px);
     max-width: 900px;
     transition: background-color 0.2s ease;
 }
