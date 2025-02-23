@@ -40,37 +40,25 @@ document.getElementById("select-denylist").addEventListener("click", async () =>
 // Function to read the exclude list and uncheck corresponding apps
 document.getElementById("deselect-unnecessary").addEventListener("click", async () => {
     try {
-        const fileCheck = await execCommand(`[ -f ${basePath}common/tmp/exclude-list ] || echo "false"`);
-        if (fileCheck.trim() === "false") {
-            fetch("https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-exclude.json")
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const excludeList = data.data
-                        .flatMap(category => category.apps)
-                        .map(app => app['package-name'])
-                        .join('\n');
-                    return excludeList;
-                })
-                .then(async excludeList => {
-                    await execCommand(`
-                        echo "${excludeList}" > ${basePath}common/tmp/exclude-list
-                        sh ${basePath}common/get_extra.sh --xposed
-                    `);
-                })
-                .catch(error => {
-                    toast("Failed to download unnecessary apps!");
-                });
-        } else {
-            await execCommand(`sh ${basePath}common/get_extra.sh --xposed`);
-        }
-        await new Promise(resolve => setTimeout(resolve, 100));
-        const result = await execCommand(`cat ${basePath}common/tmp/exclude-list`);
-        const UnnecessaryApps = result.split("\n").map(app => app.trim()).filter(Boolean);
+        const excludeList = await fetch("https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-exclude.json")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data.data
+                    .flatMap(category => category.apps)
+                    .map(app => app['package-name'])
+                    .join('\n');
+            })
+            .catch(error => {
+                toast("Failed to download unnecessary apps!");
+                throw error;
+            });
+        const xposed = await execCommand(`sh ${basePath}common/get_extra.sh --xposed`);
+        const UnnecessaryApps = excludeList.split("\n").map(app => app.trim()).filter(Boolean).concat(xposed.split("\n").map(app => app.trim()).filter(Boolean));
         const apps = document.querySelectorAll(".card");
         apps.forEach(app => {
             const contentElement = app.querySelector(".content");
