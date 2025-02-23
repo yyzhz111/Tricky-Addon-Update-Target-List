@@ -1,4 +1,4 @@
-import { execCommand, linkRedirect } from './main.js';
+import { linkRedirect } from './main.js';
 
 const telegramLink = document.getElementById('telegram');
 const githubLink = document.getElementById('github');

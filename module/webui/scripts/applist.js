@@ -1,4 +1,4 @@
-import { basePath, execCommand, floatingBtn, appsWithExclamation, appsWithQuestion, toast } from './main.js';
+import { basePath, execCommand, hideFloatingBtn, appsWithExclamation, appsWithQuestion, toast } from './main.js';
 
 const appTemplate = document.getElementById('app-template').content;
 const modeOverlay = document.querySelector('.mode-overlay');
@@ -113,7 +113,7 @@ export async function fetchAppList() {
         toast("Failed to fetch app list!");
         console.error("Failed to fetch or render app list with names:", error);
     }
-    floatingBtn.style.transform = 'translateY(0)';
+    hideFloatingBtn(false);
     toggleableCheckbox();
     if (appListContainer.firstChild !== updateCard) {
         appListContainer.insertBefore(updateCard, appListContainer.firstChild);

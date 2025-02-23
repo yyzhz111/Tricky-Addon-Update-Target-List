@@ -15,7 +15,7 @@ const permissionPopup = document.getElementById('permission-popup');
 const loadingIndicator = document.querySelector('.loading');
 const prompt = document.getElementById('prompt');
 const floatingCard = document.querySelector('.floating-card');
-export const floatingBtn = document.querySelector('.floating-btn');
+const floatingBtn = document.querySelector('.floating-btn');
 
 export const basePath = "set-path";
 export const appsWithExclamation = [];
@@ -221,22 +221,13 @@ async function checkMMRL() {
 }
 
 // Funtion to adapt floating button hide in MMRL
-function hideFloatingBtn(hide = true) {
+export function hideFloatingBtn(hide = true) {
     if (!hide) {
-        floatingBtn.style.display = 'block';
-        setTimeout(() => {
-            floatingBtn.style.transform = 'translateY(0)';
-        }, 10);
+        floatingCard.style.transform = 'translateY(0)';
     } else if (typeof ksu !== 'undefined' && ksu.mmrl) {
-        floatingBtn.style.transform = 'translateY(calc(var(--window-inset-bottom) + 120px))';
-        setTimeout(() => {
-            floatingBtn.style.display = 'none';
-        }, 400);
+        floatingCard.style.transform = 'translateY(calc(var(--window-inset-bottom) + 120px))';
     } else {
-        floatingBtn.style.transform = 'translateY(120px)';
-        setTimeout(() => {
-            floatingBtn.style.display = 'none';
-        }, 400);
+        floatingCard.style.transform = 'translateY(120px)';
     }
 }
 
@@ -342,10 +333,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateCheck();
     securityPatch();
     loadingIndicator.style.display = "none";
-    floatingBtn.style.opacity = '1';
-    setTimeout(() => {
-        hideFloatingBtn(false);
-    }, 10);
+    floatingBtn.style.display = 'block';
+    hideFloatingBtn(false);
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.getElementById("aospkb").addEventListener("click", aospkb);
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
@@ -375,5 +364,9 @@ export async function execCommand(command) {
 
 // Function to toast message
 export function toast(message) {
-    ksu.toast(message);
+    try {
+        ksu.toast(message);
+    } catch (error) {
+        console.error("Failed to show toast:", error);
+    }
 }

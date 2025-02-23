@@ -12,26 +12,22 @@ body {
     display: flex;
     justify-content: center;
     position: fixed;
+    width: 100%;
     bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+    transition: transform 0.4s ease;
+    z-index: 2;
 }
 
 .floating-btn {
-    flex-shrink: 0;
     background-color: #007bff;
     border: none;
     box-shadow: 0 4px 8px #0003;
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
+    display: none;
+    bottom: 0;
     padding: 10px 20px;
     font-size: 22px;
     font-weight: bold;
-    transition: transform 0.4s ease;
     border-radius: 50px 50px;
     user-select: none;
 }
