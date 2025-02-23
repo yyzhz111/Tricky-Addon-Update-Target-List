@@ -8,50 +8,41 @@ TMP_DIR="$MODPATH/common/tmp"
 SCRIPT_DIR="/data/adb/tricky_store"
 APK_PATH="$TMP_DIR/base.apk"
 
-abort() {
+manual_download() {
     echo "$1"
+    sleep 3
+    am start -a android.intent.action.VIEW -d "https://github.com/5ec1cff/KsuWebUIStandalone/releases"
     exit 1
 }
 
 download() {
-    download_type=${1#--}
-    download_url=$2
-    download_output=$3
-
     PATH=/data/adb/magisk:/data/data/com.termux/files/usr/bin:$PATH
     if command -v curl >/dev/null 2>&1; then
-        if [ "$download_type" = "output" ]; then
-            timeout 10 curl -Lo "$download_output" "$download_url"
-        else
-            timeout 2 curl -s "$download_url"
-        fi
+        timeout 10 curl -Ls "$1"
     else
-        if [ "$download_type" = "output" ]; then
-            timeout 10 busybox wget --no-check-certificate -qO "$download_output" "$download_url"
-        else
-            timeout 2 busybox wget --no-check-certificate -qO- "$download_url"
-        fi
+        timeout 10 busybox wget --no-check-certificate -qO- "$1"
     fi
     PATH="$ORG_PATH"
 }
 
 get_webui() {
     echo "- Downloading KSU WebUI Standalone..."
-    RESPONSE=$(download --fetch "https://api.github.com/repos/5ec1cff/KsuWebUIStandalone/releases/latest")
-    URL=$(echo "$RESPONSE" | grep -o '"browser_download_url": "[^"]*"' | cut -d '"' -f 4)
-    download --output "$URL" "$APK_PATH" || abort "! Error: APK download failed, please check your internet connection."
+    API="https://api.github.com/repos/5ec1cff/KsuWebUIStandalone/releases/latest"
+    ping -c 1 -w 5 raw.githubusercontent.com &>/dev/null || manual_download "! Error: Unable to connect to raw.githubusercontent.com, please download manually."
+    URL=$(download "$API" | grep -o '"browser_download_url": "[^"]*"' | cut -d '"' -f 4) || manual_download "! Error: Unable to get latest version, please download manually."
+    download "$URL" > "$APK_PATH" || manual_download "! Error: APK download failed, please download manually."
 
     echo "- Installing..."
     pm install -r "$APK_PATH" || {
         rm -f "$APK_PATH"
-        abort "! Error: APK installation failed."
+        manual_download "! Error: APK installation failed, please download manually.."
     }
 
     echo "- Done."
     rm -f "$APK_PATH"
 
     echo "- Launching WebUI..."
-    am start -n "io.github.a13e300.ksuwebui/.WebUIActivity" -e id "tricky_store" || abort "! Error: WebUI launch failed."
+    am start -n "io.github.a13e300.ksuwebui/.WebUIActivity" -e id "tricky_store"
 }
 
 # Launch KSUWebUI standalone or MMRL, install KSUWebUI standalone if both are not installed

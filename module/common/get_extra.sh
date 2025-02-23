@@ -16,23 +16,11 @@ aapt() { "$MODPATH/aapt" "$@"; }
 # wget = low pref, no ssl.
 # curl, has ssl on android, we use it if found
 download() {
-    download_type=${1#--}
-    download_url=$2
-    download_output=$3
-
     PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:/data/data/com.termux/files/usr/bin:$PATH
     if command -v curl >/dev/null 2>&1; then
-        if [ "$download_type" = "output" ]; then
-            timeout 10 curl -Lo "$download_output" "$download_url"
-        else
-            timeout 3 curl -s "$download_url"
-        fi
+        timeout 10 curl -Ls "$1"
     else
-        if [ "$download_type" = "output" ]; then
-            timeout 10 busybox wget --no-check-certificate -qO "$download_output" "$download_url"
-        else
-            timeout 3 busybox wget --no-check-certificate -qO- "$download_url"
-        fi
+        timeout 10 busybox wget --no-check-certificate -qO- "$1"
     fi
     PATH="$ORG_PATH"
 }
@@ -72,7 +60,7 @@ uninstall() {
 }
 
 get_update() {
-    download --output "$ZIP_URL" "$MODPATH/tmp/module.zip"
+    download "$ZIP_URL" > "$MODPATH/tmp/module.zip"
     [ -s "$MODPATH/tmp/module.zip" ] || exit 1
 }
 
@@ -132,7 +120,7 @@ set_security_patch() {
 }
 
 get_latest_security_patch() {
-    security_patch=$(download --fetch https://source.android.com/docs/security/bulletin/pixel | grep -o "<td>[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}</td>" | head -n 1 | sed 's/<td>\(.*\)<\/td>/\1/')
+    security_patch=$(download "https://source.android.com/docs/security/bulletin/pixel" | grep -o "<td>[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}</td>" | head -n 1 | sed 's/<td>\(.*\)<\/td>/\1/')
     [ -n "$security_patch" ] && echo "$security_patch" || exit 1
 }
 
