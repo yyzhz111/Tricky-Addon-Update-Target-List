@@ -8,6 +8,14 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v3.5
+- **Script:** Set `system=prop` in auto config.
+- **WebUI:** Option to fetch secuirty patch date.
+- **WebUI:** Fixed `Failed to fetch app list` issue in vanilla rom.
+- **WebUI:** Added Polish translation (#18, @Bladius2024)
+- **WebUI:** Update Japanese translation (#20, @reindex-ot)
+- **WebUI:** Minor UI improvements.
+
 ### v3.4
 - **WebUI:** Allow import custom keybox from device storage.
 - **WebUI:** Allow custom config security patch in WebUI, save empty to disable auto config.
