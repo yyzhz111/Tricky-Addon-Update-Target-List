@@ -221,11 +221,22 @@ async function checkMMRL() {
 }
 
 // Funtion to adapt floating button hide in MMRL
-function hideFloatingBtn() {
-    if (typeof ksu !== 'undefined' && ksu.mmrl) {
+function hideFloatingBtn(hide = true) {
+    if (!hide) {
+        floatingBtn.style.display = 'block';
+        setTimeout(() => {
+            floatingBtn.style.transform = 'translateY(0)';
+        }, 10);
+    } else if (typeof ksu !== 'undefined' && ksu.mmrl) {
         floatingBtn.style.transform = 'translateY(calc(var(--window-inset-bottom) + 120px))';
+        setTimeout(() => {
+            floatingBtn.style.display = 'none';
+        }, 400);
     } else {
         floatingBtn.style.transform = 'translateY(120px)';
+        setTimeout(() => {
+            floatingBtn.style.display = 'none';
+        }, 400);
     }
 }
 
@@ -308,7 +319,7 @@ window.addEventListener('scroll', () => {
         headerBlock.style.transform = 'translateY(0)';
         title.style.transform = 'translateY(0)';
         searchMenuContainer.style.transform = 'translateY(0)';
-        floatingBtn.style.transform = 'translateY(0)';
+        hideFloatingBtn(false);
     }
     lastScrollY = window.scrollY;
 });
@@ -333,7 +344,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadingIndicator.style.display = "none";
     floatingBtn.style.opacity = '1';
     setTimeout(() => {
-        floatingBtn.style.transform = 'translateY(0)';
+        hideFloatingBtn(false);
     }, 10);
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.getElementById("aospkb").addEventListener("click", aospkb);
