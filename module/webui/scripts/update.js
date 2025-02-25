@@ -161,7 +161,7 @@ function setupUpdateMenu() {
         try {
             showPrompt("prompt.installing");
             setTimeout(async () => {
-                await execCommand(`su -c 'sh ${basePath}common/get_extra.sh --install-update'`);
+                await execCommand(`sh ${basePath}common/get_extra.sh --install-update`);
                 showPrompt("prompt.installed");
                 installButton.style.display = "none";
                 rebootButton.style.display = "flex";

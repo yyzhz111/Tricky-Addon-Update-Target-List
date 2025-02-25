@@ -45,7 +45,10 @@ document.getElementById("boot-hash").addEventListener("click", async () => {
         const inputValue = inputBox.value.trim();
         try {
             await execCommand(`echo "${inputValue}" > /data/adb/boot_hash`);
-            await execCommand(`su -c resetprop -n ro.boot.vbmeta.digest ${inputValue}`);
+            await execCommand(`
+                PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:$PATH
+                resetprop -n ro.boot.vbmeta.digest ${inputValue}
+            `);
             showPrompt("prompt.boot_hash_set");
             closeCard();
         } catch (error) {
