@@ -12,15 +12,9 @@ let availableLanguages = ['en-US'];
 // Function to check for available language
 export async function initializeAvailableLanguages() {
     try {
-        const response = await fetch('locales/');
-        const text = await response.text();
-        const parser = new DOMParser();
-        const html = parser.parseFromString(text, 'text/html');
-        const files = Array.from(html.querySelectorAll('a'))
-            .map(a => a.href.split('/').pop())
-            .filter(file => file.endsWith('.json') && file !== 'A-template.json')
-            .map(file => file.replace('.json', ''));
-        availableLanguages = files;
+        const response = await fetch('locales/available-lang.json');
+        const config = await response.json();
+        availableLanguages = config.languages;
         generateLanguageMenu();
     } catch (error) {
         console.error('Failed to fetch available languages:', error);
