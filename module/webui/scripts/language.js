@@ -12,11 +12,17 @@ let availableLanguages = ['en-US'];
 // Function to check for available language
 export async function initializeAvailableLanguages() {
     try {
-        const multiLang = await execCommand(`find ${basePath}webui/locales -type f -name "*.json" ! -name "A-template.json" -exec basename -s .json {} \\;`);
-        availableLanguages = multiLang.trim().split('\n');
+        const response = await fetch('locales/');
+        const text = await response.text();
+        const parser = new DOMParser();
+        const html = parser.parseFromString(text, 'text/html');
+        const files = Array.from(html.querySelectorAll('a'))
+            .map(a => a.href.split('/').pop())
+            .filter(file => file.endsWith('.json') && file !== 'A-template.json')
+            .map(file => file.replace('.json', ''));
+        availableLanguages = files;
         generateLanguageMenu();
     } catch (error) {
-        toast("Failed to get available langauge!");
         console.error('Failed to fetch available languages:', error);
         availableLanguages = ['en-US'];
     }
@@ -38,7 +44,7 @@ export function detectUserLanguage() {
 // Load translations dynamically based on the selected language
 export async function loadTranslations(lang) {
     try {
-        const response = await fetch(`/locales/${lang}.json`);
+        const response = await fetch(`locales/${lang}.json`);
         translations = await response.json();
         applyTranslations();
     } catch (error) {
@@ -116,7 +122,7 @@ async function generateLanguageMenu() {
     languageMenu.innerHTML = '';
     const languagePromises = availableLanguages.map(async (lang) => {
         try {
-            const response = await fetch(`/locales/${lang}.json`);
+            const response = await fetch(`locales/${lang}.json`);
             const data = await response.json();
             return { lang, name: data.language || lang };
         } catch (error) {
