@@ -47,6 +47,7 @@
         "deselect_all": "Deseleccionar Todo",
         "select_denylist": "Seleccionar desde DenyList",
         "deselect_unnecessary": "Deseleccionar innecesarios",
+        "add_system_app": "Agregar Aplicación del Sistema",
         "set_aosp_keybox": "Configurar AOSP Keybox",
         "set_valid_keybox": "Configurar Keybox Válido",
         "set_custom_keybox": "Establecer Keybox Personalizado",
@@ -91,7 +92,9 @@
         "reboot_fail": "Error al reiniciar, reinicia manualmente",
         "custom_key_set": "Keybox personalizado establecido con éxito",
         "custom_key_set_error": "Error al establecer el keybox personalizado",
-        "no_file_selected": "Ningún archivo seleccionado"
+        "no_file_selected": "Ningún archivo seleccionado",
+        "system_app_not_found": "Aplicación del sistema no encontrada",
+        "system_app_error": "Error al agregar la aplicación del sistema"
     },
     "security_patch": {
         "title": "Parche de Seguridad",
@@ -111,5 +114,10 @@
         "invalid_boot": "Formato de boot inválido",
         "invalid_system": "Formato de system inválido",
         "invalid_vendor": "Formato de vendor inválido"
+    },
+    "add_system_app": {
+        "title": "Agregar Aplicación del Sistema",
+        "add": "Agregar",
+        "current_list": "Lista de Aplicaciones del Sistema Actual"
     }
 }

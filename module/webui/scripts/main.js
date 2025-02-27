@@ -1,6 +1,6 @@
 import { appListContainer, fetchAppList, modeActive } from './applist.js';
 import { initializeAvailableLanguages, detectUserLanguage, loadTranslations, setupLanguageMenu, translations } from './language.js';
-import { aospkb } from './menu_option.js';
+import { aospkb, setupSystemAppMenu } from './menu_option.js';
 import { searchMenuContainer, searchInput, clearBtn, setupMenuToggle } from './search_menu.js';
 import { updateCheck } from './update.js';
 import { securityPatch } from './security_patch.js';
@@ -40,7 +40,7 @@ async function getModuleVersion() {
 }
 
 // Function to refresh app list
-async function refreshAppList() {
+export async function refreshAppList() {
     isRefreshing = true;
     title.style.transform = 'translateY(0)';
     searchMenuContainer.style.transform = 'translateY(0)';
@@ -326,6 +326,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadTranslations(userLang);
     setupMenuToggle();
     setupLanguageMenu();
+    setupSystemAppMenu();
     await fetchAppList();
     applyRippleEffect();
     checkTrickyStoreVersion();

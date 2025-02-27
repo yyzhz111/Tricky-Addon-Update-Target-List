@@ -46,4 +46,19 @@ migrate_config() {
     if ! grep -q "^auto_config=" "/data/adb/security_patch"; then
         echo "auto_config=1" >> "/data/adb/security_patch"
     fi
+
+    # Additional system app
+    SYSTEM_APP="
+    com.google.android.gms
+    com.google.android.gsf
+    com.android.vending
+    com.oplus.deepthinker
+    com.heytap.speechassist
+    com.coloros.sceneservice"
+    touch "/data/adb/tricky_store/system_app"
+    for app in $SYSTEM_APP; do
+        if pm list packages -s | grep -q "$app" && ! grep -q "$app" "/data/adb/tricky_store/system_app"; then
+            echo "$app" >> "/data/adb/tricky_store/system_app"
+        fi
+    done
 }

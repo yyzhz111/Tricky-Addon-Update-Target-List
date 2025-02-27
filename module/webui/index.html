@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles/header.css" type="text/css">
     <link rel="stylesheet" href="styles/search_menu.css" type="text/css">
     <link rel="stylesheet" href="styles/security_patch.css" type="text/css">
+    <link rel="stylesheet" href="styles/system_app.css" type="text/css">
     <script type="module" crossorigin src="scripts/main.js"></script>
     <script type="module" crossorigin src="scripts/about.js"></script>
     <script type="module" crossorigin src="scripts/help.js"></script>
@@ -77,6 +78,7 @@
                     <li class="ripple-element" id="deselect-all" data-i18n="menu.deselect_all"></li>
                     <li class="ripple-element" id="select-denylist" data-i18n="menu.select_denylist"></li>
                     <li class="ripple-element" id="deselect-unnecessary" data-i18n="menu.deselect_unnecessary"></li>
+                    <li class="ripple-element" id="add-system-app" data-i18n="menu.add_system_app"></li>
                     <li class="ripple-element" id="aospkb" data-i18n="menu.set_aosp_keybox"></li>
                     <li class="ripple-element" id="validkb" data-i18n="menu.set_valid_keybox"></li>
                     <li class="ripple-element" id="customkb" data-i18n="menu.set_custom_keybox"></li>
@@ -328,6 +330,19 @@
                     <button id="auto-config" class="auto-button ripple-element" data-i18n="security_patch.auto"></button>
                     <button id="save-patch" class="save-button ripple-element" data-i18n="security_patch.save"></button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add System App Overlay -->
+    <div id="add-system-app-overlay" class="add-system-app-overlay">
+        <div id="add-system-app-card" class="add-system-app-card">
+            <div class="add-system-app-title" data-i18n="add_system_app.title"></div>
+            <div class="add-system-app-content">
+                <input type="text" id="system-app-input" placeholder="com.example.app">
+                <button id="add-system-app-button" class="add-system-app-button ripple-element" data-i18n="add_system_app.add"></button>
+                <h3 class="current-system-app-list" data-i18n="add_system_app.current_list"></h3>
+                <div class="current-system-app-list-content"></div>
             </div>
         </div>
     </div>

@@ -47,6 +47,7 @@
         "deselect_all": "Odznacz wszystko",
         "select_denylist": "Wybierz z listy odrzuconych",
         "deselect_unnecessary": "Odznacz niepotrzebne",
+        "add_system_app": "Dodaj aplikację systemową",
         "set_aosp_keybox": "Ustaw klucz AOSP",
         "set_valid_keybox": "Ustaw ważny klucz",
         "set_custom_keybox": "Ustaw niestandardowy klucz ",
@@ -91,7 +92,9 @@
         "reboot_fail": "Nie udało się ponownie uruchomić, proszę ponownie uruchomić ręcznie",
         "custom_key_set": "Niestandardowe klucz został pomyślnie ustawiony",
         "custom_key_set_error": "Nie udało się ustawić niestandardowego klucza",
-        "no_file_selected": "Nie wybrano pliku"
+        "no_file_selected": "Nie wybrano pliku",
+        "system_app_not_found": "Aplikacja systemowa nie znaleziona",
+        "system_app_error": "Nie udało się dodać aplikacji systemowej"
     },
     "security_patch": {
         "title": "Poprawka bezpieczeństwa",
@@ -111,5 +114,10 @@
         "invalid_boot": "Nieprawidłowy format rozruchu",
         "invalid_system": "Nieprawidłowy format systemu",
         "invalid_vendor": "Nieprawidłowy format dostawcy"
+    },
+    "add_system_app": {
+        "title": "Dodaj aplikację systemową",
+        "add": "Dodaj",
+        "current_list": "Aktualna lista aplikacji systemowych"
     }
 }

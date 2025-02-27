@@ -1,4 +1,4 @@
-import { basePath, execCommand, showPrompt, toast, applyRippleEffect } from './main.js';
+import { basePath, execCommand, showPrompt, toast, applyRippleEffect, refreshAppList } from './main.js';
 
 // Function to check or uncheck all app
 function toggleCheckboxes(shouldCheck) {
@@ -74,6 +74,104 @@ document.getElementById("deselect-unnecessary").addEventListener("click", async 
         console.error("Failed to get unnecessary apps:", error);
     }
 });
+
+// Function to add system app
+export async function setupSystemAppMenu() {
+    document.getElementById("add-system-app").addEventListener("click", () => openSystemAppOverlay());
+    document.getElementById("add-system-app-overlay").addEventListener("click", (event) => {
+        if (event.target === event.currentTarget) {
+            closeSystemAppOverlay();
+        }
+    });
+    const systemAppOverlay = document.getElementById("add-system-app-overlay");
+    const systemAppInput = document.getElementById("system-app-input");
+    function openSystemAppOverlay() {
+        renderSystemAppList();
+        document.body.classList.add("no-scroll");
+        systemAppOverlay.style.display = "flex";
+        setTimeout(() => {
+            systemAppOverlay.style.opacity = "1";
+        }, 10);
+        systemAppInput.value = "";
+    }
+    function closeSystemAppOverlay() {
+        document.body.classList.remove("no-scroll");
+        systemAppOverlay.style.opacity = "0";
+        setTimeout(() => {
+            systemAppOverlay.style.display = "none";
+        }, 300);
+    }
+
+    // Add system app button
+    document.getElementById("add-system-app-button").addEventListener("click", async () => {
+        const input = document.getElementById("system-app-input");
+        const packageName = input.value;
+        if (packageName) {
+            try {
+                const result = await execCommand(`pm list packages -s | grep -q ${packageName} || echo "false"`);
+                if (result.includes("false")) {
+                    showPrompt("prompt.system_app_not_found", false);
+                } else {
+                    await execCommand(`
+                        touch "/data/adb/tricky_store/system_app"
+                        echo "${packageName}" >> "/data/adb/tricky_store/system_app"
+                        echo "${packageName}" >> "/data/adb/tricky_store/target.txt"
+                    `);
+                    systemAppInput.value = "";
+                    closeSystemAppOverlay();
+                    refreshAppList();
+                }
+            } catch (error) {
+                console.error("Error adding system app:", error);
+                showPrompt("prompt.add_system_app_error", false);
+            }
+        }
+    });
+
+    // Display current system app list and remove button
+    async function renderSystemAppList() {
+        const currentSystemAppList = document.querySelector(".current-system-app-list");
+        const currentSystemAppListContent = document.querySelector(".current-system-app-list-content");
+        currentSystemAppListContent.innerHTML = "";
+        try {
+            const systemAppList = await execCommand(`[ -f "/data/adb/tricky_store/system_app" ] && cat "/data/adb/tricky_store/system_app" | sed '/^$/d' || echo "false"`);
+            if (systemAppList.includes("false")) {
+                currentSystemAppList.style.display = "none";
+            } else {
+                systemAppList.split("\n").forEach(app => {
+                    currentSystemAppListContent.innerHTML += `
+                    <div class="system-app-item">
+                        <span>${app}</span>
+                        <button class="remove-system-app-button ripple-element">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#FFFFFF"><path d="M154-412v-136h652v136H154Z"/></svg>
+                        </button>
+                    </div>
+                `;
+                });
+            }
+        } catch (error) {
+            currentSystemAppList.style.display = "none";
+            console.error("Error displaying system app list:", error);
+        }
+
+        const removeSystemAppButtons = document.querySelectorAll(".remove-system-app-button");
+        removeSystemAppButtons.forEach(button => {
+            button.addEventListener("click", async () => {
+                const app = button.closest(".system-app-item").querySelector("span").textContent;
+                try {
+                    await execCommand(`
+                        sed -i "/${app}/d" "/data/adb/tricky_store/system_app" || true
+                        sed -i "/${app}/d" "/data/adb/tricky_store/target.txt" || true
+                    `);
+                    closeSystemAppOverlay();
+                    refreshAppList();
+                } catch (error) {
+                    console.error("Error removing system app:", error);
+                }
+            });
+        });
+    }
+}
 
 // Function to backup previous keybox and set new keybox
 async function setKeybox(content) {

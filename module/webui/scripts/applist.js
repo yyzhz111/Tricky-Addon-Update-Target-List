@@ -40,7 +40,8 @@ export async function fetchAppList() {
 
         const result = await execCommand(`
             pm list packages -3 | awk -F: '{print $2}'
-            pm list packages -s | awk -F: '{print $2}' | grep -Ex "com.google.android.gms|com.google.android.gsf|com.android.vending" 2>/dev/null || true
+            [ -f "/data/adb/tricky_store/system_app" ] && SYSTEM_APP=$(cat "/data/adb/tricky_store/system_app" | tr '\n' '|' | sed 's/|*$//') || SYSTEM_APP=""
+            pm list packages -s | awk -F: '{print $2}' | grep -Ex "$SYSTEM_APP" 2>/dev/null || true
         `);
         const appEntries = result
             .split("\n")
@@ -53,7 +54,11 @@ export async function fetchAppList() {
         for (const entry of appEntries) {
             if (!entry.appName) {
                 try {
-                    const apkPath = await execCommand(`pm path ${entry.packageName} | grep "base.apk" | awk -F: '{print $2}' | tr -d '\\r'`);
+                    const apkPath = await execCommand(`
+                        base_apk=$(pm path ${entry.packageName} | grep "base.apk" | awk -F: '{print $2}' | tr -d '\\r')
+                        [ -n "$base_apk" ] || base_apk=$(pm path ${entry.packageName} | grep ".apk" | awk -F: '{print $2}' | tr -d '\\r')
+                        echo "$base_apk"
+                    `);
                     if (apkPath) {
                         const appName = await execCommand(`${basePath}common/aapt dump badging ${apkPath.trim()} 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g"`);
                         entry.appName = appName.trim() || "Unknown App";

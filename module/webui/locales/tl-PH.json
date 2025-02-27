@@ -47,6 +47,7 @@
         "deselect_all": "Huwag Pumili ng Lahat",
         "select_denylist": "Piliin mula sa DenyList",
         "deselect_unnecessary": "Huwag Pumili ng Hindi Kinakailangan",
+        "add_system_app": "Magdagdag ng System App",
         "set_aosp_keybox": "I-set ang AOSP Keybox",
         "set_valid_keybox": "I-set ang Valid Keybox",
         "set_custom_keybox": "I-set ang Custom Keybox",
@@ -91,7 +92,9 @@
         "reboot_fail": "Nabigo ang pag-reboot, pakisubukang mag-reboot nang manu-mano",
         "custom_key_set": "Matagumpay na na-set ang Custom Keybox",
         "custom_key_set_error": "Nabigong i-set ang Custom Keybox",
-        "no_file_selected": "Walang napiling file"
+        "no_file_selected": "Walang napiling file",
+        "system_app_not_found": "Walang natagpuan na system app",
+        "system_app_error": "Nabigong dagdag ang system app"
     },
     "security_patch": {
         "title": "Security Patch",
@@ -111,5 +114,10 @@
         "invalid_boot": "Invalid boot format",
         "invalid_system": "Invalid system format",
         "invalid_vendor": "Invalid vendor format"
+    },
+    "add_system_app": {
+        "title": "Magdagdag ng System App",
+        "add": "Magdagdag",
+        "current_list": "Kasalukuyang Listahan ng System Apps"
     }
 }

@@ -47,6 +47,7 @@
         "deselect_all": "Tüm Seçimleri Kaldır",
         "select_denylist": "Reddetme Listesinden Seç",
         "deselect_unnecessary": "Gereksizleri Seçme",
+        "add_system_app": "Sistem Uygulaması Ekle",
         "set_aosp_keybox": "AOSP Keybox Ayarla",
         "set_valid_keybox": "Geçerli Keybox Ayarla",
         "set_custom_keybox": "Özel Keybox Ayarla",
@@ -91,7 +92,9 @@
         "reboot_fail": "Yeniden başlatma başarısız, lütfen manuel olarak yeniden başlatın",
         "custom_key_set": "Özel keybox başarıyla ayarlandı",
         "custom_key_set_error": "Özel keybox ayarlanamadı",
-        "no_file_selected": "Dosya seçilmedi"
+        "no_file_selected": "Dosya seçilmedi",
+        "system_app_not_found": "Sistem uygulaması bulunamadı",
+        "system_app_error": "Sistem uygulaması ekleme hatası"
     },
     "security_patch": {
         "title": "Güvenlik Yaması",
@@ -111,5 +114,10 @@
         "invalid_boot": "Geçersiz boot formatı",
         "invalid_system": "Geçersiz system formatı",
         "invalid_vendor": "Geçersiz vendor formatı"
+    },
+    "add_system_app": {
+        "title": "Sistem Uygulaması Ekle",
+        "add": "Ekle",
+        "current_list": "Mevcut Sistem Uygulamaları Listesi"
     }
 }
