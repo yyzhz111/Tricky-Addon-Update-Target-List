@@ -105,95 +105,6 @@ body {
     display: none;
 }
 
-.file-selector-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-}
-
-.file-selector {
-    width: 90%;
-    max-width: 600px;
-    height: 80vh;
-    background-color: #fff;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.file-selector-header {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-}
-
-.current-path .separator {
-    color: #6E6E6E;
-    padding: 0 4px;
-}
-
-.back-button {
-    background: none;
-    border: none;
-    padding: 5px;
-    margin-right: 10px;
-    fill: #6E6E6E;
-    user-select: none;
-}
-
-.current-path {
-    flex-grow: 1;
-    font-size: 16px;
-    overflow: scroll;
-    white-space: nowrap;
-}
-
-.close-selector {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #ccc;
-    padding: 5px;
-}
-
-.file-list {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 10px;
-}
-
-.file-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #fff;
-    position: relative;
-    overflow: hidden;
-    user-select: none;
-}
-
-.file-item svg {
-    margin-right: 10px;
-    fill: #6E6E6E;
-}
-
-.file-item span {
-    flex-grow: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 .permission-popup {
     position: fixed;
     top: 0;
@@ -270,31 +181,6 @@ body {
 
     .uninstall-container {
         background-color: #121212;
-    }
-
-    .file-selector {
-        background-color: #343434;
-        color: #fff;
-    }
-
-    .file-selector-header {
-        border-bottom: 1px solid #6E6E6E;
-    }
-
-    .file-item {
-        background-color: #343434;
-    }
-
-    .current-path .separator {
-        color: #C2C2C2;
-    }
-
-    .back-button {
-        fill: #C2C2C2;
-    }
-
-    .file-item svg {
-        fill: #C2C2C2;
     }
 
     .permission-content {

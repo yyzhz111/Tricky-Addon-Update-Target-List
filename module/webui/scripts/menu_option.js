@@ -234,43 +234,7 @@ document.getElementById("validkb").addEventListener("click", async () => {
     });
 });
 
-// Add file selector dialog elements dynamically
-const fileSelector = document.createElement('div');
-fileSelector.className = 'file-selector-overlay';
-fileSelector.innerHTML = `
-    <div class="file-selector">
-        <div class="file-selector-header">
-            <button class="back-button">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M400-80 0-480l400-400 56 57-343 343 343 343-56 57Z"/></svg>
-            </button>
-            <div class="current-path">/storage/emulated/0/Download</div>
-            <button class="close-selector">&#x2715;</button>
-        </div>
-        <div class="file-list"></div>
-    </div>
-`;
-document.body.appendChild(fileSelector);
-
-// Add styles for animations
-const style = document.createElement('style');
-style.textContent = `
-    .file-selector-overlay {
-        transition: opacity 0.3s ease;
-        opacity: 0;
-    }
-    .file-selector-overlay.visible {
-        opacity: 1;
-    }
-    .file-list {
-        transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    .file-list.switching {
-        transform: scale(0.95);
-        opacity: 0;
-    }
-`;
-document.head.appendChild(style);
-
+const fileSelector = document.querySelector('.file-selector-overlay');
 let currentPath = '/storage/emulated/0/Download';
 
 function updateCurrentPath() {
@@ -309,7 +273,7 @@ async function listFiles(path, skipAnimation = false) {
         // Add back button item if not in root directory
         if (currentPath !== '/storage/emulated/0') {
             const backItem = document.createElement('div');
-            backItem.className = 'file-item';
+            backItem.className = 'file-item ripple-element';
             backItem.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
                     <path d="M141-160q-24 0-42-18.5T81-220v-520q0-23 18-41.5t42-18.5h280l60 60h340q23 0 41.5 18.5T881-680v460q0 23-18.5 41.5T821-160H141Z"/>
@@ -333,7 +297,7 @@ async function listFiles(path, skipAnimation = false) {
         items.forEach(item => {
             if (item.path === path) return;
             const itemElement = document.createElement('div');
-            itemElement.className = 'file-item';
+            itemElement.className = 'file-item ripple-element';
             itemElement.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
                     ${item.isDirectory ? 
@@ -420,7 +384,7 @@ document.querySelector('.back-button').addEventListener('click', async () => {
 
 // Close custom keybox selector
 document.querySelector('.close-selector').addEventListener('click', () => {
-    fileSelector.classList.remove('visible');
+    fileSelector.style.opacity = '0';
     document.body.classList.remove("no-scroll");
     setTimeout(() => {
         fileSelector.style.display = 'none';
@@ -428,7 +392,7 @@ document.querySelector('.close-selector').addEventListener('click', () => {
 });
 fileSelector.addEventListener('click', (event) => {
     if (event.target === fileSelector) {
-        fileSelector.classList.remove('visible');
+        fileSelector.style.opacity = '0';
         document.body.classList.remove("no-scroll");
         setTimeout(() => {
             fileSelector.style.display = 'none';
@@ -441,7 +405,7 @@ document.getElementById('customkb').addEventListener('click', async () => {
     fileSelector.style.display = 'flex';
     document.body.classList.add("no-scroll");
     fileSelector.offsetHeight;
-    fileSelector.classList.add('visible');
+    fileSelector.style.opacity = '1';
     currentPath = '/storage/emulated/0/Download';
     const currentPathElement = document.querySelector('.current-path');
     currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');

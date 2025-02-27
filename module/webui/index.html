@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles/about.css" type="text/css">
     <link rel="stylesheet" href="styles/applist.css" type="text/css">
     <link rel="stylesheet" href="styles/boot_hash.css" type="text/css">
+    <link rel="stylesheet" href="styles/file_selector.css" type="text/css">
     <link rel="stylesheet" href="styles/header.css" type="text/css">
     <link rel="stylesheet" href="styles/search_menu.css" type="text/css">
     <link rel="stylesheet" href="styles/security_patch.css" type="text/css">
@@ -282,6 +283,20 @@
                 <p>4. Tricky Store</p>
                 <p>5. Enable Allow Advanced KernelSU API</p>
             </div>
+        </div>
+    </div>
+
+    <!-- File Selector Overlay -->
+    <div class="file-selector-overlay">
+        <div class="file-selector">
+            <div class="file-selector-header">
+                <button class="back-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="40 -1000 900 960" width="22px"><path d="M400-93.85 13.85-480 400-866.15l56.77 56.77L127.38-480l329.39 329.38L400-93.85Z"/></svg>
+                </button>
+                <div class="current-path">/storage/emulated/0/Download</div>
+                <button class="close-selector">&#x2715;</button>
+            </div>
+            <div class="file-list"></div>
         </div>
     </div>
 
