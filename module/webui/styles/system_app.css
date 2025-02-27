@@ -2,7 +2,6 @@
     display: none;
     position: fixed;
     justify-content: center;
-    align-items: flex-start;
     top: 0;
     left: 0;
     width: 100%;
@@ -16,12 +15,13 @@
 .add-system-app-card {
     position: fixed;
     display: flex;
-    margin-top: 15%;
+    top: 10%;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     width: calc(90vw - 60px);
     max-width: 400px;
+    max-height: calc(80vh - 60px);
+    overflow-y: scroll;
     padding: 30px;
     background-color: #fff;
     border-radius: 10px;
@@ -29,9 +29,9 @@
 }
 
 .add-system-app-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 16px;
+    font-size: 26px;
+    user-select: none;
+    margin-bottom: 20px;
 }
 
 .add-system-app-content {
@@ -77,8 +77,6 @@
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    max-height: 40vh;
-    overflow-y: scroll;
 }
 
 .system-app-item {

@@ -1,6 +1,7 @@
 .security-patch-overlay {
     display: none;
     position: fixed;
+    justify-content: center;
     top: 0;
     left: 0;
     width: 100%;
@@ -12,11 +13,9 @@
 }
 
 .security-patch-card {
-    display: none;
+    display: block;
     position: fixed;
     top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
     background-color: white;
     padding: 30px;
     border-radius: 15px;
@@ -26,8 +25,6 @@
     max-width: 300px;
     max-height: calc(80% - 60px);
     overflow-y: auto;
-    transition: opacity 0.2s ease;
-    opacity: 0;
 }
 
 .security-patch-content {
