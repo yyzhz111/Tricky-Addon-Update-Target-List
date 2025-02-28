@@ -2,6 +2,7 @@ body {
     background-color: #F5F5F5;
     padding-top: var(--window-inset-top);
     padding-bottom: var(--window-inset-bottom);
+    margin: 0;
 }
 
 .no-scroll {
@@ -77,7 +78,7 @@ body {
 
 .uninstall-container {
     padding: 8px;
-    width: calc(100% - 5px);
+    width: calc(100% - 20px);
     max-width: 900px;
     display: flex;
     justify-content: center;
