@@ -320,7 +320,7 @@ async function listFiles(path, skipAnimation = false) {
                     const source = await execCommand(`cat "${item.path}"`);
                     const result = await setKeybox(source);
                     if (result) {
-                        fileSelector.style.display = 'none';
+                        closeCustomKeyboxSelector();
                         showPrompt('prompt.custom_key_set');
                     } else {
                         showPrompt('prompt.custom_key_set_error');
@@ -384,21 +384,22 @@ document.querySelector('.back-button').addEventListener('click', async () => {
 
 // Close custom keybox selector
 document.querySelector('.close-selector').addEventListener('click', () => {
+    closeCustomKeyboxSelector();
+});
+fileSelector.addEventListener('click', (event) => {
+    if (event.target === fileSelector) {
+        closeCustomKeyboxSelector();
+    }
+});
+
+// Function to close custom keybox selector
+function closeCustomKeyboxSelector() {
     fileSelector.style.opacity = '0';
     document.body.classList.remove("no-scroll");
     setTimeout(() => {
         fileSelector.style.display = 'none';
     }, 300);
-});
-fileSelector.addEventListener('click', (event) => {
-    if (event.target === fileSelector) {
-        fileSelector.style.opacity = '0';
-        document.body.classList.remove("no-scroll");
-        setTimeout(() => {
-            fileSelector.style.display = 'none';
-        }, 300);
-    }
-});
+}
 
 // Open custom keybox selector
 document.getElementById('customkb').addEventListener('click', async () => {
