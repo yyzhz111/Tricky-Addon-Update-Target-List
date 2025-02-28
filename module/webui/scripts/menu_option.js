@@ -105,7 +105,7 @@ export async function setupSystemAppMenu() {
     // Add system app button
     document.getElementById("add-system-app-button").addEventListener("click", async () => {
         const input = document.getElementById("system-app-input");
-        const packageName = input.value;
+        const packageName = input.value.trim();
         if (packageName) {
             try {
                 const result = await execCommand(`pm list packages -s | grep -q ${packageName} || echo "false"`);

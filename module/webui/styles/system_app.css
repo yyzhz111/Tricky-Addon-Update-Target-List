@@ -24,7 +24,7 @@
     overflow-y: scroll;
     padding: 30px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -54,7 +54,7 @@
 }
 
 .add-system-app-button {
-    margin-top: 10px;
+    margin-top: 15px;
     width: 100%;
     padding: 12px;
     border: none;
@@ -67,8 +67,9 @@
 }
 
 .current-system-app-list {
-    margin-top: 20px;
+    margin-top: 25px;
     margin-bottom: 10px;
+    user-select: none;
 }
 
 .current-system-app-list-content {
