@@ -15,6 +15,8 @@
         "select_denylist_description": "Yalnızca Magisk'te mevcut, Reddetme Listesindeki uygulamaları seç. Tavsiye edilir.",
         "deselect_unnecessary": "Gereksizleri Seçme",
         "deselect_unnecessary_description": "Gereksiz kategori: Xposed modülü, root yöneticisi, root ile ilgili uygulamalar ve asla bootloader durumunu kontrol etmeyen genel uygulamalar. Bu seçenek internet bağlantısı gerektirir.",
+        "add_system_app": "Sistem Uygulaması Ekle",
+        "add_system_app_description": "Belirli bir sistem uygulamasını uygulama listesine ekleyin.",
         "set_keybox": "AOSP & Geçerli Keybox Ayarla",
         "set_keybox_description": "Tricky Store'daki keybox.xml dosyasını değiştirir. Eğer geçerli bir keybox yoksa AOSP keybox ile değiştirilecektir. Geçerli keybox seçeneği internet bağlantısı gerektirir.",
         "set_custom_keybox": "Özel Keybox Ayarla",

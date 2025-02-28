@@ -15,6 +15,8 @@
         "select_denylist_description": "僅適用於 Magisk，選擇在排除列表中的應用。推薦使用。",
         "deselect_unnecessary": "取消選擇非必要應用",
         "deselect_unnecessary_description": "非必要分類：Xposed 模組、root 管理器、與 root 相關的應用，以及從不檢查 bootloader 狀態的通用應用。此功能需連網使用。",
+        "add_system_app": "添加系統應用",
+        "add_system_app_description": "添加特定系統應用到應用列表。",
         "set_keybox": "設置 AOSP & 有效密鑰",
         "set_keybox_description": "替換 Tricky Store 的密鑰（keybox.xml）。如果沒有有效密鑰，將替換為 AOSP 密鑰。有效密鑰選項需連網使用。",
         "set_custom_keybox": "設置自定義密鑰",

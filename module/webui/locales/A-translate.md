@@ -15,5 +15,5 @@
 2. Make a copy of `/module/webui/locales/A-template.json`
 3. Rename it to `language_code-COUNTRY_CODE.json`, e.g., `en-US.json`.
 4. Translate the string value inside.
-5. Add the language code to `/module/webui/locales/available-lang.json`.
+5. Add the language code to `/module/webui/locales/available-lang.json`, this step is necessary for displaying the language in the WebUI.
 6. Create a Pull Request.

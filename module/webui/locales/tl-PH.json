@@ -15,6 +15,8 @@
         "select_denylist_description": "Available lang sa Magisk, piliin ang mga app na nasa DenyList. Inirerekomenda.",
         "deselect_unnecessary": "Huwag Pumili ng Hindi Kinakailangan",
         "deselect_unnecessary_description": "Hindi kinakailangang kategorya: Xposed module, root manager, root-related apps, at mga karaniwang apps na hindi kailanman nire-refresh ang bootloader status. Nangangailangan ng koneksyon sa internet.",
+        "add_system_app": "Magdagdag ng System App",
+        "add_system_app_description": "Magdagdag ng tiyak na system app sa listahan ng apps.",
         "set_keybox": "I-set ang AOSP at Valid Keybox",
         "set_keybox_description": "Palitan ang tricky store keybox. Palitan ang AOSP keybox kung walang valid keybox. Nangangailangan ng koneksyon sa internet ang valid keybox option.",
         "set_custom_keybox": "I-set ang Custom Keybox",

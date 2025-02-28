@@ -15,6 +15,8 @@
         "select_denylist_description": "Dostępne tylko w Magisk, wybrane aplikacje, które są na DenyList. Zalecane.",
         "deselect_unnecessary": "Odznacz niepotrzebne",
         "deselect_unnecessary_description": "Kategoria niepotrzebna: moduł Xposed, menedżer root, aplikacje związane z rootem i ogólne aplikacje, które nigdy nie sprawdzają stanu bootloadera. Ta opcja wymaga połączenia internetowego.",
+        "add_system_app": "Dodaj aplikację systemową",
+        "add_system_app_description": "Dodaj konkretną aplikację systemową do listy aplikacji.",
         "set_keybox": "Ustaw AOSP i prawidłowy klucz",
         "set_keybox_description": "Zastąp tricky store keybox.xml. Klucz AOSP zostanie zastąpiony, jeśli nie będzie już prawidłowego klucza. Opcja pobrania prawidłowego klucza wymaga połączenia internetowego.",
         "set_custom_keybox": "Ustaw niestandardowy klucz",

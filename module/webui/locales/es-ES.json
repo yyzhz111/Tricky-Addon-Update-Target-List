@@ -15,6 +15,8 @@
         "select_denylist_description": "Disponible solo en Magisk, selecciona aplicaciones que están en la DenyList. Recomendado.",
         "deselect_unnecessary": "Deseleccionar innecesarios",
         "deselect_unnecessary_description": "Categorías innecesarias: módulos Xposed, gestores de root, aplicaciones relacionadas con root y aplicaciones generales que nunca verifican el estado del bootloader. Esta opción requiere conexión a Internet.",
+        "add_system_app": "Agregar Aplicación del Sistema",
+        "add_system_app_description": "Agregar una aplicación del sistema específica a la lista de aplicaciones.",
         "set_keybox": "Configurar AOSP y Keybox Válido",
         "set_keybox_description": "Reemplazar el archivo keybox.xml de Tricky Store. El AOSP Keybox será reemplazado si no hay un keybox válido. Esta opción requiere conexión a Internet.",
         "set_custom_keybox": "Establecer Keybox Personalizado",
