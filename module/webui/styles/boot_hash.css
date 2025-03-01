@@ -1,45 +1,20 @@
 .boot-hash-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1200;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .boot-hash-card {
     position: fixed;
     top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
     width: calc(90% - 60px);
     max-width: 300px;
+    height: fit-content;
     background-color: #fff;
     border-radius: 18px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    z-index: 1200;
     padding: 30px;
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 15px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.boot-hash-overlay.show {
-    visibility: visible;
-    opacity: 1;
-}
-
-.boot-hash-card.show {
-    display: flex;
-    opacity: 1;
 }
 
 .boot-hash-title {

@@ -3,7 +3,7 @@ import { updateCard } from './applist.js';
 
 const updateCardText = document.getElementById('redirect-to-release');
 const UpdateMenu = document.querySelector('.update-overlay');
-const closeUpdate = document.querySelector('.close-update');
+const closeUpdate = document.getElementById('close-update');
 const releaseNotes = document.querySelector('.changelog');
 const installButton = document.querySelector('.install');
 const rebootButton = document.querySelector('.reboot');

@@ -214,7 +214,7 @@ async function checkMMRL() {
             MMRL_API = true;
         } catch (error) {
             console.error('Permission check failed:', error);
-            permissionPopup.classList.remove('hidden');
+            permissionPopup.style.display('flex');
             MMRL_API = false;
         }
     }

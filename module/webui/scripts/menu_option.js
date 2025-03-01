@@ -234,9 +234,11 @@ document.getElementById("validkb").addEventListener("click", async () => {
     });
 });
 
+// File selector
 const fileSelector = document.querySelector('.file-selector-overlay');
 let currentPath = '/storage/emulated/0/Download';
 
+// Function to display file in current path
 function updateCurrentPath() {
     const currentPathElement = document.querySelector('.current-path');
     const segments = currentPath.split('/').filter(Boolean);
@@ -281,17 +283,8 @@ async function listFiles(path, skipAnimation = false) {
                 <span>..</span>
             `;
             backItem.addEventListener('click', async () => {
-                currentPath = currentPath.split('/').slice(0, -1).join('/');
-                if (currentPath === '') currentPath = '/storage/emulated/0';
-                const currentPathElement = document.querySelector('.current-path');
-                currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');
-                currentPathElement.scrollTo({ 
-                    left: currentPathElement.scrollWidth,
-                    behavior: 'smooth'
-                });
-                await listFiles(currentPath);
+                document.querySelector('.back-button').click();
             });
-            
             fileList.appendChild(backItem);
         }
         items.forEach(item => {

@@ -6,35 +6,27 @@ const githubLink = document.getElementById('github');
 // Function to show about overlay
 document.getElementById("about").addEventListener("click", () => {
     const aboutOverlay = document.getElementById('about-overlay');
-    const aboutMenu = document.getElementById('about-menu');
     const closeAbout = document.getElementById('close-about');
-    const showMenu = () => {
-        aboutOverlay.style.display = 'flex';
-        setTimeout(() => {
-            aboutOverlay.style.opacity = '1';
-            aboutMenu.style.opacity = '1';
-        }, 10);
-        document.body.style.overflow = 'hidden';
-    };
+
+    // Show about menu
+    document.body.classList.add("no-scroll");
+    aboutOverlay.style.display = 'flex';
+    setTimeout(() => {
+        aboutOverlay.style.opacity = '1';
+    }, 10);
+
     const hideMenu = () => {
+        document.body.classList.remove("no-scroll");
         aboutOverlay.style.opacity = '0';
-        aboutMenu.style.opacity = '0';
         setTimeout(() => {
             aboutOverlay.style.display = 'none';
-            document.body.style.overflow = 'auto';
         }, 200);
     };
-    showMenu();
-    closeAbout.addEventListener('click', (event) => {
-        event.stopPropagation();
-        hideMenu();
-    });
+
+    closeAbout.addEventListener("click", hideMenu);
     aboutOverlay.addEventListener('click', (event) => {
-        if (!aboutMenu.contains(event.target)) {
-            hideMenu();
-        }
+        if (event.target === aboutOverlay) hideMenu();
     });
-    menu.addEventListener('click', (event) => event.stopPropagation());
 });
 
 // Event listener for link redirect

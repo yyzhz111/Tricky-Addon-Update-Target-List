@@ -1,7 +1,6 @@
 import { execCommand, showPrompt } from './main.js';
 
 const bootHashOverlay = document.getElementById('boot-hash-overlay');
-const card = document.getElementById('boot-hash-card');
 const inputBox = document.getElementById('boot-hash-input');
 const saveButton = document.getElementById('boot-hash-save-button');
 
@@ -12,25 +11,20 @@ window.trimInput = (input) => {
 
 // Function to handle Verified Boot Hash
 document.getElementById("boot-hash").addEventListener("click", async () => {
-    const showCard = () => {
-        bootHashOverlay.style.display = "flex";
-        card.style.display = "flex";
-        requestAnimationFrame(() => {
-            bootHashOverlay.classList.add("show");
-            card.classList.add("show");
-        });
-        document.body.style.overflow = "hidden";
-    };
-    const closeCard = () => {
-        bootHashOverlay.classList.remove("show");
-        card.classList.remove("show");
+    // Display boot hash menu
+    document.body.classList.add("no-scroll");
+    bootHashOverlay.style.display = "flex";
+    setTimeout(() => {
+        bootHashOverlay.style.opacity = 1;
+    }, 10);
+
+    const closeBootHashMenu = () => {
+        document.body.classList.remove("no-scroll");
+        bootHashOverlay.style.opacity = 0;
         setTimeout(() => {
             bootHashOverlay.style.display = "none";
-            card.style.display = "none";
-            document.body.style.overflow = "auto";
         }, 200);
     };
-    showCard();
     try {
         const bootHashContent = await execCommand("cat /data/adb/boot_hash");
         const validHash = bootHashContent
@@ -50,14 +44,14 @@ document.getElementById("boot-hash").addEventListener("click", async () => {
                 resetprop -n ro.boot.vbmeta.digest ${inputValue}
             `);
             showPrompt("prompt.boot_hash_set");
-            closeCard();
+            closeBootHashMenu();
         } catch (error) {
             console.error("Failed to update boot_hash:", error);
             showPrompt("prompt.boot_hash_set_error", false);
         }
     });
     bootHashOverlay.addEventListener("click", (event) => {
-        if (event.target === bootHashOverlay) closeCard();
+        if (event.target === bootHashOverlay) closeBootHashMenu();
     });
 
     // Enter to save

@@ -148,74 +148,39 @@
     justify-content: center;
     align-items: center;
     opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.help-overlay.show {
-    display: flex;
-    opacity: 1;
-}
-
-.help-overlay.hide {
-    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 .help-menu {
     position: relative;
-    width: 90vw;
+    width: calc(95vw - 60px);
     max-width: 800px;
     background-color: white;
-    padding: 10px 0;
+    padding: 30px;
     border-radius: 15px;
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.close-help {
-    position: absolute;
-    top: 15px;
-    right: 12px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #ccc;
-    user-select: none;
-}
-
 .help-content {
-    max-height: 85vh;
-    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: calc(85vh - 60px);
     overflow-y: auto;
 }
 
-.help-content p {
+.help-content-header {
     font-size: 26px;
     user-select: none;
 }
 
-.help-content ul {
-    padding-left: 0;
-    list-style-type: none;
-}
-
-.help-content ul li {
-    font-weight: bold;
+.instruction strong {
     font-size: 18px;
 }
 
-.help-content ul ul li {
-    font-weight: normal;
-    font-size: 16px;
-}
-
-.help-content ul ul ul li {
-    color: #777777;
-    font-weight: normal;
-    font-size: 14px;
-}
-
-.help-content ul ul ul li a {
-    color: inherit;
+.instruction p {
+    margin: 0;
 }
 
 @media (prefers-color-scheme: dark) {

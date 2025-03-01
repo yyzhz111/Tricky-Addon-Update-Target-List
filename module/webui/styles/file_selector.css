@@ -21,6 +21,7 @@
     border-radius: 15px;
     display: flex;
     flex-direction: column;
+    position: relative;
     overflow: hidden;
 }
 
@@ -55,7 +56,7 @@
     border: none;
     font-size: 20px;
     color: #ccc;
-    padding: 5px;
+    padding: 0 5px;
 }
 
 .file-list {
@@ -83,7 +84,7 @@
 
 .file-item svg {
     margin-right: 10px;
-    fill: #6E6E6E;
+    fill: #ccc;
 }
 
 .file-item span {
@@ -112,10 +113,6 @@
     }
 
     .back-button {
-        fill: #C2C2C2;
-    }
-
-    .file-item svg {
         fill: #C2C2C2;
     }
 }
