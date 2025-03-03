@@ -36,7 +36,7 @@ async function handleSecurityPatch(mode, value = null) {
     if (mode === 'disable') {
         try {
             await execCommand(`
-                sed -i "s/^auto_config=.*/auto_config=0/" /data/adb/security_patch
+                rm -f /data/adb/tricky_store/security_patch_auto_config
                 rm -f /data/adb/tricky_store/security_patch.txt
             `);
             showPrompt('security_patch.value_empty');
@@ -48,7 +48,7 @@ async function handleSecurityPatch(mode, value = null) {
     } else if (mode === 'manual') {
         try {
             await execCommand(`
-                sed -i "s/^auto_config=.*/auto_config=0/" /data/adb/security_patch
+                rm -f /data/adb/tricky_store/security_patch_auto_config
                 echo "${value}" > /data/adb/tricky_store/security_patch.txt
                 chmod 644 /data/adb/tricky_store/security_patch.txt
             `);
@@ -63,60 +63,47 @@ async function handleSecurityPatch(mode, value = null) {
 
 // Load current configuration
 async function loadCurrentConfig() {
+    let allValue, systemValue, bootValue, vendorValue;
     try {
-        const result = await execCommand('cat /data/adb/security_patch');
-        if (result) {
-            const lines = result.split('\n');
-            let autoConfig = '1', allValue = '0', systemValue = '0', bootValue = '0', vendorValue = '0';
-            for (const line of lines) {
-                if (line.startsWith('auto_config=')) {
-                    autoConfig = line.split('=')[1];
-                }
-            }
-
-            if (autoConfig === '1') {
-                allValue = null;
-                systemValue = null;
-                bootValue = null;
-                vendorValue = null;
-                overlay.classList.add('hidden');
-            } else {
-                // Read values from tricky_store if auto_config is 0
-                const trickyResult = await execCommand('cat /data/adb/tricky_store/security_patch.txt');
-                if (trickyResult) {
-                    const trickyLines = trickyResult.split('\n');
-                    for (const line of trickyLines) {
-                        if (line.startsWith('all=')) {
-                            allValue = line.split('=')[1] || null;
-                            if (allValue !== null) allPatchInput.value = allValue;
-                        } else {
-                            allValue = null;
-                        }
-                        if (line.startsWith('system=')) {
-                            systemValue = line.split('=')[1] || null;
-                            if (systemValue !== null) systemPatchInput.value = systemValue;
-                        } else {
-                            systemValue = null;
-                        }
-                        if (line.startsWith('boot=')) {
-                            bootValue = line.split('=')[1] || null;
-                            if (bootValue !== null) bootPatchInput.value = bootValue;
-                        } else {
-                            bootValue = null;
-                        }
-                        if (line.startsWith('vendor=')) {
-                            vendorValue = line.split('=')[1] || null;
-                            if (vendorValue !== null) vendorPatchInput.value = vendorValue;
-                        } else {
-                            vendorValue = null;
-                        }
+        const autoConfig = await execCommand('[ -f /data/adb/tricky_store/security_patch_auto_config ] && echo "true" || echo "false"');
+        if (autoConfig.trim() === 'true') {
+            allValue = null;
+            systemValue = null;
+            bootValue = null;
+            vendorValue = null;
+        } else {
+            // Read values from tricky_store if auto_config is 0
+            const trickyResult = await execCommand('cat /data/adb/tricky_store/security_patch.txt');
+            if (trickyResult) {
+                const trickyLines = trickyResult.split('\n');
+                for (const line of trickyLines) {
+                    if (line.startsWith('all=')) {
+                        allValue = line.split('=')[1] || null;
+                        if (allValue !== null) allPatchInput.value = allValue;
+                    } else {
+                        allValue = null;
+                    }
+                    if (line.startsWith('system=')) {
+                        systemValue = line.split('=')[1] || null;
+                        if (systemValue !== null) systemPatchInput.value = systemValue;
+                    } else {
+                        systemValue = null;
+                    }
+                    if (line.startsWith('boot=')) {
+                        bootValue = line.split('=')[1] || null;
+                        if (bootValue !== null) bootPatchInput.value = bootValue;
+                    } else {
+                        bootValue = null;
+                    }
+                    if (line.startsWith('vendor=')) {
+                        vendorValue = line.split('=')[1] || null;
+                        if (vendorValue !== null) vendorPatchInput.value = vendorValue;
+                    } else {
+                        vendorValue = null;
                     }
                 }
-                overlay.classList.add('hidden');
             }
-
-            // Check if in advanced mode
-            if (autoConfig === '0' && allValue === null && (bootValue || systemValue || vendorValue)) {
+            if (allValue === null && (bootValue || systemValue || vendorValue)) {
                 checkAdvanced(true);
             }
         }
@@ -239,7 +226,7 @@ export function securityPatch() {
             if (output.trim() === "not set") {
                 showPrompt('security_patch.auto_failed', false);
             } else {
-                await execCommand(`sed -i "s/^auto_config=.*/auto_config=1/" /data/adb/security_patch`);
+                await execCommand(`touch /data/adb/tricky_store/security_patch_auto_config`);
                 // Reset inputs
                 allPatchInput.value = '';
                 systemPatchInput.value = '';

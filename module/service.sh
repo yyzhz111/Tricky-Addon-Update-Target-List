@@ -23,7 +23,7 @@ add_denylist_to_target() {
 }
 
 # Spoof security patch
-if grep -q "^auto_config=1" "/data/adb/security_patch"; then
+if [ -f "/data/adb/tricky_store/security_patch_auto_config" ]; then
     sh "$MODPATH/common/get_extra.sh" --security-patch
 fi
 
