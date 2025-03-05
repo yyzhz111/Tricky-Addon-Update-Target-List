@@ -1,7 +1,5 @@
 {
     "description": "Unnecessary app list",
-    "repo-link": "https://github.com/KOWX712/Tricky-Addon-Update-Target-List",
-    "json-link": "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/more-exclude.json",
     "data": [
         {
             "info": "Root manager",
@@ -125,12 +123,6 @@
                     "package-name": "org.zwanoo.android.speedtest"
                 }
             ]
-        }
-    ],
-    "Add more app into this list?": [
-        {
-            "issue": "https://github.com/KOWX712/Tricky-Addon-Update-Target-List/issues",
-            "pull-request": "https://github.com/KOWX712/Tricky-Addon-Update-Target-List/pulls"
         }
     ]
 }

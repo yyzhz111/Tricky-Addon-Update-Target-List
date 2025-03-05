@@ -71,6 +71,7 @@ fi
 # Optimization
 OUTPUT_APP="$MODPATH/common/tmp/applist"
 OUTPUT_SKIP="$MODPATH/common/tmp/skiplist"
+OUTPUT_XPOSED="$MODPATH/common/tmp/xposed"
 
 until [ "$(getprop sys.boot_completed)" = "1" ]; do
     sleep 1
@@ -109,7 +110,10 @@ echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT
     fi
 
     # Check if app is Xposed module and add to skip list if not
-    if ! aapt dump xmltree "$APK_PATH" AndroidManifest.xml 2>/dev/null | grep -qE "xposed.category|xposeddescription"; then
+    touch "$OUTPUT_XPOSED"
+    if aapt dump xmltree "$APK_PATH" AndroidManifest.xml 2>/dev/null | grep -qE "xposed.category|xposeddescription"; then
+        echo "$PACKAGE" >> "$OUTPUT_XPOSED"
+    else
         echo "$PACKAGE" >> "$OUTPUT_SKIP"
     fi
 done
