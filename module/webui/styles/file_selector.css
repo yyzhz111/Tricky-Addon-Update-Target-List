@@ -83,6 +83,7 @@
 }
 
 .file-item svg {
+    flex-shrink: 0;
     margin-right: 10px;
     fill: #ccc;
 }
