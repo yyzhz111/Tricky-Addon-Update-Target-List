@@ -4,9 +4,9 @@ const bootHashOverlay = document.getElementById('boot-hash-overlay');
 const inputBox = document.getElementById('boot-hash-input');
 const saveButton = document.getElementById('boot-hash-save-button');
 
-// Remove empty spaces from input
+// Remove empty spaces from input and convert to lowercase
 window.trimInput = (input) => {
-    input.value = input.value.replace(/\s+/g, '');
+    input.value = input.value.replace(/\s+/g, '').toLowerCase();
 };
 
 // Function to handle Verified Boot Hash
@@ -38,10 +38,13 @@ document.getElementById("boot-hash").addEventListener("click", async () => {
     saveButton.addEventListener("click", async () => {
         const inputValue = inputBox.value.trim();
         try {
-            await execCommand(`echo "${inputValue}" > /data/adb/boot_hash`);
             await execCommand(`
                 PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:$PATH
                 resetprop -n ro.boot.vbmeta.digest ${inputValue}
+                [ -z "${inputValue}" ] && rm -f /data/adb/boot_hash || {
+                    echo "${inputValue}" > /data/adb/boot_hash
+                    chmod 644 /data/adb/boot_hash
+                }
             `);
             showPrompt("prompt.boot_hash_set");
             closeBootHashMenu();

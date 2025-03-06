@@ -32,11 +32,10 @@ find_config() {
 }
 
 migrate_config() {
-    # Migrate boot_hash
-    if [ ! -f "/data/adb/boot_hash" ]; then
-        mv "$COMPATH/boot_hash" "/data/adb/boot_hash"
-    else
-        rm -f "$COMPATH/boot_hash"
+    # remove empty file
+    if [ -f "/data/adb/boot_hash" ]; then
+        hash_value=$(grep -v '^#' "/data/adb/boot_hash" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+        [ -z "$hash_value" ] && rm -f /data/adb/boot_hash || echo "$hash_value" > /data/adb/boot_hash
     fi
 
     # Migrate security_patch config*

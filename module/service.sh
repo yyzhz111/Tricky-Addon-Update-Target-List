@@ -22,17 +22,25 @@ add_denylist_to_target() {
     done
 }
 
+resetprop_if_empty() {
+    CURRENT=$(getprop "$1")
+    [ -z "$CURRENT" ] && resetprop -n "$1" "$2"
+}
+
 # Spoof security patch
 if [ -f "/data/adb/tricky_store/security_patch_auto_config" ]; then
     sh "$MODPATH/common/get_extra.sh" --security-patch
 fi
 
-# Reset verified Boot Hash
-hash_value=$(grep -v '^#' "/data/adb/boot_hash" | tr -d '[:space:]')
-if [ -n "$hash_value" ]; then
-    resetprop -n ro.boot.vbmeta.digest "$hash_value"
+# Reset vbmeta related prop
+if [ -f "/data/adb/boot_hash" ]; then
+    hash_value=$(grep -v '^#' "/data/adb/boot_hash" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+    [ -z "$hash_value" ] && rm -f /data/adb/boot_hash || resetprop -n ro.boot.vbmeta.digest "$hash_value"
 fi
-
+resetprop_if_empty ro.boot.vbmeta.invalidate_on_error yes
+resetprop_if_empty ro.boot.vbmeta.avb_version 1.0
+resetprop_if_empty ro.boot.vbmeta.hash_alg sha256
+resetprop_if_empty ro.boot.vbmeta.size 10496
 
 # Disable TSupport-A auto update target to prevent overwrite
 if [ -d "$TSPA" ]; then
