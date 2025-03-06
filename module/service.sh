@@ -37,10 +37,11 @@ if [ -f "/data/adb/boot_hash" ]; then
     hash_value=$(grep -v '^#' "/data/adb/boot_hash" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
     [ -z "$hash_value" ] && rm -f /data/adb/boot_hash || resetprop -n ro.boot.vbmeta.digest "$hash_value"
 fi
-resetprop_if_empty ro.boot.vbmeta.invalidate_on_error yes
-resetprop_if_empty ro.boot.vbmeta.avb_version 1.0
-resetprop_if_empty ro.boot.vbmeta.hash_alg sha256
-resetprop_if_empty ro.boot.vbmeta.size 10496
+resetprop_if_empty "ro.boot.vbmeta.device_state" "locked"
+resetprop_if_empty "ro.boot.vbmeta.invalidate_on_error" "yes"
+resetprop_if_empty "ro.boot.vbmeta.avb_version" "1.0"
+resetprop_if_empty "ro.boot.vbmeta.hash_alg" "sha256"
+resetprop_if_empty "ro.boot.vbmeta.size" "10496"
 
 # Disable TSupport-A auto update target to prevent overwrite
 if [ -d "$TSPA" ]; then
