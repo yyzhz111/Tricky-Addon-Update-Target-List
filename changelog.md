@@ -8,6 +8,14 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v3.6
+- **WebUI:** Option to add system apps.
+- **WebUI:** Fixed abnormal gap between content and header in MMRL.
+- Handle some vbmeta related prop, enforce boot hash to lowercase.
+- No longer auto config security patch by default (old user will remain current setup).
+- Fixed issue with disable sucompat.
+- More minor improvements.
+
 ### v3.5
 - **Script:** Set `system=prop` in auto config.
 - **WebUI:** Option to fetch secuirty patch date.
