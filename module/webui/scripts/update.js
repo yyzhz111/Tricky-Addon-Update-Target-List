@@ -160,12 +160,11 @@ function setupUpdateMenu() {
     installButton.addEventListener('click', async () => {
         try {
             showPrompt("prompt.installing");
-            setTimeout(async () => {
-                await execCommand(`sh ${basePath}common/get_extra.sh --install-update`);
-                showPrompt("prompt.installed");
-                installButton.style.display = "none";
-                rebootButton.style.display = "flex";
-            }, 300);
+            await new Promise(resolve => setTimeout(resolve, 300));
+            await execCommand(`sh ${basePath}common/get_extra.sh --install-update`);
+            showPrompt("prompt.installed");
+            installButton.style.display = "none";
+            rebootButton.style.display = "flex";
         } catch (error) {
             showPrompt("prompt.install_fail", false);
             console.error('Fail to execute installation script:', error);
@@ -176,9 +175,8 @@ function setupUpdateMenu() {
     rebootButton.addEventListener('click', async () => {
         try {
             showPrompt("prompt.rebooting");
-            setTimeout(async () => {
-                await execCommand("svc power reboot");
-            }, 1000);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            await execCommand("svc power reboot");
         } catch (error) {
             showPrompt("prompt.reboot_fail", false);
             console.error('Fail to reboot:', error);

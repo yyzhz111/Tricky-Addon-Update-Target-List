@@ -89,7 +89,7 @@
         "download_fail": "Fail to download update",
         "installing": "Installing update...",
         "installed": "Installed successfully, reboot now.",
-        "install_fail": "Fail to install, please update manual",
+        "install_fail": "Fail to install, please update manually",
         "rebooting": "Rebooting...",
         "reboot_fail": "Fail to reboot, please reboot manually",
         "custom_key_set": "Custom keybox set successfully",

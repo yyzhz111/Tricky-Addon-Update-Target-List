@@ -68,12 +68,13 @@ get_update() {
 }
 
 install_update() {
+    PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:$PATH
     if command -v magisk >/dev/null 2>&1; then
-        magisk --install-module "$MODPATH/tmp/module.zip"
+        magisk --install-module "$MODPATH/tmp/module.zip" || exit 1
     elif command -v apd >/dev/null 2>&1; then
-        apd module install "$MODPATH/tmp/module.zip"
+        apd module install "$MODPATH/tmp/module.zip" || exit 1
     elif command -v ksud >/dev/null 2>&1; then
-        ksud module install "$MODPATH/tmp/module.zip"
+        ksud module install "$MODPATH/tmp/module.zip" || exit 1
     else
         exit 1
     fi
