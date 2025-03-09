@@ -214,7 +214,7 @@ async function checkMMRL() {
             MMRL_API = true;
         } catch (error) {
             console.error('Permission check failed:', error);
-            permissionPopup.style.display('flex');
+            permissionPopup.style.display = 'flex';
             MMRL_API = false;
         }
     }
@@ -317,13 +317,13 @@ window.addEventListener('scroll', () => {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
+    await initializeAvailableLanguages();
+    const userLang = detectUserLanguage();
+    await loadTranslations(userLang);
     await checkMMRL();
     if (!MMRL_API) return;
     hideFloatingBtn();
     getModuleVersion();
-    await initializeAvailableLanguages();
-    const userLang = detectUserLanguage();
-    await loadTranslations(userLang);
     setupMenuToggle();
     setupLanguageMenu();
     setupSystemAppMenu();

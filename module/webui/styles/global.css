@@ -131,6 +131,7 @@ body {
 }
 
 .permission-popup {
+    opacity: 1;
     align-items: center;
     z-index: 2000;
 }
