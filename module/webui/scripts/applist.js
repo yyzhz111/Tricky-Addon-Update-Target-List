@@ -9,6 +9,7 @@ export let modeActive = false;
 // Fetch and render applist
 export async function fetchAppList() {
     try {
+        // fetch target list
         let targetList = [];
         try {
             const targetFileContent = await execCommand('cat /data/adb/tricky_store/target.txt');
@@ -19,56 +20,46 @@ export async function fetchAppList() {
             console.error("Failed to read target.txt file:", error);
         }
 
+        // fetch applist
         let applistMap = {};
-        try {
-            const applistResult = await execCommand(`cat ${basePath}common/tmp/applist`);
-            applistMap = applistResult
-                .split("\n")
-                .reduce((map, line) => {
-                    const match = line.match(/app-name:\s*(.+),\s*package-name:\s*(.+)/);
-                    if (match) {
-                        const appName = match[1].trim();
-                        const packageName = match[2].trim();
-                        map[packageName] = appName;
-                    }
-                    return map;
-                }, {});
-            console.log("Applist loaded successfully.");
-        } catch (error) {
-            console.warn("Applist file not found or could not be loaded. Skipping applist lookup.");
-        }
+        const response = await fetch('applist.json');
+        const appList = await response.json();
+        const appNameMap = appList.reduce((map, app) => {
+            map[app.package_name] = app.app_name;
+            return map;
+        }, {});
 
-        const result = await execCommand(`
-            pm list packages -3 | awk -F: '{print $2}'
-            [ -f "/data/adb/tricky_store/system_app" ] && SYSTEM_APP=$(cat "/data/adb/tricky_store/system_app" | tr '\n' '|' | sed 's/|*$//') || SYSTEM_APP=""
-            pm list packages -s | awk -F: '{print $2}' | grep -Ex "$SYSTEM_APP" 2>/dev/null || true
-        `);
-        const appEntries = result
-            .split("\n")
-            .map(line => {
-                const packageName = line.trim();
-                const appName = applistMap[packageName] || null;
-                return { appName, packageName };
-            })
-            .filter(entry => entry.packageName);
-        for (const entry of appEntries) {
-            if (!entry.appName) {
-                try {
-                    const apkPath = await execCommand(`
-                        base_apk=$(pm path ${entry.packageName} | grep "base.apk" | awk -F: '{print $2}' | tr -d '\\r')
-                        [ -n "$base_apk" ] || base_apk=$(pm path ${entry.packageName} | grep ".apk" | awk -F: '{print $2}' | tr -d '\\r')
-                        echo "$base_apk"
-                    `);
-                    if (apkPath) {
-                        const appName = await execCommand(`${basePath}common/aapt dump badging ${apkPath.trim()} 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g"`);
-                        entry.appName = appName.trim() || "Unknown App";
-                    } else {
-                        entry.appName = "Unknown App";
-                    }
-                } catch (error) {
-                    entry.appName = "Unknown App";
+        // Get installed packages first
+        let appEntries = [], installedPackages = [];
+        try {
+            installedPackages = await execCommand(`
+                pm list packages -3 | awk -F: '{print $2}'
+                [ -s "/data/adb/tricky_store/system_app" ] && SYSTEM_APP=$(cat "/data/adb/tricky_store/system_app" | tr '\n' '|' | sed 's/|*$//') || SYSTEM_APP=""
+                [ -z "$SYSTEM_APP" ] || pm list packages -s | awk -F: '{print $2}' | grep -Ex "$SYSTEM_APP" 2>/dev/null || true
+            `)
+            installedPackages = installedPackages.split("\n").map(line => line.trim()).filter(Boolean);
+            appEntries = await Promise.all(installedPackages.map(async packageName => {
+                if (appNameMap[packageName]) {
+                    return {
+                        appName: appNameMap[packageName],
+                        packageName
+                    };
                 }
-            }
+                const appName = await execCommand(`
+                    base_apk=$(pm path ${packageName} | grep "base.apk" | awk -F: '{print $2}')
+                    [ -n "$base_apk" ] || base_apk=$(pm path ${packageName} | grep ".apk" | awk -F: '{print $2}')
+                    ${basePath}common/aapt dump badging $base_apk 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g"
+                `);
+                return {
+                    appName: appName.trim() || packageName,
+                    packageName
+                };
+            }));
+        } catch (error) {
+            appEntries = appList.map(app => ({
+                appName: app.app_name,
+                packageName: app.package_name
+            }));
         }
 
         // Sort
@@ -108,7 +99,12 @@ export async function fetchAppList() {
             }
         
             const nameElement = appElement.querySelector(".name");
-            nameElement.innerHTML = `<strong>${appName || "Unknown App"}</strong><br>${packageName}`;
+            nameElement.innerHTML = `
+                <div class="app-info">
+                    <div class="app-name"><strong>${appName}</strong></div>
+                    <div class="package-name">${packageName}</div>
+                </div>
+            `;
             const checkbox = appElement.querySelector(".checkbox");
             checkbox.checked = targetList.includes(packageName);
             appListContainer.appendChild(appElement);

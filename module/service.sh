@@ -78,7 +78,7 @@ if [ ! -d "$TS/webroot" ] && [ ! -L "$TS/webroot" ]; then
 fi
 
 # Optimization
-OUTPUT_APP="$MODPATH/common/tmp/applist"
+OUTPUT_APP="$MODPATH/webui/applist.json"
 OUTPUT_SKIP="$MODPATH/common/tmp/skiplist"
 OUTPUT_XPOSED="$MODPATH/common/tmp/xposed"
 
@@ -97,7 +97,7 @@ else
 fi
 
 # Initialize cache files to save app list and skip list
-echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_APP"
+echo "[" > "$OUTPUT_APP"
 echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT_SKIP"
 
 # Get list of third party apps and specific system apps, then cache app name
@@ -107,16 +107,12 @@ echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT
     pm list packages -s | grep -E "$SYSTEM_APP" 2>/dev/null || true
 } | awk -F: '{print $2}' | while read -r PACKAGE; do
     # Get APK path for the package
-    APK_PATH=$(pm path "$PACKAGE" 2>/dev/null | grep "base.apk" | awk -F: '{print $2}' | tr -d '\r')
-    [ -z "$APK_PATH" ] && APK_PATH=$(pm path "$PACKAGE" 2>/dev/null | grep ".apk" | awk -F: '{print $2}' | tr -d '\r')
+    APK_PATH=$(pm path "$PACKAGE" 2>/dev/null | grep "base.apk" | awk -F: '{print $2}')
+    [ -z "$APK_PATH" ] && APK_PATH=$(pm path "$PACKAGE" 2>/dev/null | grep ".apk" | awk -F: '{print $2}')
 
-    if [ -n "$APK_PATH" ]; then
-        # Extract app name and save package info
-        APP_NAME=$(aapt dump badging "$APK_PATH" 2>/dev/null | grep "application-label:" | sed "s/application-label://g; s/'//g")
-        echo "app-name: $APP_NAME, package-name: $PACKAGE" >> "$OUTPUT_APP"
-    else
-        echo "app-name: Unknown App package-name: $PACKAGE" >> "$OUTPUT_APP"
-    fi
+    APP_NAME=$(aapt dump badging "$APK_PATH" 2>/dev/null | grep "application-label:" | sed "s/application-label://g; s/'//g")
+    [ -z "$APP_NAME" ] && APP_NAME="$PACKAGE"
+    echo "  {\"app_name\": \"$APP_NAME\", \"package_name\": \"$PACKAGE\"}," >> "$OUTPUT_APP"
 
     # Check if app is Xposed module and add to skip list if not
     touch "$OUTPUT_XPOSED"
@@ -126,3 +122,6 @@ echo "# This file is generated from service.sh to speed up load time" > "$OUTPUT
         echo "$PACKAGE" >> "$OUTPUT_SKIP"
     fi
 done
+
+sed -i '$ s/,$//' "$OUTPUT_APP"
+echo "]" >> "$OUTPUT_APP"
