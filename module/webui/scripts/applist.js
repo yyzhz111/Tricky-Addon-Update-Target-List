@@ -4,7 +4,6 @@ const appTemplate = document.getElementById('app-template').content;
 const modeOverlay = document.querySelector('.mode-overlay');
 export const appListContainer = document.getElementById('apps-list');
 export const updateCard = document.getElementById('update-card');
-export let modeActive = false;
 
 // Fetch and render applist
 export async function fetchAppList() {
@@ -21,7 +20,6 @@ export async function fetchAppList() {
         }
 
         // fetch applist
-        let applistMap = {};
         const response = await fetch('applist.json');
         const appList = await response.json();
         const appNameMap = appList.reduce((map, app) => {
@@ -202,7 +200,6 @@ function setupModeMenu() {
     function showMode(card) {
         const modeElement = card.querySelector(".mode");
         if (modeElement) {
-            modeActive = true;
             modeElement.style.display = "flex";
             modeOverlay.style.display = "flex";
             setTimeout(() => {
@@ -213,7 +210,6 @@ function setupModeMenu() {
     function hideAllModes() {
         const allModeElements = appListContainer.querySelectorAll(".mode");
         allModeElements.forEach((modeElement) => {
-            modeActive = false;
             modeElement.classList.remove('show');
             modeOverlay.style.display = "none";
             setTimeout(() => {

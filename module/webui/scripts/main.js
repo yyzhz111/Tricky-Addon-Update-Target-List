@@ -1,4 +1,4 @@
-import { appListContainer, fetchAppList, modeActive } from './applist.js';
+import { appListContainer, fetchAppList } from './applist.js';
 import { initializeAvailableLanguages, detectUserLanguage, loadTranslations, setupLanguageMenu, translations } from './language.js';
 import { aospkb, setupSystemAppMenu } from './menu_option.js';
 import { searchMenuContainer, searchInput, clearBtn, setupMenuToggle } from './search_menu.js';

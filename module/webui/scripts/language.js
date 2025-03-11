@@ -1,4 +1,4 @@
-import { basePath, execCommand, toast } from './main.js';
+import { toast } from './main.js';
 
 const languageButton = document.querySelector('.language-button');
 const languageMenu = document.querySelector('.language-menu');
@@ -6,7 +6,6 @@ const languageOptions = document.querySelectorAll('.language-option');
 const languageOverlay = document.getElementById('language-overlay');
 
 export let translations = {};
-let currentLang = 'en-US';
 let availableLanguages = ['en-US'];
 
 // Function to check for available language
