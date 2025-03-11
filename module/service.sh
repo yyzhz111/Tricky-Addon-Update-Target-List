@@ -55,10 +55,12 @@ if [ -f "$MODPATH/action.sh" ]; then
     # Hide module from Magisk manager
     if [ "$MODPATH" != "$HIDE_DIR" ]; then
         rm -rf "$HIDE_DIR"
-        mv "$MODPATH" "$HIDE_DIR"
+        mkdir -p "$HIDE_DIR"
+        busybox chcon --reference="$MODPATH" "$HIDE_DIR"
+        cp -af "$MODPATH/." "$HIDE_DIR/"
     fi
     MODPATH="$HIDE_DIR"
-    
+
     # Add target from denylist
     # To trigger this, choose "Select from DenyList" in WebUI once
     [ -f "/data/adb/tricky_store/target_from_denylist" ] && add_denylist_to_target
@@ -70,10 +72,10 @@ fi
 rm -f "$MODPATH/module.prop"
 
 # Symlink tricky store
-if [ -f "$MODPATH/action.sh" ] && [ ! -f "$TS/action.sh" ] && [ ! -L "$TS/action.sh" ]; then
+if [ -f "$MODPATH/action.sh" ] && [ ! -e "$TS/action.sh" ]; then
     ln -s "$MODPATH/action.sh" "$TS/action.sh"
 fi
-if [ ! -d "$TS/webroot" ] && [ ! -L "$TS/webroot" ]; then
+if [ ! -e "$TS/webroot" ]; then
     ln -s "$MODPATH/webui" "$TS/webroot"
 fi
 
@@ -125,3 +127,5 @@ done
 
 sed -i '$ s/,$//' "$OUTPUT_APP"
 echo "]" >> "$OUTPUT_APP"
+
+[ -f "$MODPATH/action.sh" ] && rm -rf "/data/adb/modules/TA_utl"
