@@ -47,7 +47,7 @@ migrate_config() {
     fi
 
     # Additional system app
-    if [ -f "/data/adb/tricky_store/system_app" ]; then
+    if [ ! -f "/data/adb/tricky_store/system_app" ]; then
         SYSTEM_APP="
         com.google.android.gms
         com.google.android.gsf
