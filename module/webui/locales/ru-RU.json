@@ -121,5 +121,11 @@
         "title": "Добавить системное приложение",
         "add": "Добавить",
         "current_list": "Текущий список системных приложений"
+    },
+    "confirmation": {
+        "uninstall_title": "Подтвердить удаление?",
+        "uninstall_message": "Вы уверены, что хотите удалить Tricky Addon",
+        "uninstall_cancel": "Отмена",
+        "uninstall_confirm": "Подтвердить"
     }
 }

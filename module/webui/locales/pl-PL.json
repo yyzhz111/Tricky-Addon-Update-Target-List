@@ -121,5 +121,11 @@
         "title": "Dodaj aplikację systemową",
         "add": "Dodaj",
         "current_list": "Aktualna lista aplikacji systemowych"
+    },
+    "confirmation": {
+        "uninstall_title": "Potwierdzić odinstalowanie?",
+        "uninstall_message": "Czy na pewno chcesz odinstalować Tricky Addon",
+        "uninstall_cancel": "Anuluj",
+        "uninstall_confirm": "Potwierdź"
     }
 }

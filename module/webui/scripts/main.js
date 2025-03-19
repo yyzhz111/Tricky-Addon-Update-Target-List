@@ -172,7 +172,32 @@ document.getElementById("save").addEventListener("click", async () => {
 });
 
 // Uninstall WebUI
-document.querySelector(".uninstall-container").addEventListener("click", async () => {
+document.querySelector(".uninstall-container").addEventListener("click", () => {
+    const uninstallConfirmation = document.getElementById("uninstall-confirmation-overlay");
+    const cancelButton = document.getElementById("cancel-uninstall");
+    const confirmButton = document.getElementById("confirm-uninstall")
+
+    uninstallConfirmation.style.display = 'flex';
+    setTimeout(() => {
+        uninstallConfirmation.style.opacity = 1;
+    }, 10)
+
+    const closeUninstallConfirmation = () => {
+        uninstallConfirmation.style.opacity = 0;
+        setTimeout(() => {
+            uninstallConfirmation.style.display = 'none';
+        }, 200)
+    }
+    cancelButton.addEventListener('click', () => closeUninstallConfirmation());
+    uninstallConfirmation.addEventListener('click', (e) => {
+        if (e.target === uninstallConfirmation) closeUninstallConfirmation();
+    })
+    confirmButton.addEventListener('click', () => {
+        closeUninstallConfirmation();
+        uninstallWebUI();
+    })
+});
+async function uninstallWebUI() {
     try {
         await execCommand(`sh ${basePath}common/get_extra.sh --uninstall`);
         console.log("uninstall script executed successfully.");
@@ -181,7 +206,7 @@ document.querySelector(".uninstall-container").addEventListener("click", async (
         console.error("Failed to execute uninstall command:", error);
         showPrompt("prompt.uninstall_failed", false);
     }
-});
+}
 
 // Function to check if running in MMRL
 async function checkMMRL() {

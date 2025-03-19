@@ -119,7 +119,13 @@
     },
     "add_system_app": {
         "title": "Magdagdag ng System App",
-        "add": "Magdagdag",
-        "current_list": "Kasalukuyang Listahan ng System Apps"
+        "add": "Idagdag",
+        "current_list": "Kasalukuyang Listahan ng System App"
+    },
+    "confirmation": {
+        "uninstall_title": "Kumpirmahin ang Pag-uninstall?",
+        "uninstall_message": "Sigurado ka bang gusto mong i-uninstall ang Tricky Addon",
+        "uninstall_cancel": "Kanselahin",
+        "uninstall_confirm": "Kumpirmahin"
     }
 }

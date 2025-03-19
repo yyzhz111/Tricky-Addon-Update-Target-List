@@ -118,8 +118,14 @@
         "invalid_vendor": "Format vendor tidak valid"
     },
     "add_system_app": {
-        "title": "Tambahkan Aplikasi Sistem",
+        "title": "Tambah Aplikasi Sistem",
         "add": "Tambah",
         "current_list": "Daftar Aplikasi Sistem Saat Ini"
+    },
+    "confirmation": {
+        "uninstall_title": "Konfirmasi Hapus?",
+        "uninstall_message": "Apakah Anda yakin ingin menghapus Tricky Addon",
+        "uninstall_cancel": "Batal",
+        "uninstall_confirm": "Konfirmasi"
     }
 }

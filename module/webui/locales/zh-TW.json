@@ -121,5 +121,11 @@
         "title": "添加系統應用",
         "add": "添加",
         "current_list": "當前系統應用列表"
+    },
+    "confirmation": {
+        "uninstall_title": "確認卸載？",
+        "uninstall_message": "您確定要卸載 TS 插件嗎",
+        "uninstall_cancel": "取消",
+        "uninstall_confirm": "確認"
     }
 }

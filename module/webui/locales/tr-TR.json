@@ -121,5 +121,11 @@
         "title": "Sistem Uygulaması Ekle",
         "add": "Ekle",
         "current_list": "Mevcut Sistem Uygulamaları Listesi"
+    },
+    "confirmation": {
+        "uninstall_title": "Kaldırma İşlemi Onaylansın mı?",
+        "uninstall_message": "Tricky Addon'u kaldırmak istediğinizden emin misiniz",
+        "uninstall_cancel": "İptal",
+        "uninstall_confirm": "Onayla"
     }
 }

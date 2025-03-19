@@ -121,5 +121,11 @@
         "title": "Add System App",
         "add": "Add",
         "current_list": "Current System App List"
+    },
+    "confirmation": {
+        "uninstall_title": "Confirm Uninstall?",
+        "uninstall_message": "Are you sure you want to uninstall Tricky Addon",
+        "uninstall_cancel": "Cancel",
+        "uninstall_confirm": "Confirm"
     }
 }

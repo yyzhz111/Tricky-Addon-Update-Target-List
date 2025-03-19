@@ -121,5 +121,11 @@
         "title": "システムアプリを追加",
         "add": "追加",
         "current_list": "現在のシステムアプリリスト"
+    },
+    "confirmation": {
+        "uninstall_title": "アンインストールの確認",
+        "uninstall_message": "Tricky Addonをアンインストールしてもよろしいですか",
+        "uninstall_cancel": "キャンセル",
+        "uninstall_confirm": "確認"
     }
 }

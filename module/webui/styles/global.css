@@ -130,6 +130,55 @@ body {
     display: none;
 }
 
+.uninstall-confirmation-overlay {
+    align-items: center;
+    z-index: 2000;
+}
+
+.uninstall-confirmation {
+    width: 90%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.uninstall-confirmation p {
+    user-select: none;
+}
+
+.uninstall-confirmation-title {
+    font-size: 26px;
+    user-select: none;
+}
+
+.uninstall-confirmation-button-container {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.uninstall-confirmation-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    user-select: none;
+}
+
+#confirm-uninstall {
+    color: #fff;
+    background-color: #007bff;
+}
+
 .permission-popup {
     opacity: 1;
     align-items: center;
@@ -198,6 +247,7 @@ body {
         background-color: #121212;
     }
 
+    .uninstall-confirmation,
     .permission-content {
         background-color: #343434;
     }
@@ -205,5 +255,10 @@ body {
     .permission-content h2,
     .permission-steps p {
         color: #fff;
+    }
+
+    .uninstall-confirmation-button {
+        background-color: #6E6E6E;
+        color: white;
     }
 }

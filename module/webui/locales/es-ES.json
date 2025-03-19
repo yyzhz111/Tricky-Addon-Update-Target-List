@@ -118,8 +118,14 @@
         "invalid_vendor": "Formato de vendor inválido"
     },
     "add_system_app": {
-        "title": "Agregar Aplicación del Sistema",
-        "add": "Agregar",
-        "current_list": "Lista de Aplicaciones del Sistema Actual"
+        "title": "Añadir aplicación del sistema",
+        "add": "Añadir",
+        "current_list": "Lista actual de aplicaciones del sistema"
+    },
+    "confirmation": {
+        "uninstall_title": "¿Confirmar desinstalación?",
+        "uninstall_message": "¿Está seguro de que desea desinstalar Tricky Addon",
+        "uninstall_cancel": "Cancelar",
+        "uninstall_confirm": "Confirmar"
     }
 }
