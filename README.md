@@ -29,11 +29,10 @@ Configure Tricky Store target.txt with KSU WebUI.
 | Set verifiedBootHash `optional`                                                                                                                                              |   ✅    |
 | Auto config [security patch](https://github.com/5ec1cff/TrickyStore?tab=readme-ov-file#customize-security-patch-level-121), customizable in WebUI                            |   ✅    |
 | Provide AOSP Keybox `optional`                                                                                                                                               |   ✅    |
-| Import custom Keybox from device storage                                                                                                                        |   ✅    |
+| Import custom Keybox from device storage                                                                                                                                     |   ✅    |
+| Add system apps `not recommended`                                                                                                                                            |   ✅    |
 | Valid Keybox `not guaranteed`                                                                                                                                                |   ❌    |
-| Shamiko Whitelist switch. [Why?](https://github.com/rushizgithub/shamiko?tab=readme-ov-file#whitelist)                                                                       |   ❌    |
 | Periodically add all app to target.txt                                                                                                                                       |   ❌    |
-| Add system apps `GMS added by default`                                                                                                                                       |   ❌    |
 
 ## Localization
 - Read [Translation Guide](https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/module/webui/locales/A-translate.md)
