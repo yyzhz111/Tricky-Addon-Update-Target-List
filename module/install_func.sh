@@ -15,9 +15,6 @@ initialize() {
         cp "$MODPATH/uninstall.sh" "$COMPATH/update/uninstall.sh"
     fi
 
-    #Set specific path
-    sed -i "s|\"set-path\"|\"/data/adb/modules/$NEW_MODID/\"|" "$MODPATH/webui/scripts/main.js" || abort "! Failed to set path"
-
     # Set aapt binary
     cp "$MODPATH/module.prop" "$COMPATH/update/module.prop"
     mv "$MODPATH/bin/$(getprop ro.product.cpu.abi)/aapt" "$COMPATH/aapt"

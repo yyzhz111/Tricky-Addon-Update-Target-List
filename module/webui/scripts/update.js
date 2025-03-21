@@ -26,7 +26,7 @@ function downloadFile(targetURL, fileName) {
                 reader.onload = async function() {
                     const base64Data = reader.result.split(',')[1];
                     try {
-                        await execCommand(`echo ${base64Data} | base64 -d > ${basePath}common/tmp/${fileName}`);
+                        await execCommand(`echo ${base64Data} | base64 -d > ${basePath}/common/tmp/${fileName}`);
                         resolve();
                     } catch (error) {
                         reject(error);
@@ -52,7 +52,7 @@ export async function updateCheck() {
         zipURL = data.zipUrl;
         changelogURL = data.changelog;
 
-        const updateAvailable = await execCommand(`sh ${basePath}common/get_extra.sh --check-update ${remoteVersionCode}`);
+        const updateAvailable = await execCommand(`sh ${basePath}/common/get_extra.sh --check-update ${remoteVersionCode}`);
         if (updateAvailable.includes("update")) {
             showPrompt("prompt.new_update", true, 1500);
             updateCard.style.display = "flex";
@@ -67,7 +67,7 @@ export async function updateCheck() {
 
 // Function to render changelog
 async function renderChangelog() {
-    const changelog = await execCommand(`sh ${basePath}common/get_extra.sh --release-note ${remoteVersion}`);
+    const changelog = await execCommand(`sh ${basePath}/common/get_extra.sh --release-note ${remoteVersion}`);
         window.linkRedirect = linkRedirect;
         marked.setOptions({
             sanitize: true,
@@ -111,8 +111,8 @@ function setupUpdateMenu() {
     updateCard.addEventListener('click', async () => {
         try {
             const module = await execCommand(`
-                [ -f ${basePath}common/tmp/module.zip ] || echo "noModule"
-                [ -f ${basePath}common/tmp/changelog.md ] || echo "noChangelog"
+                [ -f ${basePath}/common/tmp/module.zip ] || echo "noModule"
+                [ -f ${basePath}/common/tmp/changelog.md ] || echo "noChangelog"
                 [ ! -f /data/adb/modules/TA_utl/update ] || echo "updated"
             `);
             if (module.trim().includes("updated")) {
@@ -131,7 +131,7 @@ function setupUpdateMenu() {
                 if (downloading) return;
                 downloading = true;
                 try {
-                    await execCommand(`sh ${basePath}common/get_extra.sh --get-update ${zipURL}`);
+                    await execCommand(`sh ${basePath}/common/get_extra.sh --get-update ${zipURL}`);
                     showPrompt("prompt.downloaded");
                     installButton.style.display = "flex";
                     downloading = false;
@@ -161,7 +161,7 @@ function setupUpdateMenu() {
         try {
             showPrompt("prompt.installing");
             await new Promise(resolve => setTimeout(resolve, 300));
-            await execCommand(`sh ${basePath}common/get_extra.sh --install-update`);
+            await execCommand(`sh ${basePath}/common/get_extra.sh --install-update`);
             showPrompt("prompt.installed");
             installButton.style.display = "none";
             rebootButton.style.display = "flex";

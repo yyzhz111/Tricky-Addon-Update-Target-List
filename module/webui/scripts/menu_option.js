@@ -57,7 +57,7 @@ document.getElementById("deselect-unnecessary").addEventListener("click", async 
                 toast("Failed to download unnecessary apps!");
                 throw error;
             });
-        const xposed = await execCommand(`sh ${basePath}common/get_extra.sh --xposed`);
+        const xposed = await execCommand(`sh ${basePath}/common/get_extra.sh --xposed`);
         const UnnecessaryApps = excludeList.split("\n").map(app => app.trim()).filter(Boolean).concat(xposed.split("\n").map(app => app.trim()).filter(Boolean));
         const apps = document.querySelectorAll(".card");
         apps.forEach(app => {
@@ -192,7 +192,7 @@ async function setKeybox(content) {
 
 // Function to replace aosp kb
 export async function aospkb() {
-    const source = await execCommand(`xxd -r -p ${basePath}common/.default | base64 -d`);
+    const source = await execCommand(`xxd -r -p ${basePath}/common/.default | base64 -d`);
     const result = await setKeybox(source);
     if (result) {
         console.log("AOSP keybox copied successfully.");

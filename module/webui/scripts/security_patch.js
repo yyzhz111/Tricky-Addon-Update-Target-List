@@ -225,7 +225,7 @@ export function securityPatch() {
     // Auto config button
     autoButton.addEventListener('click', async () => {
         try {
-            const output = await execCommand(`sh ${basePath}common/get_extra.sh --security-patch`);
+            const output = await execCommand(`sh ${basePath}/common/get_extra.sh --security-patch`);
             if (output.trim() === "not set") {
                 showPrompt('security_patch.auto_failed', false);
             } else {
@@ -318,7 +318,7 @@ export function securityPatch() {
         try {
             showPrompt('security_patch.fetching');
             await new Promise(resolve => setTimeout(resolve, 200));
-            const output = await execCommand(`sh ${basePath}common/get_extra.sh --get-security-patch`);
+            const output = await execCommand(`sh ${basePath}/common/get_extra.sh --get-security-patch`);
             showPrompt('security_patch.fetched', true, 1000);
             checkAdvanced(true);
 

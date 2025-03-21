@@ -17,7 +17,7 @@ const prompt = document.getElementById('prompt');
 const floatingCard = document.querySelector('.floating-card');
 const floatingBtn = document.querySelector('.floating-btn');
 
-export const basePath = "set-path";
+export let basePath;
 export const appsWithExclamation = [];
 export const appsWithQuestion = [];
 const ADDITIONAL_APPS = [ "android", "com.android.vending", "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ]; // Always keep default apps in target.txt
@@ -27,11 +27,21 @@ let e = 0;
 let isRefreshing = false;
 let MMRL_API = true;
 
+// Function to set basePath
+async function getBasePath() {
+    try {
+        await execCommand('[ -d /data/adb/modules/.TA_utl ]');
+        basePath = "/data/adb/modules/.TA_utl"
+    } catch (error) {
+        basePath = "/data/adb/modules/TA_utl"
+    }
+}
+
 // Function to load the version from module.prop
 async function getModuleVersion() {
     const moduleVersion = document.getElementById('module-version');
     try {
-        const version = await execCommand(`grep '^version=' ${basePath}common/update/module.prop | cut -d'=' -f2`);
+        const version = await execCommand(`grep '^version=' ${basePath}/common/update/module.prop | cut -d'=' -f2`);
         moduleVersion.textContent = version;
     } catch (error) {
         console.error("Failed to read version from module.prop:", error);
@@ -55,7 +65,7 @@ export async function refreshAppList() {
     if (noConnection.style.display === "flex") {
         try {
             updateCheck();
-            await execCommand(`[ -f ${basePath}common/tmp/exclude-list ] && rm -f "${basePath}common/tmp/exclude-list"`);
+            await execCommand(`[ -f ${basePath}/common/tmp/exclude-list ] && rm -f "${basePath}/common/tmp/exclude-list"`);
         } catch (error) {
             toast("Failed!");
             console.error("Error occurred:", error);
@@ -204,7 +214,7 @@ document.querySelector(".uninstall-container").addEventListener("click", () => {
 });
 async function uninstallWebUI() {
     try {
-        await execCommand(`sh ${basePath}common/get_extra.sh --uninstall`);
+        await execCommand(`sh ${basePath}/common/get_extra.sh --uninstall`);
         console.log("uninstall script executed successfully.");
         showPrompt("prompt.uninstall_prompt");
     } catch (error) {
@@ -352,6 +362,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadTranslations(userLang);
     await checkMMRL();
     if (!MMRL_API) return;
+    await getBasePath();
     hideFloatingBtn();
     getModuleVersion();
     setupMenuToggle();
