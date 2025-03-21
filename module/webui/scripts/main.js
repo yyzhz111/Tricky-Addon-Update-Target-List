@@ -173,27 +173,32 @@ document.getElementById("save").addEventListener("click", async () => {
 
 // Uninstall WebUI
 document.querySelector(".uninstall-container").addEventListener("click", () => {
-    const uninstallConfirmation = document.getElementById("uninstall-confirmation-overlay");
+    const uninstallOverlay = document.getElementById("uninstall-confirmation-overlay");
+    const uninstallContent = document.querySelector('.uninstall-confirmation');
     const cancelButton = document.getElementById("cancel-uninstall");
     const confirmButton = document.getElementById("confirm-uninstall")
 
-    uninstallConfirmation.style.display = 'flex';
+    uninstallOverlay.style.display = 'flex';
+    document.body.classList.add('no-scroll');
     setTimeout(() => {
-        uninstallConfirmation.style.opacity = 1;
+        uninstallOverlay.style.opacity = 1;
+        uninstallContent.classList.add('open');
     }, 10)
 
-    const closeUninstallConfirmation = () => {
-        uninstallConfirmation.style.opacity = 0;
+    const closeuninstallOverlay = () => {
+        document.body.classList.remove('no-scroll');
+        uninstallOverlay.style.opacity = 0;
+        uninstallContent.classList.remove('open');
         setTimeout(() => {
-            uninstallConfirmation.style.display = 'none';
+            uninstallOverlay.style.display = 'none';
         }, 200)
     }
-    cancelButton.addEventListener('click', () => closeUninstallConfirmation());
-    uninstallConfirmation.addEventListener('click', (e) => {
-        if (e.target === uninstallConfirmation) closeUninstallConfirmation();
+    cancelButton.addEventListener('click', () => closeuninstallOverlay());
+    uninstallOverlay.addEventListener('click', (e) => {
+        if (e.target === uninstallOverlay) closeuninstallOverlay();
     })
     confirmButton.addEventListener('click', () => {
-        closeUninstallConfirmation();
+        closeuninstallOverlay();
         uninstallWebUI();
     })
 });

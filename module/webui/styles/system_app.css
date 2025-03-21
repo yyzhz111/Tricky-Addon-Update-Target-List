@@ -11,7 +11,7 @@
     width: calc(90vw - 60px);
     max-width: 400px;
     max-height: calc(80vh - 60px);
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 30px;
     background-color: #fff;
     border-radius: 15px;
@@ -19,6 +19,7 @@
 }
 
 .add-system-app-title {
+    text-align: center;
     font-size: 26px;
     user-select: none;
     margin-bottom: 20px;
@@ -57,6 +58,7 @@
 }
 
 .current-system-app-list {
+    text-align: center;
     margin-top: 25px;
     margin-bottom: 10px;
     user-select: none;

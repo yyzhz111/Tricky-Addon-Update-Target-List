@@ -1,6 +1,7 @@
 import { basePath, execCommand, showPrompt } from './main.js';
 
 const overlay = document.getElementById('security-patch-overlay');
+const overlayContent = document.querySelector('.security-patch-card');
 const advancedToggle = document.getElementById('advanced-mode');
 const normalInputs = document.getElementById('normal-mode-inputs');
 const advancedInputs = document.getElementById('advanced-mode-inputs');
@@ -18,6 +19,7 @@ function showSecurityPatchDialog() {
     overlay.style.display = 'flex';
     setTimeout(() => {
         overlay.style.opacity = '1';
+        overlayContent.classList.add('open');
         loadCurrentConfig();
     }, 10);
 }
@@ -26,6 +28,7 @@ function showSecurityPatchDialog() {
 function hideSecurityPatchDialog() {
     document.body.classList.remove("no-scroll");
     overlay.style.opacity = '0';
+    overlayContent.classList.remove('open');
     setTimeout(() => {
         overlay.style.display = 'none';
     }, 200);

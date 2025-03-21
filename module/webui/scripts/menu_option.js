@@ -79,11 +79,10 @@ document.getElementById("deselect-unnecessary").addEventListener("click", async 
 export async function setupSystemAppMenu() {
     document.getElementById("add-system-app").addEventListener("click", () => openSystemAppOverlay());
     document.getElementById("add-system-app-overlay").addEventListener("click", (event) => {
-        if (event.target === event.currentTarget) {
-            closeSystemAppOverlay();
-        }
+        if (event.target === event.currentTarget) closeSystemAppOverlay();
     });
     const systemAppOverlay = document.getElementById("add-system-app-overlay");
+    const systemAppContent = document.querySelector('.add-system-app-card');
     const systemAppInput = document.getElementById("system-app-input");
     function openSystemAppOverlay() {
         renderSystemAppList();
@@ -91,12 +90,14 @@ export async function setupSystemAppMenu() {
         systemAppOverlay.style.display = "flex";
         setTimeout(() => {
             systemAppOverlay.style.opacity = "1";
+            systemAppContent.classList.add('open');
         }, 10);
         systemAppInput.value = "";
     }
     function closeSystemAppOverlay() {
         document.body.classList.remove("no-scroll");
         systemAppOverlay.style.opacity = "0";
+        systemAppContent.classList.remove('open');
         setTimeout(() => {
             systemAppOverlay.style.display = "none";
         }, 300);
@@ -237,6 +238,7 @@ document.getElementById("validkb").addEventListener("click", async () => {
 
 // File selector
 const fileSelector = document.querySelector('.file-selector-overlay');
+const fileSelectorContent = document.querySelector('.file-selector');
 let currentPath = '/storage/emulated/0/Download';
 
 // Function to display file in current path
@@ -389,6 +391,7 @@ fileSelector.addEventListener('click', (event) => {
 // Function to close custom keybox selector
 function closeCustomKeyboxSelector() {
     fileSelector.style.opacity = '0';
+    fileSelectorContent.classList.remove('open');
     document.body.classList.remove("no-scroll");
     setTimeout(() => {
         fileSelector.style.display = 'none';
@@ -399,8 +402,10 @@ function closeCustomKeyboxSelector() {
 document.getElementById('customkb').addEventListener('click', async () => {
     fileSelector.style.display = 'flex';
     document.body.classList.add("no-scroll");
-    fileSelector.offsetHeight;
-    fileSelector.style.opacity = '1';
+    setTimeout(() => {
+        fileSelector.style.opacity = '1';
+        fileSelectorContent.classList.add('open');
+    }, 10)
     currentPath = '/storage/emulated/0/Download';
     const currentPathElement = document.querySelector('.current-path');
     currentPathElement.innerHTML = currentPath.split('/').filter(Boolean).join('<span class="separator">›</span>');

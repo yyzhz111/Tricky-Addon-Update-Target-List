@@ -1,8 +1,8 @@
 import { basePath, execCommand, showPrompt, noConnection, linkRedirect } from './main.js';
 import { updateCard } from './applist.js';
 
-const updateCardText = document.getElementById('redirect-to-release');
-const UpdateMenu = document.querySelector('.update-overlay');
+const updateMenu = document.querySelector('.update-overlay');
+const updateMenuContent = document.querySelector('.update-menu');
 const closeUpdate = document.getElementById('close-update');
 const releaseNotes = document.querySelector('.changelog');
 const installButton = document.querySelector('.install');
@@ -84,24 +84,26 @@ async function renderChangelog() {
             .split('\n')
             .filter(line => line.trim() !== '')
             .join('\n');
-            const formattedChangelog = marked.parse(cleanedChangelog);
-            releaseNotes.innerHTML = formattedChangelog;
+        const formattedChangelog = marked.parse(cleanedChangelog);
+        releaseNotes.innerHTML = formattedChangelog;
 }
 
 // Function to setup update menu
 function setupUpdateMenu() {
     function openUpdateMenu() {
-        UpdateMenu.style.display = "flex";
+        updateMenu.style.display = "flex";
         setTimeout(async () => {
-            UpdateMenu.style.opacity = "1";
+            updateMenu.style.opacity = "1";
+            updateMenuContent.classList.add('open');
         }, 10);
         document.body.classList.add("no-scroll");
     }
     function closeUpdateMenu() {
-        UpdateMenu.style.opacity = "0";
+        updateMenu.style.opacity = "0";
+        updateMenuContent.classList.remove('open');
         document.body.classList.remove("no-scroll");
         setTimeout(async () => {
-            UpdateMenu.style.display = "none";
+            updateMenu.style.display = "none";
         }, 200);
     }
 
@@ -150,10 +152,8 @@ function setupUpdateMenu() {
 
     // Close update menu
     closeUpdate.addEventListener("click", closeUpdateMenu);
-    UpdateMenu.addEventListener("click", (event) => {
-        if (event.target === UpdateMenu) {
-            closeUpdateMenu();
-        }
+    updateMenu.addEventListener("click", (event) => {
+        if (event.target === updateMenu) closeUpdateMenu();
     });
 
     // Install button

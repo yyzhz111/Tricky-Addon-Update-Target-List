@@ -42,10 +42,20 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
     display: none;
     justify-content: center;
     opacity: 0;
     transition: opacity 0.2s ease;
+}
+
+.overlay-content {
+    transform: scale(0.8);
+    transition: transform 0.2s ease;
+}
+
+.overlay-content.open {
+    transform: scale(1);
 }
 
 .close-btn {

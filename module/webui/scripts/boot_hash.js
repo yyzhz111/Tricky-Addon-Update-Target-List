@@ -1,6 +1,7 @@
 import { execCommand, showPrompt } from './main.js';
 
 const bootHashOverlay = document.getElementById('boot-hash-overlay');
+const bootHash = document.querySelector('.boot-hash-card');
 const inputBox = document.getElementById('boot-hash-input');
 const saveButton = document.getElementById('boot-hash-save-button');
 
@@ -16,11 +17,13 @@ document.getElementById("boot-hash").addEventListener("click", async () => {
     bootHashOverlay.style.display = "flex";
     setTimeout(() => {
         bootHashOverlay.style.opacity = 1;
+        bootHash.classList.add('open');
     }, 10);
 
     const closeBootHashMenu = () => {
         document.body.classList.remove("no-scroll");
         bootHashOverlay.style.opacity = 0;
+        bootHash.classList.remove('open');
         setTimeout(() => {
             bootHashOverlay.style.display = "none";
         }, 200);

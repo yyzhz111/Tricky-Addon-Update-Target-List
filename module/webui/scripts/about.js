@@ -6,6 +6,7 @@ const githubLink = document.getElementById('github');
 // Function to show about overlay
 document.getElementById("about").addEventListener("click", () => {
     const aboutOverlay = document.getElementById('about-overlay');
+    const aboutContent = document.querySelector('.about-menu');
     const closeAbout = document.getElementById('close-about');
 
     // Show about menu
@@ -13,11 +14,13 @@ document.getElementById("about").addEventListener("click", () => {
     aboutOverlay.style.display = 'flex';
     setTimeout(() => {
         aboutOverlay.style.opacity = '1';
+        aboutContent.classList.add('open');
     }, 10);
 
     const hideMenu = () => {
         document.body.classList.remove("no-scroll");
         aboutOverlay.style.opacity = '0';
+        aboutContent.classList.remove('open');
         setTimeout(() => {
             aboutOverlay.style.display = 'none';
         }, 200);
