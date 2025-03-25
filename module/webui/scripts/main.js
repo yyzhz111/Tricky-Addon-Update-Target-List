@@ -1,5 +1,5 @@
 import { appListContainer, fetchAppList } from './applist.js';
-import { initializeAvailableLanguages, detectUserLanguage, loadTranslations, setupLanguageMenu, translations } from './language.js';
+import { loadTranslations, setupLanguageMenu, translations } from './language.js';
 import { aospkb, setupSystemAppMenu } from './menu_option.js';
 import { searchMenuContainer, searchInput, clearBtn, setupMenuToggle } from './search_menu.js';
 import { updateCheck } from './update.js';
@@ -357,9 +357,7 @@ window.addEventListener('scroll', () => {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
-    await initializeAvailableLanguages();
-    const userLang = detectUserLanguage();
-    await loadTranslations(userLang);
+    loadTranslations();
     await checkMMRL();
     if (!MMRL_API) return;
     await getBasePath();

@@ -1,5 +1,3 @@
-import { toast } from './main.js';
-
 const languageButton = document.querySelector('.language-button');
 const languageMenu = document.querySelector('.language-menu');
 const languageOptions = document.querySelectorAll('.language-option');
@@ -8,49 +6,55 @@ const languageOverlay = document.getElementById('language-overlay');
 export let translations = {};
 let availableLanguages = ['en-US'];
 
-// Function to check for available language
-export async function initializeAvailableLanguages() {
-    try {
-        const response = await fetch('locales/available-lang.json');
-        const config = await response.json();
-        availableLanguages = config.languages;
-        generateLanguageMenu();
-    } catch (error) {
-        console.error('Failed to fetch available languages:', error);
-        availableLanguages = ['en-US'];
-    }
-}
-
-// Function to detect user's default language
-export function detectUserLanguage() {
+/**
+ * Detect user's default language
+ * @returns {Promise<string>} - Detected language code
+ */
+export async function detectUserLanguage() {
     const userLang = navigator.language || navigator.userLanguage;
     const langCode = userLang.split('-')[0];
-    if (availableLanguages.includes(userLang)) {
-        return userLang;
-    } else if (availableLanguages.includes(langCode)) {
-        return langCode;
-    } else {
+
+    try {
+        // Fetch available languages
+        const availableResponse = await fetch('locales/available-lang.json');
+        const availableData = await availableResponse.json();
+        availableLanguages = availableData.languages;
+        generateLanguageMenu();
+
+        // Fetch preferred language
+        const prefered_language_code = localStorage.getItem('trickyAddonLanguage');
+
+        // Check if preferred language is valid
+        if (prefered_language_code !== 'default' && availableLanguages.includes(prefered_language_code)) {
+            return prefered_language_code;
+        } else if (availableLanguages.includes(userLang)) {
+            return userLang;
+        } else if (availableLanguages.includes(langCode)) {
+            return langCode;
+        } else {
+            return 'en-US';
+        }
+    } catch (error) {
+        console.error('Error detecting user language:', error);
         return 'en-US';
     }
 }
 
-// Load translations dynamically based on the selected language
-export async function loadTranslations(lang) {
-    try {
-        const response = await fetch(`locales/${lang}.json`);
-        translations = await response.json();
-        applyTranslations();
-    } catch (error) {
-        toast(`Failed to load translation for ${lang}!`);
-        console.error(`Error loading translations for ${lang}:`, error);
-        if (lang !== 'en-US') {
-            console.log("Falling back to English.");
-            loadTranslations('en-US');
-        }
-    }
+/**
+ * Load translations dynamically based on the selected language
+ * @returns {Promise<void>}
+ */
+export async function loadTranslations() {
+    const lang = await detectUserLanguage();
+    const response = await fetch(`locales/${lang}.json`);
+    translations = await response.json();
+    applyTranslations();
 }
 
-// Function to apply translations to all elements with data-i18n attributes
+/**
+ * Apply translations to all elements with data-i18n attributes
+ * @returns {void}
+ */
 function applyTranslations() {
     document.querySelectorAll("[data-i18n]").forEach((el) => {
         const keyString = el.getAttribute("data-i18n");
@@ -65,7 +69,10 @@ function applyTranslations() {
     });
 }
 
-// Function to setup the language menu
+/**
+ * Function to setup the language menu
+ * @returns {void}
+ */
 export function setupLanguageMenu() {
     languageButton.addEventListener("click", (event) => {
         event.stopPropagation();
@@ -104,13 +111,18 @@ export function setupLanguageMenu() {
     languageMenu.addEventListener("click", (e) => {
     if (e.target.classList.contains("language-option")) {
         const lang = e.target.getAttribute("data-lang");
+        localStorage.setItem('trickyAddonLanguage', lang);
         loadTranslations(lang);
         closeLanguageMenu();
     }
 });
 }
 
-// Function to generate the language menu dynamically
+/**
+ * Generate the language menu dynamically
+ * Refer available-lang.json in ./locales for list of languages
+ * @returns {Promise<void>}
+ */
 async function generateLanguageMenu() {
     languageMenu.innerHTML = '';
     const languagePromises = availableLanguages.map(async (lang) => {
