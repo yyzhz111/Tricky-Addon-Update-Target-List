@@ -20,7 +20,7 @@ const floatingBtn = document.querySelector('.floating-btn');
 export let basePath;
 export const appsWithExclamation = [];
 export const appsWithQuestion = [];
-const ADDITIONAL_APPS = [ "android", "com.android.vending", "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ]; // Always keep default apps in target.txt
+const ADDITIONAL_APPS = [ "android", "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ]; // Always keep default apps in target.txt
 
 // Variables
 let e = 0;
