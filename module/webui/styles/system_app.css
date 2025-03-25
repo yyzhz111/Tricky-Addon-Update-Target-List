@@ -13,7 +13,7 @@
     max-height: calc(80vh - 60px);
     overflow-y: auto;
     padding: 30px;
-    background-color: #fff;
+    background-color: var(--bg-secondary);
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
@@ -36,9 +36,10 @@
 .add-system-app-content input {
     width: 100%;
     padding: 15px;
-    background-color: #F5F5F5;
-    border: 1px solid #ccc;
-    outline-color: #007bff;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    outline-color: var(--btn-primary);
     border-radius: 10px;
     box-sizing: border-box;
     font-size: 16px;
@@ -52,8 +53,8 @@
     border-radius: 12px;
     font-size: 18px;
     font-weight: bold;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--btn-primary);
+    color: var(--btn-primary-text);
     user-select: none;
 }
 
@@ -78,7 +79,7 @@
     justify-content: space-between;
     width: 100%;
     max-width: 100%;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--border-color);
     padding: 10px;
     word-wrap: break-word;
     overflow-wrap: anywhere;
@@ -100,20 +101,4 @@
     justify-content: center;
     width: 30px;
     height: 30px;
-}
-
-@media (prefers-color-scheme: dark) {
-    .add-system-app-card {
-        background-color: #343434;
-    }
-
-    .add-system-app-content input {
-        background-color: #232323;
-        color: #fff;
-        border: 1px solid #6E6E6E;
-    }
-
-    .system-app-item {
-        border-bottom: 1px solid #6E6E6E;
-    }
 }

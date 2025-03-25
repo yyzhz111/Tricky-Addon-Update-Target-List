@@ -6,7 +6,8 @@
     display: block;
     position: fixed;
     top: 10%;
-    background-color: white;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -57,7 +58,7 @@
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 2px solid #ccc;
+    border: 2px solid var(--border-color);
     border-radius: 4px;
     box-sizing: border-box;
     transition: border-color 1s ease, transform 0.3s ease, background-color 0.4s ease;
@@ -70,11 +71,15 @@
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
     transition: transform 0.2s ease-out, opacity 0.3s ease;
+
+    svg {
+        fill: var(--btn-primary-text);
+    }
 }
 
 .advanced-toggle .checkbox:checked + .custom-checkbox {
-    border-color: #007bff;
-    background-color: #007bff;
+    border-color: var(--btn-primary);
+    background-color: var(--btn-primary);
     transition: border-color 0.1s ease;
     animation: checked-bounce 0.3s ease-out;
 }
@@ -93,15 +98,16 @@
 .input-group label {
     padding-top: 10px;
     font-size: 14px;
-    color: #666;
+    color: var(--text-secondary);
     user-select: none;
 }
 
 .input-group input {
     padding: 15px;
-    background-color: #F5F5F5;
-    border: 1px solid #ccc;
-    outline-color: #007bff;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    outline-color: var(--btn-primary);
     border-radius: 10px;
     font-size: 16px;
 }
@@ -126,39 +132,17 @@
 
 .get-button,
 .auto-button {
-    background-color: #ddd;
+    color: var(--text-primary);
+    background-color: var(--border-color);
     user-select: none;
 }
 
 .save-button {
-    background-color: #007bff;
-    color: white;
+    background-color: var(--btn-primary);
+    color: var(--btn-primary-text);
     user-select: none;
 }
 
 .hidden {
     display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    .security-patch-card {
-        background-color: #343434;
-        color: white;
-    }
-
-    .input-group label {
-        color: #ccc;
-    }
-
-    .input-group input {
-        background-color: #232323;
-        color: #fff;
-        border: 1px solid #6E6E6E;
-    }
-
-    .get-button,
-    .auto-button {
-        background-color: #6E6E6E;
-        color: white;
-    }
 }

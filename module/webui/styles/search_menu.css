@@ -14,8 +14,8 @@
 }
 
 .search-card {
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
@@ -36,6 +36,8 @@
 .search-input {
     position: absolute;
     border: none;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
     font-size: 17px;
     outline: none;
     left: 10px;
@@ -45,7 +47,7 @@
 
 .clear-btn {
     position: absolute;
-    color: #ccc;
+    color: var(--border-color);
     padding-bottom: 3px;
     right: 10px;
     border: none;
@@ -68,8 +70,8 @@
 }
 
 .menu-button {
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     width: 48px;
@@ -81,7 +83,7 @@
 
 .menu-icon {
     display: inline-block;
-    fill: #000;
+    fill: var(--text-primary);
     transform: rotate(0deg);
     transition: transform 0.2s ease;
 }
@@ -91,8 +93,8 @@
 }
 
 .menu-options {
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
@@ -131,7 +133,7 @@
 .menu-options li {
     padding: 12px 15px;
     text-align: left;
-    background-color: white;
+    background-color: var(--bg-secondary);
 }
 
 .menu-options li::after {
@@ -141,7 +143,7 @@
     left: 15px;
     width: calc(100% - 30px);
     height: 1px;
-    background-color: #ccc;
+    background-color: var(--border-color);
 }
 
 .menu-options li:last-child::after {
@@ -165,37 +167,4 @@
     background-color: none;
     z-index: 100;
     display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    .menu-icon {
-        fill: #eee;
-    }
-
-    .search-input,
-    .search-card {
-        background-color: #343434;
-    }
-
-    .search-card {
-        border: 1px solid #6E6E6E;
-    }
-
-    .search-input {
-        color: white;
-    }
-
-    .menu-options,
-    #menu-button {
-        background-color: #343434;
-        border: 1px solid #6E6E6E;
-    }
-
-    .menu-options li {
-        background-color: #343434;
-    }
-
-    .menu-options li::after {
-        background-color: #6E6E6E
-    }
 }

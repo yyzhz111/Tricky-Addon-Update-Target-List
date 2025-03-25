@@ -1,12 +1,47 @@
 @import url('https://mui.kernelsu.org/mmrl/insets.css');
+@import url('https://mui.kernelsu.org/mmrl/colors.css');
 
 :root {
     --top-inset: var(--window-inset-top, 0px);
     --bottom-inset: var(--window-inset-bottom, 0px);
+
+    /* Background colors */
+    --bg-primary: var(--background, #F5F5F5);
+    --bg-secondary: var(--tonalSurface, #fff);
+    --bg-input: var(--surfaceBright, #F5F5F5);
+
+    /* Text colors */
+    --text-primary: var(--onSurface, #000);
+    --text-secondary: var(--onSurfaceVariant, #757575);
+
+    /* Border colors */
+    --border-color: var(--outlineVariant, #ccc);
+
+    /* Button colors */
+    --btn-primary: var(--primary, #007bff);
+    --btn-primary-text: var(--onPrimary, #fff);
+    --btn-uninstall: var(--error, #FF3636);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Background colors */
+        --bg-primary: var(--background, #151515);
+        --bg-secondary: var(--tonalSurface, #292929);
+        --bg-input: var(--surfaceBright, #1b1b1b);
+
+        /* Text colors */
+        --text-primary: var(--onSurface, #fff);
+        --text-secondary: var(--onSurfaceVariant, #C2C2C2);
+
+        /* Border colors */
+        --border-color: var(--outlineVariant, #636363);
+    }
 }
 
 body {
-    background-color: #F5F5F5;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
     padding-top: var(--top-inset);
     padding-bottom: var(--bottom-inset);
     margin: 0;
@@ -28,10 +63,10 @@ body {
 }
 
 .floating-btn {
-    background-color: #007bff;
+    color: var(--btn-primary-text);
+    background-color: var(--btn-primary);
     border: none;
     box-shadow: 0 4px 8px #0003;
-    color: #fff;
     display: none;
     bottom: 0;
     padding: 10px 20px;
@@ -72,7 +107,7 @@ body {
     background: none;
     border: none;
     font-size: 18px;
-    color: #ccc;
+    color: var(--border-color);
     user-select: none;
 }
 
@@ -125,12 +160,16 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 12px;
-    border: 3px solid #FF3636;
+    border: 3px solid var(--btn-uninstall);
     box-sizing: border-box;
-    background-color: #F5F5F5;
+    background-color: var(--bg-primary);
     white-space: nowrap;
     overflow: hidden;
     user-select: none;
+
+    svg {
+        fill: var(--btn-uninstall);
+    }
 }
 
 .uninstall-container i {
@@ -140,7 +179,7 @@ body {
 .uninstall-container span {
     font-size: 16px;
     font-weight: bold;
-    color: #FF3636;
+    color: var(--btn-uninstall);
 }
 
 .uninstall-container.hidden-uninstall {
@@ -157,9 +196,9 @@ body {
     max-width: 600px;
     max-height: 80%;
     overflow-y: auto;
-    background-color: white;
+    background-color: var(--bg-secondary);
     border-radius: 15px;
-    padding: 20px;
+    padding: 30px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -189,11 +228,13 @@ body {
     font-size: 18px;
     font-weight: bold;
     user-select: none;
+    color: var(--text-primary);
+    background-color: var(--border-color);
 }
 
 #confirm-uninstall {
-    color: #fff;
-    background-color: #007bff;
+    color: var(--btn-primary-text);
+    background-color: var(--btn-primary);
 }
 
 .permission-popup {
@@ -203,7 +244,8 @@ body {
 }
 
 .permission-content {
-    background-color: #fff;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
     padding: 20px;
     border-radius: 12px;
     width: 80%;
@@ -212,7 +254,6 @@ body {
 }
 
 .permission-content h2 {
-    color: #333;
     margin-bottom: 20px;
     font-size: 18px;
 }
@@ -251,31 +292,5 @@ body {
 @keyframes ripple-animation {
     to {
         transform: scale(3);
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #121212;
-        color: #fff;
-    }
-
-    .uninstall-container {
-        background-color: #121212;
-    }
-
-    .uninstall-confirmation,
-    .permission-content {
-        background-color: #343434;
-    }
-
-    .permission-content h2,
-    .permission-steps p {
-        color: #fff;
-    }
-
-    .uninstall-confirmation-button {
-        background-color: #6E6E6E;
-        color: white;
     }
 }

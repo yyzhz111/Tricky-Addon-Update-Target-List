@@ -8,7 +8,7 @@
     width: calc(90% - 60px);
     max-width: 300px;
     height: fit-content;
-    background-color: #fff;
+    background-color: var(--bg-secondary);
     border-radius: 18px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     padding: 30px;
@@ -29,11 +29,12 @@
     height: 100px;
     font-size: 16px;
     padding: 10px;
-    background-color: #F5F5F5;
-    border: 1px solid #ccc;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     box-sizing: border-box;
-    outline-color: #007bff;
+    outline-color: var(--btn-primary);
     resize: none;
 }
 
@@ -44,21 +45,9 @@
     border-radius: 12px;
     font-size: 20px;
     font-weight: bold;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--btn-primary);
+    color: var(--btn-primary-text);
     position: relative;
     overflow: hidden;
     user-select: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    .boot-hash-card {
-        background-color: #343434;
-    }
-
-    .boot-hash-input {
-        background-color: #232323;
-        color: #fff;
-        border: 1px solid #6E6E6E;
-    }
 }

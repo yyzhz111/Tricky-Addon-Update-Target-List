@@ -14,7 +14,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color: #DCDCDC;
+    background-color: var(--border-color);
     border: none;
     border-radius: 12px;
     box-sizing: border-box;
@@ -51,7 +51,7 @@
     position: relative;
     width: calc(90% - 60px);
     max-width: 800px;
-    background-color: white;
+    background-color: var(--bg-secondary);
     padding: 30px;
     border-radius: 15px;
     text-align: left;
@@ -80,12 +80,12 @@
 }
 
 .changelog a {
-    color: #6E6E6E;
-    cursor: none;
+    color: var(--text-secondary);
+    cursor: default;
 }
 
 .changelog a:active {
-    color: blue;
+    color: var(--btn-primary);
 }
 
 .update-button-container {
@@ -100,7 +100,8 @@
     display: none;
     justify-content: center;
     font-weight: bold;
-    background-color: #ddd;
+    color: var(--text-primary);
+    background-color: var(--border-color);
     width: 100%;
     border: none;
     padding: 12px;
@@ -110,12 +111,12 @@
 }
 
 .reboot {
-    color: #fff;
-    background-color: #007bff;
+    color: var(--btn-primary-text);
+    background-color: var(--btn-primary);
 }
 
 .card {
-    background-color: #fff;
+    background-color: var(--bg-secondary);
     border: none;
     box-sizing: border-box;
     border-radius: 12px;
@@ -145,9 +146,8 @@
     right: 0;
     margin: auto;
     width: fit-content;
-    background-color: #B1B1B1;
+    background-color: var(--border-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ccc;
     border-radius: 50px 50px;
     opacity: 0;
     transform: scale(0);
@@ -196,7 +196,7 @@
 }
 
 #normal-indicator {
-    background-color: #007bff;
+    background-color: var(--btn-primary);
 }
 
 #hack-indicator {
@@ -255,11 +255,15 @@
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
     transition: transform 0.2s ease-out, opacity 0.3s ease;
+
+    svg {
+        fill: var(--btn-primary-text);
+    }
 }
 
 .checkbox:checked + .custom-checkbox {
-    border-color: #007bff;
-    background-color: #007bff;
+    border-color: var(--btn-primary);
+    background-color: var(--btn-primary);
     transition: border-color 0.1s ease;
     animation: checked-bounce 0.3s ease-out;
 }
@@ -304,33 +308,5 @@
     }
     100% {
         transform: scale(1);
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    .card {
-        background-color: #343434;
-    }
-
-    .update-card {
-        background-color: #4D4D4D;
-    }
-
-    .mode {
-        background-color: #343434;
-        border: 1px solid #6E6E6E;
-    }
-
-    .install {
-        background-color: #6E6E6E;
-        color: white;
-    }
-
-    .update-menu {
-        background-color: #343434;
-    }
-
-    .update-content a {
-        color: #C2C2C2;
     }
 }

@@ -7,7 +7,7 @@
     height: 40px;
     width: calc(100% - 10px);
     max-width: 1100px;
-    background-color: #F5F5F5;
+    background-color: var(--bg-primary);
     transition: transform 0.4s ease;
     z-index: 1100;
     margin-left: auto;
@@ -18,7 +18,7 @@
 }
 
 .header-block {
-    background-color: #F5F5F5;
+    background-color: var(--bg-primary);
     display: none;
     position: fixed;
     top: 0;
@@ -56,7 +56,7 @@
 }
 
 .language-icon {
-    fill: #000;
+    fill: var(--text-primary);
 }
 
 .language-menu {
@@ -64,10 +64,10 @@
     flex-direction: column;
     position: absolute;
     right: 5px;
-    background-color: white;
+    background-color: var(--bg-secondary);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1800;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     box-sizing: border-box;
     opacity: 0;
@@ -86,8 +86,8 @@
 .language-option {
     padding: 8px 10px;
     text-align: center;
-    color: #333;
-    background-color: white;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
     border: none;
     font-size: 16px;
     width: 100%;
@@ -103,7 +103,7 @@
     left: 10px;
     width: calc(100% - 20px);
     height: 1px;
-    background-color: #ccc;
+    background-color: var(--border-color);
 }
 
 .language-option:last-child::after {
@@ -145,7 +145,7 @@
     position: relative;
     width: calc(95vw - 60px);
     max-width: 800px;
-    background-color: white;
+    background-color: var(--bg-secondary);
     padding: 30px;
     border-radius: 15px;
     text-align: left;
@@ -171,34 +171,4 @@
 
 .instruction p {
     margin: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-    .header-block,
-    .header {
-        background-color: #121212;
-    }
-
-    .help-button {
-        color: #fff;
-    }
-    
-    .language-icon {
-        fill: #eee;
-    }
-
-    .language-option,
-    .help-menu {
-        color: #eee;
-        background-color: #343434;
-    }
-
-    .language-menu {
-        background-color: #343434;
-        border: 1px solid #6E6E6E;
-    }
-
-    .language-option::after {
-        background-color: #6E6E6E;
-    }
 }
