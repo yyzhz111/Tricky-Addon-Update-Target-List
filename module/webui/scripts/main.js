@@ -124,11 +124,7 @@ export function showPrompt(key, isSuccess = true, duration = 3000) {
         clearTimeout(window.promptTimeout);
     }
     setTimeout(() => {
-        if (typeof ksu !== 'undefined' && ksu.mmrl) {
-            prompt.style.transform = 'translateY(calc((var(--window-inset-bottom) + 60%) * -1))';
-        } else {
-            prompt.style.transform = 'translateY(-60%)';
-        }
+        prompt.style.transform = 'translateY(calc((var(--window-inset-bottom, 0px) + 60%) * -1))';
         window.promptTimeout = setTimeout(() => {
             prompt.style.transform = 'translateY(100%)';
         }, duration);
@@ -227,12 +223,7 @@ async function uninstallWebUI() {
 async function checkMMRL() {
     if (typeof ksu !== 'undefined' && ksu.mmrl) {
         // Adjust elements position for MMRL
-        title.style.top = 'var(--window-inset-top)';
-        const insetTop = getComputedStyle(document.documentElement).getPropertyValue('--window-inset-top');
-        const insetTopValue = parseInt(insetTop, 10);
-        searchMenuContainer.style.top = `${insetTopValue + 40}px`;
         headerBlock.style.display = 'block';
-        floatingCard.style.bottom = 'calc(var(--window-inset-bottom) + 50px)';
 
         // Set status bars theme based on device theme
         try {
@@ -262,13 +253,8 @@ async function checkMMRL() {
 
 // Funtion to adapt floating button hide in MMRL
 export function hideFloatingBtn(hide = true) {
-    if (!hide) {
-        floatingCard.style.transform = 'translateY(0)';
-    } else if (typeof ksu !== 'undefined' && ksu.mmrl) {
-        floatingCard.style.transform = 'translateY(calc(var(--window-inset-bottom) + 120px))';
-    } else {
-        floatingCard.style.transform = 'translateY(120px)';
-    }
+    if (!hide) floatingCard.style.transform = 'translateY(0)';
+    else floatingCard.style.transform = 'translateY(calc(var(--window-inset-bottom, 0px) + 120px))';
 }
 
 // Function to apply ripple effect

@@ -1,7 +1,14 @@
+@import url('https://mui.kernelsu.org/mmrl/insets.css');
+
+:root {
+    --top-inset: var(--window-inset-top, 0px);
+    --bottom-inset: var(--window-inset-bottom, 0px);
+}
+
 body {
     background-color: #F5F5F5;
-    padding-top: var(--window-inset-top);
-    padding-bottom: var(--window-inset-bottom);
+    padding-top: var(--top-inset);
+    padding-bottom: var(--bottom-inset);
     margin: 0;
 }
 
@@ -14,7 +21,7 @@ body {
     justify-content: center;
     position: fixed;
     width: 100%;
-    bottom: 50px;
+    bottom: calc(var(--bottom-inset) + 50px);
     transition: transform 0.4s ease;
     pointer-events: none;
     z-index: 2;
