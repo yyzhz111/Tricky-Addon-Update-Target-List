@@ -8,6 +8,18 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v3.7
+- **WebUI:** Optimized UI.
+- **WebUI:** Added uninstall confirmation dialog.
+- **WebUI:** Sanitize text content (#23, @totalolage)
+- **WebUI:** Added selected language memory.
+- **WebUI:** Fixed Chinese translation (#26 #27, @xiaokuqwq)
+- **WebUI:** Added Indonesian translation (#28, @ChiseWaguri)
+- **WebUI:** Added Italian translation (#30, @luigimak)
+- **MMRL:** Added monet theme suport.
+- **MMRL:** Fixed fail to display guide when permission is not granted.
+- No longer add Play Store by default.
+
 ### v3.6
 - **WebUI:** Option to add system apps.
 - **WebUI:** Fixed abnormal gap between content and header in MMRL.
