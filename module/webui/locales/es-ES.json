@@ -1,5 +1,6 @@
 {
     "language": "Español",
+    "system_default": "Predeterminado del sistema",
     "header": {
         "title": "Tricky Addon"
     },

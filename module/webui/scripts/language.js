@@ -125,6 +125,14 @@ export function setupLanguageMenu() {
  */
 async function generateLanguageMenu() {
     languageMenu.innerHTML = '';
+    
+    // Add System Default option
+    const defaultButton = document.createElement('button');
+    defaultButton.classList.add('language-option', 'ripple-element');
+    defaultButton.setAttribute('data-lang', 'default');
+    defaultButton.setAttribute('data-i18n', 'system_default');
+    languageMenu.appendChild(defaultButton);
+
     const languagePromises = availableLanguages.map(async (lang) => {
         try {
             const response = await fetch(`locales/${lang}.json`);
