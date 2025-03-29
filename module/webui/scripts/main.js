@@ -343,7 +343,7 @@ window.addEventListener('scroll', () => {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
-    loadTranslations();
+    await loadTranslations();
     await checkMMRL();
     if (!MMRL_API) return;
     await getBasePath();

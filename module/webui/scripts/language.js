@@ -19,7 +19,7 @@ export async function detectUserLanguage() {
         const availableResponse = await fetch('locales/available-lang.json');
         const availableData = await availableResponse.json();
         availableLanguages = availableData.languages;
-        generateLanguageMenu();
+        await generateLanguageMenu();
 
         // Fetch preferred language
         const prefered_language_code = localStorage.getItem('trickyAddonLanguage');
