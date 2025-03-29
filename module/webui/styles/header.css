@@ -84,6 +84,7 @@
 }
 
 .language-option {
+    flex-shrink: 0;
     padding: 8px 10px;
     text-align: center;
     color: var(--text-primary);
