@@ -8,6 +8,13 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v3.8
+- **WebUI:** Optimized UI.
+- **WebUI:** Added mirror link fallback to fetch content from raw.githubusercontent.com
+- **WebUI:** Added French translation (#31, @anaelle-dev)
+- **WebUI:** Added Arabic Translation (#32, @ZG089)
+- **WebUI:** Added Azerbaijani Translation (#34, @mnasibzade)
+
 ### v3.7
 - **WebUI:** Optimized UI.
 - **WebUI:** Added uninstall confirmation dialog.
