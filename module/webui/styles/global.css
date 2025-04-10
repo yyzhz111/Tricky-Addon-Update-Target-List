@@ -262,14 +262,6 @@ body {
     text-align: left;
 }
 
-.permission-steps ol {
-    padding: 0 25px;
-}
-
-.permission-steps li {
-    margin-top: 10px;
-}
-
 .ripple-element {
     position: relative;
     overflow: hidden;

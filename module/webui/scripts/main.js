@@ -24,7 +24,6 @@ const ADDITIONAL_APPS = [ "android", "com.google.android.gms", "io.github.vvb206
 // Variables
 let e = 0;
 let isRefreshing = false;
-let MMRL_API = true;
 
 // Function to set basePath
 async function getBasePath() {
@@ -214,21 +213,20 @@ async function checkMMRL() {
             console.error("Error setting status bars theme:", error)
         }
 
-        // Request API permission, supported version: 33045+
+        // Check MMRL version
         try {
-            $tricky_store.requestAdvancedKernelSUAPI();
+            const mmrlJson = $tricky_store.getMmrl();
+            const mmrlData = JSON.parse(mmrlJson);
+            if (mmrlData.versionCode < 33412) {
+                throw new Error('MMRL version is less than 33412');
+            }
         } catch (error) {
-            console.error("Error requesting API:", error);
-        }
-
-        // Check permissions
-        try {
-            await execCommand('ls /data/adb/modules');
-            MMRL_API = true;
-        } catch (error) {
-            console.error('Permission check failed:', error);
+            console.error('MMRL version check failed:', error);
+            $tricky_store.requestAdvancedKernelSUAPI(); // Just to ensure linkRedirect work
             permissionPopup.style.display = 'flex';
-            MMRL_API = false;
+            setTimeout(() => {
+                linkRedirect('https://github.com/MMRLApp/MMRL/releases/latest');
+            }, 3000)
         }
     }
 }
@@ -326,9 +324,8 @@ window.addEventListener('scroll', () => {
 // Initial load
 document.addEventListener('DOMContentLoaded', async () => {
     await loadTranslations();
-    await checkMMRL();
-    if (!MMRL_API) return;
     await getBasePath();
+    checkMMRL();
     hideFloatingBtn();
     getModuleVersion();
     setupMenuToggle();
