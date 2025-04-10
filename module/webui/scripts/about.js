@@ -7,12 +7,14 @@ document.getElementById("about").addEventListener("click", () => {
     const closeAbout = document.getElementById('close-about');
 
     // Show about menu
-    document.body.classList.add("no-scroll");
-    aboutOverlay.style.display = 'flex';
     setTimeout(() => {
-        aboutOverlay.style.opacity = '1';
-        aboutContent.classList.add('open');
-    }, 10);
+        document.body.classList.add("no-scroll");
+        aboutOverlay.style.display = 'flex';
+        setTimeout(() => {
+            aboutOverlay.style.opacity = '1';
+            aboutContent.classList.add('open');
+        }, 10);
+    }, 80);
 
     const hideMenu = () => {
         document.body.classList.remove("no-scroll");

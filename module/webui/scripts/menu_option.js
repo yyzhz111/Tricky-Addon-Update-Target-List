@@ -82,7 +82,7 @@ document.getElementById("deselect-unnecessary").addEventListener("click", async 
 
 // Function to add system app
 export async function setupSystemAppMenu() {
-    document.getElementById("add-system-app").addEventListener("click", () => openSystemAppOverlay());
+    document.getElementById("add-system-app").addEventListener("click", () => setTimeout(() => openSystemAppOverlay(), 80));
     document.getElementById("add-system-app-overlay").addEventListener("click", (event) => {
         if (event.target === event.currentTarget) closeSystemAppOverlay();
     });
@@ -389,17 +389,13 @@ document.querySelector('.back-button').addEventListener('click', async () => {
 });
 
 // Close custom keybox selector
-document.querySelector('.close-selector').addEventListener('click', () => {
-    closeCustomKeyboxSelector();
-});
+document.querySelector('.close-selector').addEventListener('click', () => closeCustomKeyboxSelector());
 fileSelector.addEventListener('click', (event) => {
-    if (event.target === fileSelector) {
-        closeCustomKeyboxSelector();
-    }
+    if (event.target === fileSelector) closeCustomKeyboxSelector();
 });
 
-// Function to close custom keybox selector
-function closeCustomKeyboxSelector() {
+// close custom keybox selector
+const closeCustomKeyboxSelector = () => {
     fileSelector.style.opacity = '0';
     fileSelectorContent.classList.remove('open');
     document.body.classList.remove("no-scroll");
@@ -410,6 +406,7 @@ function closeCustomKeyboxSelector() {
 
 // Open custom keybox selector
 document.getElementById('customkb').addEventListener('click', async () => {
+    await new Promise(resolve => setTimeout(resolve, 80));
     fileSelector.style.display = 'flex';
     document.body.classList.add("no-scroll");
     setTimeout(() => {

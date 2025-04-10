@@ -13,19 +13,8 @@ const getButton = document.getElementById('get-patch');
 const autoButton = document.getElementById('auto-config');
 const saveButton = document.getElementById('save-patch');
 
-// Show security patch dialog
-function showSecurityPatchDialog() {
-    document.body.classList.add("no-scroll");
-    overlay.style.display = 'flex';
-    setTimeout(() => {
-        overlay.style.opacity = '1';
-        overlayContent.classList.add('open');
-        loadCurrentConfig();
-    }, 10);
-}
-
 // Hide security patch dialog
-function hideSecurityPatchDialog() {
+const hideSecurityPatchDialog = () => {
     document.body.classList.remove("no-scroll");
     overlay.style.opacity = '0';
     overlayContent.classList.remove('open');
@@ -207,7 +196,17 @@ function isValid8Digit(value) {
 
 // Initialize event listeners
 export function securityPatch() {
-    document.getElementById("security-patch").addEventListener("click", showSecurityPatchDialog);
+    document.getElementById("security-patch").addEventListener("click", () => {
+        setTimeout(() => {
+            document.body.classList.add("no-scroll");
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                overlayContent.classList.add('open');
+                loadCurrentConfig();
+            }, 10);
+        }, 80);
+    });
 
     // Toggle advanced mode
     advancedToggle.addEventListener('change', () => {
