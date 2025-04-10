@@ -8,6 +8,9 @@ GitHub release: [Tricky Addon: Update Target List](https://github.com/KOWX712/Tr
 Telegram channel: [KOW's Little World](https://t.me/kowchannel)
 
 ## Changelog
+### v3.8.1
+- **WebUI:** Fixed missing aosp key fallback when no valid key is available.
+
 ### v3.8
 - **WebUI:** Optimized UI.
 - **WebUI:** Added mirror link fallback to fetch content from raw.githubusercontent.com
