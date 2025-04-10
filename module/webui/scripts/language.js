@@ -1,3 +1,5 @@
+import { applyRippleEffect } from './main.js';
+
 const languageButton = document.querySelector('.language-button');
 const languageMenu = document.querySelector('.language-menu');
 const languageOptions = document.querySelectorAll('.language-option');
@@ -49,6 +51,7 @@ export async function loadTranslations() {
     const response = await fetch(`locales/${lang}.json`);
     translations = await response.json();
     applyTranslations();
+    applyRippleEffect();
 }
 
 /**
@@ -100,17 +103,20 @@ export function setupLanguageMenu() {
         }
     });
     const closeLanguageMenu = () => {
-        languageMenu.classList.remove("show");
-        languageOverlay.style.display = 'none';
+        setTimeout(() => {
+            languageMenu.classList.remove("show");
+            languageOverlay.style.display = 'none';
+        }, 80)
     }
-    languageMenu.addEventListener("click", (e) => {
-    if (e.target.classList.contains("language-option")) {
-        const lang = e.target.getAttribute("data-lang");
-        localStorage.setItem('trickyAddonLanguage', lang);
-        loadTranslations(lang);
-        closeLanguageMenu();
-    }
-});
+    languageMenu.addEventListener("click", async (e) => {
+        if (e.target.classList.contains("language-option")) {
+            const lang = e.target.getAttribute("data-lang");
+            localStorage.setItem('trickyAddonLanguage', lang);
+            closeLanguageMenu();
+            await new Promise(resolve => setTimeout(resolve, 200));
+            loadTranslations(lang);
+        }
+    });
 }
 
 /**
