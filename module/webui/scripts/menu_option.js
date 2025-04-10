@@ -195,8 +195,11 @@ async function setKeybox(content) {
     }
 }
 
-// Function to replace aosp kb
-document.getElementById("aospkb").addEventListener("click", async () => {
+/**
+ * Set aosp key
+ * @returns {Promise<void>}
+ */
+async function aospkb() {
     const source = await execCommand(`xxd -r -p ${basePath}/common/.default | base64 -d`);
     const result = await setKeybox(source);
     if (result) {
@@ -205,9 +208,12 @@ document.getElementById("aospkb").addEventListener("click", async () => {
     } else {
         showPrompt("prompt.key_set_error", false);
     }
-});
+}
 
-// Function to replace valid kb
+// aosp kb eventlistener
+document.getElementById("aospkb").addEventListener("click", async () => aospkb());
+
+// valid kb eventlistener
 document.getElementById("validkb").addEventListener("click", async () => {
     fetch("https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra")
         .then(response => {
