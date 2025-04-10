@@ -243,7 +243,20 @@ export function hideFloatingBtn(hide = true) {
 export function applyRippleEffect() {
     document.querySelectorAll('.ripple-element').forEach(element => {
         if (element.dataset.rippleListener !== "true") {
-            element.addEventListener("pointerdown", function (event) {
+            element.addEventListener("pointerdown", async (event) => {
+                const handlePointerUp = () => {
+                    ripple.classList.add("end");
+                    setTimeout(() => {
+                        ripple.classList.remove("end");
+                        ripple.remove();
+                    }, duration * 1000);
+                    element.removeEventListener("pointerup", handlePointerUp);
+                    element.removeEventListener("pointercancel", handlePointerUp);
+                };
+                element.addEventListener("pointerup", () => setTimeout(handlePointerUp, 80));
+                element.addEventListener("pointercancel", () => setTimeout(handlePointerUp, 80));
+
+                await new Promise(resolve => setTimeout(resolve, 80));
                 if (isScrolling) return;
                 const ripple = document.createElement("span");
                 ripple.classList.add("ripple");
@@ -280,17 +293,6 @@ export function applyRippleEffect() {
 
                 // Append ripple and handle cleanup
                 element.appendChild(ripple);
-                const handlePointerUp = () => {
-                    ripple.classList.add("end");
-                    setTimeout(() => {
-                        ripple.classList.remove("end");
-                        ripple.remove();
-                    }, duration * 1000);
-                    element.removeEventListener("pointerup", handlePointerUp);
-                    element.removeEventListener("pointercancel", handlePointerUp);
-                };
-                element.addEventListener("pointerup", handlePointerUp);
-                element.addEventListener("pointercancel", handlePointerUp);
             });
             element.dataset.rippleListener = "true";
         }

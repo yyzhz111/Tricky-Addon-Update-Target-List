@@ -80,7 +80,8 @@ export function setupLanguageMenu() {
         if (isVisible) {
             closeLanguageMenu();
         } else {
-            openLanguageMenu();
+            languageOverlay.style.display = 'flex';
+            setTimeout(() => languageMenu.classList.add("show"), 10);
         }
     });
     document.addEventListener("click", (event) => {
@@ -98,13 +99,7 @@ export function setupLanguageMenu() {
             closeLanguageMenu();
         }
     });
-    function openLanguageMenu() {
-        languageOverlay.style.display = 'flex';
-        setTimeout(() => {
-            languageMenu.classList.add("show");
-        }, 10);
-    }
-    function closeLanguageMenu() {
+    const closeLanguageMenu = () => {
         languageMenu.classList.remove("show");
         languageOverlay.style.display = 'none';
     }
