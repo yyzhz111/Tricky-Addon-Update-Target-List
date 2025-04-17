@@ -19,7 +19,7 @@ jobs:
       version_tag_exists: ${{ steps.check_tag.outputs.version_tag_exists }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -65,7 +65,7 @@ jobs:
     if: ${{ needs.build.outputs.version_tag_exists == 'false' }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
