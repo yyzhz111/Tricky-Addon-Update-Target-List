@@ -1,4 +1,5 @@
 MODPATH=${0%/*}
+PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:$PATH
 HIDE_DIR="/data/adb/modules/.TA_utl"
 TS="/data/adb/modules/tricky_store"
 TSPA="/data/adb/modules/tsupport-advance"
@@ -41,7 +42,9 @@ resetprop_if_empty "ro.boot.vbmeta.device_state" "locked"
 resetprop_if_empty "ro.boot.vbmeta.invalidate_on_error" "yes"
 resetprop_if_empty "ro.boot.vbmeta.avb_version" "1.0"
 resetprop_if_empty "ro.boot.vbmeta.hash_alg" "sha256"
-resetprop_if_empty "ro.boot.vbmeta.size" "10496"
+vbmeta_size=$(busybox blockdev --getbsz "/dev/block/by-name/vbmeta$(getprop ro.boot.slot_suffix)")
+[ -n "$vbmeta_size" ] || vbmeta_size="4096"
+resetprop_if_empty "ro.boot.vbmeta.size" "$vbmeta_size"
 
 # Disable TSupport-A auto update target to prevent overwrite
 if [ -d "$TSPA" ]; then
