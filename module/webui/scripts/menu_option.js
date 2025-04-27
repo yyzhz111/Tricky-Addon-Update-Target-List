@@ -179,13 +179,18 @@ export async function setupSystemAppMenu() {
     }
 }
 
-// Function to backup previous keybox and set new keybox
+/**
+ * Backup previous keybox and set new keybox
+ * @param {String} content - kb content to save
+ * @returns {Boolean}
+ */
 async function setKeybox(content) {
-    const sanitizedContent = content.replace(/'/g, "'\\''");
     try {
         await execCommand(`
             mv -f /data/adb/tricky_store/keybox.xml /data/adb/tricky_store/keybox.xml.bak 2>/dev/null
-            echo '${sanitizedContent}' > /data/adb/tricky_store/keybox.xml
+            cat << 'KB_EOF' > /data/adb/tricky_store/keybox.xml
+${content}
+KB_EOF
             chmod 644 /data/adb/tricky_store/keybox.xml
             `);
         return true;
@@ -213,15 +218,21 @@ async function aospkb() {
 // aosp kb eventlistener
 document.getElementById("aospkb").addEventListener("click", async () => aospkb());
 
-// valid kb eventlistener
-document.getElementById("validkb").addEventListener("click", async () => {
-    fetch("https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra")
+/**
+ * Fetch encoded keybox and decode
+ * @param {String} link - link to fetch
+ * @param {String} fallbackLink - fallback link
+ * @param {Boolean} valid - fetching valid kb or not, default = false
+ * @returns {void}
+ */
+async function fetchkb(link, fallbackLink, valid = false) {
+    fetch(link)
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.text();
         })
         .catch(async () => {
-            return fetch("https://raw.gitmirror.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra")
+            return fetch(fallbackLink)
                 .then(response => {
                     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     return response.text();
@@ -229,8 +240,12 @@ document.getElementById("validkb").addEventListener("click", async () => {
         })
         .then(async data => {
             if (!data.trim()) {
-                await aospkb();
-                showPrompt("prompt.no_valid_fallback", false);
+                if (valid) {
+                    await aospkb();
+                    showPrompt("prompt.no_valid_fallback", false);
+                } else {
+                    showPrompt("prompt.key_set_error", false);
+                }
                 return;
             }
             try {
@@ -239,7 +254,7 @@ document.getElementById("validkb").addEventListener("click", async () => {
                 const source = atob(decodedHex);
                 const result = await setKeybox(source);
                 if (result) {
-                    showPrompt("prompt.valid_key_set");
+                    showPrompt(valid ? "prompt.valid_key_set" : "prompt.unknown_key_set");
                 } else {
                     throw new Error("Failed to copy valid keybox");
                 }
@@ -250,6 +265,23 @@ document.getElementById("validkb").addEventListener("click", async () => {
         .catch(async error => {
             showPrompt("prompt.no_internet", false);
         });
+}
+
+// unkown kb eventlistener
+document.getElementById("devicekb").addEventListener("click", async () => {
+    fetchkb(
+        "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/bot/.device",
+        "https://raw.gitmirror.com/KOWX712/Tricky-Addon-Update-Target-List/bot/.device"
+    )
+});
+
+// valid kb eventlistener
+document.getElementById("validkb").addEventListener("click", () => {
+    fetchkb(
+        "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra",
+        "https://raw.gitmirror.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra",
+        true
+    )
 });
 
 // File selector
