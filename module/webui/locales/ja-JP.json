@@ -79,7 +79,7 @@
         "key_set_error": "Keybox の更新に失敗しました。",
         "unknown_key_set": "不明な Keybox の設定に成功しました。",
         "valid_key_set": "有効な Keybox の設定に成功しました。",
-        "no_valid_fallback": "有効な Keybox がありません。AOSP Keybox に置き換えます。",
+        "no_valid": "有効な Keybox がありません。",
         "boot_hash_set": "確認付きブートハッシュの更新に成功しました。",
         "boot_hash_set_error": "確認付きブートハッシュの更新に失敗しました。",
         "saved_target": "設定を target.txt に保存しました。",

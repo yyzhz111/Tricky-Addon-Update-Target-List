@@ -79,7 +79,7 @@
         "key_set_error": "Nabigong i-update ang keybox",
         "unknown_key_set": "Matagumpay na na-set ang Hindi Kilalang Keybox",
         "valid_key_set": "Matagumpay na na-set ang Valid Keybox",
-        "no_valid_fallback": "Walang valid na keybox na natagpuan, pinalitan ng AOSP keybox.",
+        "no_valid": "Walang valid na keybox na natagpuan.",
         "boot_hash_set": "Matagumpay na na-save ang Verified Boot Hash",
         "boot_hash_set_error": "Nabigong i-update ang Verified Boot Hash",
         "saved_target": "Na-save ang configuration sa target.txt",

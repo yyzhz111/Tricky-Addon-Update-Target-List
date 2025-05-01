@@ -79,7 +79,7 @@
         "key_set_error": "更新密鑰失敗",
         "unknown_key_set": "成功設置未知密鑰",
         "valid_key_set": "成功設置有效密鑰",
-        "no_valid_fallback": "未找到有效密鑰，已替換為 AOSP 密鑰。",
+        "no_valid": "未找到有效密鑰。",
         "boot_hash_set": "哈希值重置成功",
         "boot_hash_set_error": "哈希值重置失敗",
         "saved_target": "成功保存配置",

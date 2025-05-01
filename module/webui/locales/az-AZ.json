@@ -79,7 +79,7 @@
         "key_set_error": "Keybox-u yeniləmək mümkün olmadı",
         "unknown_key_set": "Naməlum keybox uğurla təyin olundu",
         "valid_key_set": "Etibarlı keybox uğurla təyin olundu",
-        "no_valid_fallback": "Etibarlı keybox tapılmadı, AOSP keybox ilə dəyişdirildi.",
+        "no_valid": "Etibarlı keybox tapılmadı.",
         "boot_hash_set": "Təsdiqlənmiş Boot Hash uğurla yadda saxlanıldı",
         "boot_hash_set_error": "Təsdiqlənmiş Boot Hash yenilənə bilmədi",
         "saved_target": "Konfiqurasiya target.txt-yə yadda saxlanıldı",

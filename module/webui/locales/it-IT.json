@@ -79,7 +79,7 @@
         "key_set_error": "Impossibile aggiornare keybox",
         "unknown_key_set": "Keybox sconosciuta impostata correttamente",
         "valid_key_set": "Keybox valida impostata correttamente",
-        "no_valid_fallback": "Nessuna keybox valida trovata, sostituito con keybox AOSP.",
+        "no_valid": "Nessuna keybox valida trovata.",
         "boot_hash_set": "Boot Hash Verificato salvato correttamente",
         "boot_hash_set_error": "Impossibile aggiornare Boot Hash Verificato",
         "saved_target": "Configurazione salvata in target.txt",

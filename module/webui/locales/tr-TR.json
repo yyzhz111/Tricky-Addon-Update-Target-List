@@ -79,7 +79,7 @@
         "key_set_error": "Keybox güncellenemedi",
         "unknown_key_set": "Bilinmeyen keybox başarıyla ayarlandı",
         "valid_key_set": "Geçerli keybox başarıyla ayarlandı",
-        "no_valid_fallback": "Geçerli keybox bulunamadı, AOSP keybox ile değiştirildi.",
+        "no_valid": "Geçerli keybox bulunamadı.",
         "boot_hash_set": "Doğrulanmış Boot Hash başarıyla kaydedildi",
         "boot_hash_set_error": "Doğrulanmış Boot Hash güncellenemedi",
         "saved_target": "Yapılandırma target.txt dosyasına kaydedildi",

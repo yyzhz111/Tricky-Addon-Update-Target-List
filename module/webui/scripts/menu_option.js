@@ -238,21 +238,16 @@ async function fetchkb(link, fallbackLink, valid = false) {
                     return response.text();
                 });
         })
-        .then(async data => {
+        .then(data => {
             if (!data.trim()) {
-                if (valid) {
-                    await aospkb();
-                    showPrompt("prompt.no_valid_fallback", false);
-                } else {
-                    showPrompt("prompt.key_set_error", false);
-                }
+                showPrompt(valid ? "prompt.no_valid" : "prompt.key_set_error", false);
                 return;
             }
             try {
                 const hexBytes = new Uint8Array(data.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
                 const decodedHex = new TextDecoder().decode(hexBytes);
                 const source = atob(decodedHex);
-                const result = await setKeybox(source);
+                const result = setKeybox(source);
                 if (result) {
                     showPrompt(valid ? "prompt.valid_key_set" : "prompt.unknown_key_set");
                 } else {
