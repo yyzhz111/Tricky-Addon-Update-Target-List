@@ -79,7 +79,7 @@
         "key_set_error": "فشل في تحديث keybox",
         "unknown_key_set": "تم تعيين Keybox غير معروف بنجاح",
         "valid_key_set": "تم تعيين keybox صالح بنجاح",
-        "no_valid_fallback": "لم يتم العثور على keybox صالح، تم الاستبدال بـ keybox AOSP.",
+        "no_valid": "لم يتم العثور على keybox صالح.",
         "boot_hash_set": "تم حفظ تجزئة التمهيد الموثوق بنجاح",
         "boot_hash_set_error": "فشل في تحديث تجزئة التمهيد الموثوق",
         "saved_target": "تم حفظ التكوين إلى target.txt",

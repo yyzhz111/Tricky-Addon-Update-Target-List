@@ -79,7 +79,7 @@
         "key_set_error": "Nie udało się zaktualizować klucza",
         "unknown_key_set": "Nieznany klucz został pomyślnie ustawiony",
         "valid_key_set": "Prawidłowy klucz został pomyślnie ustawiony",
-        "no_valid_fallback": "Nie znaleziono prawidłowego klucza. Zastąpiono kluczem AOSP.",
+        "no_valid": "Nie znaleziono prawidłowego klucza.",
         "boot_hash_set": "Zweryfikowano skrót rozruchowy, który został pomyślnie zapisany",
         "boot_hash_set_error": "Nie udało się zaktualizować zweryfikowanego skrótu rozruchowego",
         "saved_target": "Konfiguracja zapisana w pliku target.txt",

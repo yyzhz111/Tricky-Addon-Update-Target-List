@@ -79,7 +79,7 @@
         "key_set_error": "Gagal memperbarui keybox",
         "unknown_key_set": "Keybox tidak dikenal berhasil digunakan",
         "valid_key_set": "Keybox valid berhasil digunakan",
-        "no_valid_fallback": "Tidak ada keybox valid, menggunakan keybox AOSP.",
+        "no_valid": "Tidak ada keybox valid.",
         "boot_hash_set": "Verified Boot Hash berhasil disimpan",
         "boot_hash_set_error": "Gagal memperbarui Verified Boot Hash",
         "saved_target": "Konfigurasi disimpan ke target.txt",

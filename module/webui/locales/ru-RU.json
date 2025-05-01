@@ -79,7 +79,7 @@
         "key_set_error": "Не удалось обновить keybox",
         "unknown_key_set": "Неизвестный keybox успешно установлен",
         "valid_key_set": "Действующий keybox успешно установлен",
-        "no_valid_fallback": "Не найден действующий keybox, заменен на AOSP keybox.",
+        "no_valid": "Не найден действующий keybox.",
         "boot_hash_set": "Verified Boot Hash успешно сохранен",
         "boot_hash_set_error": "Не удалось обновить Verified Boot Hash",
         "saved_target": "Конфигурация сохранена в target.txt",
