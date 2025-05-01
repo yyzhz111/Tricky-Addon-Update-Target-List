@@ -43,8 +43,7 @@ export async function fetchAppList() {
                     };
                 }
                 const appName = await execCommand(`
-                    base_apk=$(pm path ${packageName} | grep "base.apk" | awk -F: '{print $2}')
-                    [ -n "$base_apk" ] || base_apk=$(pm path ${packageName} | grep ".apk" | awk -F: '{print $2}')
+                    base_apk=$(pm path ${packageName} | head -n1 | awk -F: '{print $2}')
                     ${basePath}/common/aapt dump badging $base_apk 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g"
                 `);
                 return {
