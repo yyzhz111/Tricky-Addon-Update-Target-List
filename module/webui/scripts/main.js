@@ -10,7 +10,6 @@ const title = document.querySelector('.header');
 export const noConnection = document.querySelector('.no-connection');
 
 // Loading, Save and Prompt Elements
-const permissionPopup = document.getElementById('permission-popup');
 const loadingIndicator = document.querySelector('.loading');
 const prompt = document.getElementById('prompt');
 const floatingCard = document.querySelector('.floating-card');
@@ -204,30 +203,10 @@ async function uninstallWebUI() {
 }
 
 // Function to check if running in MMRL
-async function checkMMRL() {
-    if (typeof ksu !== 'undefined' && ksu.mmrl) {
+function checkMMRL() {
+    if (window.$tricky_store && Object.keys($tricky_store).length > 0) {
         // Set status bars theme based on device theme
-        try {
-            $tricky_store.setLightStatusBars(!window.matchMedia('(prefers-color-scheme: dark)').matches)
-        } catch (error) {
-            console.error("Error setting status bars theme:", error)
-        }
-
-        // Check MMRL version
-        try {
-            const mmrlJson = $tricky_store.getMmrl();
-            const mmrlData = JSON.parse(mmrlJson);
-            if (mmrlData.versionCode < 33412) {
-                throw new Error('MMRL version is less than 33412');
-            }
-        } catch (error) {
-            console.error('MMRL version check failed:', error);
-            $tricky_store.requestAdvancedKernelSUAPI(); // Just to ensure linkRedirect work
-            permissionPopup.style.display = 'flex';
-            setTimeout(() => {
-                linkRedirect('https://github.com/MMRLApp/MMRL/releases/latest');
-            }, 3000)
-        }
+        $tricky_store.setLightStatusBars(!window.matchMedia('(prefers-color-scheme: dark)').matches)
     }
 }
 
