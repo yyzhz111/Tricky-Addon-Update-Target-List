@@ -1,4 +1,5 @@
-import { basePath, exec, showPrompt, noConnection, linkRedirect } from './main.js';
+import { exec } from './assets/kernelsu.js';
+import { basePath, showPrompt, noConnection, linkRedirect } from './main.js';
 import { updateCard } from './applist.js';
 
 const updateMenu = document.querySelector('.update-overlay');

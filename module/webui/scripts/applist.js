@@ -1,4 +1,5 @@
-import { basePath, exec, hideFloatingBtn, appsWithExclamation, appsWithQuestion, toast } from './main.js';
+import { exec, toast } from './assets/kernelsu.js';
+import { basePath, hideFloatingBtn, appsWithExclamation, appsWithQuestion } from './main.js';
 
 const appTemplate = document.getElementById('app-template').content;
 const modeOverlay = document.querySelector('.mode-overlay');

@@ -1,3 +1,4 @@
+import { exec, toast } from './assets/kernelsu.js';
 import { appListContainer, fetchAppList } from './applist.js';
 import { loadTranslations, setupLanguageMenu, translations } from './language.js';
 import { setupSystemAppMenu } from './menu_option.js';
@@ -310,42 +311,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("refresh").addEventListener("click", refreshAppList);
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
 });
-
-/**
- * Execute shell command with ksu.exec
- * @param {string} command - The command to execute
- * @param {Object} [options={}] - Options object containing:
- *   - cwd <string> - Current working directory of the child process
- *   - env {Object} - Environment key-value pairs
- * @returns {Promise<Object>} Resolves with:
- *   - errno {number} - Exit code of the command
- *   - stdout {string} - Standard output from the command
- *   - stderr {string} - Standard error from the command
- */
-export function exec(command, options = {}) {
-    return new Promise((resolve, reject) => {
-        const callbackFuncName = `exec_callback_${Date.now()}_${e++}`;
-        window[callbackFuncName] = (errno, stdout, stderr) => {
-            resolve({ errno, stdout, stderr });
-            cleanup(callbackFuncName);
-        };
-        function cleanup(successName) {
-            delete window[successName];
-        }
-        try {
-            ksu.exec(command, JSON.stringify(options), callbackFuncName);
-        } catch (error) {
-            reject(error);
-            cleanup(callbackFuncName);
-        }
-    });
-}
-
-// Function to toast message
-export function toast(message) {
-    try {
-        ksu.toast(message);
-    } catch (error) {
-        console.error("Failed to show toast:", error);
-    }
-}

@@ -1,4 +1,5 @@
-import { basePath, exec, showPrompt } from './main.js';
+import { exec } from './assets/kernelsu.js';
+import { basePath, showPrompt } from './main.js';
 
 const overlay = document.getElementById('security-patch-overlay');
 const overlayContent = document.querySelector('.security-patch-card');

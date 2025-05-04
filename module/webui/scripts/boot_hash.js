@@ -1,4 +1,5 @@
-import { exec, showPrompt } from './main.js';
+import { exec } from './assets/kernelsu.js';
+import { showPrompt } from './main.js';
 
 const bootHashOverlay = document.getElementById('boot-hash-overlay');
 const bootHash = document.querySelector('.boot-hash-card');
