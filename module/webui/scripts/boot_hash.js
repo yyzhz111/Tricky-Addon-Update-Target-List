@@ -1,4 +1,4 @@
-import { execCommand, showPrompt } from './main.js';
+import { exec, showPrompt } from './main.js';
 
 const bootHashOverlay = document.getElementById('boot-hash-overlay');
 const bootHash = document.querySelector('.boot-hash-card');
@@ -20,50 +20,50 @@ document.getElementById("boot-hash").addEventListener("click", async () => {
         bootHash.classList.add('open');
     }, 10);
 
-    const closeBootHashMenu = () => {
-        document.body.classList.remove("no-scroll");
-        bootHashOverlay.style.opacity = 0;
-        bootHash.classList.remove('open');
-        setTimeout(() => {
-            bootHashOverlay.style.display = "none";
-        }, 200);
-    };
-    try {
-        const bootHashContent = await execCommand("cat /data/adb/boot_hash");
-        const validHash = bootHashContent
-            .split("\n")
-            .filter(line => !line.startsWith("#") && line.trim())[0];
-        inputBox.value = validHash || "";
-    } catch (error) {
-        console.warn("Failed to read boot_hash file. Defaulting to empty input.");
-        inputBox.value = "";
-    }
-    saveButton.addEventListener("click", async () => {
-        const inputValue = inputBox.value.trim();
-        try {
-            await execCommand(`
-                PATH=/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:$PATH
-                resetprop -n ro.boot.vbmeta.digest ${inputValue}
-                [ -z "${inputValue}" ] && rm -f /data/adb/boot_hash || {
-                    echo "${inputValue}" > /data/adb/boot_hash
-                    chmod 644 /data/adb/boot_hash
-                }
-            `);
+    // read current boot hash
+    exec("cat /data/adb/boot_hash")
+        .then(({ errno, stdout }) => {
+            if (errno !== 0) {
+                inputBox.value = "";
+            } else {
+                const validHash = stdout
+                    .split("\n")
+                    .filter(line => !line.startsWith("#") && line.trim())[0];
+                inputBox.value = validHash || "";
+            }
+        });
+});
+
+const closeBootHashMenu = () => {
+    document.body.classList.remove("no-scroll");
+    bootHashOverlay.style.opacity = 0;
+    bootHash.classList.remove('open');
+    setTimeout(() => {
+        bootHashOverlay.style.display = "none";
+    }, 200);
+};
+
+// Save button listener
+saveButton.addEventListener("click", async () => {
+    const inputValue = inputBox.value.trim();
+    exec(`
+        resetprop -n ro.boot.vbmeta.digest ${inputValue}
+        [ -z "${inputValue}" ] && rm -f /data/adb/boot_hash || {
+            echo "${inputValue}" > /data/adb/boot_hash
+            chmod 644 /data/adb/boot_hash
+        }
+    `, { env: { PATH: "/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:$PATH" } })
+        .then(() => {
             showPrompt("prompt.boot_hash_set");
             closeBootHashMenu();
-        } catch (error) {
-            console.error("Failed to update boot_hash:", error);
-            showPrompt("prompt.boot_hash_set_error", false);
-        }
-    });
-    bootHashOverlay.addEventListener("click", (event) => {
-        if (event.target === bootHashOverlay) closeBootHashMenu();
-    });
+        });
+});
 
-    // Enter to save
-    inputBox.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            saveButton.click();
-        }
-    });
+bootHashOverlay.addEventListener("click", (event) => {
+    if (event.target === bootHashOverlay) closeBootHashMenu();
+});
+
+// Enter to save
+inputBox.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') saveButton.click();
 });

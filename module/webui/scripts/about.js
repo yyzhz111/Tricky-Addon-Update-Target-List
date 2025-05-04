@@ -1,11 +1,11 @@
 import { linkRedirect } from './main.js';
 
+const aboutOverlay = document.getElementById('about-overlay');
+const aboutContent = document.querySelector('.about-menu');
+const closeAbout = document.getElementById('close-about');
+
 // Function to show about overlay
 document.getElementById("about").addEventListener("click", () => {
-    const aboutOverlay = document.getElementById('about-overlay');
-    const aboutContent = document.querySelector('.about-menu');
-    const closeAbout = document.getElementById('close-about');
-
     // Show about menu
     setTimeout(() => {
         document.body.classList.add("no-scroll");
@@ -15,20 +15,20 @@ document.getElementById("about").addEventListener("click", () => {
             aboutContent.classList.add('open');
         }, 10);
     }, 80);
+});
 
-    const hideMenu = () => {
-        document.body.classList.remove("no-scroll");
-        aboutOverlay.style.opacity = '0';
-        aboutContent.classList.remove('open');
-        setTimeout(() => {
-            aboutOverlay.style.display = 'none';
-        }, 200);
-    };
+const hideMenu = () => {
+    document.body.classList.remove("no-scroll");
+    aboutOverlay.style.opacity = '0';
+    aboutContent.classList.remove('open');
+    setTimeout(() => {
+        aboutOverlay.style.display = 'none';
+    }, 200);
+};
 
-    closeAbout.addEventListener("click", hideMenu);
-    aboutOverlay.addEventListener('click', (event) => {
-        if (event.target === aboutOverlay) hideMenu();
-    });
+closeAbout.addEventListener("click", hideMenu);
+aboutOverlay.addEventListener('click', (event) => {
+    if (event.target === aboutOverlay) hideMenu();
 });
 
 // Event listener for link redirect

@@ -1,4 +1,4 @@
-import { basePath, execCommand, hideFloatingBtn, appsWithExclamation, appsWithQuestion, toast } from './main.js';
+import { basePath, exec, hideFloatingBtn, appsWithExclamation, appsWithQuestion, toast } from './main.js';
 
 const appTemplate = document.getElementById('app-template').content;
 const modeOverlay = document.querySelector('.mode-overlay');
@@ -10,13 +10,14 @@ export async function fetchAppList() {
     try {
         // fetch target list
         let targetList = [];
-        try {
-            const targetFileContent = await execCommand('cat /data/adb/tricky_store/target.txt');
-            targetList = processTargetList(targetFileContent);
-        } catch (error) {
-            toast("Failed to read target.txt!");
-            console.error("Failed to read target.txt file:", error);
-        }
+        await exec('cat /data/adb/tricky_store/target.txt')
+            .then(({ errno, stdout }) => {
+                if (errno === 0) {
+                    targetList = processTargetList(stdout);
+                } else {
+                    toast("Failed to read target.txt!");
+                }
+            });
 
         // fetch applist
         const response = await fetch('applist.json');
@@ -28,35 +29,28 @@ export async function fetchAppList() {
 
         // Get installed packages first
         let appEntries = [], installedPackages = [];
-        try {
-            installedPackages = await execCommand(`
-                pm list packages -3 | awk -F: '{print $2}'
-                [ -s "/data/adb/tricky_store/system_app" ] && SYSTEM_APP=$(cat "/data/adb/tricky_store/system_app" | tr '\n' '|' | sed 's/|*$//') || SYSTEM_APP=""
-                [ -z "$SYSTEM_APP" ] || pm list packages -s | awk -F: '{print $2}' | grep -Ex "$SYSTEM_APP" 2>/dev/null || true
-            `)
-            installedPackages = installedPackages.split("\n").map(line => line.trim()).filter(Boolean);
-            appEntries = await Promise.all(installedPackages.map(async packageName => {
-                if (appNameMap[packageName]) {
-                    return {
-                        appName: appNameMap[packageName],
-                        packageName
-                    };
-                }
-                const appName = await execCommand(`
-                    base_apk=$(pm path ${packageName} | head -n1 | awk -F: '{print $2}')
-                    ${basePath}/common/aapt dump badging $base_apk 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g"
-                `);
+        const { stdout } = await exec(`
+            pm list packages -3 | awk -F: '{print $2}'
+            [ -s "/data/adb/tricky_store/system_app" ] && SYSTEM_APP=$(cat "/data/adb/tricky_store/system_app" | tr '\n' '|' | sed 's/|*$//') || SYSTEM_APP=""
+            [ -z "$SYSTEM_APP" ] || pm list packages -s | awk -F: '{print $2}' | grep -Ex "$SYSTEM_APP" || true
+        `);
+        installedPackages = stdout.split("\n").map(line => line.trim()).filter(Boolean);
+        appEntries = await Promise.all(installedPackages.map(async (packageName) => {
+            if (appNameMap[packageName]) {
                 return {
-                    appName: appName.trim() || packageName,
+                    appName: appNameMap[packageName],
                     packageName
                 };
-            }));
-        } catch (error) {
-            appEntries = appList.map(app => ({
-                appName: app.app_name,
-                packageName: app.package_name
-            }));
-        }
+            }
+            const { stdout: appName } = await exec(`
+                base_apk=$(pm path ${packageName} | head -n1 | awk -F: '{print $2}')
+                aapt dump badging $base_apk 2>/dev/null | grep "application-label:" | sed "s/application-label://; s/'//g"
+            `, { env: { PATH: `$PATH:${basePath}/common:/data/data/com.termux/files/usr/bin` } });
+            return {
+                appName: appName || packageName,
+                packageName
+            };
+        }));
 
         // Sort
         const sortedApps = appEntries.sort((a, b) => {

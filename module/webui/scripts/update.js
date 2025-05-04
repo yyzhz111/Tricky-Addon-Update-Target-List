@@ -1,4 +1,4 @@
-import { basePath, execCommand, showPrompt, noConnection, linkRedirect } from './main.js';
+import { basePath, exec, showPrompt, noConnection, linkRedirect } from './main.js';
 import { updateCard } from './applist.js';
 
 const updateMenu = document.querySelector('.update-overlay');
@@ -23,14 +23,12 @@ function downloadFile(targetURL, fileName) {
             .then(blob => {
                 const file = new File([blob], fileName, { type: blob.type });
                 const reader = new FileReader();
-                reader.onload = async function() {
+                reader.onload = () => {
                     const base64Data = reader.result.split(',')[1];
-                    try {
-                        await execCommand(`echo ${base64Data} | base64 -d > ${basePath}/common/tmp/${fileName}`);
-                        resolve();
-                    } catch (error) {
-                        reject(error);
-                    }
+                    exec(`echo ${base64Data} | base64 -d > ${basePath}/common/tmp/${fileName}`)
+                        .then(({ errno, stderr }) => {
+                            errno === 0 ? resolve() : reject(stderr);
+                        });
                 };
                 reader.readAsDataURL(file);
             })
@@ -53,8 +51,8 @@ export async function updateCheck() {
         zipURL = data.zipUrl;
         changelogURL = data.changelog;
 
-        const updateAvailable = await execCommand(`sh ${basePath}/common/get_extra.sh --check-update ${remoteVersionCode}`);
-        if (updateAvailable.includes("update")) {
+        const { stdout } = await exec(`sh ${basePath}/common/get_extra.sh --check-update ${remoteVersionCode}`);
+        if (stdout.includes("update")) {
             showPrompt("prompt.new_update", true, 1500);
             updateCard.style.display = "flex";
             setupUpdateMenu();
@@ -67,26 +65,28 @@ export async function updateCheck() {
 }
 
 // Function to render changelog
-async function renderChangelog() {
-    const changelog = await execCommand(`sh ${basePath}/common/get_extra.sh --release-note ${remoteVersion}`);
-        window.linkRedirect = linkRedirect;
-        marked.setOptions({
-            sanitize: true,
-            walkTokens(token) {
-                if (token.type === 'link') {
-                    const href = token.href;
-                    token.href = "javascript:void(0);";
-                    token.type = "html";
-                    token.text = `<a href="javascript:void(0);" onclick="linkRedirect('${href}')">${token.text}</a>`;
+function renderChangelog() {
+    exec(`sh ${basePath}/common/get_extra.sh --release-note ${remoteVersion}`)
+        .then(({ stdout }) => {
+            window.linkRedirect = linkRedirect;
+            marked.setOptions({
+                sanitize: true,
+                walkTokens(token) {
+                    if (token.type === 'link') {
+                        const href = token.href;
+                        token.href = "javascript:void(0);";
+                        token.type = "html";
+                        token.text = `<a href="javascript:void(0);" onclick="linkRedirect('${href}')">${token.text}</a>`;
+                    }
                 }
-            }
+            });
+            const cleanedChangelog = stdout
+                .split('\n')
+                .filter(line => line.trim() !== '')
+                .join('\n');
+            const formattedChangelog = marked.parse(cleanedChangelog);
+            releaseNotes.innerHTML = formattedChangelog;
         });
-        const cleanedChangelog = changelog
-            .split('\n')
-            .filter(line => line.trim() !== '')
-            .join('\n');
-        const formattedChangelog = marked.parse(cleanedChangelog);
-        releaseNotes.innerHTML = formattedChangelog;
 }
 
 // Function to setup update menu
@@ -111,38 +111,37 @@ function setupUpdateMenu() {
     // Update card
     updateCard.addEventListener('click', async () => {
         try {
-            const module = await execCommand(`
+            const { stdout } = await exec(`
                 [ -f ${basePath}/common/tmp/module.zip ] || echo "noModule"
                 [ -f ${basePath}/common/tmp/changelog.md ] || echo "noChangelog"
                 [ ! -f /data/adb/modules/TA_utl/update ] || echo "updated"
             `);
-            if (module.trim().includes("updated")) {
+            if (stdout.trim().includes("updated")) {
                 installButton.style.display = "none";
                 rebootButton.style.display = "flex";
                 openUpdateMenu();
-            } else if (module.trim().includes("noChangelog")) {
+            } else if (stdout.trim().includes("noChangelog")) {
                 showPrompt("prompt.downloading");
                 await downloadFile(changelogURL, "changelog.md");
-                await renderChangelog();
+                renderChangelog();
                 openUpdateMenu();
                 setTimeout(() => {
                     updateCard.click();
                 }, 200);
-            } else if (module.trim().includes("noModule")) {
+            } else if (stdout.trim().includes("noModule")) {
                 if (downloading) return;
                 downloading = true;
-                try {
-                    await execCommand(`sh ${basePath}/common/get_extra.sh --get-update ${zipURL}`);
+                const { errno } = await exec(`sh ${basePath}/common/get_extra.sh --get-update ${zipURL}`);
+                if (errno === 0) {
                     showPrompt("prompt.downloaded");
                     installButton.style.display = "flex";
-                    downloading = false;
-                } catch (error) {
+                } else {
                     showPrompt("prompt.download_fail", false);
-                    downloading = false;
                 }
+                downloading = false;
             } else {
                 installButton.style.display = "flex";
-                await renderChangelog();
+                renderChangelog();
                 openUpdateMenu();
             }
         } catch (error) {
@@ -159,16 +158,16 @@ function setupUpdateMenu() {
 
     // Install button
     installButton.addEventListener('click', async () => {
-        try {
-            showPrompt("prompt.installing");
-            await new Promise(resolve => setTimeout(resolve, 300));
-            await execCommand(`sh ${basePath}/common/get_extra.sh --install-update`);
+        showPrompt("prompt.installing");
+        await new Promise(resolve => setTimeout(resolve, 300));
+        const { errno, stderr } = await exec(`sh ${basePath}/common/get_extra.sh --install-update`);
+        if (errno === 0) {
             showPrompt("prompt.installed");
             installButton.style.display = "none";
             rebootButton.style.display = "flex";
-        } catch (error) {
+        } else {
             showPrompt("prompt.install_fail", false);
-            console.error('Fail to execute installation script:', error);
+            console.error('Fail to execute installation script:', stderr);
         }
     });
 
@@ -177,7 +176,7 @@ function setupUpdateMenu() {
         try {
             showPrompt("prompt.rebooting");
             await new Promise(resolve => setTimeout(resolve, 1000));
-            await execCommand("svc power reboot");
+            await exec("svc power reboot");
         } catch (error) {
             showPrompt("prompt.reboot_fail", false);
             console.error('Fail to reboot:', error);

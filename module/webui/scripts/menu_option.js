@@ -1,4 +1,4 @@
-import { basePath, execCommand, showPrompt, toast, applyRippleEffect, refreshAppList } from './main.js';
+import { basePath, exec, showPrompt, toast, applyRippleEffect, refreshAppList } from './main.js';
 
 // Function to check or uncheck all app
 function toggleCheckboxes(shouldCheck) {
@@ -16,25 +16,23 @@ document.getElementById("select-all").addEventListener("click", () => toggleChec
 document.getElementById("deselect-all").addEventListener("click", () => toggleCheckboxes(false));
 
 // Function to read the denylist and check corresponding apps
-document.getElementById("select-denylist").addEventListener("click", async () => {
-    try {
-        const result = await execCommand(`magisk --denylist ls 2>/dev/null | awk -F'|' '{print $1}' | grep -v "isolated" | sort -u`);
-        const denylistApps = result.split("\n").map(app => app.trim()).filter(Boolean);
-        const apps = document.querySelectorAll(".card");
-        apps.forEach(app => {
-            const contentElement = app.querySelector(".content");
-            const packageName = contentElement.getAttribute("data-package");
-            const checkbox = app.querySelector(".checkbox");
-            if (denylistApps.includes(packageName)) {
-                checkbox.checked = true;
+document.getElementById("select-denylist").addEventListener("click",  () => {
+    exec(`magisk --denylist ls 2>/dev/null | awk -F'|' '{print $1}' | grep -v "isolated" | sort -u`)
+        .then(({ errno, stdout }) => {
+            if (errno === 0) {
+                const denylistApps = stdout.split("\n").map(app => app.trim()).filter(Boolean);
+                document.querySelectorAll(".card").forEach(app => {
+                    const contentElement = app.querySelector(".content");
+                    const packageName = contentElement.getAttribute("data-package");
+                    if (denylistApps.includes(packageName)) {
+                        app.querySelector(".checkbox").checked = true;
+                    }
+                });
+                exec('touch "/data/adb/tricky_store/target_from_denylist"');
+            } else {
+                toast("Failed to read DenyList!");
             }
         });
-        await execCommand('touch "/data/adb/tricky_store/target_from_denylist"');
-        console.log("Denylist apps selected successfully.");
-    } catch (error) {
-        toast("Failed to read DenyList!");
-        console.error("Failed to select Denylist apps:", error);
-    }
 });
 
 // Function to read the exclude list and uncheck corresponding apps
@@ -62,18 +60,18 @@ document.getElementById("deselect-unnecessary").addEventListener("click", async 
                 toast("Failed to download unnecessary apps!");
                 throw error;
             });
-        const xposed = await execCommand(`sh ${basePath}/common/get_extra.sh --xposed`);
-        const UnnecessaryApps = excludeList.split("\n").map(app => app.trim()).filter(Boolean).concat(xposed.split("\n").map(app => app.trim()).filter(Boolean));
-        const apps = document.querySelectorAll(".card");
-        apps.forEach(app => {
-            const contentElement = app.querySelector(".content");
-            const packageName = contentElement.getAttribute("data-package");
-            const checkbox = app.querySelector(".checkbox");
-            if (UnnecessaryApps.includes(packageName)) {
-                checkbox.checked = false;
-            }
-        });
-        console.log("Unnecessary apps deselected successfully.");
+        exec(`sh ${basePath}/common/get_extra.sh --xposed`)
+            .then(({ stdout }) => {
+                const unnecessaryApps = excludeList.split("\n").map(app => app.trim())
+                    .filter(Boolean).concat(stdout.split("\n").map(app => app.trim()).filter(Boolean));
+                document.querySelectorAll(".card").forEach(app => {
+                    const contentElement = app.querySelector(".content");
+                    const packageName = contentElement.getAttribute("data-package");
+                    if (unnecessaryApps.includes(packageName)) {
+                        app.querySelector(".checkbox").checked = false;
+                    }
+                });
+            });
     } catch (error) {
         toast("Failed to get unnecessary apps!");
         console.error("Failed to get unnecessary apps:", error);
@@ -113,67 +111,58 @@ export async function setupSystemAppMenu() {
         const input = document.getElementById("system-app-input");
         const packageName = input.value.trim();
         if (packageName) {
-            try {
-                const result = await execCommand(`pm list packages -s | grep -q ${packageName} || echo "false"`);
-                if (result.includes("false")) {
-                    showPrompt("prompt.system_app_not_found", false);
-                } else {
-                    await execCommand(`
-                        touch "/data/adb/tricky_store/system_app"
-                        echo "${packageName}" >> "/data/adb/tricky_store/system_app"
-                        echo "${packageName}" >> "/data/adb/tricky_store/target.txt"
-                    `);
-                    systemAppInput.value = "";
-                    closeSystemAppOverlay();
-                    refreshAppList();
-                }
-            } catch (error) {
-                console.error("Error adding system app:", error);
-                showPrompt("prompt.add_system_app_error", false);
-            }
+            exec(`pm list packages -s | grep -q ${packageName}`)
+                .then(({ errno }) => {
+                    if (errno !== 0) {
+                        showPrompt("prompt.system_app_not_found", false);
+                    } else {
+                        exec(`
+                            touch "/data/adb/tricky_store/system_app"
+                            echo "${packageName}" >> "/data/adb/tricky_store/system_app"
+                            echo "${packageName}" >> "/data/adb/tricky_store/target.txt"
+                        `)
+                        systemAppInput.value = "";
+                        closeSystemAppOverlay();
+                        refreshAppList();
+                    }
+                });
         }
     });
 
     // Display current system app list and remove button
     async function renderSystemAppList() {
-        const currentSystemAppList = document.querySelector(".current-system-app-list");
-        const currentSystemAppListContent = document.querySelector(".current-system-app-list-content");
-        currentSystemAppListContent.innerHTML = "";
-        try {
-            const systemAppList = await execCommand(`[ -f "/data/adb/tricky_store/system_app" ] && cat "/data/adb/tricky_store/system_app" | sed '/^$/d' || echo "false"`);
-            if (systemAppList.trim() === 'false' || systemAppList.trim() === '') {
-                currentSystemAppList.style.display = "none";
-            } else {
-                systemAppList.split("\n").forEach(app => {
-                    currentSystemAppListContent.innerHTML += `
-                    <div class="system-app-item">
-                        <span>${app}</span>
-                        <button class="remove-system-app-button ripple-element">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#FFFFFF"><path d="M154-412v-136h652v136H154Z"/></svg>
-                        </button>
-                    </div>
-                `;
-                });
-            }
-        } catch (error) {
-            currentSystemAppList.style.display = "none";
-            console.error("Error displaying system app list:", error);
+        const systemAppList = document.querySelector(".current-system-app-list");
+        const systemAppListContent = document.querySelector(".current-system-app-list-content");
+        systemAppListContent.innerHTML = "";
+        const { errno, stdout } = await exec(`[ -f "/data/adb/tricky_store/system_app" ] && cat "/data/adb/tricky_store/system_app" | sed '/^$/d'`);
+        if (errno !== 0 || stdout.trim() === "") {
+            systemAppList.style.display = "none";
+        } else {
+            stdout.split("\n").forEach(app => {
+                if (app.trim() !== "") {
+                    systemAppListContent.innerHTML += `
+                        <div class="system-app-item">
+                            <span>${app}</span>
+                            <button class="remove-system-app-button ripple-element">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#FFFFFF"><path d="M154-412v-136h652v136H154Z"/></svg>
+                            </button>
+                        </div>
+                    `;
+                }
+            });
         }
 
-        const removeSystemAppButtons = document.querySelectorAll(".remove-system-app-button");
-        removeSystemAppButtons.forEach(button => {
-            button.addEventListener("click", async () => {
+        // Remove button listener
+        document.querySelectorAll(".remove-system-app-button").forEach(button => {
+            button.addEventListener("click", () => {
                 const app = button.closest(".system-app-item").querySelector("span").textContent;
-                try {
-                    await execCommand(`
-                        sed -i "/${app}/d" "/data/adb/tricky_store/system_app" || true
-                        sed -i "/${app}/d" "/data/adb/tricky_store/target.txt" || true
-                    `);
+                exec(`
+                    sed -i "/${app}/d" "/data/adb/tricky_store/system_app"
+                    sed -i "/${app}/d" "/data/adb/tricky_store/target.txt"
+                `).then(() => {
                     closeSystemAppOverlay();
                     refreshAppList();
-                } catch (error) {
-                    console.error("Error removing system app:", error);
-                }
+                });
             });
         });
     }
@@ -185,19 +174,15 @@ export async function setupSystemAppMenu() {
  * @returns {Boolean}
  */
 async function setKeybox(content) {
-    try {
-        await execCommand(`
-            mv -f /data/adb/tricky_store/keybox.xml /data/adb/tricky_store/keybox.xml.bak 2>/dev/null
-            cat << 'KB_EOF' > /data/adb/tricky_store/keybox.xml
+    await exec(`
+        mv -f /data/adb/tricky_store/keybox.xml /data/adb/tricky_store/keybox.xml.bak 2>/dev/null
+        cat << 'KB_EOF' > /data/adb/tricky_store/keybox.xml
 ${content}
 KB_EOF
-            chmod 644 /data/adb/tricky_store/keybox.xml
-            `);
-        return true;
-    } catch (error) {
-        console.error("Failed to set keybox:", error);
-        return false;
-    }
+        chmod 644 /data/adb/tricky_store/keybox.xml
+    `).then(({ errno }) => {
+        return errno === 0;
+    });
 }
 
 /**
@@ -205,14 +190,9 @@ KB_EOF
  * @returns {Promise<void>}
  */
 async function aospkb() {
-    const source = await execCommand(`xxd -r -p ${basePath}/common/.default | base64 -d`);
-    const result = await setKeybox(source);
-    if (result) {
-        console.log("AOSP keybox copied successfully.");
-        showPrompt("prompt.aosp_key_set");
-    } else {
-        showPrompt("prompt.key_set_error", false);
-    }
+    const { stdout } = await exec(`xxd -r -p ${basePath}/common/.default | base64 -d`);
+    const result = setKeybox(stdout);
+    showPrompt(result ? "prompt.aosp_key_set" : "prompt.key_set_error", result);
 }
 
 // aosp kb eventlistener
@@ -310,8 +290,8 @@ async function listFiles(path, skipAnimation = false) {
         await new Promise(resolve => setTimeout(resolve, 150));
     }
     try {
-        const result = await execCommand(`find "${path}" -maxdepth 1 -type f -name "*.xml" -o -type d ! -name ".*" | sort`);
-        const items = result.split('\n').filter(Boolean).map(item => ({
+        const { stdout } = await exec(`find "${path}" -maxdepth 1 -type f -name "*.xml" -o -type d ! -name ".*" | sort`);
+        const items = stdout.split('\n').filter(Boolean).map(item => ({
             path: item,
             name: item.split('/').pop(),
             isDirectory: !item.endsWith('.xml')
@@ -356,14 +336,10 @@ async function listFiles(path, skipAnimation = false) {
                     });
                     await listFiles(item.path);
                 } else {
-                    const source = await execCommand(`cat "${item.path}"`);
-                    const result = await setKeybox(source);
-                    if (result) {
-                        closeCustomKeyboxSelector();
-                        showPrompt('prompt.custom_key_set');
-                    } else {
-                        showPrompt('prompt.custom_key_set_error');
-                    }
+                    const { stdout } = await exec(`cat "${item.path}"`);
+                    const result = setKeybox(stdout);
+                    showPrompt(result ? "prompt.custom_key_set" : "prompt.custom_key_set_error", result);
+                    closeCustomKeyboxSelector();
                 }
             });
             fileList.appendChild(itemElement);

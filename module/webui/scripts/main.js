@@ -26,23 +26,16 @@ let isRefreshing = false;
 
 // Function to set basePath
 async function getBasePath() {
-    try {
-        await execCommand('[ -d /data/adb/modules/.TA_utl ]');
-        basePath = "/data/adb/modules/.TA_utl"
-    } catch (error) {
-        basePath = "/data/adb/modules/TA_utl"
-    }
+    const { errno } = await exec('[ -d /data/adb/modules/.TA_utl ]');
+    basePath = errno === 0 ? "/data/adb/modules/.TA_utl" : "/data/adb/modules/TA_utl";
 }
 
 // Function to load the version from module.prop
-async function getModuleVersion() {
-    const moduleVersion = document.getElementById('module-version');
-    try {
-        const version = await execCommand(`grep '^version=' ${basePath}/common/update/module.prop | cut -d'=' -f2`);
-        moduleVersion.textContent = version;
-    } catch (error) {
-        console.error("Failed to read version from module.prop:", error);
-    }
+function getModuleVersion() {
+    exec(`grep '^version=' ${basePath}/common/update/module.prop | cut -d'=' -f2`)
+        .then(({ stdout }) => {
+            document.getElementById('module-version').textContent = stdout;
+        });
 }
 
 // Function to refresh app list
@@ -59,13 +52,8 @@ export async function refreshAppList() {
     await new Promise(resolve => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
     if (noConnection.style.display === "flex") {
-        try {
-            updateCheck();
-            await execCommand(`[ -f ${basePath}/common/tmp/exclude-list ] && rm -f "${basePath}/common/tmp/exclude-list"`);
-        } catch (error) {
-            toast("Failed!");
-            console.error("Error occurred:", error);
-        }
+        updateCheck();
+        exec(`rm -f "${basePath}/common/tmp/exclude-list"`);
     }
     await fetchAppList();
     applyRippleEffect();
@@ -75,30 +63,27 @@ export async function refreshAppList() {
 }
 
 // Function to check tricky store version
-async function checkTrickyStoreVersion() {
+function checkTrickyStoreVersion() {
     const securityPatchElement = document.getElementById('security-patch');
-    try {
-        const version = await execCommand(`
-            TS_version=$(grep "versionCode=" "/data/adb/modules/tricky_store/module.prop" | cut -d'=' -f2)
-            [ "$TS_version" -ge 158 ] || echo "NO"
-        `);
-        if (version.trim() !== "NO") securityPatchElement.style.display = "flex";
-    } catch (error) {
-        toast("Failed to check Tricky Store version!");
-        console.error("Error while checking Tricky Store version:", error);
-    }
+    exec(`
+        TS_version=$(grep "versionCode=" "/data/adb/modules/tricky_store/module.prop" | cut -d'=' -f2)
+        [ "$TS_version" -ge 158 ]
+    `).then(({ errno }) => {
+        if (errno === 0) {
+            securityPatchElement.style.display = "flex";
+        } else {
+            console.log("Tricky Store version is lower than 158, or fail to check Tricky store version.");
+        }
+    });
 }
 
 // Function to check if Magisk
-async function checkMagisk() {
+function checkMagisk() {
     const selectDenylistElement = document.getElementById('select-denylist');
-    try {
-        const magiskEnv = await execCommand(`command -v magisk >/dev/null 2>&1 || echo "NO"`);
-        if (magiskEnv.trim() !== "NO") selectDenylistElement.style.display = "flex";
-    } catch (error) {
-        toast("Failed to check Magisk!");
-        console.error("Error while checking denylist conditions:", error);
-    }
+    exec('command -v magisk')
+        .then(({ errno }) => {
+            if (errno === 0) selectDenylistElement.style.display = "flex";
+        });
 }
 
 // Function to show the prompt with a success or error message
@@ -117,18 +102,22 @@ export function showPrompt(key, isSuccess = true, duration = 3000) {
     }, 100);
 }
 
-// Function to redirect link on external browser
-export async function linkRedirect(link) {
-    try {
-        await execCommand(`am start -a android.intent.action.VIEW -d ${link}`);
-    } catch (error) {
-        toast("Failed!");
-        console.error('Error redirect link:', error);
-    }
+/**
+ * Redirect to a link with am command
+ * @param {string} link - The link to redirect in browser
+ */
+export function linkRedirect(link) {
+    toast("Redirecting to " + link);
+    setTimeout(() => {
+        exec(`am start -a android.intent.action.VIEW -d ${link}`)
+            .then(({ errno }) => {
+                if (errno !== 0) toast("Failed to open link");
+            });
+    },100);
 }
 
 // Save configure and preserve ! and ? in target.txt
-document.getElementById("save").addEventListener("click", async () => {
+document.getElementById("save").addEventListener("click", () => {
     const selectedApps = Array.from(appListContainer.querySelectorAll(".checkbox:checked"))
         .map(checkbox => checkbox.closest(".card").querySelector(".content").getAttribute("data-package"));
     let finalAppsList = new Set(selectedApps);
@@ -136,29 +125,30 @@ document.getElementById("save").addEventListener("click", async () => {
         finalAppsList.add(app);
     });
     finalAppsList = Array.from(finalAppsList);
-    try {
-        const modifiedAppsList = finalAppsList.map(app => {
-            if (appsWithExclamation.includes(app)) {
-                return `${app}!`;
-            } else if (appsWithQuestion.includes(app)) {
-                return `${app}?`;
+    const modifiedAppsList = finalAppsList.map(app => {
+        if (appsWithExclamation.includes(app)) {
+            return `${app}!`;
+        } else if (appsWithQuestion.includes(app)) {
+            return `${app}?`;
+        }
+        return app;
+    });
+    const updatedTargetContent = modifiedAppsList.join("\n");
+    exec(`echo "${updatedTargetContent}" | sort -u > /data/adb/tricky_store/target.txt`)
+        .then(({ errno }) => {
+            if (errno === 0) {
+                for (const app of appsWithExclamation) {
+                    exec(`sed -i 's/^${app}$/${app}!/' /data/adb/tricky_store/target.txt`);
+                }
+                for (const app of appsWithQuestion) {
+                    exec(`sed -i 's/^${app}$/${app}?/' /data/adb/tricky_store/target.txt`);
+                }
+                showPrompt("prompt.saved_target");
+                refreshAppList();
+            } else {
+                showPrompt("prompt.save_error", false);
             }
-            return app;
         });
-        const updatedTargetContent = modifiedAppsList.join("\n");
-        await execCommand(`echo "${updatedTargetContent}" | sort -u > /data/adb/tricky_store/target.txt`);
-        showPrompt("prompt.saved_target");
-        for (const app of appsWithExclamation) {
-            await execCommand(`sed -i 's/^${app}$/${app}!/' /data/adb/tricky_store/target.txt`);
-        }
-        for (const app of appsWithQuestion) {
-            await execCommand(`sed -i 's/^${app}$/${app}?/' /data/adb/tricky_store/target.txt`);
-        }
-    } catch (error) {
-        console.error("Failed to update target.txt:", error);
-        showPrompt("prompt.save_error", false);
-    }
-    await refreshAppList();
 });
 
 // Uninstall WebUI
@@ -189,18 +179,16 @@ document.querySelector(".uninstall-container").addEventListener("click", () => {
     })
     confirmButton.addEventListener('click', () => {
         closeuninstallOverlay();
-        uninstallWebUI();
+        exec(`sh ${basePath}/common/get_extra.sh --uninstall`)
+            .then(({ errno }) => {
+                if (errno === 0) {
+                    showPrompt("prompt.uninstall_prompt");
+                } else {
+                    showPrompt("prompt.uninstall_failed", false);
+                }
+            });
     })
 });
-async function uninstallWebUI() {
-    try {
-        await execCommand(`sh ${basePath}/common/get_extra.sh --uninstall`);
-        showPrompt("prompt.uninstall_prompt");
-    } catch (error) {
-        console.error("Failed to execute uninstall command:", error);
-        showPrompt("prompt.uninstall_failed", false);
-    }
-}
 
 // Function to check if running in MMRL
 function checkMMRL() {
@@ -323,24 +311,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
 });
 
-// Function to execute shell commands
-export async function execCommand(command) {
+/**
+ * Execute shell command with ksu.exec
+ * @param {string} command - The command to execute
+ * @param {Object} [options={}] - Options object containing:
+ *   - cwd <string> - Current working directory of the child process
+ *   - env {Object} - Environment key-value pairs
+ * @returns {Promise<Object>} Resolves with:
+ *   - errno {number} - Exit code of the command
+ *   - stdout {string} - Standard output from the command
+ *   - stderr {string} - Standard error from the command
+ */
+export function exec(command, options = {}) {
     return new Promise((resolve, reject) => {
-        const callbackName = `exec_callback_${Date.now()}_${e++}`;
-        window[callbackName] = (errno, stdout, stderr) => {
-            delete window[callbackName];
-            if (errno === 0) {
-                resolve(stdout);
-            } else {
-                console.error(`Error executing command: ${stderr}`);
-                reject(stderr);
-            }
+        const callbackFuncName = `exec_callback_${Date.now()}_${e++}`;
+        window[callbackFuncName] = (errno, stdout, stderr) => {
+            resolve({ errno, stdout, stderr });
+            cleanup(callbackFuncName);
         };
+        function cleanup(successName) {
+            delete window[successName];
+        }
         try {
-            ksu.exec(command, "{}", callbackName);
+            ksu.exec(command, JSON.stringify(options), callbackFuncName);
         } catch (error) {
-            console.error(`Execution error: ${error}`);
             reject(error);
+            cleanup(callbackFuncName);
         }
     });
 }
