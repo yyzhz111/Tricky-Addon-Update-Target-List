@@ -42,6 +42,27 @@ export function exec(command, options = {}) {
 }
 
 /**
+ * Standard I/O stream for a child process.
+ * @class
+ */
+class Stdio {
+    constructor() {
+        this.listeners = {};
+    }
+    on(event, listener) {
+        if (!this.listeners[event]) {
+            this.listeners[event] = [];
+        }
+        this.listeners[event].push(listener);
+    }
+    emit(event, ...args) {
+        if (this.listeners[event]) {
+            this.listeners[event].forEach(listener => listener(...args));
+        }
+    }
+}
+
+/**
  * Spawn shell process with ksu.spawn
  * @param {string} command - The command to execute
  * @param {string[]} [args=[]] - Array of arguments to pass to the command
@@ -69,20 +90,6 @@ export function spawn(command, args = [], options = {}) {
             if (this.listeners[event]) {
                 this.listeners[event].forEach(listener => listener(...args));
             }
-        }
-    };
-    function Stdio() {
-        this.listeners = {};
-    }
-    Stdio.prototype.on = function(event, listener) {
-        if (!this.listeners[event]) {
-            this.listeners[event] = [];
-        }
-        this.listeners[event].push(listener);
-    };
-    Stdio.prototype.emit = function(event, ...args) {
-        if (this.listeners[event]) {
-            this.listeners[event].forEach(listener => listener(...args));
         }
     };
     const callbackName = getUniqueCallbackName("spawn");

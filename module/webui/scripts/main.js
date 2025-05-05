@@ -11,7 +11,7 @@ const title = document.querySelector('.header');
 export const noConnection = document.querySelector('.no-connection');
 
 // Loading, Save and Prompt Elements
-const loadingIndicator = document.querySelector('.loading');
+export const loadingIndicator = document.querySelector('.loading');
 const prompt = document.getElementById('prompt');
 const floatingCard = document.querySelector('.floating-card');
 const floatingBtn = document.querySelector('.floating-btn');
@@ -50,16 +50,12 @@ export async function refreshAppList() {
     appListContainer.innerHTML = '';
     loadingIndicator.style.display = 'flex';
     document.querySelector('.uninstall-container').classList.add('hidden-uninstall');
-    await new Promise(resolve => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
     if (noConnection.style.display === "flex") {
         updateCheck();
         exec(`rm -f "${basePath}/common/tmp/exclude-list"`);
     }
-    await fetchAppList();
-    applyRippleEffect();
-    loadingIndicator.style.display = 'none';
-    document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
+    fetchAppList();
     isRefreshing = false;
 }
 
@@ -201,7 +197,10 @@ function checkMMRL() {
 
 // Funtion to adapt floating button hide in MMRL
 export function hideFloatingBtn(hide = true) {
-    if (!hide) floatingCard.style.transform = 'translateY(0)';
+    if (!hide) {
+        floatingCard.style.transform = 'translateY(0)';
+        floatingBtn.style.display = 'block';
+    }
     else floatingCard.style.transform = 'translateY(calc(var(--window-inset-bottom, 0px) + 120px))';
 }
 
@@ -299,15 +298,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupMenuToggle();
     setupLanguageMenu();
     setupSystemAppMenu();
-    await fetchAppList();
-    applyRippleEffect();
+    fetchAppList();
     checkTrickyStoreVersion();
     checkMagisk();
     updateCheck();
     securityPatch();
-    loadingIndicator.style.display = "none";
-    floatingBtn.style.display = 'block';
-    hideFloatingBtn(false);
     document.getElementById("refresh").addEventListener("click", refreshAppList);
-    document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
 });
