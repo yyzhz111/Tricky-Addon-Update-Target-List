@@ -204,11 +204,17 @@ export function hideFloatingBtn(hide = true) {
     else floatingCard.style.transform = 'translateY(calc(var(--window-inset-bottom, 0px) + 120px))';
 }
 
-// Function to apply ripple effect
+/**
+ * Simulate MD3 ripple animation
+ * Usage: class="ripple-element" style="position: relative; overflow: hidden;"
+ * Note: Require background-color to work properly
+ * @return {void}
+ */
 export function applyRippleEffect() {
     document.querySelectorAll('.ripple-element').forEach(element => {
         if (element.dataset.rippleListener !== "true") {
             element.addEventListener("pointerdown", async (event) => {
+                // Pointer up event
                 const handlePointerUp = () => {
                     ripple.classList.add("end");
                     setTimeout(() => {
@@ -221,8 +227,6 @@ export function applyRippleEffect() {
                 element.addEventListener("pointerup", () => setTimeout(handlePointerUp, 80));
                 element.addEventListener("pointercancel", () => setTimeout(handlePointerUp, 80));
 
-                await new Promise(resolve => setTimeout(resolve, 80));
-                if (isScrolling) return;
                 const ripple = document.createElement("span");
                 ripple.classList.add("ripple");
 
@@ -247,7 +251,6 @@ export function applyRippleEffect() {
                 // Adaptive color
                 const computedStyle = window.getComputedStyle(element);
                 const bgColor = computedStyle.backgroundColor || "rgba(0, 0, 0, 0)";
-                const textColor = computedStyle.color;
                 const isDarkColor = (color) => {
                     const rgb = color.match(/\d+/g);
                     if (!rgb) return false;
@@ -256,7 +259,9 @@ export function applyRippleEffect() {
                 };
                 ripple.style.backgroundColor = isDarkColor(bgColor) ? "rgba(255, 255, 255, 0.2)" : "";
 
-                // Append ripple and handle cleanup
+                // Append ripple if not scrolling
+                await new Promise(resolve => setTimeout(resolve, 80));
+                if (isScrolling) return;
                 element.appendChild(ripple);
             });
             element.dataset.rippleListener = "true";
