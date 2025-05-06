@@ -237,31 +237,6 @@ body {
     background-color: var(--btn-primary);
 }
 
-.permission-popup {
-    opacity: 1;
-    align-items: center;
-    z-index: 2000;
-}
-
-.permission-content {
-    color: var(--text-primary);
-    background-color: var(--bg-secondary);
-    padding: 20px;
-    border-radius: 12px;
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-}
-
-.permission-content h2 {
-    margin-bottom: 20px;
-    font-size: 18px;
-}
-
-.permission-steps {
-    text-align: left;
-}
-
 .ripple-element {
     position: relative;
     overflow: hidden;

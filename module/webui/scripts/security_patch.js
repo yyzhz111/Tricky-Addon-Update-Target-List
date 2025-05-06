@@ -1,4 +1,5 @@
-import { basePath, execCommand, showPrompt } from './main.js';
+import { exec, spawn } from './assets/kernelsu.js';
+import { basePath, showPrompt } from './main.js';
 
 const overlay = document.getElementById('security-patch-overlay');
 const overlayContent = document.querySelector('.security-patch-card');
@@ -24,32 +25,26 @@ const hideSecurityPatchDialog = () => {
 }
 
 // Function to handle security patch operation
-async function handleSecurityPatch(mode, value = null) {
+function handleSecurityPatch(mode, value = null) {
     if (mode === 'disable') {
-        try {
-            await execCommand(`
-                rm -f /data/adb/tricky_store/security_patch_auto_config
-                rm -f /data/adb/tricky_store/security_patch.txt
-            `);
-            showPrompt('security_patch.value_empty');
-            return true;
-        } catch (error) {
-            showPrompt('security_patch.save_failed', false);
-            return false;
-        }
+        exec(`
+            rm -f /data/adb/tricky_store/security_patch_auto_config || true
+            rm -f /data/adb/tricky_store/security_patch.txt || true
+        `).then(({ errno }) => {
+            const result = errno === 0;
+            showPrompt(result ? 'security_patch.value_empty' : 'security_patch.save_failed', result);
+            return result;
+        });
     } else if (mode === 'manual') {
-        try {
-            await execCommand(`
-                rm -f /data/adb/tricky_store/security_patch_auto_config
-                echo "${value}" > /data/adb/tricky_store/security_patch.txt
-                chmod 644 /data/adb/tricky_store/security_patch.txt
-            `);
-            showPrompt('security_patch.save_success');
-            return true;
-        } catch (error) {
-            showPrompt('security_patch.save_failed', false);
-            return false;
-        }
+        exec(`
+            rm -f /data/adb/tricky_store/security_patch_auto_config || true
+            echo "${value}" > /data/adb/tricky_store/security_patch.txt
+            chmod 644 /data/adb/tricky_store/security_patch.txt
+        `).then(({ errno }) => {
+            const result = errno === 0;
+            showPrompt(result ? 'security_patch.save_success' : 'security_patch.save_failed', result);
+            return result;
+        });
     }
 }
 
@@ -57,17 +52,17 @@ async function handleSecurityPatch(mode, value = null) {
 async function loadCurrentConfig() {
     let allValue, systemValue, bootValue, vendorValue;
     try {
-        const autoConfig = await execCommand('[ -f /data/adb/tricky_store/security_patch_auto_config ] && echo "true" || echo "false"');
-        if (autoConfig.trim() === 'true') {
+        const { errno } = await exec('[ -f /data/adb/tricky_store/security_patch_auto_config ]');
+        if (errno === 0) {
             allValue = null;
             systemValue = null;
             bootValue = null;
             vendorValue = null;
         } else {
-            // Read values from tricky_store if auto_config is 0
-            const trickyResult = await execCommand('cat /data/adb/tricky_store/security_patch.txt');
-            if (trickyResult) {
-                const trickyLines = trickyResult.split('\n');
+            // Read values from tricky_store if manual mode
+            const { stdout } = await exec('cat /data/adb/tricky_store/security_patch.txt');
+            if (stdout.trim() !== '') {
+                const trickyLines = stdout.split('\n');
                 for (const line of trickyLines) {
                     if (line.startsWith('all=')) {
                         allValue = line.split('=')[1] || null;
@@ -222,13 +217,16 @@ export function securityPatch() {
     });
 
     // Auto config button
-    autoButton.addEventListener('click', async () => {
-        try {
-            const output = await execCommand(`sh ${basePath}/common/get_extra.sh --security-patch`);
-            if (output.trim() === "not set") {
+    autoButton.addEventListener('click', () => {
+        const output = spawn('sh', [`${basePath}/common/get_extra.sh`, '--security-patch']);
+        output.stdout.on('data', (data) => {
+            if (data.includes("not set")) {
                 showPrompt('security_patch.auto_failed', false);
-            } else {
-                await execCommand(`touch /data/adb/tricky_store/security_patch_auto_config`);
+            }
+        });
+        output.on('exit', (code) => {
+            if (code === 0) {
+                exec(`touch /data/adb/tricky_store/security_patch_auto_config`)
                 // Reset inputs
                 allPatchInput.value = '';
                 systemPatchInput.value = '';
@@ -237,12 +235,12 @@ export function securityPatch() {
 
                 checkAdvanced(false);
                 showPrompt('security_patch.auto_success');
+            } else {
+                showPrompt('security_patch.auto_failed', false);
             }
-        } catch (error) {
-            showPrompt('security_patch.auto_failed', false);
-        }
-        hideSecurityPatchDialog();
-        loadCurrentConfig();
+            hideSecurityPatchDialog();
+            loadCurrentConfig();
+        });
     });
 
     // Save button
@@ -252,7 +250,7 @@ export function securityPatch() {
             const allValue = allPatchInput.value.trim();
             if (!allValue) {
                 // Save empty value to disable auto config
-                await handleSecurityPatch('disable');
+                handleSecurityPatch('disable');
                 hideSecurityPatchDialog();
                 return;
             }
@@ -261,7 +259,7 @@ export function securityPatch() {
                 return;
             }
             const value = `all=${allValue}`;
-            const result = await handleSecurityPatch('manual', value);
+            const result = handleSecurityPatch('manual', value);
             if (result) {
                 // Reset inputs
                 systemPatchInput.value = '';
@@ -276,7 +274,7 @@ export function securityPatch() {
 
             if (!bootValue && !systemValue && !vendorValue) {
                 // Save empty values to disable auto config
-                await handleSecurityPatch('disable');
+                handleSecurityPatch('disable');
                 hideSecurityPatchDialog();
                 return;
             }
@@ -302,7 +300,7 @@ export function securityPatch() {
                 vendorValue ? `vendor=${vendorValue}` : ''
             ].filter(Boolean);
             const value = config.filter(Boolean).join('\n');
-            const result = await handleSecurityPatch('manual', value);
+            const result = handleSecurityPatch('manual', value);
             if (result) {
                 // Reset inputs
                 allPatchInput.value = '';
@@ -314,19 +312,19 @@ export function securityPatch() {
 
     // Get button
     getButton.addEventListener('click', async () => {
-        try {
-            showPrompt('security_patch.fetching');
-            await new Promise(resolve => setTimeout(resolve, 200));
-            const output = await execCommand(`sh ${basePath}/common/get_extra.sh --get-security-patch`);
+        showPrompt('security_patch.fetching');
+        const output = spawn('sh', [`${basePath}/common/get_extra.sh`, '--get-security-patch']);
+        output.stdout.on('data', (data) => {
             showPrompt('security_patch.fetched', true, 1000);
             checkAdvanced(true);
 
-            allPatchInput.value = output.replace(/-/g, '');
+            allPatchInput.value = data.replace(/-/g, '');
             systemPatchInput.value = 'prop';
-            bootPatchInput.value = output;
-            vendorPatchInput.value = output;
-        } catch (error) {
-            showPrompt('security_patch.get_failed', false);
-        }
+            bootPatchInput.value = data;
+            vendorPatchInput.value = data;
+        });
+        output.on('exit', (code) => {
+            if (code !== 0) showPrompt('security_patch.get_failed', false);
+        });
     });
 }

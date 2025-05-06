@@ -1,3 +1,4 @@
+import { exec, toast } from './assets/kernelsu.js';
 import { appListContainer, fetchAppList } from './applist.js';
 import { loadTranslations, setupLanguageMenu, translations } from './language.js';
 import { setupSystemAppMenu } from './menu_option.js';
@@ -10,8 +11,7 @@ const title = document.querySelector('.header');
 export const noConnection = document.querySelector('.no-connection');
 
 // Loading, Save and Prompt Elements
-const permissionPopup = document.getElementById('permission-popup');
-const loadingIndicator = document.querySelector('.loading');
+export const loadingIndicator = document.querySelector('.loading');
 const prompt = document.getElementById('prompt');
 const floatingCard = document.querySelector('.floating-card');
 const floatingBtn = document.querySelector('.floating-btn');
@@ -27,23 +27,16 @@ let isRefreshing = false;
 
 // Function to set basePath
 async function getBasePath() {
-    try {
-        await execCommand('[ -d /data/adb/modules/.TA_utl ]');
-        basePath = "/data/adb/modules/.TA_utl"
-    } catch (error) {
-        basePath = "/data/adb/modules/TA_utl"
-    }
+    const { errno } = await exec('[ -d /data/adb/modules/.TA_utl ]');
+    basePath = errno === 0 ? "/data/adb/modules/.TA_utl" : "/data/adb/modules/TA_utl";
 }
 
 // Function to load the version from module.prop
-async function getModuleVersion() {
-    const moduleVersion = document.getElementById('module-version');
-    try {
-        const version = await execCommand(`grep '^version=' ${basePath}/common/update/module.prop | cut -d'=' -f2`);
-        moduleVersion.textContent = version;
-    } catch (error) {
-        console.error("Failed to read version from module.prop:", error);
-    }
+function getModuleVersion() {
+    exec(`grep '^version=' ${basePath}/common/update/module.prop | cut -d'=' -f2`)
+        .then(({ stdout }) => {
+            document.getElementById('module-version').textContent = stdout;
+        });
 }
 
 // Function to refresh app list
@@ -57,49 +50,37 @@ export async function refreshAppList() {
     appListContainer.innerHTML = '';
     loadingIndicator.style.display = 'flex';
     document.querySelector('.uninstall-container').classList.add('hidden-uninstall');
-    await new Promise(resolve => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
     if (noConnection.style.display === "flex") {
-        try {
-            updateCheck();
-            await execCommand(`[ -f ${basePath}/common/tmp/exclude-list ] && rm -f "${basePath}/common/tmp/exclude-list"`);
-        } catch (error) {
-            toast("Failed!");
-            console.error("Error occurred:", error);
-        }
+        updateCheck();
+        exec(`rm -f "${basePath}/common/tmp/exclude-list"`);
     }
-    await fetchAppList();
-    applyRippleEffect();
-    loadingIndicator.style.display = 'none';
-    document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
+    fetchAppList();
     isRefreshing = false;
 }
 
 // Function to check tricky store version
-async function checkTrickyStoreVersion() {
+function checkTrickyStoreVersion() {
     const securityPatchElement = document.getElementById('security-patch');
-    try {
-        const version = await execCommand(`
-            TS_version=$(grep "versionCode=" "/data/adb/modules/tricky_store/module.prop" | cut -d'=' -f2)
-            [ "$TS_version" -ge 158 ] || echo "NO"
-        `);
-        if (version.trim() !== "NO") securityPatchElement.style.display = "flex";
-    } catch (error) {
-        toast("Failed to check Tricky Store version!");
-        console.error("Error while checking Tricky Store version:", error);
-    }
+    exec(`
+        TS_version=$(grep "versionCode=" "/data/adb/modules/tricky_store/module.prop" | cut -d'=' -f2)
+        [ "$TS_version" -ge 158 ]
+    `).then(({ errno }) => {
+        if (errno === 0) {
+            securityPatchElement.style.display = "flex";
+        } else {
+            console.log("Tricky Store version is lower than 158, or fail to check Tricky store version.");
+        }
+    });
 }
 
 // Function to check if Magisk
-async function checkMagisk() {
+function checkMagisk() {
     const selectDenylistElement = document.getElementById('select-denylist');
-    try {
-        const magiskEnv = await execCommand(`command -v magisk >/dev/null 2>&1 || echo "NO"`);
-        if (magiskEnv.trim() !== "NO") selectDenylistElement.style.display = "flex";
-    } catch (error) {
-        toast("Failed to check Magisk!");
-        console.error("Error while checking denylist conditions:", error);
-    }
+    exec('command -v magisk')
+        .then(({ errno }) => {
+            if (errno === 0) selectDenylistElement.style.display = "flex";
+        });
 }
 
 // Function to show the prompt with a success or error message
@@ -118,18 +99,22 @@ export function showPrompt(key, isSuccess = true, duration = 3000) {
     }, 100);
 }
 
-// Function to redirect link on external browser
-export async function linkRedirect(link) {
-    try {
-        await execCommand(`am start -a android.intent.action.VIEW -d ${link}`);
-    } catch (error) {
-        toast("Failed!");
-        console.error('Error redirect link:', error);
-    }
+/**
+ * Redirect to a link with am command
+ * @param {string} link - The link to redirect in browser
+ */
+export function linkRedirect(link) {
+    toast("Redirecting to " + link);
+    setTimeout(() => {
+        exec(`am start -a android.intent.action.VIEW -d ${link}`)
+            .then(({ errno }) => {
+                if (errno !== 0) toast("Failed to open link");
+            });
+    },100);
 }
 
 // Save configure and preserve ! and ? in target.txt
-document.getElementById("save").addEventListener("click", async () => {
+document.getElementById("save").addEventListener("click", () => {
     const selectedApps = Array.from(appListContainer.querySelectorAll(".checkbox:checked"))
         .map(checkbox => checkbox.closest(".card").querySelector(".content").getAttribute("data-package"));
     let finalAppsList = new Set(selectedApps);
@@ -137,29 +122,30 @@ document.getElementById("save").addEventListener("click", async () => {
         finalAppsList.add(app);
     });
     finalAppsList = Array.from(finalAppsList);
-    try {
-        const modifiedAppsList = finalAppsList.map(app => {
-            if (appsWithExclamation.includes(app)) {
-                return `${app}!`;
-            } else if (appsWithQuestion.includes(app)) {
-                return `${app}?`;
+    const modifiedAppsList = finalAppsList.map(app => {
+        if (appsWithExclamation.includes(app)) {
+            return `${app}!`;
+        } else if (appsWithQuestion.includes(app)) {
+            return `${app}?`;
+        }
+        return app;
+    });
+    const updatedTargetContent = modifiedAppsList.join("\n");
+    exec(`echo "${updatedTargetContent}" | sort -u > /data/adb/tricky_store/target.txt`)
+        .then(({ errno }) => {
+            if (errno === 0) {
+                for (const app of appsWithExclamation) {
+                    exec(`sed -i 's/^${app}$/${app}!/' /data/adb/tricky_store/target.txt`);
+                }
+                for (const app of appsWithQuestion) {
+                    exec(`sed -i 's/^${app}$/${app}?/' /data/adb/tricky_store/target.txt`);
+                }
+                showPrompt("prompt.saved_target");
+                refreshAppList();
+            } else {
+                showPrompt("prompt.save_error", false);
             }
-            return app;
         });
-        const updatedTargetContent = modifiedAppsList.join("\n");
-        await execCommand(`echo "${updatedTargetContent}" | sort -u > /data/adb/tricky_store/target.txt`);
-        showPrompt("prompt.saved_target");
-        for (const app of appsWithExclamation) {
-            await execCommand(`sed -i 's/^${app}$/${app}!/' /data/adb/tricky_store/target.txt`);
-        }
-        for (const app of appsWithQuestion) {
-            await execCommand(`sed -i 's/^${app}$/${app}?/' /data/adb/tricky_store/target.txt`);
-        }
-    } catch (error) {
-        console.error("Failed to update target.txt:", error);
-        showPrompt("prompt.save_error", false);
-    }
-    await refreshAppList();
 });
 
 // Uninstall WebUI
@@ -190,58 +176,45 @@ document.querySelector(".uninstall-container").addEventListener("click", () => {
     })
     confirmButton.addEventListener('click', () => {
         closeuninstallOverlay();
-        uninstallWebUI();
+        exec(`sh ${basePath}/common/get_extra.sh --uninstall`)
+            .then(({ errno }) => {
+                if (errno === 0) {
+                    showPrompt("prompt.uninstall_prompt");
+                } else {
+                    showPrompt("prompt.uninstall_failed", false);
+                }
+            });
     })
 });
-async function uninstallWebUI() {
-    try {
-        await execCommand(`sh ${basePath}/common/get_extra.sh --uninstall`);
-        showPrompt("prompt.uninstall_prompt");
-    } catch (error) {
-        console.error("Failed to execute uninstall command:", error);
-        showPrompt("prompt.uninstall_failed", false);
-    }
-}
 
 // Function to check if running in MMRL
-async function checkMMRL() {
-    if (typeof ksu !== 'undefined' && ksu.mmrl) {
+function checkMMRL() {
+    if (window.$tricky_store && Object.keys($tricky_store).length > 0) {
         // Set status bars theme based on device theme
-        try {
-            $tricky_store.setLightStatusBars(!window.matchMedia('(prefers-color-scheme: dark)').matches)
-        } catch (error) {
-            console.error("Error setting status bars theme:", error)
-        }
-
-        // Check MMRL version
-        try {
-            const mmrlJson = $tricky_store.getMmrl();
-            const mmrlData = JSON.parse(mmrlJson);
-            if (mmrlData.versionCode < 33412) {
-                throw new Error('MMRL version is less than 33412');
-            }
-        } catch (error) {
-            console.error('MMRL version check failed:', error);
-            $tricky_store.requestAdvancedKernelSUAPI(); // Just to ensure linkRedirect work
-            permissionPopup.style.display = 'flex';
-            setTimeout(() => {
-                linkRedirect('https://github.com/MMRLApp/MMRL/releases/latest');
-            }, 3000)
-        }
+        $tricky_store.setLightStatusBars(!window.matchMedia('(prefers-color-scheme: dark)').matches)
     }
 }
 
 // Funtion to adapt floating button hide in MMRL
 export function hideFloatingBtn(hide = true) {
-    if (!hide) floatingCard.style.transform = 'translateY(0)';
+    if (!hide) {
+        floatingCard.style.transform = 'translateY(0)';
+        floatingBtn.style.display = 'block';
+    }
     else floatingCard.style.transform = 'translateY(calc(var(--window-inset-bottom, 0px) + 120px))';
 }
 
-// Function to apply ripple effect
+/**
+ * Simulate MD3 ripple animation
+ * Usage: class="ripple-element" style="position: relative; overflow: hidden;"
+ * Note: Require background-color to work properly
+ * @return {void}
+ */
 export function applyRippleEffect() {
     document.querySelectorAll('.ripple-element').forEach(element => {
         if (element.dataset.rippleListener !== "true") {
             element.addEventListener("pointerdown", async (event) => {
+                // Pointer up event
                 const handlePointerUp = () => {
                     ripple.classList.add("end");
                     setTimeout(() => {
@@ -254,8 +227,6 @@ export function applyRippleEffect() {
                 element.addEventListener("pointerup", () => setTimeout(handlePointerUp, 80));
                 element.addEventListener("pointercancel", () => setTimeout(handlePointerUp, 80));
 
-                await new Promise(resolve => setTimeout(resolve, 80));
-                if (isScrolling) return;
                 const ripple = document.createElement("span");
                 ripple.classList.add("ripple");
 
@@ -280,7 +251,6 @@ export function applyRippleEffect() {
                 // Adaptive color
                 const computedStyle = window.getComputedStyle(element);
                 const bgColor = computedStyle.backgroundColor || "rgba(0, 0, 0, 0)";
-                const textColor = computedStyle.color;
                 const isDarkColor = (color) => {
                     const rgb = color.match(/\d+/g);
                     if (!rgb) return false;
@@ -289,7 +259,9 @@ export function applyRippleEffect() {
                 };
                 ripple.style.backgroundColor = isDarkColor(bgColor) ? "rgba(255, 255, 255, 0.2)" : "";
 
-                // Append ripple and handle cleanup
+                // Append ripple if not scrolling
+                await new Promise(resolve => setTimeout(resolve, 80));
+                if (isScrolling) return;
                 element.appendChild(ripple);
             });
             element.dataset.rippleListener = "true";
@@ -331,46 +303,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupMenuToggle();
     setupLanguageMenu();
     setupSystemAppMenu();
-    await fetchAppList();
-    applyRippleEffect();
+    fetchAppList();
     checkTrickyStoreVersion();
     checkMagisk();
     updateCheck();
     securityPatch();
-    loadingIndicator.style.display = "none";
-    floatingBtn.style.display = 'block';
-    hideFloatingBtn(false);
     document.getElementById("refresh").addEventListener("click", refreshAppList);
-    document.querySelector('.uninstall-container').classList.remove('hidden-uninstall');
 });
-
-// Function to execute shell commands
-export async function execCommand(command) {
-    return new Promise((resolve, reject) => {
-        const callbackName = `exec_callback_${Date.now()}_${e++}`;
-        window[callbackName] = (errno, stdout, stderr) => {
-            delete window[callbackName];
-            if (errno === 0) {
-                resolve(stdout);
-            } else {
-                console.error(`Error executing command: ${stderr}`);
-                reject(stderr);
-            }
-        };
-        try {
-            ksu.exec(command, "{}", callbackName);
-        } catch (error) {
-            console.error(`Execution error: ${error}`);
-            reject(error);
-        }
-    });
-}
-
-// Function to toast message
-export function toast(message) {
-    try {
-        ksu.toast(message);
-    } catch (error) {
-        console.error("Failed to show toast:", error);
-    }
-}
