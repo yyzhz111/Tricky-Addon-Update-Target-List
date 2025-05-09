@@ -57,7 +57,8 @@
         "set_custom_keybox": "Set Custom Keybox",
         "set_verified_boot_hash": "Set Verified Boot Hash",
         "set_security_patch": "Set Security Patch",
-        "about": "About"
+        "about": "About",
+        "shortcut": "Create home screen shortcut"
     },
     "boot_hash": {
         "title": "Boot Hash",
@@ -99,7 +100,8 @@
         "custom_key_set_error": "Failed to set custom keybox",
         "no_file_selected": "No file selected",
         "system_app_not_found": "System app not found",
-        "system_app_error": "Failed to add system app"
+        "system_app_error": "Failed to add system app",
+        "shortcut_created": "Home screen shortcut created"
     },
     "security_patch": {
         "title": "Security Patch",

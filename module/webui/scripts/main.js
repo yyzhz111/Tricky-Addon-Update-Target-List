@@ -192,6 +192,14 @@ function checkMMRL() {
     if (window.$tricky_store && Object.keys($tricky_store).length > 0) {
         // Set status bars theme based on device theme
         $tricky_store.setLightStatusBars(!window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+        // Create home screen shortcut
+        const shortcutButton = document.getElementById('shortcut');
+        shortcutButton.style.display = 'flex';
+        shortcutButton.addEventListener('click', () => {
+            $tricky_store.createShortcut();
+            showPrompt("prompt.shortcut_created", true);
+        });
     }
 }
 

@@ -57,7 +57,8 @@
         "set_custom_keybox": "カスタム Keybox を設定",
         "set_verified_boot_hash": "確認付きブートハッシュを設定",
         "set_security_patch": "セキュリティパッチを設定",
-        "about": "このアドオンについて"
+        "about": "このアドオンについて",
+        "shortcut": "ホーム画面にショートカットを作成"
     },
     "boot_hash": {
         "title": "ブートハッシュ",
@@ -99,7 +100,8 @@
         "custom_key_set_error": "カスタム Keybox の設定に失敗しました",
         "no_file_selected": "ファイルが選択されていません",
         "system_app_not_found": "システムアプリが見つかりません",
-        "system_app_error": "システムアプリの追加に失敗しました"
+        "system_app_error": "システムアプリの追加に失敗しました",
+        "shortcut_created": "ホーム画面にショートカットが作成されました"
     },
     "security_patch": {
         "title": "セキュリティパッチ",

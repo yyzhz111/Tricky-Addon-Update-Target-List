@@ -57,7 +57,8 @@
         "set_custom_keybox": "I-set ang Custom Keybox",
         "set_verified_boot_hash": "I-set ang Verified Boot Hash",
         "set_security_patch": "I-set ang Security Patch",
-        "about": "Tungkol"
+        "about": "Tungkol",
+        "shortcut": "Gumawa ng shortcut sa home screen"
     },
     "boot_hash": {
         "title": "Boot Hash",
@@ -99,7 +100,8 @@
         "custom_key_set_error": "Nabigong i-set ang Custom Keybox",
         "no_file_selected": "Walang napiling file",
         "system_app_not_found": "Walang natagpuan na system app",
-        "system_app_error": "Nabigong dagdag ang system app"
+        "system_app_error": "Nabigong dagdag ang system app",
+        "shortcut_created": "Matagumpay na nagawa ang shortcut sa home screen"
     },
     "security_patch": {
         "title": "Security Patch",

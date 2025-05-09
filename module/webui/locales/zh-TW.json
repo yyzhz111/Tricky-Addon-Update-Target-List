@@ -57,7 +57,8 @@
         "set_custom_keybox": "設置自定義密鑰",
         "set_security_patch": "設置安全補丁",
         "set_verified_boot_hash": "設置哈希值",
-        "about": "關於"
+        "about": "關於",
+        "shortcut": "建立主畫面捷徑"
     },
     "boot_hash": {
         "title": "哈希值",
@@ -99,7 +100,8 @@
         "custom_key_set_error": "設置自定義密鑰失敗",
         "no_file_selected": "未選擇文件",
         "system_app_not_found": "未找到該系統應用",
-        "system_app_error": "系統應用添加失敗"
+        "system_app_error": "系統應用添加失敗",
+        "shortcut_created": "主畫面捷徑已建立"
     },
     "security_patch": {
         "title": "安全補丁",

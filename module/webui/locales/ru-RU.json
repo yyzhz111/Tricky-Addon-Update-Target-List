@@ -57,7 +57,8 @@
         "set_custom_keybox": "Установить пользовательский Keybox",
         "set_security_patch": "Установить Security Patch",
         "set_verified_boot_hash": "Установить Verified Boot Hash",
-        "about": "О программе"
+        "about": "О программе",
+        "shortcut": "Создать ярлык на главном экране"
     },
     "boot_hash": {
         "title": "Boot Hash",
@@ -99,7 +100,8 @@
         "custom_key_set_error": "Не удалось установить пользовательский keybox",
         "no_file_selected": "Файл не выбран",
         "system_app_not_found": "Системное приложение не найдено",
-        "system_app_error": "Не удалось добавить системное приложение"
+        "system_app_error": "Не удалось добавить системное приложение",
+        "shortcut_created": "Ярлык на главном экране создан"
     },
     "security_patch": {
         "title": "Патч безопасности",

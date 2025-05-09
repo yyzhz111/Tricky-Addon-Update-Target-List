@@ -57,7 +57,8 @@
         "set_custom_keybox": "Özəl Keybox təyin et",
         "set_verified_boot_hash": "Təsdiqlənmiş Boot Hash təyin et",
         "set_security_patch": "Təhlükəsizlik Təkmilləşdirməsini təyin et",
-        "about": "Haqqında"
+        "about": "Haqqında",
+        "shortcut": "Ana ekran qısayolu yarat"
     },
     "boot_hash": {
         "title": "Boot Hash",
@@ -99,7 +100,8 @@
         "custom_key_set_error": "Özəl keybox təyin oluna bilmədi",
         "no_file_selected": "Fayl seçilməyib",
         "system_app_not_found": "Sistem tətbiqi tapılmadı",
-        "system_app_error": "Sistem tətbiqini əlavə etmək mümkün olmadı"
+        "system_app_error": "Sistem tətbiqini əlavə etmək mümkün olmadı",
+        "shortcut_created": "Ana ekran qısayolu yaradıldı"
     },
     "security_patch": {
         "title": "Təhlükəsizlik Təkmilləşdirməsi",

@@ -57,7 +57,8 @@
         "set_custom_keybox": "Gunakan Keybox Kustom",
         "set_verified_boot_hash": "Atur Verified Boot Hash",
         "set_security_patch": "Atur Patch Keamanan",
-        "about": "Tentang"
+        "about": "Tentang",
+        "shortcut": "Buat pintasan di layar utama"
     },
     "boot_hash": {
         "title": "Verified Boot Hash",
@@ -99,7 +100,8 @@
         "custom_key_set_error": "Gagal menggunakan keybox kustom",
         "no_file_selected": "Tidak ada file yang dipilih",
         "system_app_not_found": "Aplikasi sistem tidak ditemukan",
-        "system_app_error": "Gagal menambahkan aplikasi sistem"
+        "system_app_error": "Gagal menambahkan aplikasi sistem",
+        "shortcut_created": "Pintasan layar utama telah dibuat"
     },
     "security_patch": {
         "title": "Patch Keamanan",

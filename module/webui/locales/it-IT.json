@@ -57,7 +57,8 @@
         "set_custom_keybox": "Imposta Keybox Personalizzata",
         "set_verified_boot_hash": "Imposta Boot Hash Verificato",
         "set_security_patch": "Imposta Patch di Sicurezza",
-        "about": "About"
+        "about": "About",
+        "shortcut": "Crea collegamento nella schermata iniziale"
     },
     "boot_hash": {
         "title": "Boot Hash",
@@ -99,7 +100,8 @@
         "custom_key_set_error": "Impossibile impostare keybox personalizzata",
         "no_file_selected": "Nessun file selezionato",
         "system_app_not_found": "App di sistema non trovata",
-        "system_app_error": "Impossibile aggiungere l'app di sistema"
+        "system_app_error": "Impossibile aggiungere l'app di sistema",
+        "shortcut_created": "Collegamento creato nella schermata iniziale"
     },
     "security_patch": {
         "title": "Patch di sicurezza",

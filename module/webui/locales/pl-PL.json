@@ -57,7 +57,8 @@
         "set_custom_keybox": "Ustaw niestandardowy klucz ",
         "set_verified_boot_hash": "Ustaw zweryfikowany skrót rozruchowy",
         "set_security_patch": "Ustaw poprawkę bezpieczeństwa",
-        "about": "O"
+        "about": "O",
+        "shortcut": "Utwórz skrót na ekranie głównym"
     },
     "boot_hash": {
         "title": "Hash rozruchu",
@@ -99,7 +100,8 @@
         "custom_key_set_error": "Nie udało się ustawić niestandardowego klucza",
         "no_file_selected": "Nie wybrano pliku",
         "system_app_not_found": "Aplikacja systemowa nie znaleziona",
-        "system_app_error": "Nie udało się dodać aplikacji systemowej"
+        "system_app_error": "Nie udało się dodać aplikacji systemowej",
+        "shortcut_created": "Skrót na ekranie głównym został utworzony"
     },
     "security_patch": {
         "title": "Poprawka bezpieczeństwa",
