@@ -52,7 +52,7 @@
         "deselect_unnecessary": "不要な選択を解除",
         "add_system_app": "システムアプリを追加",
         "set_aosp_keybox": "AOSP Keybox を設定",
-        "set_unknow_keybox": "不明な Keybox を設定",
+        "set_unknown_keybox": "不明な Keybox を設定",
         "set_valid_keybox": "有効な Keybox を設定",
         "set_custom_keybox": "カスタム Keybox を設定",
         "set_verified_boot_hash": "確認付きブートハッシュを設定",

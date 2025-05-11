@@ -52,7 +52,7 @@
         "deselect_unnecessary": "Lazımsızları seçmə",
         "add_system_app": "Sistem Tətbiqi Əlavə et",
         "set_aosp_keybox": "AOSP Keybox təyin et",
-        "set_unknow_keybox": "Naməlum Keybox təyin et",
+        "set_unknown_keybox": "Naməlum Keybox təyin et",
         "set_valid_keybox": "Etibarlı Keybox təyin et",
         "set_custom_keybox": "Özəl Keybox təyin et",
         "set_verified_boot_hash": "Təsdiqlənmiş Boot Hash təyin et",

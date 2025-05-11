@@ -52,7 +52,7 @@
         "deselect_unnecessary": "Désélectionner les applications inutiles",
         "add_system_app": "Ajouter une application système",
         "set_aosp_keybox": "Définir une Keybox AOSP",
-        "set_unknow_keybox": "Définir une Keybox inconnue",
+        "set_unknown_keybox": "Définir une Keybox inconnue",
         "set_valid_keybox": "Définir une Keybox valide",
         "set_custom_keybox": "Définir une Keybox personnalisée",
         "set_verified_boot_hash": "Définir le hash Verified Boot",

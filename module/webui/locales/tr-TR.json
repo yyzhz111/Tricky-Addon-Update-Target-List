@@ -52,7 +52,7 @@
         "deselect_unnecessary": "Gereksizleri Seçme",
         "add_system_app": "Sistem Uygulaması Ekle",
         "set_aosp_keybox": "AOSP Keybox Ayarla",
-        "set_unknow_keybox": "Bilinmeyen Keybox Ayarla",
+        "set_unknown_keybox": "Bilinmeyen Keybox Ayarla",
         "set_valid_keybox": "Geçerli Keybox Ayarla",
         "set_custom_keybox": "Özel Keybox Ayarla",
         "set_security_patch": "Güvenlik Yaması Ayarla",

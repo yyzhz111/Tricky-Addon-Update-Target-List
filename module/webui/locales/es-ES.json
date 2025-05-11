@@ -52,7 +52,7 @@
         "deselect_unnecessary": "Deseleccionar innecesarios",
         "add_system_app": "Agregar Aplicación del Sistema",
         "set_aosp_keybox": "Configurar AOSP Keybox",
-        "set_unknow_keybox": "Configurar Keybox Desconocido",
+        "set_unknown_keybox": "Configurar Keybox Desconocido",
         "set_valid_keybox": "Configurar Keybox Válido",
         "set_custom_keybox": "Establecer Keybox Personalizado",
         "set_security_patch": "Configurar Parche de Seguridad",

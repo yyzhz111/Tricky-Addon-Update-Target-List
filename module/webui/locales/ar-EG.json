@@ -52,7 +52,7 @@
         "deselect_unnecessary": "إلغاء تحديد غير الضروري",
         "add_system_app": "إضافة تطبيق نظام",
         "set_aosp_keybox": "تعيين Keybox AOSP",
-        "set_unknow_keybox": "تعيين Keybox غير معروف",
+        "set_unknown_keybox": "تعيين Keybox غير معروف",
         "set_valid_keybox": "تعيين Keybox صالح",
         "set_custom_keybox": "تعيين Keybox مخصص",
         "set_verified_boot_hash": "تعيين تجزئة التمهيد الموثوق",

@@ -52,7 +52,7 @@
         "deselect_unnecessary": "Отменить выбор ненужных",
         "add_system_app": "Добавить системное приложение",
         "set_aosp_keybox": "Установить AOSP Keybox",
-        "set_unknow_keybox": "Установить неизвестный Keybox",
+        "set_unknown_keybox": "Установить неизвестный Keybox",
         "set_valid_keybox": "Установить действующий Keybox",
         "set_custom_keybox": "Установить пользовательский Keybox",
         "set_security_patch": "Установить Security Patch",

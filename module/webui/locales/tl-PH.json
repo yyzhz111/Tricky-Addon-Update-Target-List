@@ -52,7 +52,7 @@
         "deselect_unnecessary": "Huwag Pumili ng Hindi Kinakailangan",
         "add_system_app": "Magdagdag ng System App",
         "set_aosp_keybox": "I-set ang AOSP Keybox",
-        "set_unknow_keybox": "I-set ang Hindi Kilalang Keybox",
+        "set_unknown_keybox": "I-set ang Hindi Kilalang Keybox",
         "set_valid_keybox": "I-set ang Valid Keybox",
         "set_custom_keybox": "I-set ang Custom Keybox",
         "set_verified_boot_hash": "I-set ang Verified Boot Hash",

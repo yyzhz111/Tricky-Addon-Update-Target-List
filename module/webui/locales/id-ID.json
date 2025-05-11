@@ -52,7 +52,7 @@
         "deselect_unnecessary": "Batalkan Pilihan yang Tidak Perlu",
         "add_system_app": "Tambahkan Aplikasi Sistem",
         "set_aosp_keybox": "Gunakan Keybox AOSP",
-        "set_unknow_keybox": "Gunakan Keybox Tidak Dikenal",
+        "set_unknown_keybox": "Gunakan Keybox Tidak Dikenal",
         "set_valid_keybox": "Gunakan Keybox Valid",
         "set_custom_keybox": "Gunakan Keybox Kustom",
         "set_verified_boot_hash": "Atur Verified Boot Hash",

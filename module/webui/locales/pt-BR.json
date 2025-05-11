@@ -52,7 +52,7 @@
         "deselect_unnecessary": "Desmarcar desnecessário",
         "add_system_app": "Adicionar app do sistema",
         "set_aosp_keybox": "Definir AOSP Keybox",
-        "set_unknow_keybox": "Definir Keybox Desconhecido",
+        "set_unknown_keybox": "Definir Keybox Desconhecido",
         "set_valid_keybox": "Definir Keybox Válida",
         "set_custom_keybox": "Definir Keybox Custom",
         "set_verified_boot_hash": "Definir Hash de Boot Verificado",

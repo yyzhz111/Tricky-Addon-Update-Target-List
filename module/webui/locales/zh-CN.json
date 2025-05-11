@@ -52,7 +52,7 @@
         "deselect_unnecessary": "取消选择非必要应用",
         "add_system_app": "添加系统应用",
         "set_aosp_keybox": "设置 AOSP 密钥",
-        "unknown_key_set": "设置未知密钥",
+        "set_unknown_keybox": "设置未知密钥",
         "set_valid_keybox": "设置有效密钥",
         "set_custom_keybox": "设置自定义密钥",
         "set_security_patch": "设置安全补丁",
