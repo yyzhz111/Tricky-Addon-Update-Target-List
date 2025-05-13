@@ -256,16 +256,26 @@ export function applyRippleEffect() {
                 ripple.style.animationDuration = `${duration}s`;
                 ripple.style.transition = `opacity ${duration}s ease`;
 
-                // Adaptive color
-                const computedStyle = window.getComputedStyle(element);
-                const bgColor = computedStyle.backgroundColor || "rgba(0, 0, 0, 0)";
+                // Get effective background color (traverse up if transparent)
+                const getEffectiveBackgroundColor = (el) => {
+                    while (el && el !== document.documentElement) {
+                        const bg = window.getComputedStyle(el).backgroundColor;
+                        if (bg && bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") {
+                            return bg;
+                        }
+                        el = el.parentElement;
+                    }
+                    return "rgba(255, 255, 255, 1)";
+                };
+
+                const bgColor = getEffectiveBackgroundColor(element);
                 const isDarkColor = (color) => {
                     const rgb = color.match(/\d+/g);
                     if (!rgb) return false;
                     const [r, g, b] = rgb.map(Number);
                     return (r * 0.299 + g * 0.587 + b * 0.114) < 96; // Luma formula
                 };
-                ripple.style.backgroundColor = isDarkColor(bgColor) ? "rgba(255, 255, 255, 0.2)" : "";
+                ripple.style.backgroundColor = isDarkColor(bgColor) ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.2)";
 
                 // Append ripple if not scrolling
                 await new Promise(resolve => setTimeout(resolve, 80));

@@ -38,7 +38,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"><path d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q83 0 155.5 31.5t127 86q54.5 54.5 86 127T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Zm0-82q26-36 45-75t31-83H404q12 44 31 83t45 75Zm-104-16q-18-33-31.5-68.5T322-320H204q29 50 72.5 87t99.5 55Zm208 0q56-18 99.5-55t72.5-87H638q-9 38-22.5 73.5T584-178ZM170-400h136q-3-20-4.5-39.5T300-480q0-21 1.5-40.5T306-560H170q-5 20-7.5 39.5T160-480q0 21 2.5 40.5T170-400Zm216 0h188q3-20 4.5-39.5T580-480q0-21-1.5-40.5T574-560H386q-3 20-4.5 39.5T380-480q0 21 1.5 40.5T386-400Zm268 0h136q5-20 7.5-39.5T800-480q0-21-2.5-40.5T790-560H654q3 20 4.5 39.5T660-480q0 21-1.5 40.5T654-400Zm-16-240h118q-29-50-72.5-87T584-782q18 33 31.5 68.5T638-640Zm-234 0h152q-12-44-31-83t-45-75q-26 36-45 75t-31 83Zm-200 0h118q9-38 22.5-73.5T376-782q-56 18-99.5 55T204-640Z"/></svg>
                 </i>
             </button>
-            <div class="language-menu"></div>
+            <div class="language-menu blur-box"></div>
             <div id="language-overlay" class="language-overlay"></div>
         </div>
     </div>
@@ -56,7 +56,7 @@
 
     <!-- Menu Options -->
     <div class="search-menu-container">
-        <div class="search-card ripple-element">
+        <div class="search-card ripple-element blur-box">
             <span class="search-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" height="19px" viewBox="0 -960 960 960" width="24px" fill="#6E6E6E"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" /></svg>
             </span>
@@ -65,12 +65,12 @@
         </div>
         <div class="menu">
             <input type="checkbox" id="menu-toggle" class="menu-toggle">
-            <label for="menu-toggle" class="menu-button ripple-element" id="menu-button">
+            <label for="menu-toggle" class="menu-button ripple-element blur-box" id="menu-button">
                 <i class="menu-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -1060 960 960" width="24px"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
                 </i>
             </label>
-            <div id="menu-options" class="menu-options">
+            <div id="menu-options" class="menu-options blur-box">
                 <ul>
                     <li class="ripple-element" id="refresh" data-i18n="menu.refresh"></li>
                     <li class="ripple-element" id="select-all" data-i18n="menu.select_all"></li>
@@ -145,7 +145,7 @@
 
     <!-- Help Overlay -->
     <div id="help-overlay" class="help-overlay overlay">
-        <div class="help-menu overlay-content">
+        <div class="help-menu overlay-content blur-box">
             <button id="close-help" class="close-btn">&#x2715;</button>
             <div class="help-content">
                 <div class="help-content-header" data-i18n="help.help_instructions"></div>
@@ -195,7 +195,7 @@
 
     <!-- BootHash Input Overlay -->
     <div id="boot-hash-overlay" class="boot-hash-overlay overlay">
-        <div id="boot-hash-card" class="boot-hash-card overlay-content">
+        <div id="boot-hash-card" class="boot-hash-card overlay-content blur-box">
             <div class="boot-hash-title" data-i18n="boot_hash.title"></div>
             <textarea id="boot-hash-input" class="boot-hash-input" placeholder="Paste your verified Boot Hash here" data-i18n="boot_hash.input_placeholder" oninput="window.trimInput(this)"></textarea>
             <button id="boot-hash-save-button" class="boot-hash-save-button ripple-element" data-i18n="boot_hash.save_button"></button>
@@ -204,7 +204,7 @@
 
     <!-- About Overlay -->
     <div id="about-overlay" class="about-overlay overlay">
-        <div class="about-menu overlay-content">
+        <div class="about-menu overlay-content blur-box">
             <button id="close-about" class="close-btn">&#x2715;</button>
             <div class="about-title">
                 <p id="module_name_line1" data-i18n="about.module_name_line1"></p>
@@ -232,7 +232,7 @@
 
     <!-- Update Overlay -->
     <div class="update-overlay overlay">
-        <div class="update-menu overlay-content">
+        <div class="update-menu overlay-content blur-box">
             <button id="close-update" class="close-btn">&#x2715;</button>
             <div class="update-content">
                 <h1 data-i18n="update.changelog"></h1>
@@ -247,7 +247,7 @@
 
     <!-- File Selector Overlay -->
     <div class="file-selector-overlay overlay">
-        <div class="file-selector overlay-content">
+        <div class="file-selector overlay-content blur-box">
             <div class="file-selector-header">
                 <button class="back-button">
                     <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="40 -1050 900 960" width="22px"><path d="M400-93.85 13.85-480 400-866.15l56.77 56.77L127.38-480l329.39 329.38L400-93.85Z"/></svg>
@@ -261,7 +261,7 @@
 
     <!-- Security Patch Overlay -->
     <div id="security-patch-overlay" class="security-patch-overlay overlay">
-        <div id="security-patch-card" class="security-patch-card overlay-content">
+        <div id="security-patch-card" class="security-patch-card overlay-content blur-box">
             <div class="security-patch-header" data-i18n="security_patch.title"></div>
             <div class="security-patch-content">
                 <div id="normal-mode-inputs" class="normal-mode-inputs">
@@ -311,7 +311,7 @@
 
     <!-- Add System App Overlay -->
     <div id="add-system-app-overlay" class="add-system-app-overlay overlay">
-        <div id="add-system-app-card" class="add-system-app-card overlay-content">
+        <div id="add-system-app-card" class="add-system-app-card overlay-content blur-box">
             <div class="add-system-app-title" data-i18n="add_system_app.title"></div>
             <div class="add-system-app-content">
                 <input type="text" id="system-app-input" placeholder="com.example.app" autocapitalize="none">
@@ -324,7 +324,7 @@
 
     <!-- Uninstall Confirmation Overlay -->
     <div class="uninstall-confirmation-overlay overlay" id="uninstall-confirmation-overlay">
-        <div class="uninstall-confirmation overlay-content">
+        <div class="uninstall-confirmation overlay-content blur-box">
             <div class="uninstall-confirmation-title" data-i18n="confirmation.uninstall_title"></div>
             <p data-i18n="confirmation.uninstall_message"></p>
             <div class="uninstall-confirmation-button-container">
