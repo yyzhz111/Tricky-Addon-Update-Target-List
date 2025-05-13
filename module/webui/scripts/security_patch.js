@@ -313,7 +313,8 @@ export function securityPatch() {
     // Get button
     getButton.addEventListener('click', async () => {
         showPrompt('security_patch.fetching');
-        const output = spawn('sh', [`${basePath}/common/get_extra.sh`, '--get-security-patch']);
+        const output = spawn('sh', [`${basePath}/common/get_extra.sh`, '--get-security-patch'],
+                        { env: { PATH: "/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:/data/data/com.termux/files/usr/bin:$PATH" }});
         output.stdout.on('data', (data) => {
             showPrompt('security_patch.fetched', true, 1000);
             checkAdvanced(true);
