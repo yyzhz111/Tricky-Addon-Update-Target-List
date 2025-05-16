@@ -141,6 +141,62 @@ get_latest_security_patch() {
     [ -n "$security_patch" ] && echo "$security_patch" || exit 1
 }
 
+unknown_kb() {
+    # adapted from https://github.com/TMLP-Team/keyboxGenerator/blob/main/keyboxGenerator_v2.0.py
+    ECKEY="eckey.pem"
+    CERT="cert.pem"
+    RSAKEY="rsakey.pem"
+    KEYBOX="keybox.xml"
+
+    # gen ec_key
+    openssl ecparam -name prime256v1 -genkey -noout -out "$ECKEY" || exit 1
+
+    # gen cert
+    openssl req -new -x509 -key "$ECKEY" -out "$CERT" -days 3650 -subj "/CN=Generated" || exit 1
+
+    # gen rsa key
+    openssl genrsa -out "$RSAKEY" 2048 || exit 1
+
+    # convert rsa key to PKCS#1
+    openssl rsa -in "$RSAKEY" -out "$RSAKEY" -traditional || exit 1
+
+    # Generate keybox XML
+    cat << KEYBOX_EOF > "$KEYBOX"
+<?xml version="1.0"?>
+    <AndroidAttestation>
+        <NumberOfKeyboxes>1</NumberOfKeyboxes>
+        <Keybox DeviceID="sw">
+            <Key algorithm="ecdsa">
+                <PrivateKey format="pem">
+$(sed 's/^/                    /' "$ECKEY")
+                </PrivateKey>
+                <CertificateChain>
+                    <NumberOfCertificates>1</NumberOfCertificates>
+                        <Certificate format="pem">
+$(sed 's/^/                        /' "$CERT")
+                        </Certificate>
+                </CertificateChain>
+            </Key>
+            <Key algorithm="rsa">
+                <PrivateKey format="pem">
+$(sed 's/^/                    /' "$RSAKEY")
+                </PrivateKey>
+            </Key>
+        </Keybox>
+</AndroidAttestation>
+KEYBOX_EOF
+
+    # cleanup
+    rm -f $ECKEY $CERT $RSAKEY
+
+    if [ -f $KEYBOX ]; then
+        mv /data/adb/tricky_store/keybox.xml /data/adb/tricky_store/keybox.xml.bak
+        mv "$KEYBOX" /data/adb/tricky_store/keybox.xml
+    else
+        exit 1
+    fi
+}
+
 case "$1" in
 --xposed)
     get_xposed
@@ -184,6 +240,10 @@ case "$1" in
     ;;
 --get-security-patch)
     get_latest_security_patch
+    exit
+    ;;
+--unknown-kb)
+    unknown_kb
     exit
     ;;
 esac

@@ -1,4 +1,4 @@
-import { exec, toast } from './assets/kernelsu.js';
+import { exec, spawn, toast } from './assets/kernelsu.js';
 import { basePath, showPrompt, applyRippleEffect, refreshAppList } from './main.js';
 
 // Function to check or uncheck all app
@@ -245,10 +245,11 @@ async function fetchkb(link, fallbackLink, valid = false) {
 
 // unkown kb eventlistener
 document.getElementById("devicekb").addEventListener("click", async () => {
-    fetchkb(
-        "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/bot/.device",
-        "https://raw.gitmirror.com/KOWX712/Tricky-Addon-Update-Target-List/bot/.device"
-    )
+    const output = spawn("sh", [`${basePath}/common/get_extra.sh`, "--unknown-kb"],
+                    { cwd: "/data/local/tmp", env: { PATH: `$PATH:${basePath}/common`, OPENSSL_CONF: "/dev/null" }});
+    output.on('exit', (code) => {
+        showPrompt(code === 0 ? "prompt.unknown_key_set" : "prompt.key_set_error", code === 0);
+    });
 });
 
 // valid kb eventlistener
