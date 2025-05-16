@@ -203,10 +203,9 @@ document.getElementById("aospkb").addEventListener("click", async () => aospkb()
  * Fetch encoded keybox and decode
  * @param {String} link - link to fetch
  * @param {String} fallbackLink - fallback link
- * @param {Boolean} valid - fetching valid kb or not, default = false
  * @returns {void}
  */
-async function fetchkb(link, fallbackLink, valid = false) {
+async function fetchkb(link, fallbackLink) {
     fetch(link)
         .then(response => {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -221,7 +220,7 @@ async function fetchkb(link, fallbackLink, valid = false) {
         })
         .then(data => {
             if (!data.trim()) {
-                showPrompt(valid ? "prompt.no_valid" : "prompt.key_set_error", false);
+                showPrompt("prompt.no_valid", false);
                 return;
             }
             try {
@@ -230,7 +229,7 @@ async function fetchkb(link, fallbackLink, valid = false) {
                 const source = atob(decodedHex);
                 const result = setKeybox(source);
                 if (result) {
-                    showPrompt(valid ? "prompt.valid_key_set" : "prompt.unknown_key_set");
+                    showPrompt("prompt.valid_key_set");
                 } else {
                     throw new Error("Failed to copy valid keybox");
                 }
@@ -256,8 +255,7 @@ document.getElementById("devicekb").addEventListener("click", async () => {
 document.getElementById("validkb").addEventListener("click", () => {
     fetchkb(
         "https://raw.githubusercontent.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra",
-        "https://raw.gitmirror.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra",
-        true
+        "https://raw.gitmirror.com/KOWX712/Tricky-Addon-Update-Target-List/main/.extra"
     )
 });
 

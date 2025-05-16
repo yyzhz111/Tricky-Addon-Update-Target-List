@@ -3,7 +3,6 @@
 # This file is the backend of JavaScript
 
 MODPATH=${0%/*}
-ORG_PATH="$PATH"
 SKIPLIST="$MODPATH/tmp/skiplist"
 XPOSED="$MODPATH/tmp/xposed"
 
