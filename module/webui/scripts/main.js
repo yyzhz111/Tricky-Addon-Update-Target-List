@@ -85,8 +85,7 @@ function checkMagisk() {
 
 // Function to show the prompt with a success or error message
 export function showPrompt(key, isSuccess = true, duration = 3000) {
-    const message = key.split('.').reduce((acc, k) => acc && acc[k], translations) || key;
-    prompt.textContent = message;
+    prompt.textContent = translations[key];
     prompt.classList.toggle('error', !isSuccess);
     if (window.promptTimeout) {
         clearTimeout(window.promptTimeout);
