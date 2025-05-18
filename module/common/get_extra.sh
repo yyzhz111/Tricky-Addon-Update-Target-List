@@ -136,8 +136,17 @@ set_security_patch() {
 }
 
 get_latest_security_patch() {
-    security_patch=$(download "https://source.android.com/docs/security/bulletin/pixel" | grep -o "<td>[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}</td>" | head -n 1 | sed 's/<td>\(.*\)<\/td>/\1/')
-    [ -n "$security_patch" ] && echo "$security_patch" || exit 1
+    security_patch=$(download "https://source.android.com/docs/security/bulletin/pixel" |
+                     sed -n 's/.*<td>\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\)<\/td>.*/\1/p' |
+                     head -n 1)
+
+    if [ -n "$security_patch" ]; then
+        echo "$security_patch"
+        exit 0
+    elif ! ping -c 1 -W 5 "source.android.com" >/dev/null 2>&1; then
+        echo "Connection failed" >&2
+    fi
+    exit 1
 }
 
 unknown_kb() {

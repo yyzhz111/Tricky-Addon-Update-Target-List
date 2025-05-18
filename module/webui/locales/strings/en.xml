@@ -113,6 +113,7 @@
     <string name="security_patch_fetching">Fetching...</string>
     <string name="security_patch_fetched">Done</string>
     <string name="security_patch_get_failed">Failed to fetch security patch date</string>
+    <string name="security_patch_unable_to_connect">Unable to connect to source.android.com</string>
     <string name="security_patch_auto_success">Auto config enabled successfully</string>
     <string name="security_patch_auto_failed">Failed to enable auto config</string>
     <string name="security_patch_save_success">Security patch saved successfully</string>

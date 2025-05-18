@@ -113,6 +113,7 @@
     <string name="security_patch_fetching">獲取中...</string>
     <string name="security_patch_fetched">完成</string>
     <string name="security_patch_get_failed">獲取安全補丁日期失敗</string>
+    <string name="security_patch_unable_to_connect">無法連線至 source.android.com</string>
     <string name="security_patch_auto_success">自動配置成功啟用</string>
     <string name="security_patch_auto_failed">無法啟用自動配置</string>
     <string name="security_patch_save_success">安全補丁成功保存</string>

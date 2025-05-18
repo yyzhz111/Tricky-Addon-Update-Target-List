@@ -314,7 +314,7 @@ export function securityPatch() {
     getButton.addEventListener('click', async () => {
         showPrompt('security_patch_fetching');
         const output = spawn('sh', [`${basePath}/common/get_extra.sh`, '--get-security-patch'],
-                        { env: { PATH: "/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:/data/data/com.termux/files/usr/bin:$PATH" }});
+                        { cwd: "/data/local/tmp", env: { PATH: "/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk:/data/data/com.termux/files/usr/bin:$PATH" }});
         output.stdout.on('data', (data) => {
             showPrompt('security_patch_fetched', true, 1000);
             checkAdvanced(true);
@@ -323,6 +323,13 @@ export function securityPatch() {
             systemPatchInput.value = 'prop';
             bootPatchInput.value = data;
             vendorPatchInput.value = data;
+        });
+        output.stderr.on('data', (data) => {
+            if (data.includes("failed")) {
+                showPrompt('security_patch_unable_to_connect', false);
+            } else {
+                console.error(data);
+            }
         });
         output.on('exit', (code) => {
             if (code !== 0) showPrompt('security_patch_get_failed', false);
