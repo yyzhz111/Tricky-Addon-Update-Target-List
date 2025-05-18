@@ -139,10 +139,10 @@ document.getElementById("save").addEventListener("click", () => {
                 for (const app of appsWithQuestion) {
                     exec(`sed -i 's/^${app}$/${app}?/' /data/adb/tricky_store/target.txt`);
                 }
-                showPrompt("prompt.saved_target");
+                showPrompt("prompt_saved_target");
                 refreshAppList();
             } else {
-                showPrompt("prompt.save_error", false);
+                showPrompt("prompt_save_error", false);
             }
         });
 });
@@ -178,9 +178,9 @@ document.querySelector(".uninstall-container").addEventListener("click", () => {
         exec(`sh ${basePath}/common/get_extra.sh --uninstall`)
             .then(({ errno }) => {
                 if (errno === 0) {
-                    showPrompt("prompt.uninstall_prompt");
+                    showPrompt("prompt_uninstall_prompt");
                 } else {
-                    showPrompt("prompt.uninstall_failed", false);
+                    showPrompt("prompt_uninstall_failed", false);
                 }
             });
     })
@@ -197,7 +197,7 @@ function checkMMRL() {
         shortcutButton.style.display = 'flex';
         shortcutButton.addEventListener('click', () => {
             $tricky_store.createShortcut();
-            showPrompt("prompt.shortcut_created", true);
+            showPrompt("prompt_shortcut_created", true);
         });
     }
 }

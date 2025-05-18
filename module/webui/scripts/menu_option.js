@@ -115,7 +115,7 @@ export async function setupSystemAppMenu() {
             exec(`pm list packages -s | grep -q ${packageName}`)
                 .then(({ errno }) => {
                     if (errno !== 0) {
-                        showPrompt("prompt.system_app_not_found", false);
+                        showPrompt("prompt_system_app_not_found", false);
                     } else {
                         exec(`
                             touch "/data/adb/tricky_store/system_app"
@@ -193,7 +193,7 @@ KB_EOF
 async function aospkb() {
     const { stdout } = await exec(`xxd -r -p ${basePath}/common/.default | base64 -d`);
     const result = setKeybox(stdout);
-    showPrompt(result ? "prompt.aosp_key_set" : "prompt.key_set_error", result);
+    showPrompt(result ? "prompt_aosp_key_set" : "prompt_key_set_error", result);
 }
 
 // aosp kb eventlistener
@@ -220,7 +220,7 @@ async function fetchkb(link, fallbackLink) {
         })
         .then(data => {
             if (!data.trim()) {
-                showPrompt("prompt.no_valid", false);
+                showPrompt("prompt_no_valid", false);
                 return;
             }
             try {
@@ -229,7 +229,7 @@ async function fetchkb(link, fallbackLink) {
                 const source = atob(decodedHex);
                 const result = setKeybox(source);
                 if (result) {
-                    showPrompt("prompt.valid_key_set");
+                    showPrompt("prompt_valid_key_set");
                 } else {
                     throw new Error("Failed to copy valid keybox");
                 }
@@ -238,7 +238,7 @@ async function fetchkb(link, fallbackLink) {
             }
         })
         .catch(async error => {
-            showPrompt("prompt.no_internet", false);
+            showPrompt("prompt_no_internet", false);
         });
 }
 
@@ -247,7 +247,7 @@ document.getElementById("devicekb").addEventListener("click", async () => {
     const output = spawn("sh", [`${basePath}/common/get_extra.sh`, "--unknown-kb"],
                     { cwd: "/data/local/tmp", env: { PATH: `$PATH:${basePath}/common`, OPENSSL_CONF: "/dev/null" }});
     output.on('exit', (code) => {
-        showPrompt(code === 0 ? "prompt.unknown_key_set" : "prompt.key_set_error", code === 0);
+        showPrompt(code === 0 ? "prompt_unknown_key_set" : "prompt_key_set_error", code === 0);
     });
 });
 
@@ -338,7 +338,7 @@ async function listFiles(path, skipAnimation = false) {
                 } else {
                     const { stdout } = await exec(`cat "${item.path}"`);
                     const result = setKeybox(stdout);
-                    showPrompt(result ? "prompt.custom_key_set" : "prompt.custom_key_set_error", result);
+                    showPrompt(result ? "prompt_custom_key_set" : "prompt_custom_key_set_error", result);
                     closeCustomKeyboxSelector();
                 }
             });
