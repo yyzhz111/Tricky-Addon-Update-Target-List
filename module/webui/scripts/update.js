@@ -164,7 +164,7 @@ function setupUpdateMenu() {
                         { env: { PATH: "$PATH:/data/adb/ap/bin:/data/adb/ksu/bin:/data/adb/magisk" } });
         output.stderr.on('data', (data) => {
             console.error('Error during installation:', data);
-        })
+        });
         output.on('exit', (code) => {
             if (code === 0) {
                 showPrompt("prompt_installed");

@@ -56,7 +56,9 @@ check_update() {
     [ -f "$MODDIR/disable" ] && rm -f "$MODDIR/disable"
     LOCAL_VERSION=$(grep '^versionCode=' "$MODPATH/update/module.prop" | awk -F= '{print $2}')
     if [ "$REMOTE_VERSION" -gt "$LOCAL_VERSION" ] && [ ! -f "/data/adb/modules/TA_utl/update" ]; then
-        if [ "$MAGISK" = "true" ]; then
+        if [ "$CANARY" = "true" ]; then
+            exit 1
+        elif [ "$MAGISK" = "true" ]; then
             [ -d "/data/adb/modules/TA_utl" ] && rm -rf "/data/adb/modules/TA_utl"
             cp -rf "$MODPATH/update" "/data/adb/modules/TA_utl"
         else
@@ -81,19 +83,26 @@ get_update() {
 }
 
 install_update() {
-    if command -v magisk >/dev/null 2>&1; then
-        magisk --install-module "$MODPATH/tmp/module.zip" || exit 1
-    elif command -v apd >/dev/null 2>&1; then
-        apd module install "$MODPATH/tmp/module.zip" || exit 1
-    elif command -v ksud >/dev/null 2>&1; then
-        ksud module install "$MODPATH/tmp/module.zip" || exit 1
-    else
-        exit 1
-    fi
+    zip_file="$MODPATH/tmp/module.zip"
+    . "$MODPATH/manager.sh"
 
-    rm -f "$MODPATH/tmp/module.zip"
-    rm -f "$MODPATH/tmp/changelog.md"
-    rm -f "$MODPATH/tmp/version"
+    case $MANAGER in
+        APATCH)
+            apd module install "$zip_file" || exit 1
+            ;;
+        KSU)
+            ksud module install "$zip_file" || exit 1
+            ;;
+        MAGISK)
+            magisk --install-module "$zip_file" || exit 1
+            ;;
+        *)
+            rm -f "$zip_file" "$MODPATH/tmp/changelog.md" "$MODPATH/tmp/version" || true
+            exit 1
+            ;;
+    esac
+
+    rm -f "$zip_file" "$MODPATH/tmp/changelog.md" "$MODPATH/tmp/version" || true
 }
 
 release_note() {

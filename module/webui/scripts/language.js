@@ -1,4 +1,4 @@
-import { applyRippleEffect } from './main.js';
+import { applyRippleEffect, linkRedirect } from './main.js';
 
 const languageButton = document.querySelector('.language-button');
 const languageMenu = document.querySelector('.language-menu');
@@ -45,7 +45,6 @@ async function detectUserLanguage() {
         const availableData = await availableResponse.json();
         availableLanguages = Object.keys(availableData);
         languageNames = availableData;
-        await generateLanguageMenu();
 
         // Fetch preferred language
         const prefered_language_code = localStorage.getItem('trickyAddonLanguage');
@@ -88,6 +87,9 @@ export async function loadTranslations() {
         } else {
             translations = baseTranslations;
         }
+
+        // Generate language menu
+        await generateLanguageMenu();
     } catch (error) {
         console.error('Error loading translations:', error);
         translations = baseTranslations;
@@ -189,4 +191,11 @@ async function generateLanguageMenu() {
         button.textContent = name;
         languageMenu.appendChild(button);
     });
+
+    // Add translation guide button
+    const moreBtn = document.createElement('button');
+    moreBtn.classList.add('language-option', 'ripple-element');
+    moreBtn.textContent = translations.more_language;
+    moreBtn.onclick = () => linkRedirect('https://github.com/KOWX712/Tricky-Addon-Update-Target-List/blob/main/module/webui/locales/GUIDE.md');
+    languageMenu.appendChild(moreBtn);
 }

@@ -53,7 +53,13 @@
 }
 
 .link-icon {
-    display: inline-block;
+    font-size: 18px;
+    padding: 3px 10px;
+    color: #fff;
+    fill: #fff;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
     font-style: normal;
     border-radius: 8px;
     box-sizing: border-box;
@@ -62,27 +68,19 @@
 }
 
 .link-icon svg {
-    padding-bottom: 3px;
-    vertical-align: bottom;
-    height: 17px;
+    padding-right: 3px;
 }
 
 #telegram {
-    font-size: 18px;
-    padding: 3px 10px;
     background-color: #38A7ED;
-    color: #fff;
-    fill: #fff;
-    user-select: none;
 }
 
 #github {
-    font-size: 18px;
-    padding: 3px 10px;
     background-color: #606060;
-    color: #fff;
-    fill: #fff;
-    user-select: none;
+}
+
+#canary {
+    background-color: #821284;
 }
 
 #link-text {

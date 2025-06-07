@@ -19,7 +19,7 @@ const floatingBtn = document.querySelector('.floating-btn');
 export let basePath;
 export const appsWithExclamation = [];
 export const appsWithQuestion = [];
-const ADDITIONAL_APPS = [ "android", "com.google.android.gms", "io.github.vvb2060.keyattestation", "io.github.vvb2060.mahoshojo", "icu.nullptr.nativetest" ]; // Always keep default apps in target.txt
+const ADDITIONAL_APPS = []; // Deprecated
 
 // Variables
 let e = 0;
@@ -27,8 +27,12 @@ let isRefreshing = false;
 
 // Function to set basePath
 async function getBasePath() {
-    const { errno } = await exec('[ -d /data/adb/modules/.TA_utl ]');
-    basePath = errno === 0 ? "/data/adb/modules/.TA_utl" : "/data/adb/modules/TA_utl";
+    try {
+        const { errno } = await exec('[ -d /data/adb/modules/.TA_utl ]');
+        basePath = errno === 0 ? "/data/adb/modules/.TA_utl" : "/data/adb/modules/TA_utl";
+    } catch (error) {
+        console.error("Error getting base path:", error);
+    }
 }
 
 // Function to load the version from module.prop
